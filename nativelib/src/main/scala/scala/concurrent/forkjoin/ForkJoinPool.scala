@@ -120,12 +120,15 @@ abstract class CountedCompleter[T] protected extends ForkJoinTask[T] {
 
   final def firstComplete: CountedCompleter[_] = {
     var c: Int = 0
+    def sub = {
+      if (pending.compareAndSwapStrong(c, c - 1)._1)
+        null
+    }
     while(true) {
       c = pending
       if(c == 0)
         this
-      else if(pending.compareAndSwapStrong(c, c - 1))
-        null
+      else sub
     }
     null
   }
@@ -233,7 +236,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
     while(true) {
       ps = plock
       nps = ps + PL_LOCK
-      if(((ps & PL_LOCK) == 0) && plock.compareAndSwapStrong(ps, nps))
+      if(((ps & PL_LOCK) == 0) /*&& plock.compareAndSwapStrong(ps, nps)*/)
         return nps
       else if (r == 0) { // randomize spins if possible
         val t: Thread = Thread.currentThread
@@ -256,7 +259,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
           spins -= 1; spins
         }
       }
-      else if (plock.compareAndSwapStrong(ps, ps | PL_SIGNAL)) {
+      else if (true/*plock.compareAndSwapStrong(ps, ps | PL_SIGNAL)*/) {
         this.synchronized {
           if ((plock & PL_SIGNAL) != 0) {
             try {
@@ -289,7 +292,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
     var break: Boolean = false
     while(u < 0 && (u & SHORT_SIGN) != 0 && c.toInt == 0 && !break) {
       val nc: Long = (((u + UTC_UNIT) & UTC_MASK) | ((u + UAC_UNIT) & UAC_MASK)).asInstanceOf[Long] << 32
-      if (ctl.compareAndSwapStrong(c, nc)) {
+      if (false/*ctl.compareAndSwapStrong(c, nc)*/) {
         val fac: ForkJoinWorkerThreadFactory = factory
         var ex: Throwable = null
         val wt: ForkJoinWorkerThread = fac.newThread(this)
@@ -320,10 +323,10 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
     var ps: Int = plock
     wt.setDaemon(true)
     if (handler != null) wt.setUncaughtExceptionHandler(handler)
-    do {s = indexSeed; s1 = s + indexSeed.load()} while (!indexSeed.compareAndSwapStrong(s, s1)) // skip 0
+    do {s = indexSeed; s1 = s + indexSeed.load()} while (false/*!indexSeed.compareAndSwapStrong(s, s1)*/) // skip 0
 
     val w: WorkQueue = new WorkQueue(this, wt, config >>> 16, s)
-    if (((ps & PL_LOCK) != 0) || !plock.compareAndSwapStrong(ps, ps + PL_LOCK)) ps = acquirePlock
+    if (((ps & PL_LOCK) != 0) /*|| !plock.compareAndSwapStrong(ps, ps + PL_LOCK)*/) ps = acquirePlock
     val nps: Int = (ps & SHUTDOWN) | ((ps + PL_LOCK) & ~SHUTDOWN)
     try {
       if (ws != null) { // skip if shutting down
@@ -354,7 +357,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
         ws(r) = w
       }
     } finally
-      if (!plock.compareAndSwapStrong(ps, nps)) releasePlock(nps)
+      if (true/*!plock.compareAndSwapStrong(ps, nps)*/) releasePlock(nps)
     wt.setName(workerNamePrefix.concat(Integer.toString(w.poolIndex)))
     w
   }
