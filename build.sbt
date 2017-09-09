@@ -297,6 +297,12 @@ lazy val sbtScalaNative =
     )
     .dependsOn(tools)
 
+lazy val nativelibAux =
+  project
+    .in(file("nativelib-aux"))
+    .settings(libSettings)
+    .settings(mavenPublishSettings)
+
 lazy val nativelib =
   project
     .in(file("nativelib"))
@@ -305,6 +311,7 @@ lazy val nativelib =
     .settings(
       libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
     )
+    .dependsOn(nativelibAux)
 
 lazy val javalib =
   project
