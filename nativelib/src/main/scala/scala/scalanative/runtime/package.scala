@@ -30,9 +30,6 @@ package object runtime {
   final val TRAIT_KIND  = 1
   final val STRUCT_KIND = 2
 
-  /** Used as a stub right hand of intrinsified methods. */
-  def undefined: Nothing = throw new UndefinedBehaviorError
-
   /** Returns info pointer for given type. */
   def typeof[T](implicit tag: Tag[T]): Ptr[Type] = undefined
 

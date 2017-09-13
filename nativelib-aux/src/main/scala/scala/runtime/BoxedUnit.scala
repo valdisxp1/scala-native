@@ -6,6 +6,6 @@ class BoxedUnit extends java.io.Serializable {
   override def toString: String           = "()"
 }
 object BoxedUnit {
-  def UNIT = ???
+  def UNIT = scala.scalanative.runtime.undefined
   val TYPE = classOf[Unit]
 }
