@@ -4,10 +4,6 @@ import native._
 import runtime.Intrinsics._
 
 package object runtime {
-
-  /** Runtime Type Information. */
-  type Type = CStruct3[Int, String, Byte]
-
   implicit class TypeOps(val self: Ptr[Type]) extends AnyVal {
     def id: Int      = !(self._1)
     def name: String = !(self._2)
@@ -29,21 +25,6 @@ package object runtime {
   final val CLASS_KIND  = 0
   final val TRAIT_KIND  = 1
   final val STRUCT_KIND = 2
-
-  /** Returns info pointer for given type. */
-  def typeof[T](implicit tag: Tag[T]): Ptr[Type] = undefined
-
-  /** Intrinsified unsigned devision on ints. */
-  def divUInt(l: Int, r: Int): Int = undefined
-
-  /** Intrinsified unsigned devision on longs. */
-  def divULong(l: Long, r: Long): Long = undefined
-
-  /** Intrinsified unsigned remainder on ints. */
-  def remUInt(l: Int, r: Int): Int = undefined
-
-  /** Intrinsified unsigned remainder on longs. */
-  def remULong(l: Long, r: Long): Long = undefined
 
   /** Intrinsified byte to unsigned int converstion. */
   def byteToUInt(b: Byte): Int = undefined

@@ -6,9 +6,6 @@ import scalanative.runtime.undefined
 
 package object native {
 
-  /** Int on 32-bit architectures and Long on 64-bit ones. */
-  type Word = Long
-
   /** UInt on 32-bit architectures and ULong on 64-bit ones. */
   type UWord = ULong
 
@@ -69,20 +66,11 @@ package object native {
   /** The C '_Bool' and C++ 'bool' type. */
   type CBool = Boolean
 
-  /** The C/C++ 'size_t' type. */
-  type CSize = Word
-
   /** The C/C++ 'ssize_t' type. */
   type CSSize = Word
 
-  /** The C/C++ 'ptrdiff_t' type. */
-  type CPtrDiff = Long
-
   /** C-style string with trailing 0. */
   type CString = Ptr[CChar]
-
-  /** The C 'sizeof' operator. */
-  def sizeof[T](implicit tag: Tag[T]): CSize = undefined
 
   /** Heap allocate and zero-initialize a value
    *  using current implicit allocator.
