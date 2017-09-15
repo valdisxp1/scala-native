@@ -13,6 +13,7 @@ import scala.scalanative.runtime.{CAtomicInt, CAtomicLong, CAtomicRef}
 import scala.scalanative.runtime.CAtomicsImplicits._
 import scala.scalanative.native.CLong
 
+/*
 object BreaksIfElse {
   def doesNotCompile: AnyRef = {
     val c = 0
@@ -23,6 +24,39 @@ object BreaksIfElse {
     null
   }
 }
+ */
+object BreaksIfElse {
+  def doesNotCompile: AnyRef = {
+    val c = 0
+    if (c == 0)
+      this
+    else if (c == 1)
+      null
+    null
+  }
+
+  def doesCompile: AnyRef = {
+    val c = 0
+    if (c == 0)
+      this
+    else if (c == 1)
+      null
+    else 0
+    null
+  }
+
+  def doesCompile2: AnyRef = {
+    val c = 0
+    def sub = if (c == 1) null
+
+    if (c == 0)
+      this
+    else sub
+    null
+  }
+}
+/*
+*/
 
 abstract class CountedCompleter[T] protected extends ForkJoinTask[T] {
 
