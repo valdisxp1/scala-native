@@ -26,6 +26,7 @@ object BreaksIfElse {
 }
  */
 object BreaksIfElse {
+/*
   def doesNotCompile: AnyRef = {
     val c = 0
     if (c == 0)
@@ -34,6 +35,7 @@ object BreaksIfElse {
       null
     null
   }
+*/
 
   def doesCompile: AnyRef = {
     val c = 0
