@@ -13,6 +13,17 @@ import scala.scalanative.runtime.{CAtomicInt, CAtomicLong, CAtomicRef}
 import scala.scalanative.runtime.CAtomicsImplicits._
 import scala.scalanative.native.CLong
 
+object BreaksIfElse {
+  def doesNotCompile: AnyRef = {
+    val c = 0
+    if (c == 0)
+      this
+    else if (c == 1)
+      null
+    null
+  }
+}
+
 abstract class CountedCompleter[T] protected extends ForkJoinTask[T] {
 
   /** This task's completer, or null if none */
@@ -127,15 +138,6 @@ abstract class CountedCompleter[T] protected extends ForkJoinTask[T] {
       else if(pending.compareAndSwapStrong(c, c - 1))
         return null
     }
-    null
-  }
-
-  final def firstComplete0: AnyRef = {
-    var c: Int = 0
-    if (c == 0)
-      this
-    else if (c == 1)
-      null
     null
   }
 
