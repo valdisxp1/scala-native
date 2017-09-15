@@ -57,8 +57,38 @@ object BreaksIfElse {
     null
   }
 }
-/*
-*/
+
+object BreaksSynchronize {
+/*  def doesNotCompile(arg: Int): Unit = {
+    42 //any expression
+    this.synchronized{
+      println("xyz")// returns Unit
+    }
+  }
+
+  def doesNotCompile2(arg: Int): Unit = {
+    42 //any expression
+    this.synchronized{
+      println("xyz")
+      println("123")// returns Unit
+    }
+  }*/
+
+  def doesCompile(arg: Int): Unit = {
+    42 //any expression
+    this.synchronized{
+      println("xyz")
+      1
+    }
+  }
+
+  def doesCompile2(arg: Int): Unit = {
+    //no expression
+    this.synchronized {
+      println("xyz") // returns Unit
+    }
+  }
+}
 
 abstract class CountedCompleter[T] protected extends ForkJoinTask[T] {
 
