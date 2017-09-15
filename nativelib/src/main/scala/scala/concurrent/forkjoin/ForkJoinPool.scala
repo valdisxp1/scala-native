@@ -132,13 +132,10 @@ abstract class CountedCompleter[T] protected extends ForkJoinTask[T] {
 
   final def firstComplete0: AnyRef = {
     var c: Int = 0
-    while(true) {
-      c = c + 1
-      if(c == 0)
-        this
-      else if(c == 9)
-        null
-    }
+    if (c == 0)
+      this
+    else if (c == 1)
+      null
     null
   }
 
