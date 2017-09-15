@@ -90,6 +90,44 @@ object BreaksSynchronize {
   }
 }
 
+object BreaksWhileInSynchronized {
+  def doesNotCompile = {
+    42
+    synchronized {
+      while(false) {
+        //can be also non-empty
+      }
+    }
+  }
+
+  def doesNotCompile2 = {
+    synchronized {
+      while(false) {
+        //can be also non-empty
+      }
+    }
+    false
+  }
+
+  def doesCompile = {
+    synchronized {
+      while(false) {
+        //can be also non-empty
+      }
+      4
+    }
+    false
+  }
+
+  def doesCompile2 = {
+    synchronized {
+      while(false) {
+        //can be also non-empty
+      }
+    }
+  }
+}
+
 abstract class CountedCompleter[T] protected extends ForkJoinTask[T] {
 
   /** This task's completer, or null if none */
@@ -1709,6 +1747,16 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
     }
     terminated
   }
+
+  def awaitTermination0 = {
+    42
+    synchronized {
+      while(false) {
+        //can be also non-empty
+      }
+    }
+  }
+
 
   def awaitQuiescence(timeout: Long, unit: TimeUnit): Boolean = {
     val nanos: Long = unit.toNanos(timeout)
