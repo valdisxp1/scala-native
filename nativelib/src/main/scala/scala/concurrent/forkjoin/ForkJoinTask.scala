@@ -31,7 +31,10 @@ abstract class ForkJoinTask[V] extends Future[V] with Serializable {
         return s
       if (status.compareAndSwapStrong(s, s | completion)) {
         if ((s >>> 16) != 0)
-          this.synchronized(notifyAll())
+          this.synchronized {
+            notifyAll()
+            Workaround.avoidUnitType
+          }
         completion
       }
     }
@@ -72,6 +75,7 @@ abstract class ForkJoinTask[V] extends Future[V] with Serializable {
                 interrupted = true
             }
           } else notifyAll()
+          Workaround.avoidUnitType
         }
 
       }
@@ -89,8 +93,13 @@ abstract class ForkJoinTask[V] extends Future[V] with Serializable {
     while (s >= 0) {
       if (status.compareAndSwapStrong(s, s | SIGNAL)) {
         this synchronized {
-          if (status >= 0) wait()
-          else notifyAll()
+          if (status >= 0) {
+            wait()
+            Workaround.avoidUnitType
+          } else {
+            notifyAll()
+            Workaround.avoidUnitType
+          }
         }
 
       }
@@ -362,11 +371,13 @@ abstract class ForkJoinTask[V] extends Future[V] with Serializable {
         s = status
         var break: Boolean = false
         while (s >= 0 && !break) {
-          if (w != null && w.qlock < 0)
+          if (w != null && w.qlock < 0) {
             cancelIgnoringExceptions(this)
-          else if (!canBlock) {
+            Workaround.avoidUnitType
+          } else if (!canBlock) {
             if (p == null || p.tryCompensate)
               canBlock = true
+            Workaround.avoidUnitType
           } else {
             ms = TimeUnit.NANOSECONDS.toMillis(ns)
             if (ms > 0L && status.compareAndSwapStrong(s, s | SIGNAL)) {
@@ -374,19 +385,24 @@ abstract class ForkJoinTask[V] extends Future[V] with Serializable {
                 if (status >= 0) {
                   try {
                     wait(ms)
+                    Workaround.avoidUnitType
                   } catch {
                     case ie: InterruptedException =>
                       if (p == null)
                         interrupted = true
+                      Workaround.avoidUnitType
                   }
-                } else
+                } else {
                   notifyAll()
+                  Workaround.avoidUnitType
+                }
               }
             }
             s = status
             ns = deadline - System.nanoTime()
             if (s < 0 || interrupted || ns <= 0L)
               break = true
+            Workaround.avoidUnitType
           }
           if (!break) s = status
         }
@@ -598,10 +614,13 @@ object ForkJoinTask {
       if (t == null) {
         if (ex == null)
           ex = new NullPointerException()
+        Workaround.avoidUnitType
       } else if (i != 0)
         t.fork
-      else if (t.doInvoke() < NORMAL && ex == null)
+      else if (t.doInvoke() < NORMAL && ex == null) {
         ex = t.getException
+        Workaround.avoidUnitType
+      }
       i -= 1
     }
     i = 1
@@ -610,8 +629,10 @@ object ForkJoinTask {
       if (t != null) {
         if (ex != null)
           t.cancel(false)
-        else if (t.doJoin() < NORMAL)
+        else if (t.doJoin() < NORMAL) {
           ex = t.getException
+          Workaround.avoidUnitType
+        }
       }
       i += 1
     }

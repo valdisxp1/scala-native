@@ -123,9 +123,9 @@ abstract class CountedCompleter[T] protected extends ForkJoinTask[T] {
     while(true) {
       c = pending
       if(c == 0)
-        this
+        return this
       else if(pending.compareAndSwapStrong(c, c - 1))
-        null
+        return null
     }
     null
   }
@@ -246,6 +246,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
           if (z != null) r = z.seed
           else r = 1
         }
+        Workaround.avoidUnitType
       }
       else if (spins >= 0) {
         r ^= r << 1
@@ -271,6 +272,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
             }
           }
           else notifyAll()
+          Workaround.avoidUnitType
         }
       }
     }
@@ -280,7 +282,10 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
 
   private def releasePlock(ps: Int): Unit = {
     plock.store(ps)
-    this.synchronized(notifyAll())
+    this.synchronized{
+      notifyAll()
+      Workaround.avoidUnitType
+    }
   }
 
   private def tryAddWorker(): Unit = {
@@ -1017,6 +1022,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
                 }
                 else
                   task.notifyAll()
+                Workaround.avoidUnitType
               }
             }
             val c: Long = ctl // re-activate
@@ -1162,6 +1168,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
         if((c >> TC_SHIFT).toShort == -(config & SMASK)) {
           this.synchronized {
             notifyAll() // signal when 0 workers
+            Workaround.avoidUnitType
           }
         }
         return true
@@ -1611,7 +1618,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
       var millis: Long = 0L
 
       var break: Boolean = false
-      while(true) {
+      while(!break) {
         terminated = isTerminated
         millis = unit.toMillis(waitTime)
         if(isTerminated || waitTime <= 0L || millis <= 0L)
@@ -1621,6 +1628,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
           waitTime = nanos - (System.nanoTime() - startTime)
         }
       }
+      Workaround.avoidUnitType
     }
     terminated
   }
@@ -2300,8 +2308,10 @@ object ForkJoinPool {
             q.qlock.store(0)
             t.doExec
           }
-          else
+          else {
             q.qlock.store(0)
+            Workaround.avoidUnitType
+          }
         }
       }
       if(t.status >= 0) {
