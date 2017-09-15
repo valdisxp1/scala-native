@@ -665,6 +665,9 @@ trait NirGenExpr { self: NirGenPhase =>
           genApplyNew(app)
         case _ =>
           val sym = fun.symbol
+          if(sym == null){
+            println(">>> apply: "+ app)
+          }
 
           if (sym.isLabel) {
             genApplyLabel(app)
