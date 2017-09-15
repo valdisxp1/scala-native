@@ -121,7 +121,7 @@ abstract class CountedCompleter[T] protected extends ForkJoinTask[T] {
   final def firstComplete: CountedCompleter[_] = {
     var c: Int = 0
     def sub = {
-      if (pending.compareAndSwapStrong(c, c - 1)._1)
+      if (pending.compareAndSwapStrong(c, c - 1))
         null
     }
     while(true) {
