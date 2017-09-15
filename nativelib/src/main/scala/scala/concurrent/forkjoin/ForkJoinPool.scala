@@ -59,7 +59,7 @@ object BreaksIfElse {
 }
 
 object BreaksSynchronize {
-/*  def doesNotCompile(arg: Int): Unit = {
+  def doesNotCompile(arg: Int): Unit = {
     42 //any expression
     this.synchronized{
       println("xyz")// returns Unit
@@ -72,7 +72,7 @@ object BreaksSynchronize {
       println("xyz")
       println("123")// returns Unit
     }
-  }*/
+  }
 
   def doesCompile(arg: Int): Unit = {
     42 //any expression
@@ -91,7 +91,7 @@ object BreaksSynchronize {
 }
 
 object BreaksWhileInSynchronized {
-  def doesNotCompile = {
+/*  def doesNotCompile = {
     42
     synchronized {
       while(false) {
@@ -107,7 +107,7 @@ object BreaksWhileInSynchronized {
       }
     }
     false
-  }
+  }*/
 
   def doesCompile = {
     synchronized {
