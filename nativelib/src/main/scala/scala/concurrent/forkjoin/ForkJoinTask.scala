@@ -23,6 +23,7 @@ abstract class ForkJoinTask[V] extends Future[V] with Serializable {
   // volatile
   var status = CAtomicInt() // accessed directly by pool and workers
 
+  private val FAKE_RETURN_VALUE = 0
   private def setCompletion(completion: Int): Int = {
     var s: Int = 0
     while (true) {
@@ -31,7 +32,10 @@ abstract class ForkJoinTask[V] extends Future[V] with Serializable {
         return s
       if (status.compareAndSwapStrong(s, s | completion)) {
         if ((s >>> 16) != 0)
-          this.synchronized(notifyAll())
+          this.synchronized{
+            notifyAll()
+            FAKE_RETURN_VALUE
+          }
         completion
       }
     }
@@ -72,6 +76,7 @@ abstract class ForkJoinTask[V] extends Future[V] with Serializable {
                 interrupted = true
             }
           } else notifyAll()
+          FAKE_RETURN_VALUE
         }
 
       }
@@ -89,8 +94,14 @@ abstract class ForkJoinTask[V] extends Future[V] with Serializable {
     while (s >= 0) {
       if (status.compareAndSwapStrong(s, s | SIGNAL)) {
         this synchronized {
-          if (status >= 0) wait()
-          else notifyAll()
+          if (status >= 0) {
+            wait()
+            FAKE_RETURN_VALUE
+          }
+          else {
+            notifyAll()
+            FAKE_RETURN_VALUE
+          }
         }
 
       }
@@ -362,11 +373,13 @@ abstract class ForkJoinTask[V] extends Future[V] with Serializable {
         s = status
         var break: Boolean = false
         while (s >= 0 && !break) {
-          if (w != null && w.qlock < 0)
+          if (w != null && w.qlock < 0) {
             cancelIgnoringExceptions(this)
-          else if (!canBlock) {
+            FAKE_RETURN_VALUE
+          } else if (!canBlock) {
             if (p == null || p.tryCompensate)
               canBlock = true
+            FAKE_RETURN_VALUE
           } else {
             ms = TimeUnit.NANOSECONDS.toMillis(ns)
             if (ms > 0L && status.compareAndSwapStrong(s, s | SIGNAL)) {
@@ -374,19 +387,28 @@ abstract class ForkJoinTask[V] extends Future[V] with Serializable {
                 if (status >= 0) {
                   try {
                     wait(ms)
+                    FAKE_RETURN_VALUE
                   } catch {
                     case ie: InterruptedException =>
                       if (p == null)
                         interrupted = true
+                      FAKE_RETURN_VALUE
                   }
-                } else
+                } else {
                   notifyAll()
+                  FAKE_RETURN_VALUE
+                }
               }
             }
             s = status
             ns = deadline - System.nanoTime()
-            if (s < 0 || interrupted || ns <= 0L)
+            if (s < 0 || interrupted || ns <= 0L) {
               break = true
+              FAKE_RETURN_VALUE
+            } else {
+              FAKE_RETURN_VALUE
+            }
+            FAKE_RETURN_VALUE
           }
           if (!break) s = status
         }
@@ -589,6 +611,8 @@ object ForkJoinTask {
       t2.reportException(s2)
   }
 
+  val FAKE_RETURN_VALUE = 0
+
   def invokeAll(tasks: ForkJoinTask[_]*): Unit = {
     var ex: Throwable = null
     val last: Int     = tasks.length - 1
@@ -596,12 +620,18 @@ object ForkJoinTask {
     while (i >= 0) {
       val t: ForkJoinTask[_] = tasks(i)
       if (t == null) {
-        if (ex == null)
+        if (ex == null) {
           ex = new NullPointerException()
+          FAKE_RETURN_VALUE
+        } else {
+          FAKE_RETURN_VALUE
+        }
       } else if (i != 0)
         t.fork
-      else if (t.doInvoke() < NORMAL && ex == null)
+      else if (t.doInvoke() < NORMAL && ex == null) {
         ex = t.getException
+        FAKE_RETURN_VALUE
+      }
       i -= 1
     }
     i = 1
@@ -610,8 +640,10 @@ object ForkJoinTask {
       if (t != null) {
         if (ex != null)
           t.cancel(false)
-        else if (t.doJoin() < NORMAL)
+        else if (t.doJoin() < NORMAL) {
           ex = t.getException
+          FAKE_RETURN_VALUE
+        }
       }
       i += 1
     }

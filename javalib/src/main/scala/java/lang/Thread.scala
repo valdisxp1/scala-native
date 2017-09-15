@@ -522,8 +522,6 @@ object Thread {
     threadOrdinalNum
   }
 
-  def `yield`(): Unit = ???
-
   def interrupted(): scala.Boolean = {
     val ret = currentThread().isInterrupted
     currentThread().interruptedState = false

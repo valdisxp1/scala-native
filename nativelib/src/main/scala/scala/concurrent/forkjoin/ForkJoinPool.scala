@@ -228,7 +228,8 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
   final var workerNamePrefix: String = sb.toString // to create worker name string
 
   private def acquirePlock: Int = {
-    var spins: Int = PL_SPINS
+    //TODO FIX
+    /*var spins: Int = PL_SPINS
     var r: Int = 0
     var ps: Int = 0
     var nps: Int = 0
@@ -249,6 +250,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
           if (z != null) r = z.seed
           else r = 1
         }
+        0 // for the compiler
       }
       else if (spins >= 0) {
         r ^= r << 1
@@ -258,6 +260,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
         if (r >= 0) {
           spins -= 1; spins
         }
+        0 // for the compiler
       }
       else if (plock.compareAndSwapStrong(ps, ps | PL_SIGNAL)) {
         this.synchronized {
@@ -275,15 +278,18 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
           }
           else notifyAll()
         }
-      }
-    }
+      } else 0 // for the compiler
+    }*/
     0 // for the compiler
   }
 
-
+  private val FAKE_RETURN_VALUE = -1
   private def releasePlock(ps: Int): Unit = {
     plock.store(ps)
-    this.synchronized(notifyAll())
+    this.synchronized{
+      notifyAll()
+      FAKE_RETURN_VALUE
+    }
   }
 
   private def tryAddWorker(): Unit = {
@@ -987,7 +993,8 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
   }
 
   def awaitJoin(joiner: WorkQueue, task: ForkJoinTask[_]): Int = {
-    var s: Int = task.status
+    //TODO FIX
+    /*var s: Int = task.status
     if(joiner != null && task != null && s >= 0) {
       val prevJoin: ForkJoinTask[_] = joiner.currentJoin
       joiner.currentJoin = task
@@ -1029,7 +1036,8 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
       }
       joiner.currentJoin = prevJoin
     }
-    s
+    s*/
+    FAKE_RETURN_VALUE
   }
 
   def helpJoinOnce(joiner: WorkQueue, task: ForkJoinTask[_]): Unit = {
@@ -1165,6 +1173,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
         if((c >> TC_SHIFT).toShort == -(config & SMASK)) {
           this.synchronized {
             notifyAll() // signal when 0 workers
+            FAKE_RETURN_VALUE
           }
         }
         return true
@@ -1614,7 +1623,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
       var millis: Long = 0L
 
       var break: Boolean = false
-      while(true) {
+      while(!break) {
         terminated = isTerminated
         millis = unit.toMillis(waitTime)
         if(isTerminated || waitTime <= 0L || millis <= 0L)
@@ -1624,6 +1633,7 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
           waitTime = nanos - (System.nanoTime() - startTime)
         }
       }
+      FAKE_RETURN_VALUE
     }
     terminated
   }
@@ -2193,6 +2203,8 @@ object ForkJoinPool {
 
   private var poolNumberSequence: Int = 0
 
+  private val FAKE_RETURN_VALUE = 0
+
   def getSurplusQueuedTaskCount: Int = {
     val t: Thread = Thread.currentThread()
     var wt: ForkJoinWorkerThread = null
@@ -2303,8 +2315,10 @@ object ForkJoinPool {
             q.qlock.store(0)
             t.doExec
           }
-          else
+          else {
             q.qlock.store(0)
+            FAKE_RETURN_VALUE
+          }
         }
       }
       if(t.status >= 0) {
