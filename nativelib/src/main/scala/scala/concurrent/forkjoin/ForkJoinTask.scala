@@ -13,8 +13,8 @@ import java.util.concurrent.TimeoutException
 import java.util.concurrent.locks.ReentrantLock
 import java.lang.reflect.Constructor
 
-import scalanative.runtime.{CAtomicInt, CAtomicLong}
-import scalanative.runtime.CAtomicsImplicits._
+import scala.scalanative.runtime.{CAtomicInt, CAtomicLong}
+import scala.scalanative.runtime.CAtomicsImplicits._
 
 abstract class ForkJoinTask[V] extends Future[V] with Serializable {
 
