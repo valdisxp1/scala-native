@@ -65,14 +65,7 @@ object BreaksSynchronize {
       println("xyz")// returns Unit
     }
   }
-
-  def doesNotCompile2(arg: Int): Unit = {
-    42 //any expression
-    this.synchronized{
-      println("xyz")
-      println("123")// returns Unit
-    }
-  }*/
+*/
 
   def doesCompile(arg: Int): Unit = {
     42 //any expression
