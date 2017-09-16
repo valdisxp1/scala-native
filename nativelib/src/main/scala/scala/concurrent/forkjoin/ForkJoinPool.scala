@@ -84,7 +84,7 @@ object BreaksSynchronize {
 }
 
 object BreaksWhileInSynchronized {
-/*  def doesNotCompile = {
+  def doesNotCompile = {
     42
     synchronized {
       while(false) {
@@ -92,7 +92,6 @@ object BreaksWhileInSynchronized {
       }
     }
   }
-
   def doesNotCompile2 = {
     synchronized {
       while(false) {
@@ -100,7 +99,7 @@ object BreaksWhileInSynchronized {
       }
     }
     false
-  }*/
+  }
 
   def doesCompile = {
     synchronized {
