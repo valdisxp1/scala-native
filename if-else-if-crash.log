@@ -206,28 +206,28 @@ Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray fea
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
-[0m[[32msuccess[0m] [0mTotal time: 0 s, completed Sep 15, 2017 7:27:39 PM[0m
-[0m[[32msuccess[0m] [0mTotal time: 1 s, completed Sep 15, 2017 7:27:40 PM[0m
-[0m[[32msuccess[0m] [0mTotal time: 0 s, completed Sep 15, 2017 7:27:40 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 0 s, completed Sep 16, 2017 4:50:33 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 1 s, completed Sep 16, 2017 4:50:35 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 0 s, completed Sep 16, 2017 4:50:35 PM[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}nscplugin...[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.11-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.11-0.4.0-SNAPSHOT.pom[0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.11 ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
 [0m[[0minfo[0m] [0mDone packaging.[0m
-[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.11 ...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Sep 15 19:27:40 CEST 2017[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Sat Sep 16 16:50:36 CEST 2017[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/nscplugin/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
-[0m[[0minfo[0m] [0mCompiling 43 Scala sources to /home/valdis/scala-native/nscplugin/target/scala-2.11/classes...[0m
 [0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/nscplugin/target/scala-2.11/api...[0m
+[0m[[0minfo[0m] [0mCompiling 43 Scala sources to /home/valdis/scala-native/nscplugin/target/scala-2.11/classes...[0m
 model contains 257 documentable templates
-[0m[[33mwarn[0m] [0m/home/valdis/scala-native/nscplugin/src/main/scala/scala/scalanative/nscplugin/NirGenExpr.scala:1358: match may not be exhaustive.[0m
-[0m[[33mwarn[0m] [0mIt would fail on the following input: (Nothing, Byte)[0m
+[0m[[33mwarn[0m] [0m/home/valdis/scala-native/nscplugin/src/main/scala/scala/scalanative/nscplugin/NirGenExpr.scala:1355: match may not be exhaustive.[0m
+[0m[[33mwarn[0m] [0mIt would fail on the following inputs: (Ptr, Bool), (Ptr, Float), (Unit, Unit)[0m
 [0m[[33mwarn[0m] [0m        val conv = (fromty, toty) match {[0m
 [0m[[33mwarn[0m] [0m                   ^[0m
 [0m[[33mwarn[0m] [0m/home/valdis/scala-native/nscplugin/src/main/scala/scala/scalanative/nscplugin/NirGenName.scala:92: match may not be exhaustive.[0m
@@ -246,7 +246,7 @@ model contains 257 documentable templates
 [0m[[0minfo[0m] [0m	published nscplugin_2.11.11 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/srcs/nscplugin_2.11.11-sources.jar[0m
 [0m[[0minfo[0m] [0m	published nscplugin_2.11.11 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/docs/nscplugin_2.11.11-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[32msuccess[0m] [0mTotal time: 34 s, completed Sep 15, 2017 7:28:14 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 47 s, completed Sep 16, 2017 4:51:22 PM[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}nativelib...[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
@@ -261,95 +261,25 @@ model contains 257 documentable templates
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Sep 15 19:28:15 CEST 2017[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Sat Sep 16 16:51:24 CEST 2017[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/nativelib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
 [0m[[0minfo[0m] [0mCompiling 86 Scala sources to /home/valdis/scala-native/nativelib/target/scala-2.11/classes...[0m
 [0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/nativelib/target/scala-2.11/api...[0m
 [0m[[33mwarn[0m] [0mdropping dependency on node with no phase object: mixin[0m
+[0m[[33mwarn[0m] [0m/home/valdis/scala-native/nativelib/src/main/scala/scala/concurrent/forkjoin/ForkJoinPool.scala:76: a pure expression does nothing in statement position; you may be omitting necessary parentheses[0m
+[0m[[33mwarn[0m] [0m    42 //any expression[0m
+[0m[[33mwarn[0m] [0m    ^[0m
+[0m[[33mwarn[0m] [0m/home/valdis/scala-native/nativelib/src/main/scala/scala/concurrent/forkjoin/ForkJoinPool.scala:76: a pure expression does nothing in statement position; you may be omitting necessary parentheses[0m
+[0m[[33mwarn[0m] [0m    42 //any expression[0m
+[0m[[33mwarn[0m] [0m    ^[0m
 [0m[[33mwarn[0m] [0mthere were 44 feature warnings; re-run with -feature for details[0m
-model contains 350 documentable templates
-[0m[[33mwarn[0m] [0mone warning found[0m
+model contains 352 documentable templates
+[0m[[33mwarn[0m] [0mtwo warnings found[0m
 [0m[[0minfo[0m] [0mMain Scala API documentation successful.[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-javadoc.jar ...[0m
->>> Class:rtti
->>>__check_class_has_trait
->>>__check_trait_has_trait
->>><init>
->>> Class:_Class
->>>ty
->>>cast
->>>getComponentType
->>>getInterfaces
->>>getName
->>>getSimpleName
->>>getSuperclass
->>>getField
->>>isArray
->>>isAssignableFrom
->>>isInstance
->>>is
->>>isInterface
->>>isPrimitive
->>>equals
->>>hashCode
->>>toString
->>><init>
->>> Class:_Class
->>>_class2class
->>>class2_class
->>><init>
->>> Class:_Object
->>>__equals
 [0m[[0minfo[0m] [0mDone packaging.[0m
->>>__hashCode
->>>__toString
->>>__getClass
->>>__notify
->>>__notifyAll
->>>__wait
->>>__wait
->>>__wait
->>>__scala_$eq$eq
->>>__scala_$hash$hash
->>>__clone
->>>__finalize
->>><init>
->>> Class:Field
->>>get
->>><init>
->>> Class:SocketHelpers
->>>isReachableByEcho
->>>hostToIp
->>>hostToIpArray
->>>ipToHost
->>><init>
->>> Class:$anonfun
->>>apply
->>>apply
->>><init>
->>> Class:$anonfun
->>>apply
->>>apply
->>><init>
->>> Class:$anonfun
->>>apply
->>>apply
->>><init>
->>> Class:$anonfun
->>>apply
->>>apply
->>><init>
->>> Class:BreaksIfElse
->>>doesNotCompile
->>> apply: {
-  if (c.==(1))
-    null
-  else
-    ();
-  scala.runtime.BoxedUnit.UNIT
-}()
 java.lang.NullPointerException
-	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genApply(NirGenExpr.scala:672)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genApply(NirGenExpr.scala:669)
 	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genExpr(NirGenExpr.scala:93)
 	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genIf(NirGenExpr.scala:196)
 	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genIf(NirGenExpr.scala:180)
@@ -377,19 +307,19 @@ java.lang.NullPointerException
 	at scala.scalanative.nscplugin.NirGenStat$StatBuffer$$anonfun$genClass$1.apply(NirGenStat.scala:70)
 	at scala.scalanative.util.ScopedVar$.scoped(ScopedVar.scala:41)
 	at scala.scalanative.nscplugin.NirGenStat$StatBuffer.genClass(NirGenStat.scala:69)
-	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$scala$scalanative$nscplugin$NirGenPhase$NirCodePhase$$genClass$1$1.apply(NirGenPhase.scala:97)
 	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$scala$scalanative$nscplugin$NirGenPhase$NirCodePhase$$genClass$1$1.apply(NirGenPhase.scala:96)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$scala$scalanative$nscplugin$NirGenPhase$NirCodePhase$$genClass$1$1.apply(NirGenPhase.scala:95)
 	at scala.scalanative.util.ScopedVar$.scoped(ScopedVar.scala:41)
-	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase.scala$scalanative$nscplugin$NirGenPhase$NirCodePhase$$genClass$1(NirGenPhase.scala:96)
-	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1$$anonfun$apply$mcV$sp$1.apply(NirGenPhase.scala:106)
-	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1$$anonfun$apply$mcV$sp$1.apply(NirGenPhase.scala:106)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase.scala$scalanative$nscplugin$NirGenPhase$NirCodePhase$$genClass$1(NirGenPhase.scala:95)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1$$anonfun$apply$mcV$sp$1.apply(NirGenPhase.scala:105)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1$$anonfun$apply$mcV$sp$1.apply(NirGenPhase.scala:105)
 	at scala.collection.mutable.UnrolledBuffer$Unrolled.foreach(UnrolledBuffer.scala:239)
 	at scala.collection.mutable.UnrolledBuffer.foreach(UnrolledBuffer.scala:145)
-	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1.apply$mcV$sp(NirGenPhase.scala:106)
-	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1.apply(NirGenPhase.scala:104)
-	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1.apply(NirGenPhase.scala:104)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1.apply$mcV$sp(NirGenPhase.scala:105)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1.apply(NirGenPhase.scala:103)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1.apply(NirGenPhase.scala:103)
 	at scala.scalanative.util.ScopedVar$.scoped(ScopedVar.scala:41)
-	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase.apply(NirGenPhase.scala:104)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase.apply(NirGenPhase.scala:103)
 	at scala.tools.nsc.Global$GlobalPhase$$anonfun$applyPhase$1.apply$mcV$sp(Global.scala:467)
 	at scala.tools.nsc.Global$GlobalPhase.withCurrentUnit(Global.scala:458)
 	at scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:467)
@@ -454,4 +384,4 @@ java.lang.NullPointerException
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
 	at java.lang.Thread.run(Thread.java:745)
 [0m[[31merror[0m] [0m(nativelib/compile:[31mcompileIncremental[0m) java.lang.NullPointerException[0m
-[0m[[31merror[0m] [0mTotal time: 25 s, completed Sep 15, 2017 7:28:39 PM[0m
+[0m[[31merror[0m] [0mTotal time: 21 s, completed Sep 16, 2017 4:51:44 PM[0m
