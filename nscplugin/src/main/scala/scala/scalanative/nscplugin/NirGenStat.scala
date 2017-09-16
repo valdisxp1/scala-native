@@ -165,7 +165,7 @@ trait NirGenStat { self: NirGenPhase =>
     def genMethods(cd: ClassDef): Unit =
       cd.impl.body.foreach {
         case dd: DefDef =>
-          println(">>>"+dd.name);genMethod(dd)
+          genMethod(dd)
         case _ =>
           ()
       }

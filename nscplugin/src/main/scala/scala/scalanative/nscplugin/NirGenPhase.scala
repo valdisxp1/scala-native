@@ -87,7 +87,6 @@ abstract class NirGenPhase
       }
 
       def genClass(cd: ClassDef): Unit = {
-        println(">>> Class:"+cd.name)
         val path   = genPathFor(cunit, cd.symbol)
         val buffer = new StatBuffer
 
