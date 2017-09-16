@@ -59,7 +59,7 @@ object BreaksIfElse {
 }
 
 object BreaksSynchronize {
-  def doesNotCompile(arg: Int): Unit = {
+  /*def doesNotCompile(arg: Int): Unit = {
     42 //any expression
     this.synchronized{
       println("xyz")// returns Unit
@@ -72,7 +72,7 @@ object BreaksSynchronize {
       println("xyz")
       println("123")// returns Unit
     }
-  }
+  }*/
 
   def doesCompile(arg: Int): Unit = {
     42 //any expression
@@ -1747,16 +1747,6 @@ class ForkJoinPool(parallelism: Int, val factory: ForkJoinPool.ForkJoinWorkerThr
     }
     terminated
   }
-
-  def awaitTermination0 = {
-    42
-    synchronized {
-      while(false) {
-        //can be also non-empty
-      }
-    }
-  }
-
 
   def awaitQuiescence(timeout: Long, unit: TimeUnit): Boolean = {
     val nanos: Long = unit.toNanos(timeout)
