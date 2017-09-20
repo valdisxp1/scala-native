@@ -2,14 +2,13 @@ package java.lang
 
 import java.util
 import java.lang.Thread._
-import scala.scalanative.native.stub
 import scala.scalanative.runtime.NativeThread
-import scala.scalanative.native.{
+
+import scala.scalanative.unsafe.{
   CFunctionPtr,
   CFunctionPtr1,
   CInt,
   Ptr,
-  ULong,
   stackalloc
 }
 import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_t}
@@ -43,8 +42,6 @@ class Thread extends Runnable {
   // Stack size to be passes to VM for thread execution
   private var stackSize: scala.Long = NativeThread.THREAD_DEFAULT_STACK_SIZE
 
-  @stub
-  def getStackTrace(): Array[StackTraceElement] = ???
   // Indicates if the thread was already started
   var started: scala.Boolean = false
 
@@ -545,12 +542,6 @@ object Thread {
     threadOrdinalNum
   }
 
-  def `yield`(): Unit = ???
-
-  def `yield`(): Unit = ???
-
-  def `yield`(): Unit = ???
-
   def interrupted(): scala.Boolean = {
     val ret = currentThread().isInterrupted
     currentThread().interruptedState = false
@@ -582,10 +573,8 @@ object Thread {
 
   def sleep(millis: scala.Long): Unit = sleep(millis, 0)
 
-  @stub
-  def dumpStack(): Unit = ???
-
   trait UncaughtExceptionHandler {
     def uncaughtException(t: Thread, e: Throwable)
   }
+
 }
