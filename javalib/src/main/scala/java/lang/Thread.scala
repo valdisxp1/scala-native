@@ -3,15 +3,9 @@ package java.lang
 import java.util
 import java.lang.Thread._
 
+import scala.runtime.AbstractFunction1
 import scala.scalanative.runtime.NativeThread
-import scala.scalanative.native.{
-  CFunctionPtr,
-  CFunctionPtr1,
-  CInt,
-  Ptr,
-  ULong,
-  stackalloc
-}
+import scala.scalanative.native.{CFunctionPtr, CFunctionPtr1, CInt, Ptr, ULong, stackalloc}
 import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_t}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
@@ -254,9 +248,12 @@ class Thread extends Runnable {
         "Error while trying to unpark thread " + toString)
   }
 
-  private def runAsPtr2Ptr(ptr: Ptr[scala.Byte]): Ptr[scala.Byte] = {
-    run()
-    null.asInstanceOf[Ptr[scala.Byte]]
+  private val runAsPtr2Ptr= new AbstractFunction1[Ptr[scala.Byte],Ptr[scala.Byte]] {
+    val me = Thread.this
+    override def apply(v1: Ptr[scala.Byte]): Ptr[scala.Byte] = {
+      me.run()
+      null.asInstanceOf[Ptr[scala.Byte]]
+    }
   }
 
   def run(): Unit = {
