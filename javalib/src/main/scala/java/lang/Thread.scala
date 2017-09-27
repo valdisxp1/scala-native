@@ -62,7 +62,7 @@ class Thread extends Runnable {
    * NOTE: This is used to keep track of the pthread linked to this Thread,
    * it might be easier/better to handle this at lower level
    */
-  private[this] val underlying: pthread_t = 0.asInstanceOf[ULong]
+  private[this] var underlying: pthread_t = 0.asInstanceOf[ULong]
 
   // Synchronization is done using internal lock
   val lock: Object = new Object()
@@ -300,7 +300,7 @@ class Thread extends Runnable {
   }
 
   //synchronized
-  def start(): Unit = { /*
+  def start(): Unit = {
     lock.synchronized {
       if(started)
         //this thread was started
@@ -322,7 +322,8 @@ class Thread extends Runnable {
       underlying = !id
       THREAD_LIST(underlying) = this
 
-    }*/ }
+    }
+  }
 
   type State = CInt
 
