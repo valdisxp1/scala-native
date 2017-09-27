@@ -256,6 +256,11 @@ class Thread extends Runnable {
     }
   }
 
+  private def callRun(t: Ptr[Thread]): Ptr[scala.Byte] = {
+    (!t).run()
+    null.asInstanceOf[Ptr[scala.Byte]]
+  }
+
   def run(): Unit = {
     if (target != null) {
       target.run()
@@ -301,11 +306,11 @@ class Thread extends Runnable {
       // adding the thread to the thread group
       group.add(this)
 
-      val routine = CFunctionPtr.fromFunction1(runAsPtr2Ptr)
+      val routine = CFunctionPtr.fromFunction1(callRun) //need void pointer :(
 
       val id = stackalloc[pthread_t]
       val status = pthread_create(id, null.asInstanceOf[Ptr[pthread_attr_t]],
-        routine, null.asInstanceOf[Ptr[scala.Byte]])
+        routine, .asInstanceOf[Ptr[scala.Byte]])
       if(status != 0)
         throw new Exception("Failed to create new thread, pthread error " + status)
 
