@@ -21,4 +21,15 @@ object ThreadSuite extends tests.Suite {
 
   }
 
+  test("Thread should be able to change a shared var"){
+    var shared: Int = 0
+    new Thread(new Runnable {
+      def run(): Unit = {
+        shared = 1
+      }
+    })
+    Thread.sleep(100)
+    assertEquals(shared,1)
+  }
+
 }
