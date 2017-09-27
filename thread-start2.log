@@ -1,0 +1,534 @@
+[0m[[0minfo[0m] [0mLoading global plugins from /home/valdis/.sbt/0.13/plugins[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/.sbt/0.13/plugins/}global-plugins...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#sbt;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#actions;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classpath;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#interface;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#io;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#control;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#launcher-interface;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#completion;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#collections;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#api;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classfile;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logging;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#process;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-integration;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#incremental-compiler;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#relation;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compile;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#persist;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-tools.sbinary#sbinary_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-ivy-integration;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#ivy;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cross;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt.ivy#ivy;2.3.0-sbt-48dd0744422128446aee9ac31aa356ee203cc9f4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jcraft#jsch;0.1.50 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#serialization_2.10;0.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-pickling_2.10;0.10.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#quasiquotes_2.10;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-core_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-ast_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.thoughtworks.paranamer#paranamer;2.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#jawn-parser_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#json4s-support_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#run;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#task-system;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tasks;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tracking;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cache;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#testing;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-agent;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main-settings;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#apply-macro;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#command;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#template-resolver;0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logic;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-interface;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[0minfo[0m] [0mLoading project definition from /home/valdis/scala-native/project[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/project/}scala-native-build...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-sbt#global-plugins;0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#scripted-plugin;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#sbt;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#actions;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classpath;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#interface;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#io;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#control;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#launcher-interface;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#completion;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#collections;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#api;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classfile;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logging;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#process;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-integration;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#incremental-compiler;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#relation;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compile;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#persist;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-tools.sbinary#sbinary_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-ivy-integration;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#ivy;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cross;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt.ivy#ivy;2.3.0-sbt-48dd0744422128446aee9ac31aa356ee203cc9f4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jcraft#jsch;0.1.50 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#serialization_2.10;0.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-pickling_2.10;0.10.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#quasiquotes_2.10;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-core_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-ast_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.thoughtworks.paranamer#paranamer;2.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#jawn-parser_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#json4s-support_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#run;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#task-system;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tasks;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tracking;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cache;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#testing;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-agent;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main-settings;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#apply-macro;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#command;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#template-resolver;0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logic;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-interface;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jgit#org.eclipse.jgit.pgm;3.2.0.201312181205-r ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving args4j#args4j;2.0.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-compress;1.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.tukaani#xz;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jgit#org.eclipse.jgit.archive;3.2.0.201312181205-r ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jgit#org.eclipse.jgit;3.2.0.201312181205-r ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.googlecode.javaewah#JavaEWAH;0.5.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.osgi#org.osgi.core;4.3.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jgit#org.eclipse.jgit.ui;3.2.0.201312181205-r ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.lihaoyi#fastparse_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.lihaoyi#fastparse-utils_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#quasiquotes_2.10;2.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.lihaoyi#sourcecode_2.10;0.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.lihaoyi#scalaparse_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#sbt-crossproject;0.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.eed3si9n#sbt-dirty-money;0.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving me.lessis#bintray-sbt;0.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving me.lessis#bintry_2.10;0.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder.dispatch#dispatch-json4s-native_2.10;0.11.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder.dispatch#dispatch-core_2.10;0.11.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.ning#async-http-client;1.8.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving io.netty#netty;3.9.2.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-native_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-nop;1.7.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jsuereth#sbt-pgp;1.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jsuereth#pgp-library_2.10;1.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.bouncycastle#bcpg-jdk15on;1.51 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.bouncycastle#bcprov-jdk15on;1.51 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder#dispatch-http_2.10;0.8.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder#dispatch-core_2.10;0.8.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpcore;4.1.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-logging#commons-logging;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-codec#commons-codec;1.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder#dispatch-futures_2.10;0.8.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-actors;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#paradise_2.10.6;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[33mwarn[0m] [0mFound version conflict(s) in library dependencies; some are suspected to be binary incompatible:[0m
+[0m[[33mwarn[0m] [0m[0m
+[0m[[33mwarn[0m] [0m	* org.scalamacros:quasiquotes_2.10:2.1.0 is selected over 2.0.1[0m
+[0m[[33mwarn[0m] [0m	    +- com.lihaoyi:sourcecode_2.10:0.1.3                  (depends on 2.1.0)[0m
+[0m[[33mwarn[0m] [0m	    +- com.lihaoyi:fastparse_2.10:0.4.2                   (depends on 2.1.0)[0m
+[0m[[33mwarn[0m] [0m	    +- com.lihaoyi:fastparse-utils_2.10:0.4.2             (depends on 2.1.0)[0m
+[0m[[33mwarn[0m] [0m	    +- com.lihaoyi:scalaparse_2.10:0.4.2                  (depends on 2.1.0)[0m
+[0m[[33mwarn[0m] [0m	    +- org.scala-lang.modules:scala-pickling_2.10:0.10.1  (depends on 2.0.1)[0m
+[0m[[33mwarn[0m] [0m[0m
+[0m[[33mwarn[0m] [0m	* com.jcraft:jsch:0.1.50 is selected over 0.1.46[0m
+[0m[[33mwarn[0m] [0m	    +- org.eclipse.jgit:org.eclipse.jgit:3.2.0.201312181205-r (depends on 0.1.46)[0m
+[0m[[33mwarn[0m] [0m	    +- org.scala-sbt:ivy:0.13.16                          (depends on 0.1.46)[0m
+[0m[[33mwarn[0m] [0m[0m
+[0m[[33mwarn[0m] [0mRun 'evicted' to see detailed eviction warnings[0m
+Using default gc
+[0m[[0minfo[0m] [0mResolving key references (12269 settings) ...[0m
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+[0m[[0minfo[0m] [0mSet current project to scala-native (in build file:/home/valdis/scala-native/)[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[32msuccess[0m] [0mTotal time: 1 s, completed Sep 27, 2017 3:37:52 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 16 s, completed Sep 27, 2017 3:38:07 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 1 s, completed Sep 27, 2017 3:38:08 PM[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}nscplugin...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.11 ...[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.11-0.4.0-SNAPSHOT-sources.jar ...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/nscplugin/target/scala-2.11/api...[0m
+[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.11-0.4.0-SNAPSHOT.pom[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Wed Sep 27 15:38:09 CEST 2017[0m
+[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/nscplugin/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
+[0m[[0minfo[0m] [0mCompiling 44 Scala sources to /home/valdis/scala-native/nscplugin/target/scala-2.11/classes...[0m
+model contains 263 documentable templates
+[0m[[33mwarn[0m] [0m/home/valdis/scala-native/nscplugin/src/main/scala/scala/scalanative/nscplugin/NirGenExpr.scala:1376: match may not be exhaustive.[0m
+[0m[[33mwarn[0m] [0mIt would fail on the following inputs: (Unit, ULong), (Void, ULong)[0m
+[0m[[33mwarn[0m] [0m        val conv = (fromty, toty) match {[0m
+[0m[[33mwarn[0m] [0m                   ^[0m
+[0m[[33mwarn[0m] [0m/home/valdis/scala-native/nscplugin/src/main/scala/scala/scalanative/nscplugin/NirGenName.scala:92: match may not be exhaustive.[0m
+[0m[[33mwarn[0m] [0mIt would fail on the following inputs: Byte, Int, Long, Short, UByte, UInt, ULong, UShort[0m
+[0m[[33mwarn[0m] [0m    def printType(ty: nir.Type): Unit = ty match {[0m
+[0m[[33mwarn[0m] [0m                                        ^[0m
+[0m[[0minfo[0m] [0mMain Scala API documentation successful.[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.11-0.4.0-SNAPSHOT-javadoc.jar ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[33mwarn[0m] [0mthere were two unchecked warnings; re-run with -unchecked for details[0m
+[0m[[33mwarn[0m] [0mthree warnings found[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.11-0.4.0-SNAPSHOT.jar ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0m	published nscplugin_2.11.11 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/poms/nscplugin_2.11.11.pom[0m
+[0m[[0minfo[0m] [0m	published nscplugin_2.11.11 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/jars/nscplugin_2.11.11.jar[0m
+[0m[[0minfo[0m] [0m	published nscplugin_2.11.11 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/srcs/nscplugin_2.11.11-sources.jar[0m
+[0m[[0minfo[0m] [0m	published nscplugin_2.11.11 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/docs/nscplugin_2.11.11-javadoc.jar[0m
+[0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
+[0m[[32msuccess[0m] [0mTotal time: 39 s, completed Sep 27, 2017 3:38:47 PM[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}nativelib...[0m
+[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Wed Sep 27 15:38:55 CEST 2017[0m
+[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/nativelib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
+[0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/nativelib/target/scala-2.11/api...[0m
+[0m[[0minfo[0m] [0mCompiling 83 Scala sources to /home/valdis/scala-native/nativelib/target/scala-2.11/classes...[0m
+[0m[[33mwarn[0m] [0mdropping dependency on node with no phase object: mixin[0m
+[0m[[33mwarn[0m] [0mthere were 44 feature warnings; re-run with -feature for details[0m
+model contains 311 documentable templates
+[0m[[33mwarn[0m] [0mone warning found[0m
+[0m[[0minfo[0m] [0mMain Scala API documentation successful.[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-javadoc.jar ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[33mwarn[0m] [0mthere were 44 feature warnings; re-run with -feature for details[0m
+[0m[[33mwarn[0m] [0mone warning found[0m
+[0m[[0minfo[0m] [0mBecause /home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/package.scala contains a macro definition, the following dependencies are invalidated unconditionally:[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/java/lang/Class.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/java/lang/Object.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/java/net/SocketHelpers.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/concurrent/forkjoin/ForkJoinPool.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/concurrent/forkjoin/ForkJoinTask.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/Ptr.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/Zone.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/complex.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/ctype.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/errno.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/math.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/signal.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/statvfs.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/stdio.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/stdlib.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/string.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/arpa/inet.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/dirent.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/errno.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/fcntl.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/grp.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/limits.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/netdb.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/netinet/in.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/netinet/tcp.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/pthread.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/pwd.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/regex.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sched.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/ioctl.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/select.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/socket.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/stat.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/time.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/types.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/uio.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/unistd.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/utime.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Arrays.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Atomic.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Boxes.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/GC.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Intrinsics.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/NativeThread.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Platform.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/package.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/time.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/unwind.scala[0m
+[0m[[0minfo[0m] [0m	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/zlib.scala[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.jar ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0m	published nativelib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/poms/nativelib_native0.4.0-SNAPSHOT_2.11.pom[0m
+[0m[[0minfo[0m] [0m	published nativelib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/jars/nativelib_native0.4.0-SNAPSHOT_2.11.jar[0m
+[0m[[0minfo[0m] [0m	published nativelib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/srcs/nativelib_native0.4.0-SNAPSHOT_2.11-sources.jar[0m
+[0m[[0minfo[0m] [0m	published nativelib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/docs/nativelib_native0.4.0-SNAPSHOT_2.11-javadoc.jar[0m
+[0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
+[0m[[32msuccess[0m] [0mTotal time: 34 s, completed Sep 27, 2017 3:39:20 PM[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}javalib...[0m
+[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.11 ...[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#javalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Wed Sep 27 15:39:22 CEST 2017[0m
+[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/javalib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-javadoc.jar ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0mCompiling 367 Scala sources to /home/valdis/scala-native/javalib/target/scala-2.11/classes...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+java.lang.AssertionError: assertion failed: 
+  Can't get function pointer to a closure with captures: List(Thread.this) in application scala.scalanative.native.CFunctionPtr.fromFunction1({
+  {
+    (new <$anon: Function1>(Thread.this): Function1)
+  }
+})
+     while compiling: /home/valdis/scala-native/javalib/src/main/scala/java/lang/Thread.scala
+        during phase: nir
+     library version: version 2.11.11
+    compiler version: version 2.11.11
+  reconstructed args: -Xplugin:/home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/jars/nscplugin_2.11.11.jar -encoding utf8 -classpath /home/valdis/scala-native/javalib/target/scala-2.11/classes:/home/valdis/scala-native/nativelib/target/scala-2.11/classes:/home/valdis/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.11.jar -javabootclasspath /home/valdis/scala-native/javalib/target/scala-2.11/classes:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/classes -bootclasspath /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/classes:/home/valdis/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.11.jar
+
+  last tree to typer: TypeTree(class Byte)
+       tree position: line 43 of /home/valdis/scala-native/javalib/src/main/scala/java/util/Collections.scala
+            tree tpe: Byte
+              symbol: (final abstract) class Byte in package scala
+   symbol definition: final abstract class Byte extends  (a ClassSymbol)
+      symbol package: scala
+       symbol owners: class Byte
+           call site: <$anon: Function2> in package fs in package fs
+
+== Source file context for tree position ==
+
+    40   private lazy val EMPTY_LIST_ITERATOR: ListIterator[_] = new EmptyListIterator
+    41 
+    42   private lazy val EMPTY_ENUMERATION: Enumeration[_] = {
+    43     new Enumeration[Any] {
+    44       def hasMoreElements: Boolean = false
+    45 
+    46       def nextElement(): Any =
+	at scala.tools.nsc.Global.assert(Global.scala:288)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genFunPtrOp(NirGenExpr.scala:1216)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genApplyPrimitive(NirGenExpr.scala:730)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genApply(NirGenExpr.scala:672)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genExpr(NirGenExpr.scala:93)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genValDef(NirGenExpr.scala:165)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genExpr(NirGenExpr.scala:63)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer$$anonfun$genBlock$1.apply(NirGenExpr.scala:121)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer$$anonfun$genBlock$1.apply(NirGenExpr.scala:121)
+	at scala.collection.immutable.List.foreach(List.scala:392)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genBlock(NirGenExpr.scala:121)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genExpr(NirGenExpr.scala:59)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genSynchronized(NirGenExpr.scala:1356)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genApplyPrimitive(NirGenExpr.scala:734)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genApply(NirGenExpr.scala:672)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genExpr(NirGenExpr.scala:93)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer$$anonfun$genBlock$1.apply(NirGenExpr.scala:121)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer$$anonfun$genBlock$1.apply(NirGenExpr.scala:121)
+	at scala.collection.immutable.List.foreach(List.scala:392)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genBlock(NirGenExpr.scala:121)
+	at scala.scalanative.nscplugin.NirGenExpr$ExprBuffer.genExpr(NirGenExpr.scala:59)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer$$anonfun$genBody$1$2.apply(NirGenStat.scala:384)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer$$anonfun$genBody$1$2.apply(NirGenStat.scala:384)
+	at scala.scalanative.util.ScopedVar$.scoped(ScopedVar.scala:41)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer.genBody$1(NirGenStat.scala:383)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer.genNormalMethodBody(NirGenStat.scala:389)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer$$anonfun$genMethod$1.apply(NirGenStat.scala:209)
+	at scala.scalanative.util.ScopedVar$.scoped(ScopedVar.scala:41)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer.genMethod(NirGenStat.scala:185)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer$$anonfun$genMethods$1.apply(NirGenStat.scala:170)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer$$anonfun$genMethods$1.apply(NirGenStat.scala:168)
+	at scala.collection.immutable.List.foreach(List.scala:392)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer.genMethods(NirGenStat.scala:168)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer.genNormalClass(NirGenStat.scala:96)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer$$anonfun$genClass$1.apply$mcV$sp(NirGenStat.scala:71)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer$$anonfun$genClass$1.apply(NirGenStat.scala:70)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer$$anonfun$genClass$1.apply(NirGenStat.scala:70)
+	at scala.scalanative.util.ScopedVar$.scoped(ScopedVar.scala:41)
+	at scala.scalanative.nscplugin.NirGenStat$StatBuffer.genClass(NirGenStat.scala:69)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$scala$scalanative$nscplugin$NirGenPhase$NirCodePhase$$genClass$1$1.apply(NirGenPhase.scala:96)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$scala$scalanative$nscplugin$NirGenPhase$NirCodePhase$$genClass$1$1.apply(NirGenPhase.scala:95)
+	at scala.scalanative.util.ScopedVar$.scoped(ScopedVar.scala:41)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase.scala$scalanative$nscplugin$NirGenPhase$NirCodePhase$$genClass$1(NirGenPhase.scala:95)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1$$anonfun$apply$mcV$sp$1.apply(NirGenPhase.scala:105)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1$$anonfun$apply$mcV$sp$1.apply(NirGenPhase.scala:105)
+	at scala.collection.mutable.UnrolledBuffer$Unrolled.foreach(UnrolledBuffer.scala:239)
+	at scala.collection.mutable.UnrolledBuffer.foreach(UnrolledBuffer.scala:145)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1.apply$mcV$sp(NirGenPhase.scala:105)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1.apply(NirGenPhase.scala:103)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase$$anonfun$apply$1.apply(NirGenPhase.scala:103)
+	at scala.scalanative.util.ScopedVar$.scoped(ScopedVar.scala:41)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase.apply(NirGenPhase.scala:103)
+	at scala.tools.nsc.Global$GlobalPhase$$anonfun$applyPhase$1.apply$mcV$sp(Global.scala:467)
+	at scala.tools.nsc.Global$GlobalPhase.withCurrentUnit(Global.scala:458)
+	at scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:467)
+	at scala.tools.nsc.Global$GlobalPhase$$anonfun$run$1.apply(Global.scala:425)
+	at scala.tools.nsc.Global$GlobalPhase$$anonfun$run$1.apply(Global.scala:425)
+	at scala.collection.Iterator$class.foreach(Iterator.scala:891)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1334)
+	at scala.tools.nsc.Global$GlobalPhase.run(Global.scala:425)
+	at scala.scalanative.nscplugin.NirGenPhase$NirCodePhase.run(NirGenPhase.scala:65)
+	at scala.tools.nsc.Global$Run.compileUnitsInternal(Global.scala:1528)
+	at scala.tools.nsc.Global$Run.compileUnits(Global.scala:1513)
+	at scala.tools.nsc.Global$Run.compileSources(Global.scala:1508)
+	at scala.tools.nsc.Global$Run.compile(Global.scala:1609)
+	at xsbt.CachedCompiler0.run(CompilerInterface.scala:116)
+	at xsbt.CachedCompiler0.run(CompilerInterface.scala:95)
+	at xsbt.CompilerInterface.run(CompilerInterface.scala:26)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at sbt.compiler.AnalyzingCompiler.call(AnalyzingCompiler.scala:107)
+	at sbt.compiler.AnalyzingCompiler.compile(AnalyzingCompiler.scala:53)
+	at sbt.compiler.AnalyzingCompiler.compile(AnalyzingCompiler.scala:47)
+	at sbt.compiler.MixedAnalyzingCompiler$$anonfun$compileScala$1$1.apply$mcV$sp(MixedAnalyzingCompiler.scala:50)
+	at sbt.compiler.MixedAnalyzingCompiler$$anonfun$compileScala$1$1.apply(MixedAnalyzingCompiler.scala:50)
+	at sbt.compiler.MixedAnalyzingCompiler$$anonfun$compileScala$1$1.apply(MixedAnalyzingCompiler.scala:50)
+	at sbt.compiler.MixedAnalyzingCompiler.timed(MixedAnalyzingCompiler.scala:74)
+	at sbt.compiler.MixedAnalyzingCompiler.compileScala$1(MixedAnalyzingCompiler.scala:49)
+	at sbt.compiler.MixedAnalyzingCompiler.compile(MixedAnalyzingCompiler.scala:64)
+	at sbt.compiler.IC$$anonfun$compileInternal$1.apply(IncrementalCompiler.scala:160)
+	at sbt.compiler.IC$$anonfun$compileInternal$1.apply(IncrementalCompiler.scala:160)
+	at sbt.inc.IncrementalCompile$$anonfun$doCompile$1.apply(Compile.scala:66)
+	at sbt.inc.IncrementalCompile$$anonfun$doCompile$1.apply(Compile.scala:64)
+	at sbt.inc.IncrementalCommon.cycle(IncrementalCommon.scala:32)
+	at sbt.inc.Incremental$$anonfun$1.apply(Incremental.scala:72)
+	at sbt.inc.Incremental$$anonfun$1.apply(Incremental.scala:71)
+	at sbt.inc.Incremental$.manageClassfiles(Incremental.scala:99)
+	at sbt.inc.Incremental$.compile(Incremental.scala:71)
+	at sbt.inc.IncrementalCompile$.apply(Compile.scala:54)
+	at sbt.compiler.IC$.compileInternal(IncrementalCompiler.scala:160)
+	at sbt.compiler.IC$.incrementalCompile(IncrementalCompiler.scala:138)
+	at sbt.Compiler$.compile(Compiler.scala:155)
+	at sbt.Compiler$.compile(Compiler.scala:141)
+	at sbt.Defaults$.sbt$Defaults$$compileIncrementalTaskImpl(Defaults.scala:913)
+	at sbt.Defaults$$anonfun$compileIncrementalTask$1.apply(Defaults.scala:904)
+	at sbt.Defaults$$anonfun$compileIncrementalTask$1.apply(Defaults.scala:902)
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47)
+	at sbt.$tilde$greater$$anonfun$$u2219$1.apply(TypeFunctions.scala:40)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+[0m[[31merror[0m] [0m(javalib/compile:[31mcompileIncremental[0m) java.lang.AssertionError: assertion failed: [0m
+[0m[[31merror[0m] [0m  Can't get function pointer to a closure with captures: List(Thread.this) in application scala.scalanative.native.CFunctionPtr.fromFunction1({[0m
+[0m[[31merror[0m] [0m  {[0m
+[0m[[31merror[0m] [0m    (new <$anon: Function1>(Thread.this): Function1)[0m
+[0m[[31merror[0m] [0m  }[0m
+[0m[[31merror[0m] [0m})[0m
+[0m[[31merror[0m] [0m     while compiling: /home/valdis/scala-native/javalib/src/main/scala/java/lang/Thread.scala[0m
+[0m[[31merror[0m] [0m        during phase: nir[0m
+[0m[[31merror[0m] [0m     library version: version 2.11.11[0m
+[0m[[31merror[0m] [0m    compiler version: version 2.11.11[0m
+[0m[[31merror[0m] [0m  reconstructed args: -Xplugin:/home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/jars/nscplugin_2.11.11.jar -encoding utf8 -classpath /home/valdis/scala-native/javalib/target/scala-2.11/classes:/home/valdis/scala-native/nativelib/target/scala-2.11/classes:/home/valdis/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.11.jar -javabootclasspath /home/valdis/scala-native/javalib/target/scala-2.11/classes:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/classes -bootclasspath /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/classes:/home/valdis/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.11.jar[0m
+[0m[[31merror[0m] [0m[0m
+[0m[[31merror[0m] [0m  last tree to typer: TypeTree(class Byte)[0m
+[0m[[31merror[0m] [0m       tree position: line 43 of /home/valdis/scala-native/javalib/src/main/scala/java/util/Collections.scala[0m
+[0m[[31merror[0m] [0m            tree tpe: Byte[0m
+[0m[[31merror[0m] [0m              symbol: (final abstract) class Byte in package scala[0m
+[0m[[31merror[0m] [0m   symbol definition: final abstract class Byte extends  (a ClassSymbol)[0m
+[0m[[31merror[0m] [0m      symbol package: scala[0m
+[0m[[31merror[0m] [0m       symbol owners: class Byte[0m
+[0m[[31merror[0m] [0m           call site: <$anon: Function2> in package fs in package fs[0m
+[0m[[31merror[0m] [0m[0m
+[0m[[31merror[0m] [0m== Source file context for tree position ==[0m
+[0m[[31merror[0m] [0m[0m
+[0m[[31merror[0m] [0m    40   private lazy val EMPTY_LIST_ITERATOR: ListIterator[_] = new EmptyListIterator[0m
+[0m[[31merror[0m] [0m    41 [0m
+[0m[[31merror[0m] [0m    42   private lazy val EMPTY_ENUMERATION: Enumeration[_] = {[0m
+[0m[[31merror[0m] [0m    43     new Enumeration[Any] {[0m
+[0m[[31merror[0m] [0m    44       def hasMoreElements: Boolean = false[0m
+[0m[[31merror[0m] [0m    45 [0m
+[0m[[31merror[0m] [0m    46       def nextElement(): Any =[0m
+[0m[[31merror[0m] [0mTotal time: 34 s, completed Sep 27, 2017 3:39:55 PM[0m
