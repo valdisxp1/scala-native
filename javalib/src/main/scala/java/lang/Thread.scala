@@ -254,13 +254,9 @@ class Thread extends Runnable {
         "Error while trying to unpark thread " + toString)
   }
 
-  private def toCRoutine(
-      f: => (() => Unit)): (Ptr[scala.Byte]) => Ptr[scala.Byte] = {
-    def g(ptr: Ptr[scala.Byte]) = {
-      f
-      null.asInstanceOf[Ptr[scala.Byte]]
-    }
-    g
+  private def runAsPtr2Ptr(ptr: Ptr[scala.Byte]): Ptr[scala.Byte] = {
+    run()
+    null.asInstanceOf[Ptr[scala.Byte]]
   }
 
   def run(): Unit = {
@@ -308,9 +304,7 @@ class Thread extends Runnable {
       // adding the thread to the thread group
       group.add(this)
 
-      val a: (Ptr[scala.Byte]) => Ptr[scala.Byte] = toCRoutine(run)
-
-      val routine = CFunctionPtr.fromFunction1(a)
+      val routine = CFunctionPtr.fromFunction1(runAsPtr2Ptr)
 
       val id = stackalloc[pthread_t]
       val status = pthread_create(id, null.asInstanceOf[Ptr[pthread_attr_t]],
