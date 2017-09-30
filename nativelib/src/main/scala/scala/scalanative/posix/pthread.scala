@@ -102,8 +102,8 @@ object pthread {
 
   def pthread_create(thread: Ptr[pthread_t],
                      attr: Ptr[pthread_attr_t],
-                     startroutine: CFunctionPtr1[Ptr[Byte], Ptr[Byte]],
-                     args: Ptr[Byte]): CInt = extern
+                     startroutine: CFunctionPtr1[Ptr[Long], Ptr[Byte]],
+                     args: Ptr[Long]): CInt = extern
 
   def pthread_detach(thread: pthread_t): CInt = extern
 
