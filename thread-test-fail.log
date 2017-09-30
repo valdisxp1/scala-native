@@ -1,0 +1,2085 @@
+[0m[[0minfo[0m] [0mLoading global plugins from /home/valdis/.sbt/0.13/plugins[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/.sbt/0.13/plugins/}global-plugins...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#sbt;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#actions;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classpath;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#interface;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#io;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#control;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#launcher-interface;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#completion;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#collections;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#api;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classfile;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logging;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#process;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-integration;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#incremental-compiler;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#relation;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compile;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#persist;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-tools.sbinary#sbinary_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-ivy-integration;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#ivy;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cross;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt.ivy#ivy;2.3.0-sbt-48dd0744422128446aee9ac31aa356ee203cc9f4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jcraft#jsch;0.1.50 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#serialization_2.10;0.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-pickling_2.10;0.10.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#quasiquotes_2.10;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-core_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-ast_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.thoughtworks.paranamer#paranamer;2.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#jawn-parser_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#json4s-support_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#run;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#task-system;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tasks;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tracking;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cache;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#testing;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-agent;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main-settings;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#apply-macro;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#command;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#template-resolver;0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logic;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-interface;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[0minfo[0m] [0mLoading project definition from /home/valdis/scala-native/project[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/project/}scala-native-build...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-sbt#global-plugins;0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#scripted-plugin;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#sbt;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#actions;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classpath;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#interface;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#io;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#control;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#launcher-interface;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#completion;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#collections;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#api;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classfile;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logging;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#process;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-integration;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#incremental-compiler;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#relation;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compile;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#persist;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-tools.sbinary#sbinary_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-ivy-integration;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#ivy;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cross;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt.ivy#ivy;2.3.0-sbt-48dd0744422128446aee9ac31aa356ee203cc9f4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jcraft#jsch;0.1.50 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#serialization_2.10;0.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-pickling_2.10;0.10.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#quasiquotes_2.10;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-core_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-ast_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.thoughtworks.paranamer#paranamer;2.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#jawn-parser_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#json4s-support_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#run;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#task-system;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tasks;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tracking;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cache;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#testing;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-agent;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main-settings;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#apply-macro;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#command;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#template-resolver;0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logic;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-interface;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jgit#org.eclipse.jgit.pgm;3.2.0.201312181205-r ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving args4j#args4j;2.0.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-compress;1.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.tukaani#xz;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jgit#org.eclipse.jgit.archive;3.2.0.201312181205-r ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jgit#org.eclipse.jgit;3.2.0.201312181205-r ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.googlecode.javaewah#JavaEWAH;0.5.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.osgi#org.osgi.core;4.3.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jgit#org.eclipse.jgit.ui;3.2.0.201312181205-r ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.lihaoyi#fastparse_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.lihaoyi#fastparse-utils_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#quasiquotes_2.10;2.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.lihaoyi#sourcecode_2.10;0.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.lihaoyi#scalaparse_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#sbt-crossproject;0.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.eed3si9n#sbt-dirty-money;0.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving me.lessis#bintray-sbt;0.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving me.lessis#bintry_2.10;0.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder.dispatch#dispatch-json4s-native_2.10;0.11.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder.dispatch#dispatch-core_2.10;0.11.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.ning#async-http-client;1.8.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving io.netty#netty;3.9.2.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-native_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-nop;1.7.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jsuereth#sbt-pgp;1.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jsuereth#pgp-library_2.10;1.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.bouncycastle#bcpg-jdk15on;1.51 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.bouncycastle#bcprov-jdk15on;1.51 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder#dispatch-http_2.10;0.8.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder#dispatch-core_2.10;0.8.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpcore;4.1.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-logging#commons-logging;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-codec#commons-codec;1.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder#dispatch-futures_2.10;0.8.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-actors;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#paradise_2.10.6;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[33mwarn[0m] [0mFound version conflict(s) in library dependencies; some are suspected to be binary incompatible:[0m
+[0m[[33mwarn[0m] [0m[0m
+[0m[[33mwarn[0m] [0m	* org.scalamacros:quasiquotes_2.10:2.1.0 is selected over 2.0.1[0m
+[0m[[33mwarn[0m] [0m	    +- com.lihaoyi:sourcecode_2.10:0.1.3                  (depends on 2.1.0)[0m
+[0m[[33mwarn[0m] [0m	    +- com.lihaoyi:fastparse_2.10:0.4.2                   (depends on 2.1.0)[0m
+[0m[[33mwarn[0m] [0m	    +- com.lihaoyi:fastparse-utils_2.10:0.4.2             (depends on 2.1.0)[0m
+[0m[[33mwarn[0m] [0m	    +- com.lihaoyi:scalaparse_2.10:0.4.2                  (depends on 2.1.0)[0m
+[0m[[33mwarn[0m] [0m	    +- org.scala-lang.modules:scala-pickling_2.10:0.10.1  (depends on 2.0.1)[0m
+[0m[[33mwarn[0m] [0m[0m
+[0m[[33mwarn[0m] [0m	* com.jcraft:jsch:0.1.50 is selected over 0.1.46[0m
+[0m[[33mwarn[0m] [0m	    +- org.eclipse.jgit:org.eclipse.jgit:3.2.0.201312181205-r (depends on 0.1.46)[0m
+[0m[[33mwarn[0m] [0m	    +- org.scala-sbt:ivy:0.13.16                          (depends on 0.1.46)[0m
+[0m[[33mwarn[0m] [0m[0m
+[0m[[33mwarn[0m] [0mRun 'evicted' to see detailed eviction warnings[0m
+Using default gc
+[0m[[0minfo[0m] [0mResolving key references (12269 settings) ...[0m
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+[0m[[0minfo[0m] [0mSet current project to scala-native (in build file:/home/valdis/scala-native/)[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[0minfo[0m] [0mLinking (9284 ms)[0m
+[0m[[0minfo[0m] [0mDiscovered 4419 classes and 25213 methods[0m
+[0m[[0minfo[0m] [0mOptimizing (11313 ms)[0m
+[0m[[0minfo[0m] [0mGenerating intermediate code (4675 ms)[0m
+[0m[[0minfo[0m] [0mProduced 68 files[0m
+[0m[[0minfo[0m] [0mCompiling to native code (5734 ms)[0m
+[0m[[0minfo[0m] [0mLinking native code (467 ms)[0m
+[0m[[0minfo[0m] [0mStarting process '/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out' on port '34683'.[0m
+[0m[[0minfo[0m] [0m* java.util.ArraysSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] asList[0m[0m
+[0m[[0minfo[0m] [0m* java.util.zip.CheckedOutputStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getChecksum()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write(Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write(Array[Byte], Int, Int)[0m[0m
+[0m[[0minfo[0m] [0m* scala.FloatComparisonSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fcmp[0m[0m
+[0m[[0minfo[0m] [0m* java.net.Inet6AddressSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isMulticastAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isAnyLocalAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isLoopbackAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isLinkLocalAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isSiteLocalAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isIPv4CompatibleAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getByAddress[0m[0m
+[0m[[0minfo[0m] [0m* java.lang.ExceptionSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] printStackTrace[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] printStackTrace <no stack trace available>[0m[0m
+[0m[[0minfo[0m] [0m* java.util.zip.DeflaterSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Deflater.setInput doesn't throw an exception[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Deflater needs input right after being created[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Deflater doesn't need input after input has been set[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Deflater can deflate byte arrays with default compression level[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Deflater can deflate with best compression level[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Deflater can deflate given a buffer smaller than total amount of data[0m[0m
+[0m[[0minfo[0m] [0m* scala.scalanative.native.SizeofSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] UByte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] UShort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] UInt[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ULong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Ptr[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] CStruct1[Byte][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] CStruct2[Byte, Byte][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] CStruct2[Byte, Int][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] CStruct3[Byte, Short, Byte][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] CStruct4[Byte, Short, Byte, Int][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] inner struct CStruct2[Byte, CStruct2[Long, Byte]][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] inner struct CStruct3[Byte, Long, CStruct3[Int, Int, Byte]][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] inner struct CStruct3[Byte, Long, CStruct3[Int, Int, CStruct4[Byte, Int, Short, Byte]][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] CArray[Byte, _32][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] CArray[Byte, _128][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] CArray[Byte, _1024][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] CArray[CStruct3[Byte, Int, Byte], _32][0m[0m
+[0m[[0minfo[0m] [0m* java.lang.CharacterSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toLowerCase[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toUpperCase[0m[0m
+[0m[[0minfo[0m] [0m* scala.EqualitySuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] case class equality[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] null equals null[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] null does not equal object[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] object does not equal null[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] == null doesn't call equals[0m[0m
+[0m[[0minfo[0m] [0m* java.util.FormatterSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(Appendable)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(Locale)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(Appendable, Locale)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(String, String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(String, String, Locale)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(File)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(File, String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(File, String, Locale)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(PrintStream)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(OutputStream)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(OutputStream, String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(OutputStream, String, Locale)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] locale()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] out()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] flush()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] close()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toString()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ioException()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for null parameter[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for argument index[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for width[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for precision[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for line separator[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for percent[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for flag[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for general conversion b/B[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for general conversion type 's' and 'S'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for general conversion type 'h' and 'H'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for general conversion other cases[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for general conversion exception[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Character conversion[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for legal Byte/Short/Integer/Long conversion type 'd'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for legal Byte/Short/Integer/Long conversion type 'o'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for legal Byte/Short/Integer/Long conversion type 'x' and 'X'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Date/Time conversion[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for null argument for Byte/Short/Integer/Long/BigInteger conversion[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for legal BigInteger conversion type 'd'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for padding of BigInteger conversion[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for BigInteger conversion exception[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for BigInteger exception throwing order[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double conversion type 'e' and 'E'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double conversion type 'g' and 'G'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double conversion type 'g' and 'G' overflow[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double conversion type 'f'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double conversion type 'a' and 'A'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for BigDecimal conversion type 'e' and 'E'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for BigDecimal conversion type 'g' and 'G'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for BigDecimal conversion type 'f'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for exceptions in Float/Double/BigDecimal conversion type 'e', 'E', 'g', 'G', 'f', 'a', 'A'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double/BigDecimal exception throwing order[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for BigDecimal exception throwing order[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for null argument for Float/Double/BigDecimal conversion[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Formatter.BigDecimalLayoutForm.values()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Formatter.BigDecimalLayoutForm.valueOf(String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] DaylightTime[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ScientificNotation[0m[0m
+[0m[[0minfo[0m] [0m* scala.scalanative.native.InstanceOfSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects "".asInstanceOf[String] succeed[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects null.asInstanceOf[String] should succeed[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects a.asInstanceOf[String], where a = null should succeed[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects (new AnyRef).asInstanceOf[AnyRef] should succeeds[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects anyRef.isInstanceOf[String] == false[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects literal null.isInstanceOf[String] == false[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects "".isInstanceOf[String] == true[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects a.isInstanceOf[String] == true, where a = ""[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects a.isInstanceOf[String] == false, where a = null[0m[0m
+[0m[[0minfo[0m] [0m* scala.scalanative.native.CStringSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fromCString[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toCString[0m[0m
+[0m[[0minfo[0m] [0m* java.io.FileOutputStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write null[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write out of bounds negative count[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write out of bounds negative offset[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write out of bounds array too small[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] attempt to open a readonly regular file[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] attempt to open a directory[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] attempt to create a file in a readonly directory[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] truncate a file on initialization if append=false[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] do not truncate a file on initialization if append=true[0m[0m
+[0m[[0minfo[0m] [0m* java.io.BufferedWriterSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Creating a `BufferedWriter` with a buffer of size 0 throws an exception[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write small chunks to a `BufferedWriter`[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write a chunk larger than buffer size to a `BufferedWriter`[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Closing twice is harmless[0m[0m
+[0m[[0minfo[0m] [0m* java.lang.MathSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] max[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] min[0m[0m
+[0m[[0minfo[0m] [0m* java.util.zip.CRC32Suite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getValue()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] update(Array[Byte])[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] update(Array[Byte], Int, Int)[0m[0m
+[0m[[0minfo[0m] [0m* java.io.FileWriterSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write to new file[0m[0m
+[0m[[0minfo[0m] [0m* scala.ArrayDoubleCopySuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: init[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: copy to another array[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: copy zero elements from empty array[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: copy to self without overlap (1/2)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: copy to self without overlap (2/2)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: copy to self with overlap and backward copy[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: copy to self with overlap and forward copy[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: throws NullPointerException if from is null[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: throws NullPointerException if to is null[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: throws IndexOutOfBoundsException if length is negative[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: throws IndexOutOfBoundsException if toPos + len > to.length[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: throws IndexOutOfBoundsException if fromPos + len > from.length[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: throws IndexOutOfBoundsException if toPos is negative[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: throws IndexOutOfBoundsException if fromPos is negative[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Double]: throws ArrayStoreException if copy to a different type of array[0m[0m
+[0m[[0minfo[0m] [0m* java.io.BufferedOutputStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(OutputStream)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(OutputStream, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Size must be > 0[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] flush()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write(Array[Byte], Int, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write(Array[Byte], Int, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write(Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] close()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Write scenario 1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Write scenario 2[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Write scenario 3[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] flush on closed stream[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] creating a buffer of negative size throws IllegalArgumentException[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write to closed Buffer throws IOException[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] simple write[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write without flush does nothing[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] simple write Array[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write array with bad index or length throw exceptions[0m[0m
+[0m[[0minfo[0m] [0m* java.nio.file.PathsSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Paths.get(relative path) returns a path relative to cwd[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Paths.get(absolute path) returns an absolute path[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Paths.get(URI) throws an exception when the scheme is missing[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Paths.get(URI) throws an exception when the scheme is different from `file`[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Paths.get(URI) returns a path if the scheme is `file`[0m[0m
+[0m[[0minfo[0m] [0m* java.io.PushbackInputStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] reset()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] mark()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(InputStream)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(InputStream, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] available()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] read()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] read(Array[Byte], Int, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] skip(Long)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] unread(Array[Byte])[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] unread(Array[Byte], Int, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] unread(Int)[0m[0m
+[0m[[0minfo[0m] [0m* java.io.FileInputStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] read null[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] read out of bounds negative count[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] read out of bounds negative offset[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] read out of bounds array too small[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] valid file descriptor and sync success[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] can read 0xFF correctly[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] throws FileNotFoundException when creating new FileInputStream with non-existing file path[0m[0m
+[0m[[0minfo[0m] [0m* java.net.ServerSocketSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] bind[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] accept[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] close[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] soTimeout[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toString[0m[0m
+[0m[[0minfo[0m] [0m* java.io.InputStreamReaderSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should throw a NPE if null is passed to constructor[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] closing closes the inner stream[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] closing twice is harmless[0m[0m
+[0m[[0minfo[0m] [0m* java.util.ArrayListSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(Collection[java.lang.Integer])[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(Collection[String])[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(null) throws NullPointerException[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] equals() for empty lists[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] equals() for nonempty lists[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] trimToSize() for non-empty lists with different capacities[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] trimToSize() for empty lists[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] trimToSize() for non-empty lists[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] size()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isEmpty()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] indexOf(Any)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] lastIndexOf(Any)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] clone()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] clone() with size() != capacity()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toArray()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toArray[T](arr: Array[T]) when arr is shorter[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toArray[T](arr: Array[T]) when arr is with the same length or longer[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Array[E].toArray[T](Array[T]) when T >: E[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Array[E].toArray[T](Array[T]) should throw ArrayStoreException when not T >: E[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toArray[T](null) throws null[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] get(Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] set(Int, E)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] add(E)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] add(Int, E)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] add(Int, E) when the capacity has to be expanded[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] remove(Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] remove(Any)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] addAll[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] clear()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should throw an error with negative initial capacity[0m[0m
+[0m[[0minfo[0m] [0m* scala.ArrayObjectCopySuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: init[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: copy to another array[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: copy zero elements from empty array[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: copy to self without overlap (1/2)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: copy to self without overlap (2/2)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: copy to self with overlap and backward copy[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: copy to self with overlap and forward copy[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: throws NullPointerException if from is null[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: throws NullPointerException if to is null[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: throws IndexOutOfBoundsException if length is negative[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: throws IndexOutOfBoundsException if toPos + len > to.length[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: throws IndexOutOfBoundsException if fromPos + len > from.length[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: throws IndexOutOfBoundsException if toPos is negative[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: throws IndexOutOfBoundsException if fromPos is negative[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Object]: throws ArrayStoreException if copy to a different type of array[0m[0m
+[0m[[0minfo[0m] [0m* java.lang.StringBuilderSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] append[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] append float[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] insert[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] insert float[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should_allow_string_interpolation_to_survive_null_and_undefined[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] deleteCharAt[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] replace[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] setCharAt[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ensureCapacity[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should_properly_setLength[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] appendCodePoint[0m[0m
+[0m[[0minfo[0m] [0m* java.nio.file.PathSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.getNameCount()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.getName[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.endsWith with absolute path[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.endsWith with relative path[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.getFileName[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.subpath[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.getParent[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.getRoot[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.isAbsolute[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.iterator[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.normalize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.startsWith[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.relativize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.resolve()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Path.resolveSibling()[0m[0m
+[0m[[0minfo[0m] [0m* java.util.concurrent.TimeUnitSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toNanos()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toMicros()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toMillis()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toSeconds()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toMinutes()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toHours()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toDays()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] values()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] valueOf()[0m[0m
+[0m[[0minfo[0m] [0m* java.util.DateSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] after[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] before[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] clone[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compareTo[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] equals[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getTime[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] hashCode[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] setTime[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toString[0m[0m
+[0m[[0minfo[0m] [0m* java.io.BufferedInputStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] creating a buffer of negative size throws IllegalArgumentException[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] simple reads[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] read to closed buffer throws IOException[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] read into array with bad index or length throw exceptions[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] read into array behaves correctly when asking more elements that are in the buffer[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] mark and reset behave correctly[0m[0m
+[0m[[0minfo[0m] [0m* scala.scalanative.native.StackallocSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Int * 4[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] CStruct2[Int, Int][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] CArray[Int, _4][0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] stack-allocated list[0m[0m
+[0m[[0minfo[0m] [0m* java.lang.FloatSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] equals[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ==[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] eq[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] parseFloat[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toString[0m[0m
+[0m[[0minfo[0m] [0m* java.lang.DoubleSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] equals[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ==[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] eq[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] parseDouble[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toString[0m[0m
+[0m[[0minfo[0m] [0m* java.nio.file.DirectoryStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.newDirectoryStream(Path)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.newDirectoryStream(Path, DirectoryStream.Filter[Path])[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Cannot get iterator more than once[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Cannot get an iterator after close()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] hasNext returns false after stream is closed[0m[0m
+[0m[[0minfo[0m] [0m* java.util.jar.JarEntrySuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(JarEntry)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(ZipEntry)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getAttributes()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getCertificates()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getCodeSigners()[0m[0m
+[0m[[0minfo[0m] [0m* java.io.OutputStreamWriterSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should throw a NPE if null is passed to constructor[0m[0m
+[0m[[0minfo[0m] [0m* java.util.jar.JarFileSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] entries()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] entriesIterator[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getEntry(String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getJarEntry(String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getManifest()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getInputStream(ZipEntry)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] input stream operations with signed files[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] JAR created with 1.4[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] jar verification[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] jar verification modified entry[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] jar file insert entry in manifest jar[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] jar file modified class[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] jar file modified manifest main attributes[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] jar file modified manifest entry attributes[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] jar file modified sf entry attributes[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getInputStream(JarEntry)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] jar verification empty entry[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] jar written with flush[0m[0m
+[0m[[0minfo[0m] [0m* scala.DoubleComparisonSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fcmp[0m[0m
+[0m[[0minfo[0m] [0m* java.net.URISuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should parse vanilla absolute URIs[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should parse absolute URIs with empty path[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should parse absolute URIs with IPv6[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should parse absolute URIs without authority[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should parse absolute URIs with empty authority[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should parse opaque URIs[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should parse relative URIs[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should fail on bad URIs[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] constructor should not throw on good URIs[0m[0m
+[0m[[0minfo[0m] [0m* scala.scalanative.IssuesSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #208[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #253[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #260[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #275[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #314[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #326[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #327[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #337[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #350[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #374[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #376[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #382[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #404[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #424[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #445[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #449[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #349[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #482[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #644[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #667[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #679[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #695[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #762[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #780[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #803[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] #809[0m[0m
+[0m[[0minfo[0m] [0m* java.lang.StringBufferSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] append[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] append float[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] insert[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] insert float[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] deleteCharAt[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] replace[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] setCharAt[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ensureCapacity[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should_properly_setLength[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] appendCodePoint[0m[0m
+[0m[[0minfo[0m] [0m* java.io.FileDescriptorSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] valid descriptors[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] invalid descriptors[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sync should throw java.io.SyncFailedException for stdin[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sync should throw java.io.SyncFailedException for stdout[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sync should throw java.io.SyncFailedException for stderr[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sync should throw java.io.SyncFailedException for new fd[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] valid should verify that file descriptor is still valid[0m[0m
+[0m[[0minfo[0m] [0m* scala.PrimitiveSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] -x[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ~x[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] +x[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] x << y[0m[0m
+[0m[[0minfo[0m] [0m* java.util.zip.GZIPInputStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(InputStream)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(InputStream, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] read(Array[Byte], Int, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] close()[0m[0m
+[0m[[0minfo[0m] [0m* scala.scalanative.native.ZoneSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] zone allocator alloc[0m[0m
+[0m[[0minfo[0m] [0m* java.nio.file.FilesSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.copy can copy to a non-existing file[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.copy throws if the target exists and is a file[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.copy throws if the target exists and is an empty directory[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.copy works if the target exists and is an empty directory and REPLACE_EXISTING is set[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.copy throws if the target exists and is a non-empty directory[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.copy throws if the target exists and is a non-empty directory and REPLACE_EXISTING is set[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.copy replaces the target if its an existing file and REPLACE_EXISTING is set[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createSymbolicLink can create symbolic links[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createSymbolicLink throws if the link already exists[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.exists reports existing files as existing[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.exists reports existing directories as existing[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.exists reports non-existing files as such[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.exists handles symlinks[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createDirectory can create a directory[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createDirectory throws if the file already exists[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createDirectories can create directories if none of the hierarchy exists[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createDirectories can create directories if some of the hierarchy exists[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createFile can create a new file[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createFile throws if the file already exists[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createLink can create links[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createLink throws if the file already exists[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createTempDirectory works without parent directory[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createTempDirectory works with parent directory[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.isRegularFile reports files as such[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.isRegularFile handles directories[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.isRegularFile handles symlinks[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createTempFile works without parent directory[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.createTempFile works with parent directory[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.delete can delete files[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.delete can delete empty directories[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.delete throws when deleting a non-existing file[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.delete throws when deleting a non-empty directory[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.deleteIfExists works if the file exists[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.deleteIfExists works if the file doesn't exist[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.list lists files[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.readSymbolicLink can read a valid symbolic link[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.readSymbolicLink can read a broken symbolic link[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.walk walks files[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.walk follows symlinks[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.walk detects cycles[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.walkFileTree walks the tree[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.walkFileTree can be terminated[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.walkFileTree can skip subtrees[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.walkFileTree can skip siblings[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.find finds files[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.getLastModifiedTime works[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.getAttribute can fetch attributes from BasicFileAttributeView[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.getAttribute obeys given LinkOption[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.getAttribute accepts a view name[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.getOwner works[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.getPosixFilePermissions works[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.lines returns the lines[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.write can write to a file[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.move moves files[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.setAttribute can set lastModifiedTime[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.setAttribute can set lastAccessTime[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.setAttribute can set permissions[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.readAllLines returns all the lines[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.readAllBytes reads all bytes[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.readAttributes(Path, Class[_], Array[LinkOption]) works[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.readAttributes(Path, String, Array[LinkOption]) works[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.readAttributes(Path, String, Array[LinkOption]) supports *[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Files.newByteChannel returns a channel[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] newInputStream returns an inputStream[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] newOutputStream returns an OutputStream[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] newOutputStream honors OpenOptions[0m[0m
+[0m[[0minfo[0m] [0m* scala.partest.t10032Suite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t2[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t3.i1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t3.e1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t4.i1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t4.e1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t5.i1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t5.e1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t6.i1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t6.e1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t7.i1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t7.e1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t8.i1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t8.e1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t9.i1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t9.e1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t10.i1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t10.e1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t11.i1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] t11.e1[0m[0m
+[0m[[0minfo[0m] [0m* java.lang.IntegerSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] parseInt[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] parseUnsignedInt[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toString[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toUnsignedString[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] equals[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] highestOneBit[0m[0m
+[0m[[0minfo[0m] [0m* scala.scalanative.native.CComplexSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cacosf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] casinf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] catanf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ccosf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] csinf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ctanf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cacoshf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] casinhf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] catanhf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ccoshf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] csinhf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ctanhf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cexpf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] clogf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cabsf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cpowf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] csqrtf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cargf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cimagf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] conjf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cprojf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] crealf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cacos[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cacos[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] casin[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ctan[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ccos[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] csin[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ctan[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cacosh[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] casinh[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] catanh[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ccosh[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] csinh[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ctanh[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cexp[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] clog[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cabs[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cpow[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] csqrt[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] carg[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cimag[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] conj[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] cproj[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] creal[0m[0m
+[0m[[0minfo[0m] [0m* java.util.jar.AttributesNameSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor()[0m[0m
+[0m[[0minfo[0m] [0m* java.io.FileReaderSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] throws FileNotFoundException when creating new FileReader with non-existing file path[0m[0m
+[0m[[0minfo[0m] [0m* java.nio.channels.FileChannelSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] A FileChannel can read from a file[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] A FileChannel can write to a file[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] A FileChannel can overwrite a file[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] A file channel writes at the beginning, unless otherwise specified[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Cannot combine APPEND and TRUNCATE_EXISTING[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Cannot combine APPEND and READ[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write to a channel with APPEND[0m[0m
+[0m[[0minfo[0m] [0m* java.util.jar.ManifestSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(Manifest)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(InputStream)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] clear()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] clone()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] equals()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] hashCode()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getAttributes()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getEntries()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getMainAttributes()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write(OutputStream)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] testNul[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Decoding[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] read()[0m[0m
+[0m[[0minfo[0m] [0m* scala.ReflectiveProxySuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should allow subtyping in return types[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should allow this.type in return types[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should allow generic return types[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should work with unary methods on primitive types[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should work with binary operators on primitive types[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should work with equality operators on primitive types[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should work with Arrays[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should work with Arrays of primitive values[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should work with Strings[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should properly generate forwarders for inherited methods[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should be bug-compatible with Scala/JVM for inherited overloads[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should work on java.lang.Object.{ notify, notifyAll }[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should work on java.lang.Object.clone[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should not work on scala.AnyRef.{ eq, ne, synchronized }[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should work with { eq, ne, synchronized } on AnyVal[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should work with default arguments[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] should unbox all types of arguments[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] NoSuchMethodException with no dyn method[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] NoSuchMethodException with one dyn method[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] NoSuchMethodException with method defined in other class[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] issue #643 - return Nothing[0m[0m
+[0m[[0minfo[0m] [0m* tests.SuiteSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects true[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] does not expect false[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects not false[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] does not expect true[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects A and throws A[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects C and throws C with function[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects A and throws B[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] expects A and doesn't throw[0m[0m
+[0m[[0minfo[0m] [0m* java.io.RandomAccessFileSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Creating a `RandomAccessFile` with an invalid mode throws an exception[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Creating a `RandomAccessFile` with mode = `r` and a non-existing file should throw an exception[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] valid file descriptor and sync success[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write and read a boolean[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write and read a Byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write and read an unsigned byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write and read a Char[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write and read a Double[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write and read a Float[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write and read an Int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write and read a whole line with terminator = '\n'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write and read a whole line with terminator = '\r'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write and read a whole line with terminator = '\r\n'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write and read a Long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Can write and read a modified UTF string[0m[0m
+[0m[[0minfo[0m] [0m* java.util.concurrent.atomic.AtomicSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Atomic Boolean[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Atomic Integer Array[0m[0m
+[0m[[0minfo[0m] [0m* scala.EnumerationSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Elements in a simple enum are correct[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Elements use the names they were given[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Elements use the names and IDs they were given[0m[0m
+[0m[[0minfo[0m] [0m* java.util.StringTokenizerSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(String, String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(String, String, Boolean)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] countTokens()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] hasMoreElements()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] hasMoreTokens()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextElement()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextToken()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextToken(String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] hasMoreElements_NPE[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] hasMoreTokens_NPE[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextToken_NPE[0m[0m
+[0m[[0minfo[0m] [0m* java.lang.SystemSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] System.nanoTime is monotonically increasing[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] System.getenv should contain known env variables[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] System.getenv(key) should read known env variables[0m[0m
+[0m[[0minfo[0m] [0m* java.util.jar.JarOutputStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(OutputStream, Manifest)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(OutputStream)[0m[0m
+[0m[[0minfo[0m] [0m* scala.ExceptionHandlingSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] 1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] 2[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] 3[0m[0m
+[0m[[0minfo[0m] [0m* java.util.RandomSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] seed 10[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] seed -5[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] seed max long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] seed max int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] seed reset[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] reset nextGaussian[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextDouble[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextBoolean[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextInt[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextIntN[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextInt2Pow[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextLong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextFloat[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextBytes[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] nextGaussian[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] default seed[0m[0m
+[0m[[0minfo[0m] [0m* java.util.zip.Adler32Suite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getValue()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] reset()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] update(Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] update(Array[Byte])[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] updateArray(Byte, Int, Int)[0m[0m
+[0m[[0minfo[0m] [0m* scala.ObjectCloneSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] clone with primitive[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] clone with ref[0m[0m
+[0m[[0minfo[0m] [0m* java.net.InetSocketAddressSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] this(String, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] createUnresolved[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] createUnresolved should throw IllegalArgumentException[0m[0m
+[0m[[0minfo[0m] [0m* java.lang.StringSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] +[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compareTo[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compareToIgnoreCase[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] equalsIgnoreCase[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] regionMatches[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] replace Char[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] replace CharSequence[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] replaceAll non-ascii[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getBytes[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] literals have consistent hash code implementation[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] intern[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] indexOf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] lastIndexOf[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toUpperCase[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toLowerCase[0m[0m
+[0m[[0minfo[0m] [0m* java.util.zip.CheckedInputStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getChecksum()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] skipJ[0m[0m
+[0m[[0minfo[0m] [0m* scala.ArrayIntCopySuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: init[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: copy to another array[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: copy zero elements from empty array[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: copy to self without overlap (1/2)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: copy to self without overlap (2/2)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: copy to self with overlap and backward copy[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: copy to self with overlap and forward copy[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: throws NullPointerException if from is null[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: throws NullPointerException if to is null[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: throws IndexOutOfBoundsException if length is negative[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: throws IndexOutOfBoundsException if toPos + len > to.length[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: throws IndexOutOfBoundsException if fromPos + len > from.length[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: throws IndexOutOfBoundsException if toPos is negative[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: throws IndexOutOfBoundsException if fromPos is negative[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] array[Int]: throws ArrayStoreException if copy to a different type of array[0m[0m
+[0m[[0minfo[0m] [0m* java.util.zip.InflaterSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Inflater.setInput doesn't throw an exception[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Inflater needs input right after being created[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Inflater doesn't need input after input has been set[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Inflater doesn't need dictionary right after being created[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Inflater doesn't need dictionary right after input has been set[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Inflater can inflate byte arrays compressed with default compression level[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Inflater can inflate byte arrays compressed with best compression level[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Inflater can inflate byte arrays when given a buffer smalled than total output[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] finished[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getAdler()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getRemaining()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getTotalIn()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getTotalOut()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] inflate$B[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] inflate$B1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] inflate$BII[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] inflate$BII1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] inflateZero[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(Boolean)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] needsDictionary()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] needsInput()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] reset()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] setInput$B[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] setInput$BII[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getBytesRead()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getBytesWritten()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] inflate[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] setDictionary$B[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Exceptions[0m[0m
+[0m[[0minfo[0m] [0m* java.util.zip.GZIPOutputStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(OutputStream)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(OutputStream, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] finish()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] write(Array[Byte], Int, Int)[0m[0m
+[0m[[0minfo[0m] [0m* java.net.SocketSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] keepAlive[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] reuseAddr[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] OOBInline[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] tcpNoDelay[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] soLinger[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] soTimeout[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] receiveBufferSize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sendBufferSize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] trafficClass[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] connect with timeout[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] bind[0m[0m
+[0m[[0minfo[0m] [0m* scala.util.PropertiesSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Properties.releaseVersion[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Properties.versionNumberString[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Properties.copyrightString[0m[0m
+[0m[[0minfo[0m] [0m* java.util.zip.ZipFileSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(File)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(File, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] close()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] entries()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getEntry(String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getEntry(String) throws an exception when the zip is closed[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getInputStream(ZipEntry)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] size()[0m[0m
+[0m[[0minfo[0m] [0m* java.util.zip.DeflaterOutputStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] DeflaterOutputStream can deflate a few bytes[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] DeflaterOutputStream can deflate more bytes than its buffer size[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] DeflaterOutputStream can be flushed with `SYNC_FLUSH`[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] constructor(OutputStream, Deflater)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] constructor(OutputStream, Deflater, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] DeflaterOutputStream.close[0m[0m
+[0m[[0minfo[0m] [0m* scala.partest.MixinSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] 1[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] 2[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] 3[0m[0m
+[0m[[0minfo[0m] [0m* scala.SymbolSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] symbols are interned[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] symbols have names[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] symbol hash code is name hash code[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] symbol equality[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] symbol unapply[0m[0m
+[0m[[0minfo[0m] [0m* java.util.zip.ZipEntrySuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(ZipEntry)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getComment()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getCompressedSize()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getCrc()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getExtra()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getMethod()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getName()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getSize()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getTime()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isDirectory()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] setComment(String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] setCompressedSize(Long)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] setCrc(Long)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] setExtra(Array[Byte])[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] setMethod(Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] setSize(Long)[0m[0m
+[0m[[0minfo[0m] [0m* java.nio.file.attribute.PosixFilePermissionsSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] An empty permissions set produces the right string: ---------[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Just OWNER_READ permission produces the right string: r--------[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Just OWNER_WRITE permission produces the right string: -w-------[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Just OWNER_EXECUTE permission produces the right string: --x------[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Just GROUP_READ permission produces the right string: ---r-----[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Just GROUP_WRITE permission produces the right string: ----w----[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Just GROUP_EXECUTE permission produces the right string: -----x---[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Just OTHERS_READ permission produces the right string: ------r--[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Just OTHERS_WRITE permission produces the right string: -------w-[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Just OTHERS_EXECUTE permission produces the right string: --------x[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Parsing the empty permissions gives an empty set[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Parsing OWNER_READ permission produces the right permissions[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Parsing OWNER_WRITE permission produces the right permissions[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Parsing OWNER_EXECUTE permission produces the right permissions[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Parsing GROUP_READ permission produces the right permissions[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Parsing GROUP_WRITE permission produces the right permissions[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Parsing GROUP_EXECUTE permission produces the right permissions[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Parsing OTHERS_READ permission produces the right permissions[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Parsing OTHERS_WRITE permission produces the right permissions[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Parsing OTHERS_EXECUTE permission produces the right permissions[0m[0m
+[0m[[0minfo[0m] [0m* java.util.stream.StreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Stream.builder can build an empty stream[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Stream.empty is empty[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Stream.of can put elements in a stream[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Stream.flatMap works[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Stream.flatMap works twice[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Stream.onClose works[0m[0m
+[0m[[0minfo[0m] [0m* java.lang.StackTraceElementSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getClassName[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getMethodName[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isNativeMethod[0m[0m
+[0m[[0minfo[0m] [0m* scala.scalanative.native.CInteropSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] varargs[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] pointer substraction[0m[0m
+[0m[[0minfo[0m] [0m* scala.scalanative.runtime.AtomicSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Strong byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Weak byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] load and store byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_add byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] add_fetch byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_sub byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sub_fetch byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_and byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] and_fetch byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_or byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] or_fetch byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_xor byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] xor_fetch byte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Strong short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Weak short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] load and store short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_add short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] add_fetch short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_sub short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sub_fetch short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_and short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] and_fetch short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_or short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] or_fetch short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_xor short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] xor_fetch short[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Strong int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Weak int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] load and store int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_add int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] add_fetch int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_sub int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sub_fetch int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_and int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] and_fetch int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_or int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] or_fetch int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_xor int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] xor_fetch int[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Strong long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Weak long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] load and store long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_add long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] add_fetch long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_sub long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sub_fetch long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_and long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] and_fetch long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_or long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] or_fetch long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_xor long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] xor_fetch long[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Strong ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Weak ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] load and store ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_add ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] add_fetch ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_sub ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sub_fetch ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_and ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] and_fetch ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_or ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] or_fetch ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_xor ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] xor_fetch ubyte[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Strong ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Weak ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] load and store ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_add ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] add_fetch ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_sub ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sub_fetch ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_and ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] and_fetch ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_or ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] or_fetch ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_xor ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] xor_fetch ushort[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Strong uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Weak uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] load and store uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_add uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] add_fetch uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_sub uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sub_fetch uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_and uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] and_fetch uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_or uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] or_fetch uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_xor uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] xor_fetch uint[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Strong ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Weak ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] load and store ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_add ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] add_fetch ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_sub ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sub_fetch ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_and ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] and_fetch ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_or ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] or_fetch ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_xor ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] xor_fetch ulong[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Strong csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Weak csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] load and store csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_add csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] add_fetch csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_sub csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] sub_fetch csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_and csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] and_fetch csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_or csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] or_fetch csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] fetch_xor csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] xor_fetch csize[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Strong Char[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Weak Char[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Strong UnsignedChar[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] compare and swap Weak UnsignedChar[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] multiple compare and swap should yield correct results[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] store behaves as expected[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] constructor with initial value[0m[0m
+[0m[[0minfo[0m] [0m* java.io.PushbackReaderSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] PushbackReader can unread characters[0m[0m
+[0m[[0minfo[0m] [0m* java.lang.ClassSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] primitives have their own classes[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getComponentType[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isPrimitive[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isArray[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isInstance[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isAssignableFrom[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toString[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isInterface[0m[0m
+[0m[[0minfo[0m] [0m* java.io.BufferedReaderSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Closing a `BufferedReader` closes its inner reader[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Closing twice is harmless[0m[0m
+[0m[[0minfo[0m] [0m* java.util.zip.ZipInputStreamSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(InputStream)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] close()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] close() can be called several times[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] closeEntry()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] close() after exception[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getNextEntry()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] read(Array[Byte], Int, Int)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Read only byte at a time[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] skip(Long)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] available()[0m[0m
+[0m[[0minfo[0m] [0m* java.net.InetAddressSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] equals should work on localhosts from getByName[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getAllByName[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getByName[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] getHostAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isReachable[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isMulticastAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isAnyLocalAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isLinkLocalAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isLoopbackAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] isSiteLocalAddress[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] MC methods[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toString[0m[0m
+[0m[[0minfo[0m] [0m* java.util.FormatterUSSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(Appendable)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(Locale)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(Appendable, Locale)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(String, String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(String, String, Locale)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(File)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(File, String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(File, String, Locale)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(PrintStream)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(OutputStream)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(OutputStream, String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Constructor(OutputStream, String, Locale)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] locale()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] out()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] flush()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] close()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] toString()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ioException()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for null parameter[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for argument index[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for width[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for precision[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for line separator[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for percent[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for flag[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for general conversion b/B[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double conversion type 's' and 'S' with excess precision[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for general conversion type 's' and 'S'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for general conversion type 'h' and 'H'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for general conversion other cases[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for general conversion exception[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Character conversion[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for legal Byte/Short/Integer/Long conversion type 'd'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for legal Byte/Short/Integer/Long conversion type 'o'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for legal Byte/Short/Integer/Long conversion type 'x' and 'X'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Date/Time conversion[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for null argument for Byte/Short/Integer/Long/BigInteger conversion[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for legal BigInteger conversion type 'd'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for padding of BigInteger conversion[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for BigInteger conversion exception[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for BigInteger exception throwing order[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double conversion type 'e' and 'E'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double conversion type 'g' and 'G'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double conversion type 'g' and 'G' overflow[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for java.lang.Float/Double.MAX_VALUE conversion type 'f'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double conversion type 'f'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for java.lang.Double.MIN_VALUE conversion type 'a' and 'A'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double conversion type 'a' and 'A'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for BigDecimal conversion type 'e' and 'E'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for BigDecimal conversion type 'g' and 'G'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for BigDecimal conversion type 'f'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for exceptions in Float/Double/BigDecimal conversion type 'e', 'E', 'g', 'G', 'f', 'a', 'A'[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for Float/Double/BigDecimal exception throwing order[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for BigDecimal exception throwing order[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] format(String, Array[Object]) for null argument for Float/Double/BigDecimal conversion[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Formatter.BigDecimalLayoutForm.values()[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Formatter.BigDecimalLayoutForm.valueOf(String)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] DaylightTime[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] ScientificNotation[0m[0m
+[0m[[0minfo[0m] [0m* scala.scalanative.CStringEscapesSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] c"..." literals with various escapes[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] the value of c"..." literals[0m[0m
+[0m[[0minfo[0m] [0m* java.util.regex.MatcherSuite$[0m
+[0m[[0minfo[0m] [0m[32m  [ok] quoteReplacement[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] match[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] replaceAll[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] replaceFirst[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] group[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] named group (re2 syntax)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] named group (java syntax)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] start(i)/end(i)[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] start/end[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] start(name)/end(name) re2 syntax[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] start(name)/end(name) java syntax[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] appendReplacement/appendTail[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] appendReplacement/appendTail with group replacement by index[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] appendReplacement/appendTail with group replacement by name[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] reset[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] (not supported) hasTransparentBounds/useTransparentBounds[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] lookingAt[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] pattern[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] issue #852, StringIndexOutOfBoundsException[0m[0m
+[0m[[0minfo[0m] [0m* java.lang.ThreadSuite$[0m
+[0m[[31merror[0m] [0mterminate called after throwing an instance of 'scalanative::ExceptionWrapper'[0m
+[0m[[31merror[0m] [0m  what():  std::exception[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Runtime static variables access and currentThread do not crash[0m[0m
+[0m[[0minfo[0m] [0m[32m  [ok] Get/Set Priority work as it should with currentThread[0m[0m
+java.net.SocketException: Socket is closed
+	at java.net.Socket.setSoTimeout(Socket.java:1137)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.receive(ComRunner.scala:102)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeRunner.receive(ScalaNativeRunner.scala:41)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeTask.receive$1(ScalaNativeTask.scala:32)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeTask.execute(ScalaNativeTask.scala:43)
+	at sbt.TestRunner.runTest$1(TestFramework.scala:76)
+	at sbt.TestRunner.run(TestFramework.scala:85)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mCould not run test java.lang.ThreadSuite: java.net.SocketException: Socket is closed[0m
+java.lang.NullPointerException
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:78)
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:71)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.generic.TraversableForwarder$class.foreach(TraversableForwarder.scala:32)
+	at scala.collection.mutable.ListBuffer.foreach(ListBuffer.scala:45)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at sbt.JUnitXmlTestsListener$TestSuite.stop(JUnitXmlTestsListener.scala:71)
+	at sbt.JUnitXmlTestsListener.writeSuite(JUnitXmlTestsListener.scala:180)
+	at sbt.JUnitXmlTestsListener.endGroup(JUnitXmlTestsListener.scala:161)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at sbt.TestFramework$.safeForeach(TestFramework.scala:107)
+	at sbt.TestRunner.safeListenersCall(TestFramework.scala:96)
+	at sbt.TestRunner.run(TestFramework.scala:90)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mjava.lang.NullPointerException[0m
+java.net.SocketException: Socket closed
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:116)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:153)
+	at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+	at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+	at java.io.DataOutputStream.flush(DataOutputStream.java:123)
+	at java.io.FilterOutputStream.close(FilterOutputStream.java:158)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.close(ComRunner.scala:108)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.send(ComRunner.scala:64)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeRunner.send(ScalaNativeRunner.scala:38)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeTask.execute(ScalaNativeTask.scala:28)
+	at sbt.TestRunner.runTest$1(TestFramework.scala:76)
+	at sbt.TestRunner.run(TestFramework.scala:85)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mCould not run test scala.scalanative.native.IntrinsicsSuite: java.net.SocketException: Socket closed[0m
+java.lang.NullPointerException
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:78)
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:71)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.generic.TraversableForwarder$class.foreach(TraversableForwarder.scala:32)
+	at scala.collection.mutable.ListBuffer.foreach(ListBuffer.scala:45)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at sbt.JUnitXmlTestsListener$TestSuite.stop(JUnitXmlTestsListener.scala:71)
+	at sbt.JUnitXmlTestsListener.writeSuite(JUnitXmlTestsListener.scala:180)
+	at sbt.JUnitXmlTestsListener.endGroup(JUnitXmlTestsListener.scala:161)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at sbt.TestFramework$.safeForeach(TestFramework.scala:107)
+	at sbt.TestRunner.safeListenersCall(TestFramework.scala:96)
+	at sbt.TestRunner.run(TestFramework.scala:90)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mjava.lang.NullPointerException[0m
+java.net.SocketException: Socket closed
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:116)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:153)
+	at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+	at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+	at java.io.DataOutputStream.flush(DataOutputStream.java:123)
+	at java.io.FilterOutputStream.close(FilterOutputStream.java:158)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.close(ComRunner.scala:108)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.send(ComRunner.scala:64)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeRunner.send(ScalaNativeRunner.scala:38)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeTask.execute(ScalaNativeTask.scala:28)
+	at sbt.TestRunner.runTest$1(TestFramework.scala:76)
+	at sbt.TestRunner.run(TestFramework.scala:85)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mCould not run test java.util.regex.PatternSuite: java.net.SocketException: Socket closed[0m
+java.lang.NullPointerException
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:78)
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:71)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.generic.TraversableForwarder$class.foreach(TraversableForwarder.scala:32)
+	at scala.collection.mutable.ListBuffer.foreach(ListBuffer.scala:45)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at sbt.JUnitXmlTestsListener$TestSuite.stop(JUnitXmlTestsListener.scala:71)
+	at sbt.JUnitXmlTestsListener.writeSuite(JUnitXmlTestsListener.scala:180)
+	at sbt.JUnitXmlTestsListener.endGroup(JUnitXmlTestsListener.scala:161)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at sbt.TestFramework$.safeForeach(TestFramework.scala:107)
+	at sbt.TestRunner.safeListenersCall(TestFramework.scala:96)
+	at sbt.TestRunner.run(TestFramework.scala:90)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mjava.lang.NullPointerException[0m
+java.net.SocketException: Socket closed
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:116)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:153)
+	at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+	at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+	at java.io.DataOutputStream.flush(DataOutputStream.java:123)
+	at java.io.FilterOutputStream.close(FilterOutputStream.java:158)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.close(ComRunner.scala:108)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.send(ComRunner.scala:64)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeRunner.send(ScalaNativeRunner.scala:38)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeTask.execute(ScalaNativeTask.scala:28)
+	at sbt.TestRunner.runTest$1(TestFramework.scala:76)
+	at sbt.TestRunner.run(TestFramework.scala:85)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mCould not run test java.util.zip.InflaterInputStreamSuite: java.net.SocketException: Socket closed[0m
+java.lang.NullPointerException
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:78)
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:71)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.generic.TraversableForwarder$class.foreach(TraversableForwarder.scala:32)
+	at scala.collection.mutable.ListBuffer.foreach(ListBuffer.scala:45)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at sbt.JUnitXmlTestsListener$TestSuite.stop(JUnitXmlTestsListener.scala:71)
+	at sbt.JUnitXmlTestsListener.writeSuite(JUnitXmlTestsListener.scala:180)
+	at sbt.JUnitXmlTestsListener.endGroup(JUnitXmlTestsListener.scala:161)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at sbt.TestFramework$.safeForeach(TestFramework.scala:107)
+	at sbt.TestRunner.safeListenersCall(TestFramework.scala:96)
+	at sbt.TestRunner.run(TestFramework.scala:90)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mjava.lang.NullPointerException[0m
+java.net.SocketException: Socket closed
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:116)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:153)
+	at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+	at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+	at java.io.DataOutputStream.flush(DataOutputStream.java:123)
+	at java.io.FilterOutputStream.close(FilterOutputStream.java:158)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.close(ComRunner.scala:108)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.send(ComRunner.scala:64)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeRunner.send(ScalaNativeRunner.scala:38)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeTask.execute(ScalaNativeTask.scala:28)
+	at sbt.TestRunner.runTest$1(TestFramework.scala:76)
+	at sbt.TestRunner.run(TestFramework.scala:85)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mCould not run test java.lang.LongSuite: java.net.SocketException: Socket closed[0m
+java.lang.NullPointerException
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:78)
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:71)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.generic.TraversableForwarder$class.foreach(TraversableForwarder.scala:32)
+	at scala.collection.mutable.ListBuffer.foreach(ListBuffer.scala:45)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at sbt.JUnitXmlTestsListener$TestSuite.stop(JUnitXmlTestsListener.scala:71)
+	at sbt.JUnitXmlTestsListener.writeSuite(JUnitXmlTestsListener.scala:180)
+	at sbt.JUnitXmlTestsListener.endGroup(JUnitXmlTestsListener.scala:161)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at sbt.TestFramework$.safeForeach(TestFramework.scala:107)
+	at sbt.TestRunner.safeListenersCall(TestFramework.scala:96)
+	at sbt.TestRunner.run(TestFramework.scala:90)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mjava.lang.NullPointerException[0m
+java.net.SocketException: Socket closed
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:116)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:153)
+	at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+	at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+	at java.io.DataOutputStream.flush(DataOutputStream.java:123)
+	at java.io.FilterOutputStream.close(FilterOutputStream.java:158)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.close(ComRunner.scala:108)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.send(ComRunner.scala:64)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeRunner.send(ScalaNativeRunner.scala:38)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeTask.execute(ScalaNativeTask.scala:28)
+	at sbt.TestRunner.runTest$1(TestFramework.scala:76)
+	at sbt.TestRunner.run(TestFramework.scala:85)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mCould not run test java.util.jar.JarInputStreamSuite: java.net.SocketException: Socket closed[0m
+java.lang.NullPointerException
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:78)
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:71)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.generic.TraversableForwarder$class.foreach(TraversableForwarder.scala:32)
+	at scala.collection.mutable.ListBuffer.foreach(ListBuffer.scala:45)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at sbt.JUnitXmlTestsListener$TestSuite.stop(JUnitXmlTestsListener.scala:71)
+	at sbt.JUnitXmlTestsListener.writeSuite(JUnitXmlTestsListener.scala:180)
+	at sbt.JUnitXmlTestsListener.endGroup(JUnitXmlTestsListener.scala:161)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at sbt.TestFramework$.safeForeach(TestFramework.scala:107)
+	at sbt.TestRunner.safeListenersCall(TestFramework.scala:96)
+	at sbt.TestRunner.run(TestFramework.scala:90)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mjava.lang.NullPointerException[0m
+java.net.SocketException: Socket closed
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:116)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:153)
+	at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+	at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+	at java.io.DataOutputStream.flush(DataOutputStream.java:123)
+	at java.io.FilterOutputStream.close(FilterOutputStream.java:158)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.close(ComRunner.scala:108)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.send(ComRunner.scala:64)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeRunner.send(ScalaNativeRunner.scala:38)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeTask.execute(ScalaNativeTask.scala:28)
+	at sbt.TestRunner.runTest$1(TestFramework.scala:76)
+	at sbt.TestRunner.run(TestFramework.scala:85)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mCould not run test java.nio.file.PathMatcherSuite: java.net.SocketException: Socket closed[0m
+java.lang.NullPointerException
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:78)
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:71)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.generic.TraversableForwarder$class.foreach(TraversableForwarder.scala:32)
+	at scala.collection.mutable.ListBuffer.foreach(ListBuffer.scala:45)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at sbt.JUnitXmlTestsListener$TestSuite.stop(JUnitXmlTestsListener.scala:71)
+	at sbt.JUnitXmlTestsListener.writeSuite(JUnitXmlTestsListener.scala:180)
+	at sbt.JUnitXmlTestsListener.endGroup(JUnitXmlTestsListener.scala:161)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at sbt.TestFramework$.safeForeach(TestFramework.scala:107)
+	at sbt.TestRunner.safeListenersCall(TestFramework.scala:96)
+	at sbt.TestRunner.run(TestFramework.scala:90)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mjava.lang.NullPointerException[0m
+java.net.SocketException: Socket closed
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:116)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:153)
+	at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+	at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+	at java.io.DataOutputStream.flush(DataOutputStream.java:123)
+	at java.io.FilterOutputStream.close(FilterOutputStream.java:158)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.close(ComRunner.scala:108)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.send(ComRunner.scala:64)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeRunner.send(ScalaNativeRunner.scala:38)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeTask.execute(ScalaNativeTask.scala:28)
+	at sbt.TestRunner.runTest$1(TestFramework.scala:76)
+	at sbt.TestRunner.run(TestFramework.scala:85)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mCould not run test java.util.jar.AttributesSuite: java.net.SocketException: Socket closed[0m
+java.lang.NullPointerException
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:78)
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:71)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.generic.TraversableForwarder$class.foreach(TraversableForwarder.scala:32)
+	at scala.collection.mutable.ListBuffer.foreach(ListBuffer.scala:45)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at sbt.JUnitXmlTestsListener$TestSuite.stop(JUnitXmlTestsListener.scala:71)
+	at sbt.JUnitXmlTestsListener.writeSuite(JUnitXmlTestsListener.scala:180)
+	at sbt.JUnitXmlTestsListener.endGroup(JUnitXmlTestsListener.scala:161)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at sbt.TestFramework$.safeForeach(TestFramework.scala:107)
+	at sbt.TestRunner.safeListenersCall(TestFramework.scala:96)
+	at sbt.TestRunner.run(TestFramework.scala:90)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0mjava.lang.NullPointerException[0m
+java.net.SocketException: Socket closed
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:116)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:153)
+	at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+	at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+	at java.io.DataOutputStream.flush(DataOutputStream.java:123)
+	at java.io.FilterOutputStream.close(FilterOutputStream.java:158)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.close(ComRunner.scala:108)
+	at scala.scalanative.sbtplugin.testinterface.ComRunner.send(ComRunner.scala:64)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeRunner.send(ScalaNativeRunner.scala:38)
+	at scala.scalanative.sbtplugin.testinterface.ScalaNativeRunner.done(ScalaNativeRunner.scala:56)
+	at sbt.Defaults$$anonfun$allTestGroupsTask$1$$anonfun$16.apply(Defaults.scala:624)
+	at sbt.Defaults$$anonfun$allTestGroupsTask$1$$anonfun$16.apply(Defaults.scala:622)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.Map$Map1.foreach(Map.scala:109)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at sbt.Defaults$$anonfun$allTestGroupsTask$1.apply(Defaults.scala:622)
+	at sbt.Defaults$$anonfun$allTestGroupsTask$1.apply(Defaults.scala:620)
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47)
+	at sbt.$tilde$greater$$anonfun$$u2219$1.apply(TypeFunctions.scala:40)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31merror[0m] [0m(tests/nativetest:[31mexecuteTests[0m) java.net.SocketException: Socket closed[0m
+[0m[[31merror[0m] [0mTotal time: 48 s, completed Sep 30, 2017 5:41:18 PM[0m

@@ -298,6 +298,7 @@ class Thread extends Runnable {
       val threadObjectIdPtr = stackalloc[scala.Long]
       !threadObjectIdPtr = threadObjectId
 
+      println("Starting thread " + threadObjectId)
       val id = stackalloc[pthread_t]
       val status = pthread_create(id, null.asInstanceOf[Ptr[pthread_attr_t]],
         callRunRoutine, threadObjectIdPtr)
@@ -306,6 +307,7 @@ class Thread extends Runnable {
 
       started = true
       underlying = !id
+      println("Started thread " + threadObjectId + "=>" + underlying)
       THREAD_LIST(underlying) = this
 
     }
@@ -407,7 +409,11 @@ object Thread {
   // defined as Ptr[Void] => Ptr[Void]
   // called as Ptr[Long] => Ptr[Void]
   private def callRun(t: Ptr[scala.Long]): Ptr[scala.Byte] = {
-    IdentityHash2Thread(!t).run()
+    val id = !t
+    println("callRun(" + id + ")")
+    val thread = IdentityHash2Thread(id)
+    println("["+thread+"].run()")
+    thread.run()
     null.asInstanceOf[Ptr[scala.Byte]]
   }
 
