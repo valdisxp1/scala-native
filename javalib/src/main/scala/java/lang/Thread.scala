@@ -301,7 +301,7 @@ class Thread extends Runnable {
       println("Starting thread " + threadObjectId)
       val id = stackalloc[pthread_t]
       val status = pthread_create(id, null.asInstanceOf[Ptr[pthread_attr_t]],
-        callRunRoutine, threadObjectIdPtr)
+        callRunRoutine, threadObjectIdPtr.asInstanceOf[Ptr[scala.Byte]])
       if(status != 0)
         throw new Exception("Failed to create new thread, pthread error " + status)
 
@@ -408,7 +408,8 @@ object Thread {
 
   // defined as Ptr[Void] => Ptr[Void]
   // called as Ptr[Long] => Ptr[Void]
-  private def callRun(t: Ptr[scala.Long]): Ptr[scala.Byte] = {
+  private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
+    val t  = p.asInstanceOf[Ptr[scala.Long]]
     val id = !t
     println("callRun(" + id + ")")
     val thread = IdentityHash2Thread(id)
