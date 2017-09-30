@@ -256,14 +256,6 @@ class Thread extends Runnable {
     }
   }
 
-  // defined as Ptr[Void] => Ptr[Void]
-  // called as Ptr[Long] => Ptr[Void]
-  private def callRun(t: Ptr[scala.Byte]): Ptr[scala.Byte] = {
-    val actuallyLong = t.asInstanceOf[Ptr[scala.Long]]
-    IdentityHash2Thread(!actuallyLong).run()
-    null.asInstanceOf[Ptr[scala.Byte]]
-  }
-
   def run(): Unit = {
     if (target != null) {
       target.run()
@@ -309,8 +301,6 @@ class Thread extends Runnable {
       // adding the thread to the thread group
       group.add(this)
 
-      val routine = CFunctionPtr.fromFunction1(callRun)
-
       val threadObjectId = System.identityHashCode(this)
       IdentityHash2Thread(threadObjectId) = this
       val threadObjectIdPtr = stackalloc[scala.Long]
@@ -318,7 +308,7 @@ class Thread extends Runnable {
 
       val id = stackalloc[pthread_t]
       val status = pthread_create(id, null.asInstanceOf[Ptr[pthread_attr_t]],
-        routine, threadObjectIdPtr.asInstanceOf[Ptr[scala.Byte]])
+        callRunRoutine, threadObjectIdPtr.asInstanceOf[Ptr[scala.Byte]])
       if(status != 0)
         throw new Exception("Failed to create new thread, pthread error " + status)
 
@@ -421,6 +411,16 @@ object Thread {
 
   private final val THREAD_LIST = new mutable.HashMap[pthread_t, Thread]()
   private final val IdentityHash2Thread = new mutable.HashMap[scala.Long, Thread]()
+
+  // defined as Ptr[Void] => Ptr[Void]
+  // called as Ptr[Long] => Ptr[Void]
+  private def callRun(t: Ptr[scala.Byte]): Ptr[scala.Byte] = {
+    val actuallyLong = t.asInstanceOf[Ptr[scala.Long]]
+    IdentityHash2Thread(!actuallyLong).run()
+    null.asInstanceOf[Ptr[scala.Byte]]
+  }
+
+  private lazy val callRunRoutine = CFunctionPtr.fromFunction1(callRun)
 
   private val lock: Object = new Object()
 
