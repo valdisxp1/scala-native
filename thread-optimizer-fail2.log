@@ -1,0 +1,77 @@
+[0m[[0minfo[0m] [0mLoading global plugins from /home/valdis/.sbt/0.13/plugins[0m
+[0m[[0minfo[0m] [0mLoading project definition from /home/valdis/scala-native/project[0m
+Using default gc
+[0m[[0minfo[0m] [0mResolving key references (12269 settings) ...[0m
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
+[0m[[0minfo[0m] [0mSet current project to scala-native (in build file:/home/valdis/scala-native/)[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[0minfo[0m] [0mCompiling 1 Scala source to /home/valdis/scala-native/unit-tests/target/scala-2.11/test-classes...[0m
+[0m[[0minfo[0m] [0mCompiling 1 Scala source to /home/valdis/scala-native/unit-tests/target/scala-2.11/test-classes...[0m
+[0m[[0minfo[0m] [0mLinking (6661 ms)[0m
+[0m[[0minfo[0m] [0mDiscovered 4416 classes and 25175 methods[0m
+scala.scalanative.util.UnsupportedException: can't cast from Class(Top(java.lang.Object)) to Ptr (class java.lang.String)
+	at scala.scalanative.util.package$.unsupported(package.scala:17)
+	at scala.scalanative.optimizer.pass.AsLowering.onInst(AsLowering.scala:15)
+	at scala.scalanative.optimizer.Pass$$anonfun$onInsts$1.apply(Pass.scala:45)
+	at scala.scalanative.optimizer.Pass$$anonfun$onInsts$1.apply(Pass.scala:45)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)
+	at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:47)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at scala.scalanative.optimizer.Pass$class.onInsts(Pass.scala:45)
+	at scala.scalanative.optimizer.pass.AsLowering.onInsts(AsLowering.scala:9)
+	at scala.scalanative.optimizer.Pass$class.onDefn(Pass.scala:33)
+	at scala.scalanative.optimizer.pass.AsLowering.onDefn(AsLowering.scala:9)
+	at scala.scalanative.optimizer.Pass$$anonfun$onDefns$1.apply(Pass.scala:22)
+	at scala.scalanative.optimizer.Pass$$anonfun$onDefns$1.apply(Pass.scala:22)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)
+	at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:47)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at scala.scalanative.optimizer.Pass$class.onDefns(Pass.scala:22)
+	at scala.scalanative.optimizer.pass.AsLowering.onDefns(AsLowering.scala:9)
+	at scala.scalanative.optimizer.Optimizer$.scala$scalanative$optimizer$Optimizer$$loop$1(Optimizer.scala:64)
+	at scala.scalanative.optimizer.Optimizer$$anonfun$apply$1.apply(Optimizer.scala:74)
+	at scala.scalanative.optimizer.Optimizer$$anonfun$apply$1.apply(Optimizer.scala:70)
+	at scala.collection.parallel.AugmentedIterableIterator$class.map2combiner(RemainsIterator.scala:120)
+	at scala.collection.parallel.immutable.ParHashMap$ParHashMapIterator.map2combiner(ParHashMap.scala:79)
+	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1057)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply$mcV$sp(Tasks.scala:54)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:53)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:53)
+	at scala.collection.parallel.Task$class.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1054)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask$class.internal(Tasks.scala:183)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:514)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask$class.compute(Tasks.scala:162)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:514)
+	at scala.concurrent.forkjoin.RecursiveAction.exec(RecursiveAction.java:160)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+[0m[[31merror[0m] [0m(tests/nativetest:[31mnativeOptimizeNIR[0m) scala.scalanative.util.UnsupportedException: can't cast from Class(Top(java.lang.Object)) to Ptr (class java.lang.String)[0m
+[0m[[31merror[0m] [0mTotal time: 24 s, completed Sep 30, 2017 4:57:48 PM[0m
