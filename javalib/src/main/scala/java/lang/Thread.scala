@@ -417,7 +417,7 @@ object Thread {
     null.asInstanceOf[Ptr[scala.Byte]]
   }
 
-  private lazy val callRunRoutine = CFunctionPtr.fromFunction1(callRun)
+  private val callRunRoutine = CFunctionPtr.fromFunction1(callRun)
 
   private val lock: Object = new Object()
 
