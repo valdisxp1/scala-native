@@ -248,14 +248,6 @@ class Thread extends Runnable {
         "Error while trying to unpark thread " + toString)
   }
 
-  private val runAsPtr2Ptr= new AbstractFunction1[Ptr[scala.Byte],Ptr[scala.Byte]] {
-    val me = Thread.this
-    override def apply(v1: Ptr[scala.Byte]): Ptr[scala.Byte] = {
-      me.run()
-      null.asInstanceOf[Ptr[scala.Byte]]
-    }
-  }
-
   def run(): Unit = {
     if (target != null) {
       target.run()
