@@ -27,7 +27,7 @@ object ThreadSuite extends tests.Suite {
       def run(): Unit = {
         shared = 1
       }
-    })
+    }).start()
     Thread.sleep(100)
     assertEquals(shared,1)
   }
