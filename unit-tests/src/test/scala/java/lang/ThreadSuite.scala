@@ -21,7 +21,7 @@ object ThreadSuite extends tests.Suite {
 
   }
 
-  test("Thread should be able to change a shared var"){
+  test("Thread should be able to change a shared var") {
     var shared: Int = 0
     new Thread(new Runnable {
       def run(): Unit = {
@@ -29,7 +29,37 @@ object ThreadSuite extends tests.Suite {
       }
     }).start()
     Thread.sleep(100)
-    assertEquals(shared,1)
+    assertEquals(shared, 1)
+  }
+
+  test("Thread should be able to change its internal state") {
+    class StatefulThread extends Thread{
+      var internal = 0
+      override def run() = {
+        internal = 1
+      }
+    }
+    val t  = new StatefulThread
+    t.start()
+    Thread.sleep(100)
+    assertEquals(t.internal, 1)
+  }
+
+  test("Thread should be able to call a method") {
+    object hasTwoArgMethod {
+      var timesCalled = 0
+      def call(arg: String, arg2: Int): Unit = {
+        assertEquals("abc", arg)
+        assertEquals(123, arg2)
+      }
+    }
+    new Thread(new Runnable {
+      def run(): Unit = {
+        hasTwoArgMethod.call("abc",123)
+      }
+    }).start()
+    Thread.sleep(100)
+    assertEquals(hasTwoArgMethod.timesCalled, 1)
   }
 
   def withExceptionHandler[U](handler: Thread.UncaughtExceptionHandler)(f: => U): U = {
