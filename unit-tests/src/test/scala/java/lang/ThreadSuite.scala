@@ -51,6 +51,9 @@ object ThreadSuite extends tests.Suite {
       def call(arg: String, arg2: Int): Unit = {
         assertEquals("abc", arg)
         assertEquals(123, arg2)
+        synchronized {
+          timesCalled += 1
+        }
       }
     }
     new Thread(new Runnable {
