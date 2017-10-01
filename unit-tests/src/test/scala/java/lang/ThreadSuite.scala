@@ -45,6 +45,19 @@ object ThreadSuite extends tests.Suite {
     assertEquals(t.internal, 1)
   }*/
 
+  test("Thread should be able to change runnable's internal state") {
+    class StatefulRunnable extends Runnable{
+      var internal = 0
+      def run(): Unit = {
+        internal = 1
+      }
+    }
+    val runnable = new StatefulRunnable
+    new Thread(runnable).start()
+    Thread.sleep(100)
+    assertEquals(runnable.internal, 1)
+  }
+
   test("Thread should be able to call a method") {
     object hasTwoArgMethod {
       var timesCalled = 0
