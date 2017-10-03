@@ -18,27 +18,33 @@ import scala.scalanative.posix.sched._
 
 // Ported from Harmony
 
-class Thread extends Runnable {
+class Thread private(parentThread: Thread, // only the main thread does not have a parent (= null)
+                     rawGroup: ThreadGroup,
+                     // Thread's target - a Runnable object whose run method should be invoked
+                     private val target: Runnable,
+                     rawName: String,
+                     // Stack size to be passes to VM for thread execution
+                     val stackSize: scala.Long
+                    ) extends Runnable {
 
   private var interruptedState = false
 
   // Thread's name
-  private[this] var name: String = "main" // default name of the main thread
+  // throws NullPointerException if the given name is null
+  private[this] var name: String = if (rawName != THREAD) rawName.toString else THREAD + threadId
 
   // This thread's thread group
-  var group: ThreadGroup = _
+  val group: ThreadGroup = if (rawGroup != null) rawGroup else parentThread.group
+  group.checkGroup()
 
   // This thread's context class loader
-  private var contextClassLoader: ClassLoader = _
+  private var contextClassLoader: ClassLoader = if(parentThread != null) parentThread.contextClassLoader else null
 
   // Indicates whether this thread was marked as daemon
-  private var daemon: scala.Boolean = false
+  private var daemon: scala.Boolean = if(parentThread != null) parentThread.daemon else false
 
   // Thread's priority
-  private var priority: Int = 5
-
-  // Stack size to be passes to VM for thread execution
-  private var stackSize: scala.Long = NativeThread.THREAD_DEFAULT_STACK_SIZE
+  private var priority: Int = if(parentThread != null) parentThread.priority else 5
 
   // Indicates if the thread was already started
   var started: scala.Boolean = false
@@ -48,14 +54,11 @@ class Thread extends Runnable {
   // conflicted with the 'isAlive' method
   var alive: scala.Boolean = false
 
-  // Thread's target - a Runnable object whose run method should be invoked
-  private var target: Runnable = _
-
   // Uncaught exception handler for this thread
   private var exceptionHandler: Thread.UncaughtExceptionHandler = _
 
   // Thread's ID
-  private var threadId: scala.Long = _
+  private var threadId: scala.Long = getNextThreadId
 
   // The underlying pthread ID
   /*
@@ -70,40 +73,21 @@ class Thread extends Runnable {
   // ThreadLocal values : local and inheritable
   var localValues: ThreadLocal.Values = _
 
-  var inheritableValues: ThreadLocal.Values = _
+  var inheritableValues: ThreadLocal.Values =  if (parentThread != null && parentThread.inheritableValues != null) {
+    new ThreadLocal.Values(parentThread.inheritableValues)
+  } else null
+
+  checkGCWatermark()
+  checkAccess()
 
   def this(group: ThreadGroup,
            target: Runnable,
            name: String,
            stacksize: scala.Long) = {
-    this()
-    val currentThread: Thread = Thread.currentThread()
-
-    var threadGroup: ThreadGroup = null
-    if (group != null) {
-      threadGroup = group
-    } else if (threadGroup == null)
-      threadGroup = currentThread.group
-
-    threadGroup.checkGroup()
-
-    this.group = threadGroup
-    this.daemon = currentThread.daemon
-    this.contextClassLoader = currentThread.contextClassLoader
-    this.target = target
-    this.stackSize = stacksize
-    this.priority = currentThread.priority
-    this.threadId = getNextThreadId
-    // throws NullPointerException if the given name is null
-    this.name = if (name != THREAD) name.toString else THREAD + threadId
-
-    checkGCWatermark()
-    checkAccess()
-
-    val parent: Thread = currentThread
-    if (parent != null && parent.inheritableValues != null)
-      inheritableValues = new ThreadLocal.Values(parent.inheritableValues)
+    this(Thread.currentThread(), group, target, name, stacksize)
   }
+
+  def this() = this(null, null, THREAD, 0)
 
   def this(target: Runnable) = this(null, target, THREAD, 0)
 
@@ -387,11 +371,9 @@ object Thread {
   final val STACK_TRACE_INDENT: String = "    "
 
   // Main thread group
-  var mainThreadGroup: ThreadGroup = new ThreadGroup()
+  val mainThreadGroup: ThreadGroup = new ThreadGroup()
 
-  private val MainThread = new Thread()
-
-  MainThread.group = mainThreadGroup
+  private val MainThread = new Thread(null, mainThreadGroup, null, "main", 0)
 
   // Default uncaught exception handler
   private var defaultExceptionHandler: UncaughtExceptionHandler = _
