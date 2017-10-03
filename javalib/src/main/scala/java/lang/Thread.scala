@@ -117,51 +117,6 @@ class Thread extends Runnable {
   def this(group: ThreadGroup, target: Runnable, name: String) =
     this(group, target, name, 0)
 
-  def this(gp: ThreadGroup,
-           name: String,
-           nativeAddr: scala.Long,
-           stackSize: scala.Long,
-           priority: Int,
-           daemon: scala.Boolean) = {
-    this()
-    val contextLoader: ClassLoader = null
-
-    var group: ThreadGroup = gp
-
-    if (group == null) {
-      if (systemThreadGroup == null) {
-        // This is main thread
-        systemThreadGroup = new ThreadGroup()
-        mainThreadGroup = new ThreadGroup(systemThreadGroup, "main")
-        group = mainThreadGroup
-      } else {
-        group = mainThreadGroup
-      }
-    }
-
-    this.group = group
-    this.stackSize = stackSize
-    this.priority = priority
-    this.daemon = daemon
-    this.threadId = getNextThreadId
-    this.name = if (name != null) name else THREAD + threadId
-    // Each thread created from JNI has bootstrap class loader as
-    // its context class loader. The only exception is the main thread
-    // which has system class loader as its context class loader.
-    this.contextClassLoader = contextLoader
-    this.target = null
-    // The thread is actually running
-    this.alive = true
-    this.started = true
-
-    // adding the thread to the thread group should be the last action
-    group.add(this)
-
-    val parent: Thread = Thread.currentThread()
-    if (parent != null && parent.inheritableValues != null) {
-      inheritableValues = new ThreadLocal.Values(parent.inheritableValues)
-    }
-  }
 
   def this(group: ThreadGroup, name: String) = this(group, null, name, 0)
 
