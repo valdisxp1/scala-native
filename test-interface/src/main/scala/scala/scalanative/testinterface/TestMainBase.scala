@@ -26,9 +26,16 @@ abstract class TestMainBase {
 
   /** Actual main method of the test runner. */
   def testMain(args: Array[String]): Unit = {
+    segfault
     val serverPort   = args.head.toInt
     val clientSocket = new Socket("127.0.0.1", serverPort)
     testRunner(Array.empty, null, clientSocket)
+  }
+
+  private def segfault: Unit = {
+    val ptr: Ptr[CSignedChar] = null.asInstanceOf[Ptr[CSignedChar]]
+    val segfault = !ptr
+    scala.Predef.println(segfault)
   }
 
   /** Test runner loop.
