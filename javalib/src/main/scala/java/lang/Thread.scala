@@ -34,7 +34,7 @@ class Thread private(parentThread: Thread, // only the main thread does not have
   private[this] var name: String = if (rawName != THREAD) rawName.toString else THREAD + threadId
 
   // This thread's thread group
-  val group: ThreadGroup = if (rawGroup != null) rawGroup else parentThread.group
+  private[lang] var group: ThreadGroup = if (rawGroup != null) rawGroup else parentThread.group
   group.checkGroup()
 
   // This thread's context class loader
