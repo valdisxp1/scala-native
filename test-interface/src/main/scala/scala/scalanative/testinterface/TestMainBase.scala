@@ -26,7 +26,7 @@ abstract class TestMainBase {
 
   /** Actual main method of the test runner. */
   def testMain(args: Array[String]): Unit = {
-    signal.signal(signal.SIGSEGV,CFunctionPtr.fromFunction1(TestMainBase.handleSegFault))
+    signal.signal(signal.SIGSEGV,TestMainBase.segFaultHandler)
     segfault
     val serverPort   = args.head.toInt
     val clientSocket = new Socket("127.0.0.1", serverPort)
@@ -158,18 +158,22 @@ abstract class TestMainBase {
 }
 
 object TestMainBase {
+  private val segFaultHandler = CFunctionPtr.fromFunction1(handleSegFault _)
   private def handleSegFault(signal: Int): Unit = {
     Console.err.println("Segmentation fault")
     val stackTraces = Thread.getAllStackTraces
     val indent= "    "
-    import scala.collection.JavaConverters
-    val map = JavaConverters.mapAsScalaMapConverter(stackTraces).asScala
-    map.foreach {
-      case (key: Thread,values: Array[StackTraceElement]) =>
+    val it = stackTraces.entrySet().iterator()
+    while (it.hasNext) {
+      val entry = it.next()
+      val key: Thread = entry.getKey
+      val values: Array[StackTraceElement] = entry.getValue
       Console.err.println(key.getName + ":")
-      scala.collection.mutable.WrappedArray.make[StackTraceElement](values).foreach{
-        element: StackTraceElement =>
-          Console.err.println(indent + element)
+      var i = 0
+      while (i < values.length) {
+        val element = values(i)
+        Console.err.println(indent + element)
+        i += 1
       }
     }
     System.exit(139)
