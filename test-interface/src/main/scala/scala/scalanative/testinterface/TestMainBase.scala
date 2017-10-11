@@ -26,6 +26,7 @@ abstract class TestMainBase {
 
   /** Actual main method of the test runner. */
   def testMain(args: Array[String]): Unit = {
+    signal.signal(signal.SIGSEGV,CFunctionPtr.fromFunction1(TestMainBase.handleSegFault))
     segfault
     val serverPort   = args.head.toInt
     val clientSocket = new Socket("127.0.0.1", serverPort)
@@ -153,5 +154,24 @@ abstract class TestMainBase {
     override def info(msg: String): Unit   = log(Log.Level.Info, msg, None)
     override def debug(msg: String): Unit  = log(Log.Level.Debug, msg, None)
     override def trace(t: Throwable): Unit = log(Log.Level.Trace, "", Some(t))
+  }
+}
+
+object TestMainBase {
+  private def handleSegFault(signal: Int): Unit = {
+    Console.err.println("Segmentation fault")
+    val stackTraces = Thread.getAllStackTraces
+    val indent= "    "
+    import scala.collection.JavaConverters
+    val map = JavaConverters.mapAsScalaMapConverter(stackTraces).asScala
+    map.foreach {
+      case (key: Thread,values: Array[StackTraceElement]) =>
+      Console.err.println(key.getName + ":")
+      scala.collection.mutable.WrappedArray.make[StackTraceElement](values).foreach{
+        element: StackTraceElement =>
+          Console.err.println(indent + element)
+      }
+    }
+    System.exit(139)
   }
 }
