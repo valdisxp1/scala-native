@@ -161,6 +161,8 @@ object TestMainBase {
   private val segFaultHandler = CFunctionPtr.fromFunction1(handleSegFault _)
   private def handleSegFault(signal: Int): Unit = {
     Console.err.println("Segmentation fault")
+    Console.err.println("Current thread:")
+    Thread.dumpStack()
     val stackTraces = Thread.getAllStackTraces
     val indent= "    "
     Console.err.println("" + stackTraces.size() + " threads in total")
