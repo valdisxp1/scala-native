@@ -163,6 +163,7 @@ object TestMainBase {
     Console.err.println("Segmentation fault")
     val stackTraces = Thread.getAllStackTraces
     val indent= "    "
+    Console.err.println("" + stackTraces.size() + " threads in total")
     val it = stackTraces.entrySet().iterator()
     while (it.hasNext) {
       val entry = it.next()
