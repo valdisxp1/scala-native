@@ -27,16 +27,25 @@ abstract class TestMainBase {
   /** Actual main method of the test runner. */
   def testMain(args: Array[String]): Unit = {
     signal.signal(signal.SIGSEGV,TestMainBase.segFaultHandler)
-    segfault
-    val serverPort   = args.head.toInt
-    val clientSocket = new Socket("127.0.0.1", serverPort)
-    testRunner(Array.empty, null, clientSocket)
+//    segfault
+    args.toList match {
+      case "run-test" :: className :: Nil =>
+        runSingleTest(className)
+      case serverPort :: _ =>
+        val clientSocket = new Socket("127.0.0.1", serverPort.toInt)
+        testRunner(Array.empty, null, clientSocket)
+    }
   }
 
   private def segfault: Unit = {
     val ptr: Ptr[CSignedChar] = null.asInstanceOf[Ptr[CSignedChar]]
     val segfault = !ptr
     scala.Predef.println(segfault)
+  }
+
+  private def runSingleTest(value: String): Unit = {
+//    val taskDef = new TaskDef(value,null,true,Array.empty)
+//    Task()
   }
 
   /** Test runner loop.
@@ -51,28 +60,31 @@ abstract class TestMainBase {
                          clientSocket: Socket): Unit = {
     val stream = new DataInputStream(clientSocket.getInputStream)
     receive(stream) match {
-      case Command.NewRunner(id, args, remoteArgs) =>
+      case c@Command.NewRunner(id, args, remoteArgs) =>
         val runner = frameworks(id).runner(args.toArray,
                                            remoteArgs.toArray,
                                            new PreloadedClassLoader(tests))
+        println(">>>"+c)
         testRunner(tasks, runner, clientSocket)
 
-      case Command.SendInfo(id, None) =>
+      case c@Command.SendInfo(id, None) =>
         val fps  = frameworks(id).fingerprints()
         val name = frameworks(id).name()
         val info = Command.SendInfo(id, Some(FrameworkInfo(name, fps.toSeq)))
         send(clientSocket)(info)
+        println(">>>"+c)
         testRunner(tasks, runner, clientSocket)
 
-      case Command.Tasks(newTasks) =>
+      case c@Command.Tasks(newTasks) =>
         val ts = runner.tasks(newTasks.toArray)
         val taskInfos = TaskInfos(ts.zipWithIndex.toSeq.map {
           case (t, id) => task2TaskInfo(id, t, runner)
         })
         send(clientSocket)(taskInfos)
+        println(">>>"+c)
         testRunner(tasks ++ ts, runner, clientSocket)
 
-      case Command.Execute(taskID, colors) =>
+      case c@Command.Execute(taskID, colors) =>
         val handler = new RemoteEventHandler(clientSocket)
         val loggers =
           colors.map(new RemoteLogger(clientSocket, 0, _): Logger).toArray
@@ -89,13 +101,15 @@ abstract class TestMainBase {
           case (t, id) => task2TaskInfo(id + origSize, t, runner)
         }
         send(clientSocket)(TaskInfos(taskInfos))
+        println(">>>"+c)
         testRunner(tasks ++ newTasks, runner, clientSocket)
 
-      case Command.RunnerDone(_) =>
+      case c@Command.RunnerDone(_) =>
         val r       = runner.done()
         val message = Command.RunnerDone(r)
         send(clientSocket)(message)
 
+        println(">>>"+c)
       case other =>
         println(s"Unexpected message: $other")
     }
