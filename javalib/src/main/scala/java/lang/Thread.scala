@@ -370,11 +370,6 @@ object Thread {
 
   final val STACK_TRACE_INDENT: String = "    "
 
-  // Main thread group
-  val mainThreadGroup: ThreadGroup = new ThreadGroup()
-
-  private val MainThread = new Thread(null, mainThreadGroup, null, "main", 0)
-
   // Default uncaught exception handler
   private var defaultExceptionHandler: UncaughtExceptionHandler = _
 
@@ -499,4 +494,7 @@ object Thread {
     def uncaughtException(t: Thread, e: Throwable)
   }
 
+  val mainThreadGroup: ThreadGroup = new ThreadGroup()
+
+  private val MainThread = new Thread(null, mainThreadGroup, null, "main", 0)
 }
