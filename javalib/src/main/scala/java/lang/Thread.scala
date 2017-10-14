@@ -6,7 +6,6 @@ import java.lang.Thread._
 import scala.scalanative.runtime.NativeThread
 import scala.scalanative.native.{
   CFunctionPtr,
-  CFunctionPtr1,
   CInt,
   Ptr,
   ULong,
