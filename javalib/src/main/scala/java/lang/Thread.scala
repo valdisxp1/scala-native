@@ -6,7 +6,6 @@ import java.lang.Thread._
 import scala.scalanative.runtime.NativeThread
 import scala.scalanative.native.{
   CFunctionPtr,
-  CFunctionPtr1,
   CInt,
   Ptr,
   ULong,
@@ -24,7 +23,8 @@ class Thread private(parentThread: Thread, // only the main thread does not have
                      private val target: Runnable,
                      rawName: String,
                      // Stack size to be passes to VM for thread execution
-                     val stackSize: scala.Long
+                     val stackSize: scala.Long,
+                     mainThread: scala.Boolean
                     ) extends Runnable {
 
   private var interruptedState = false
@@ -34,17 +34,17 @@ class Thread private(parentThread: Thread, // only the main thread does not have
   private[this] var name: String = if (rawName != THREAD) rawName.toString else THREAD + threadId
 
   // This thread's thread group
-  val group: ThreadGroup = if (rawGroup != null) rawGroup else parentThread.group
+  private[lang] var group: ThreadGroup = if (rawGroup != null) rawGroup else parentThread.group
   group.checkGroup()
 
   // This thread's context class loader
-  private var contextClassLoader: ClassLoader = if(parentThread != null) parentThread.contextClassLoader else null
+  private var contextClassLoader: ClassLoader = if(!mainThread) parentThread.contextClassLoader else null
 
   // Indicates whether this thread was marked as daemon
-  private var daemon: scala.Boolean = if(parentThread != null) parentThread.daemon else false
+  private var daemon: scala.Boolean = if(!mainThread) parentThread.daemon else false
 
   // Thread's priority
-  private var priority: Int = if(parentThread != null) parentThread.priority else 5
+  private var priority: Int = if(!mainThread) parentThread.priority else 5
 
   // Indicates if the thread was already started
   var started: scala.Boolean = false
@@ -84,7 +84,7 @@ class Thread private(parentThread: Thread, // only the main thread does not have
            target: Runnable,
            name: String,
            stacksize: scala.Long) = {
-    this(Thread.currentThread(), group, target, name, stacksize)
+    this(Thread.currentThread(), group, target, name, stacksize, mainThread = false)
   }
 
   def this() = this(null, null, THREAD, 0)
@@ -370,11 +370,6 @@ object Thread {
 
   final val STACK_TRACE_INDENT: String = "    "
 
-  // Main thread group
-  val mainThreadGroup: ThreadGroup = new ThreadGroup()
-
-  private val MainThread = new Thread(null, mainThreadGroup, null, "main", 0)
-
   // Default uncaught exception handler
   private var defaultExceptionHandler: UncaughtExceptionHandler = _
 
@@ -499,4 +494,7 @@ object Thread {
     def uncaughtException(t: Thread, e: Throwable)
   }
 
+  private val mainThreadGroup: ThreadGroup = new ThreadGroup(parent = null, name = "system", mainGroup = true)
+
+  private val MainThread = new Thread(parentThread = null, mainThreadGroup, target = null, "main", 0, mainThread = true)
 }

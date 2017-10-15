@@ -6,15 +6,17 @@ import scala.collection.JavaConversions._
 
 // Ported from Harmony
 
-class ThreadGroup extends UncaughtExceptionHandler {
+class ThreadGroup private[lang](
+                                  // Parent thread group of this thread group
+                                  private val parent: ThreadGroup,
+                                  // This group's name
+                                  private[lang] val name: String,
+                                  mainGroup: scala.Boolean) extends UncaughtExceptionHandler {
 
   import ThreadGroup._
 
   // This group's max priority
   var maxPriority: Int = Thread.MAX_PRIORITY
-
-  // This group's name
-  var name: String = "system"
 
   // Indicated if this thread group was marked as daemon
   private var daemon: scala.Boolean = false
@@ -26,22 +28,17 @@ class ThreadGroup extends UncaughtExceptionHandler {
   private val groups: util.LinkedList[ThreadGroup] =
     new util.LinkedList[ThreadGroup]()
 
-  // Parent thread group of this thread group
-  private var parent: ThreadGroup = _
-
   // All threads in the group
   private val threads: util.LinkedList[Thread] = new util.LinkedList[Thread]()
 
   def this(parent: ThreadGroup, name: String) = {
-    this()
+    this(parent, name, mainGroup = false)
     if (parent == null) {
       throw new NullPointerException(
         "The parent thread group specified is null!")
     }
 
     parent.checkAccess()
-    this.name = name
-    this.parent = parent
     this.daemon = parent.daemon
     this.maxPriority = parent.maxPriority
     parent.add(this)
@@ -439,5 +436,4 @@ object ThreadGroup {
   // ThreadGroup lock object
   private class ThreadGroupLock {}
   private final val lock: ThreadGroupLock = new ThreadGroupLock
-
 }
