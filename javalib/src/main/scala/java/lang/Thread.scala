@@ -138,13 +138,11 @@ class Thread private(parentThread: Thread, // only the main thread does not have
 
   def isInterrupted: scala.Boolean = interruptedState
 
-  //synchronized
-  final def join(): Unit = {
+  final def join(): Unit = synchronized {
     while (isAlive) wait()
   }
 
-  // synchronized
-  final def join(ml: scala.Long): Unit = {
+  final def join(ml: scala.Long): Unit = synchronized {
     var millis: scala.Long = ml
     if (millis == 0)
       join()
@@ -160,8 +158,7 @@ class Thread private(parentThread: Thread, // only the main thread does not have
     }
   }
 
-  //synchronized
-  final def join(ml: scala.Long, n: Int): Unit = {
+  final def join(ml: scala.Long, n: Int): Unit = synchronized {
     var nanos: Int         = n
     var millis: scala.Long = ml
     if (millis < 0 || nanos < 0 || nanos > 999999)
@@ -354,12 +351,25 @@ object Thread {
   // called as Ptr[Thread] => Ptr[Void]
   private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
     val thread = !p.asInstanceOf[Ptr[Thread]]
+    lock synchronized {
+      thread.alive = true
+      thread.started = true
+      lock.notifyAll()
+    }
+
     try {
       thread.run()
     } catch {
       case e: Throwable =>
         thread.getUncaughtExceptionHandler.uncaughtException(thread, e)
+    } finally {
+      thread.group.remove(thread)
+      thread synchronized {
+        thread.alive = false
+        thread.notifyAll()
+      }
     }
+
     null.asInstanceOf[Ptr[scala.Byte]]
   }
 
