@@ -21,6 +21,28 @@ object ThreadSuite extends tests.Suite {
 
   }
 
+  def takesAtLeast[R](expectedDelayMs: scala.Long)(f: => R): R = {
+    val start  = System.currentTimeMillis()
+    val result = f
+    val end    = System.currentTimeMillis()
+
+    assert(end - start >= expectedDelayMs)
+
+    result
+  }
+
+  def takesAtLeast[R](expectedDelayMs: scala.Long,
+                      expectedDelayNanos: scala.Int)(f: => R): R = {
+    val expectedDelay = expectedDelayMs * 1000000 + expectedDelayMs
+    val start         = System.nanoTime()
+    val result        = f
+    val end           = System.nanoTime()
+
+    assert(end - start >= expectedDelay)
+
+    result
+  }
+
   test("Thread should be able to change a shared var") {
     var shared: Int = 0
     new Thread(new Runnable {
@@ -104,7 +126,7 @@ object ThreadSuite extends tests.Suite {
     }
   }
 
-  case class ExceptionDetector(thread: Thread, exception: Throwable) extends Thread.UncaughtExceptionHandler {
+  class ExceptionDetector(thread: Thread, exception: Throwable) extends Thread.UncaughtExceptionHandler {
     private var _wasException = false
     def wasException: scala.Boolean = _wasException
     def uncaughtException(t: Thread, e: Throwable): Unit = {
@@ -127,5 +149,41 @@ object ThreadSuite extends tests.Suite {
       Thread.sleep(100)
     }
     assert(detector.wasException)
+  }
+
+  test("Thread.join should wait until timeout"){
+    val thread = new Thread {
+      override def run(): Unit = {
+        Thread.sleep(2000)
+      }
+    }
+    takesAtLeast(100) {
+      thread.join(100)
+    }
+    assert(thread.isAlive)
+  }
+
+  test("Thread.join should wait for thread finishing") {
+    val thread = new Thread {
+      override def run(): Unit = {
+        Thread.sleep(100)
+      }
+    }
+    takesAtLeast(100) {
+      thread.join(1000)
+    }
+    assertNot(thread.isAlive)
+  }
+  test("Thread.join should wait for thread finishing (no timeout)") {
+
+    val thread = new Thread {
+      override def run(): Unit = {
+        Thread.sleep(100)
+      }
+    }
+    takesAtLeast(100) {
+      thread.join()
+    }
+    assertNot(thread.isAlive)
   }
 }
