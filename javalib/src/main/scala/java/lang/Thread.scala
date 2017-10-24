@@ -29,6 +29,9 @@ class Thread private(parentThread: Thread, // only the main thread does not have
 
   private var interruptedState = false
 
+  // Thread's ID
+  private val threadId: scala.Long = getNextThreadId
+
   // Thread's name
   // throws NullPointerException if the given name is null
   private[this] var name: String = if (rawName != THREAD) rawName.toString else THREAD + threadId
@@ -56,9 +59,6 @@ class Thread private(parentThread: Thread, // only the main thread does not have
 
   // Uncaught exception handler for this thread
   private var exceptionHandler: Thread.UncaughtExceptionHandler = _
-
-  // Thread's ID
-  private var threadId: scala.Long = getNextThreadId
 
   // The underlying pthread ID
   /*
