@@ -354,7 +354,12 @@ object Thread {
   // called as Ptr[Thread] => Ptr[Void]
   private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
     val thread = !p.asInstanceOf[Ptr[Thread]]
-    thread.run()
+    try {
+      thread.run()
+    } catch {
+      case e: Throwable =>
+        thread.getUncaughtExceptionHandler.uncaughtException(thread, e)
+    }
     null.asInstanceOf[Ptr[scala.Byte]]
   }
 
