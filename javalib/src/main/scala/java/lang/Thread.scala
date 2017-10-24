@@ -132,7 +132,10 @@ class Thread private(parentThread: Thread, // only the main thread does not have
     }
   }
 
-  final def isAlive: scala.Boolean = lock.synchronized(alive)
+  final def isAlive: scala.Boolean = lock.synchronized{
+    Console.err.println(">> " + getName + " " + alive)
+    alive
+  }
 
   final def isDaemon: scala.Boolean = daemon
 
@@ -353,6 +356,7 @@ object Thread {
     val thread = !p.asInstanceOf[Ptr[Thread]]
     lock synchronized {
       thread.alive = true
+      Console.err.println(">> START " + thread.getName + " ")
       thread.started = true
       lock.notifyAll()
     }
@@ -365,6 +369,7 @@ object Thread {
     } finally {
       thread.group.remove(thread)
       thread synchronized {
+        Console.err.println(">> END " + thread.getName + " ")
         thread.alive = false
         thread.notifyAll()
       }
