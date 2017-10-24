@@ -157,6 +157,7 @@ object ThreadSuite extends tests.Suite {
         Thread.sleep(2000)
       }
     }
+    thread.start()
     takesAtLeast(100) {
       thread.join(100)
     }
@@ -169,6 +170,7 @@ object ThreadSuite extends tests.Suite {
         Thread.sleep(100)
       }
     }
+    thread.start()
     takesAtLeast(100) {
       thread.join(1000)
     }
@@ -181,6 +183,7 @@ object ThreadSuite extends tests.Suite {
         Thread.sleep(100)
       }
     }
+    thread.start()
     takesAtLeast(100) {
       thread.join()
     }
