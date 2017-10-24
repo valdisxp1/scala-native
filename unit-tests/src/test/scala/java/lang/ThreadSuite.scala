@@ -73,19 +73,12 @@ object ThreadSuite extends tests.Suite {
         throw exception
       }
     })
-    var wasException = false
-    thread.setUncaughtExceptionHandler(
-      new Thread.UncaughtExceptionHandler {
-        def uncaughtException(t: Thread, e: Throwable) = {
-          assertEquals(t, thread)
-          assertEquals(e, exception)
-          wasException = true
-        }
-      })
+    val detector = new ExceptionDetector(thread, exception)
+    thread.setUncaughtExceptionHandler(detector)
 
     thread.start()
     Thread.sleep(100)
-    assert(wasException)
+    assert(detector.wasException)
   }
 
   def withExceptionHandler[U](handler: Thread.UncaughtExceptionHandler)(f: => U): U = {
@@ -98,6 +91,16 @@ object ThreadSuite extends tests.Suite {
     }
   }
 
+  case class ExceptionDetector(thread: Thread, exception: Throwable) extends Thread.UncaughtExceptionHandler {
+    private var _wasException = false
+    def wasException: scala.Boolean = _wasException
+    def uncaughtException(t: Thread, e: Throwable): Unit = {
+      assertEquals(t, thread)
+      assertEquals(e, exception)
+      _wasException = true
+    }
+  }
+
   test("Exceptions in Threads should be handled"){
     val exception = new NullPointerException("There must be a null somewhere")
     val thread = new Thread(new Runnable {
@@ -105,17 +108,11 @@ object ThreadSuite extends tests.Suite {
         throw exception
       }
     })
-    var wasException = false
-    withExceptionHandler(new Thread.UncaughtExceptionHandler{
-      def uncaughtException(t: Thread, e: Throwable) = {
-        assertEquals(t, thread)
-        assertEquals(e, exception)
-        wasException = true
-      }
-    }){
+    val detector = new ExceptionDetector(thread, exception)
+    withExceptionHandler(detector){
       thread.start()
       Thread.sleep(100)
     }
-    assert(wasException)
+    assert(detector.wasException)
   }
 }
