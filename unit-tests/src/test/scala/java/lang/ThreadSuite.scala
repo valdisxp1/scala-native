@@ -32,6 +32,19 @@ object ThreadSuite extends tests.Suite {
     assertEquals(shared, 1)
   }
 
+  test("Thread should be able to change its internal state") {
+    class StatefulThread extends Thread{
+      var internal = 0
+      override def run() = {
+        internal = 1
+      }
+    }
+    val t  = new StatefulThread
+    t.start()
+    Thread.sleep(100)
+    assertEquals(t.internal, 1)
+  }
+
   test("Thread should be able to change runnable's internal state") {
     class StatefulRunnable extends Runnable {
       var internal = 0
