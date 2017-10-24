@@ -29,6 +29,9 @@ class Thread private(parentThread: Thread, // only the main thread does not have
 
   private var interruptedState = false
 
+  // Thread's ID
+  private val threadId: scala.Long = getNextThreadId
+
   // Thread's name
   // throws NullPointerException if the given name is null
   private[this] var name: String = if (rawName != THREAD) rawName.toString else THREAD + threadId
@@ -56,9 +59,6 @@ class Thread private(parentThread: Thread, // only the main thread does not have
 
   // Uncaught exception handler for this thread
   private var exceptionHandler: Thread.UncaughtExceptionHandler = _
-
-  // Thread's ID
-  private var threadId: scala.Long = getNextThreadId
 
   // The underlying pthread ID
   /*
@@ -354,7 +354,12 @@ object Thread {
   // called as Ptr[Thread] => Ptr[Void]
   private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
     val thread = !p.asInstanceOf[Ptr[Thread]]
-    thread.run()
+    try {
+      thread.run()
+    } catch {
+      case e: Throwable =>
+        thread.getUncaughtExceptionHandler.uncaughtException(thread, e)
+    }
     null.asInstanceOf[Ptr[scala.Byte]]
   }
 
@@ -450,7 +455,7 @@ object Thread {
   def getDefaultUncaughtExceptionHandler: UncaughtExceptionHandler =
     defaultExceptionHandler
 
-  def setDefaultUncaughtHandler(eh: UncaughtExceptionHandler): Unit =
+  def setDefaultUncaughtExceptionHandler(eh: UncaughtExceptionHandler): Unit =
     defaultExceptionHandler = eh
 
   //synchronized
