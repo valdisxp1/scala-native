@@ -90,6 +90,7 @@ object ThreadSuite extends tests.Suite {
 
   def withExceptionHandler[U](handler: Thread.UncaughtExceptionHandler)(f: => U): U = {
     val oldHandler = Thread.getDefaultUncaughtExceptionHandler
+    Thread.setDefaultUncaughtExceptionHandler(handler)
     try {
       f
     } finally {
@@ -97,7 +98,7 @@ object ThreadSuite extends tests.Suite {
     }
   }
 
-/*  test("Exceptions in Threads should be handled"){
+  test("Exceptions in Threads should be handled"){
     val exception = new NullPointerException("There must be a null somewhere")
     val thread = new Thread(new Runnable {
       def run(): Unit = {
@@ -116,5 +117,5 @@ object ThreadSuite extends tests.Suite {
       Thread.sleep(100)
     }
     assert(wasException)
-  }*/
+  }
 }

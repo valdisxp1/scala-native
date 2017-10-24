@@ -455,7 +455,7 @@ object Thread {
   def getDefaultUncaughtExceptionHandler: UncaughtExceptionHandler =
     defaultExceptionHandler
 
-  def setDefaultUncaughtHandler(eh: UncaughtExceptionHandler): Unit =
+  def setDefaultUncaughtExceptionHandler(eh: UncaughtExceptionHandler): Unit =
     defaultExceptionHandler = eh
 
   //synchronized
