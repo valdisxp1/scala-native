@@ -151,15 +151,12 @@ object ThreadSuite extends tests.Suite {
     assert(detector.wasException)
   }
 
-  var saveMe: AnyRef = _
-
   test("Thread.join should wait until timeout"){
     val thread = new Thread {
       override def run(): Unit = {
         Thread.sleep(2000)
       }
     }
-    saveMe = thread
     thread.start()
     takesAtLeast(100) {
       thread.join(100)
