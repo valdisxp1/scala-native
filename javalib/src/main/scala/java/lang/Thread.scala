@@ -5,7 +5,7 @@ import java.lang.Thread._
 
 import scala.Byte
 import scala.scalanative.runtime.NativeThread
-import scala.scalanative.native.{CFunctionPtr, CInt, Ptr, ULong, stackalloc}
+import scala.scalanative.native.{CFunctionPtr, CInt, Ptr, ULong, stackalloc, stdlib, sizeof}
 import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_t}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
@@ -234,7 +234,7 @@ class Thread private(parentThread: Thread, // only the main thread does not have
       // adding the thread to the thread group
       group.add(this)
 
-      val threadPtr = stackalloc[Thread]
+      val threadPtr =  stdlib.malloc(sizeof[Ptr[Thread]]).asInstanceOf[Ptr[Thread]]
       !threadPtr = this
 
       val id = stackalloc[pthread_t]
@@ -250,8 +250,6 @@ class Thread private(parentThread: Thread, // only the main thread does not have
       started = true
       underlying = !id
       THREAD_LIST(underlying) = this
-      //TODO fix stackalloc properly
-      Thread.sleep(300)
     }
   }
 
