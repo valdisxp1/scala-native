@@ -3,14 +3,9 @@ package java.lang
 import java.util
 import java.lang.Thread._
 
+import scala.Byte
 import scala.scalanative.runtime.NativeThread
-import scala.scalanative.native.{
-  CFunctionPtr,
-  CInt,
-  Ptr,
-  ULong,
-  stackalloc
-}
+import scala.scalanative.native.{CFunctionPtr, CInt, Ptr, ULong, stackalloc}
 import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_t}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
@@ -255,6 +250,8 @@ class Thread private(parentThread: Thread, // only the main thread does not have
       started = true
       underlying = !id
       THREAD_LIST(underlying) = this
+      //TODO fix stackalloc properly
+      Thread.sleep(300)
     }
   }
 
@@ -353,13 +350,10 @@ object Thread {
   // defined as Ptr[Void] => Ptr[Void]
   // called as Ptr[Thread] => Ptr[Void]
   private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
+    Console.err.print(">>>")
+    Console.err.println(p != null)
     val thread = !p.asInstanceOf[Ptr[Thread]]
-    lock synchronized {
-      thread.alive = true
-      Console.err.println(">> START " + thread.getName + " ")
-      thread.started = true
-      lock.notifyAll()
-    }
+    pre(thread)
 
     try {
       thread.run()
@@ -367,15 +361,33 @@ object Thread {
       case e: Throwable =>
         thread.getUncaughtExceptionHandler.uncaughtException(thread, e)
     } finally {
-      thread.group.remove(thread)
-      thread synchronized {
-        Console.err.println(">> END " + thread.getName + " ")
-        thread.alive = false
-        thread.notifyAll()
-      }
+      post(thread)
     }
 
     null.asInstanceOf[Ptr[scala.Byte]]
+  }
+
+  private def post(thread: Thread) = {
+    thread.group.remove(thread)
+    thread synchronized {
+      //        Console.err.println(">> END " + thread.getName)
+      thread.alive = false
+      thread.notifyAll()
+    }
+  }
+
+  private def pre(thread: Thread) = {
+    Console.err.println(">>X" + thread)// NO LONGER THERE
+      lock synchronized {
+//      thread.alive = true
+      //      if(thread.getName != null) {
+      //        Console.err.println(">> START " + thread.getName)
+      //      } else {
+      //        Console.err.println(">> START NULL")
+      //      }
+//      thread.started = true
+      lock.notifyAll()
+    }
   }
 
   private val callRunRoutine = CFunctionPtr.fromFunction1(callRun)
