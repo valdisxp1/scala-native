@@ -46,6 +46,67 @@ object ThreadSuite extends tests.Suite {
     result
   }
 
+  test("sleep suspends execution by at least the requested amount") {
+    val millisecondTests = Seq(0, 1, 5, 100)
+    millisecondTests.foreach { ms =>
+      takesAtLeast(ms) {
+        Thread.sleep(ms)
+      }
+    }
+    millisecondTests.foreach { ms =>
+      takesAtLeast(ms) {
+        Thread.sleep(ms, 0)
+      }
+    }
+
+    val tests = Seq(0 -> 0,
+                    0   -> 1,
+                    0   -> 999999,
+                    1   -> 0,
+                    1   -> 1,
+                    5   -> 0,
+                    100 -> 0,
+                    100 -> 50)
+
+    tests.foreach {
+      case (ms, nanos) =>
+        takesAtLeast(ms, nanos) {
+          Thread.sleep(ms, nanos)
+        }
+    }
+  }
+
+  test("wait suspends execution by at least the requested amount") {
+    val mutex            = new Object()
+    val millisecondTests = Seq(0, 1, 5, 100)
+    millisecondTests.foreach { ms =>
+      mutex.synchronized {
+        mutex.wait(ms)
+      }
+    }
+    millisecondTests.foreach { ms =>
+      mutex.synchronized {
+        mutex.wait(ms, 0)
+      }
+    }
+
+    val tests = Seq(0 -> 0,
+                    0   -> 1,
+                    0   -> 999999,
+                    1   -> 0,
+                    1   -> 1,
+                    5   -> 0,
+                    100 -> 0,
+                    100 -> 50)
+
+    tests.foreach {
+      case (ms, nanos) =>
+        mutex.synchronized {
+          mutex.wait(ms, nanos)
+        }
+    }
+  }
+
   test("Thread should be able to change a shared var") {
     var shared: Int = 0
     new Thread(new Runnable {
