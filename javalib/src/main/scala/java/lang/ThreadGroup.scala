@@ -6,12 +6,13 @@ import scala.collection.JavaConversions._
 
 // Ported from Harmony
 
-class ThreadGroup private[lang](
-                                  // Parent thread group of this thread group
-                                  private val parent: ThreadGroup,
-                                  // This group's name
-                                  private[lang] val name: String,
-                                  mainGroup: scala.Boolean) extends UncaughtExceptionHandler {
+class ThreadGroup private[lang] (
+                                 // Parent thread group of this thread group
+                                 private val parent: ThreadGroup,
+                                 // This group's name
+                                 private[lang] val name: String,
+                                 mainGroup: scala.Boolean)
+    extends UncaughtExceptionHandler {
 
   import ThreadGroup._
 
