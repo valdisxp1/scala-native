@@ -128,7 +128,7 @@ class Thread private(parentThread: Thread, // only the main thread does not have
   }
 
   final def isAlive: scala.Boolean = lock.synchronized{
-    Console.err.println(">> " + getName + " " + alive)
+//    Console.err.println(">> " + getName + " " + alive)
     alive
   }
 
@@ -247,9 +247,26 @@ class Thread private(parentThread: Thread, // only the main thread does not have
         throw new Exception(
           "Failed to create new thread, pthread error " + status)
 
-      started = true
       underlying = !id
       THREAD_LIST(underlying) = this
+
+      // wjw -- why are we *waiting* for a child thread to actually start running?
+      // this *guarantees* two context switches
+      // nothing in j.l.Thread spec says we have to do this
+      // my guess is that this actually masks an underlying race condition that we need to fix.
+
+      val interrupted =
+        try {
+          while (!this.started) {
+            lock.wait()
+          }
+          false
+        } catch {
+          case e: InterruptedException =>
+            true
+        }
+
+      if (interrupted) Thread.currentThread.interrupt()
     }
   }
 
@@ -348,8 +365,6 @@ object Thread {
   // defined as Ptr[Void] => Ptr[Void]
   // called as Ptr[Thread] => Ptr[Void]
   private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
-    Console.err.print(">>>")
-    Console.err.println(p != null)
     val thread = !p.asInstanceOf[Ptr[Thread]]
     pre(thread)
 
@@ -368,7 +383,7 @@ object Thread {
   private def post(thread: Thread) = {
     thread.group.remove(thread)
     thread synchronized {
-      //        Console.err.println(">> END " + thread.getName)
+      Console.err.println(">> END " + thread.getName)
       thread.alive = false
       thread.notifyAll()
     }
@@ -377,13 +392,13 @@ object Thread {
   private def pre(thread: Thread) = {
     Console.err.println(">>X" + thread)// NO LONGER THERE
       lock synchronized {
-//      thread.alive = true
+      thread.alive = true
       //      if(thread.getName != null) {
       //        Console.err.println(">> START " + thread.getName)
       //      } else {
       //        Console.err.println(">> START NULL")
       //      }
-//      thread.started = true
+      thread.started = true
       lock.notifyAll()
     }
   }
