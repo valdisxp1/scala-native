@@ -26,7 +26,7 @@ object ThreadSuite extends tests.Suite {
     val result = f
     val end    = System.currentTimeMillis()
     val actual = end - start
-    Console.out.println("It took "+ actual + " ms")
+    Console.out.println("It took " + actual + " ms")
     assert(actual >= expectedDelayMs)
 
     result
@@ -40,7 +40,7 @@ object ThreadSuite extends tests.Suite {
     val end           = System.nanoTime()
 
     val actual = end - start
-    Console.out.println("It took "+ actual + " ns")
+    Console.out.println("It took " + actual + " ns")
     assert(actual >= expectedDelay)
 
     result
@@ -119,13 +119,13 @@ object ThreadSuite extends tests.Suite {
   }
 
   test("Thread should be able to change its internal state") {
-    class StatefulThread extends Thread{
+    class StatefulThread extends Thread {
       var internal = 0
       override def run() = {
         internal = 1
       }
     }
-    val t  = new StatefulThread
+    val t = new StatefulThread
     t.start()
     Thread.sleep(100)
     assertEquals(t.internal, 1)
@@ -180,7 +180,8 @@ object ThreadSuite extends tests.Suite {
     assert(detector.wasException)
   }
 
-  def withExceptionHandler[U](handler: Thread.UncaughtExceptionHandler)(f: => U): U = {
+  def withExceptionHandler[U](handler: Thread.UncaughtExceptionHandler)(
+      f: => U): U = {
     val oldHandler = Thread.getDefaultUncaughtExceptionHandler
     Thread.setDefaultUncaughtExceptionHandler(handler)
     try {
@@ -190,8 +191,9 @@ object ThreadSuite extends tests.Suite {
     }
   }
 
-  class ExceptionDetector(thread: Thread, exception: Throwable) extends Thread.UncaughtExceptionHandler {
-    private var _wasException = false
+  class ExceptionDetector(thread: Thread, exception: Throwable)
+      extends Thread.UncaughtExceptionHandler {
+    private var _wasException       = false
     def wasException: scala.Boolean = _wasException
     def uncaughtException(t: Thread, e: Throwable): Unit = {
       assertEquals(t, thread)
@@ -200,7 +202,7 @@ object ThreadSuite extends tests.Suite {
     }
   }
 
-  test("Exceptions in Threads should be handled"){
+  test("Exceptions in Threads should be handled") {
     val exception = new NullPointerException("There must be a null somewhere")
     val thread = new Thread(new Runnable {
       def run(): Unit = {
@@ -208,14 +210,14 @@ object ThreadSuite extends tests.Suite {
       }
     })
     val detector = new ExceptionDetector(thread, exception)
-    withExceptionHandler(detector){
+    withExceptionHandler(detector) {
       thread.start()
       Thread.sleep(100)
     }
     assert(detector.wasException)
   }
 
-  test("Thread.join should wait until timeout"){
+  test("Thread.join should wait until timeout") {
     val thread = new Thread {
       override def run(): Unit = {
         Thread.sleep(2000)

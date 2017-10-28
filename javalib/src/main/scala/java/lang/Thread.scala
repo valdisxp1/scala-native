@@ -5,22 +5,23 @@ import java.lang.Thread._
 
 import scala.Byte
 import scala.scalanative.runtime.NativeThread
-import scala.scalanative.native.{CFunctionPtr, CInt, Ptr, ULong, stackalloc, stdlib, sizeof}
+import scala.scalanative.native.{CFunctionPtr, CInt, Ptr, ULong, stackalloc}
 import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_t}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
 
 // Ported from Harmony
 
-class Thread private(parentThread: Thread, // only the main thread does not have a parent (= null)
-                     rawGroup: ThreadGroup,
-                     // Thread's target - a Runnable object whose run method should be invoked
-                     private val target: Runnable,
-                     rawName: String,
-                     // Stack size to be passes to VM for thread execution
-                     val stackSize: scala.Long,
-                     mainThread: scala.Boolean
-                    ) extends Runnable {
+class Thread private (
+    parentThread: Thread, // only the main thread does not have a parent (= null)
+    rawGroup: ThreadGroup,
+    // Thread's target - a Runnable object whose run method should be invoked
+    private val target: Runnable,
+    rawName: String,
+    // Stack size to be passes to VM for thread execution
+    val stackSize: scala.Long,
+    mainThread: scala.Boolean)
+    extends Runnable {
 
   private var interruptedState = false
 
@@ -29,20 +30,24 @@ class Thread private(parentThread: Thread, // only the main thread does not have
 
   // Thread's name
   // throws NullPointerException if the given name is null
-  private[this] var name: String = if (rawName != THREAD) rawName.toString else THREAD + threadId
+  private[this] var name: String =
+    if (rawName != THREAD) rawName.toString else THREAD + threadId
 
   // This thread's thread group
-  private[lang] var group: ThreadGroup = if (rawGroup != null) rawGroup else parentThread.group
+  private[lang] var group: ThreadGroup =
+    if (rawGroup != null) rawGroup else parentThread.group
   group.checkGroup()
 
   // This thread's context class loader
-  private var contextClassLoader: ClassLoader = if(!mainThread) parentThread.contextClassLoader else null
+  private var contextClassLoader: ClassLoader =
+    if (!mainThread) parentThread.contextClassLoader else null
 
   // Indicates whether this thread was marked as daemon
-  private var daemon: scala.Boolean = if(!mainThread) parentThread.daemon else false
+  private var daemon: scala.Boolean =
+    if (!mainThread) parentThread.daemon else false
 
   // Thread's priority
-  private var priority: Int = if(!mainThread) parentThread.priority else 5
+  private var priority: Int = if (!mainThread) parentThread.priority else 5
 
   // Indicates if the thread was already started
   var started: scala.Boolean = false
@@ -68,9 +73,10 @@ class Thread private(parentThread: Thread, // only the main thread does not have
   // ThreadLocal values : local and inheritable
   var localValues: ThreadLocal.Values = _
 
-  var inheritableValues: ThreadLocal.Values =  if (parentThread != null && parentThread.inheritableValues != null) {
-    new ThreadLocal.Values(parentThread.inheritableValues)
-  } else null
+  var inheritableValues: ThreadLocal.Values =
+    if (parentThread != null && parentThread.inheritableValues != null) {
+      new ThreadLocal.Values(parentThread.inheritableValues)
+    } else null
 
   checkGCWatermark()
   checkAccess()
@@ -79,7 +85,12 @@ class Thread private(parentThread: Thread, // only the main thread does not have
            target: Runnable,
            name: String,
            stacksize: scala.Long) = {
-    this(Thread.currentThread(), group, target, name, stacksize, mainThread = false)
+    this(Thread.currentThread(),
+         group,
+         target,
+         name,
+         stacksize,
+         mainThread = false)
   }
 
   def this() = this(null, null, THREAD, 0)
@@ -95,7 +106,6 @@ class Thread private(parentThread: Thread, // only the main thread does not have
 
   def this(group: ThreadGroup, target: Runnable, name: String) =
     this(group, target, name, 0)
-
 
   def this(group: ThreadGroup, name: String) = this(group, null, name, 0)
 
@@ -127,7 +137,7 @@ class Thread private(parentThread: Thread, // only the main thread does not have
     }
   }
 
-  final def isAlive: scala.Boolean = lock.synchronized{
+  final def isAlive: scala.Boolean = lock.synchronized {
 //    Console.err.println(">> " + getName + " " + alive)
     alive
   }
@@ -234,7 +244,7 @@ class Thread private(parentThread: Thread, // only the main thread does not have
       // adding the thread to the thread group
       group.add(this)
 
-      val threadPtr =  stdlib.malloc(sizeof[Ptr[Thread]]).asInstanceOf[Ptr[Thread]]
+      val threadPtr = stackalloc[Thread]
       !threadPtr = this
 
       val id = stackalloc[pthread_t]
@@ -390,8 +400,8 @@ object Thread {
   }
 
   private def pre(thread: Thread) = {
-    Console.err.println(">>X" + thread)// NO LONGER THERE
-      lock synchronized {
+    Console.err.println(">>X" + thread) // NO LONGER THERE
+    lock synchronized {
       thread.alive = true
       //      if(thread.getName != null) {
       //        Console.err.println(">> START " + thread.getName)
@@ -539,7 +549,13 @@ object Thread {
     def uncaughtException(t: Thread, e: Throwable)
   }
 
-  private val mainThreadGroup: ThreadGroup = new ThreadGroup(parent = null, name = "system", mainGroup = true)
+  private val mainThreadGroup: ThreadGroup =
+    new ThreadGroup(parent = null, name = "system", mainGroup = true)
 
-  private val MainThread = new Thread(parentThread = null, mainThreadGroup, target = null, "main", 0, mainThread = true)
+  private val MainThread = new Thread(parentThread = null,
+                                      mainThreadGroup,
+                                      target = null,
+                                      "main",
+                                      0,
+                                      mainThread = true)
 }
