@@ -2,6 +2,7 @@ package java.lang
 
 import java.util
 import java.lang.Thread._
+import java.lang.Thread.State
 
 import scala.scalanative.runtime.NativeThread
 import scala.scalanative.native.{CFunctionPtr, CInt, Ptr, ULong, stackalloc}
@@ -276,39 +277,14 @@ class Thread private (
     }
   }
 
-  type State = CInt
-
-  final val NEW: State           = 0
-  final val RUNNABLE: State      = 1
-  final val BLOCKED: State       = 2
-  final val WAITING: State       = 3
-  final val TIMED_WAITING: State = 4
-  final val TERMINATED: State    = 5
-
   def getState: State = {
-    RUNNABLE
-    /*
-    var dead: scala.Boolean = false
-    lock.synchronized{
-      if(started && !isAlive) dead = true
+    if (!started) {
+      State.NEW
+    } else if (isAlive) {
+      State.RUNNABLE
+    } else {
+      State.TERMINATED
     }
-    if(dead) return TERMINATED
-
-    val state = VMThreadManager.getState(this)
-
-    if(0 != (state & VMThreadManager.TM_THREAD_STATE_TERMINATED)) State.TERMINATED
-    else if(0 != (state & VMThreadManager.TM_THREAD_STATE_WAITING_WITH_TIMEOUT)) State.TIMED_WAITING
-    else if(0 != (state & VMThreadManager.TM_THREAD_STATE_WAITING)
-      || 0 != (state & VMThreadManager.TM_THREAD_STATE_PARKED)) State.WAITING
-    else if(0 != (state & VMThreadManager.TM_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER)) State.BLOCKED
-    else if(0 != (state & VMThreadManager.TM_THREAD_STATE_RUNNABLE)) State.RUNNABLE
-
-    //TODO track down all situations where a thread is really in RUNNABLE state
-    // but TM_THREAD_STATE_RUNNABLE is not set.  In the meantime, leave the following
-    // TM_THREAD_STATE_ALIVE test as it is.
-    else if(0 != (state & VMThreadManager.TM_THREAD_STATE_ALIVE)) State.RUNNABLE
-    else State.NEW
-   */
   }
 
   @deprecated
@@ -400,6 +376,17 @@ object Thread {
       thread.started = true
       lock.notifyAll()
     }
+  }
+
+  final class State
+
+  object State {
+    final val NEW           = new State
+    final val RUNNABLE      = new State
+    final val BLOCKED       = new State
+    final val WAITING       = new State
+    final val TIMED_WAITING = new State
+    final val TERMINATED    = new State
   }
 
   private val callRunRoutine = CFunctionPtr.fromFunction1(callRun)
