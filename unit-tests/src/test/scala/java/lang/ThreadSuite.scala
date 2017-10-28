@@ -26,7 +26,8 @@ object ThreadSuite extends tests.Suite {
     val result = f
     val end    = System.currentTimeMillis()
     val actual = end - start
-    Console.out.println("It took " + actual + " ms")
+    Console.out.println(
+      "It took " + actual + " ms, expected at least " + expectedDelayMs + " ms")
     assert(actual >= expectedDelayMs)
 
     result
@@ -40,7 +41,8 @@ object ThreadSuite extends tests.Suite {
     val end           = System.nanoTime()
 
     val actual = end - start
-    Console.out.println("It took " + actual + " ns")
+    Console.out.println(
+      "It took " + actual + " ns, expected at least " + expectedDelay + " ns")
     assert(actual >= expectedDelay)
 
     result
