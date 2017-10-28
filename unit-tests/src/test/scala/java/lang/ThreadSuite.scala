@@ -255,4 +255,17 @@ object ThreadSuite extends tests.Suite {
     }
     assertNot(thread.isAlive)
   }
+
+  test("Thread.getState") {
+    val thread = new Thread {
+      override def run(): Unit = {
+        Thread.sleep(100)
+      }
+    }
+    assertEquals(Thread.State.NEW, thread.getState)
+    thread.start()
+    assertEquals(Thread.State.RUNNABLE, thread.getState)
+    thread.join()
+    assertEquals(Thread.State.TERMINATED, thread.getState)
+  }
 }
