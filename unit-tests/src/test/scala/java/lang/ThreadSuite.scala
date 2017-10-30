@@ -239,4 +239,35 @@ object ThreadSuite extends tests.Suite {
     thread.join()
     assertEquals(Thread.State.TERMINATED, thread.getState)
   }
+
+  test("Thread.interrupt should interrupt sleep") {
+    val thread = new Thread {
+      override def run() = {
+        expectThrows(classOf[InterruptedException], Thread.sleep(1000))
+      }
+    }
+    thread.start()
+    takesAtLeast(100) {
+      Thread.sleep(100)
+      thread.interrupt()
+      assertEquals(Thread.State.TERMINATED, thread.getState)
+    }
+  }
+  test("Thread.interrupt should interrupt between calculations") {
+    val thread = new Thread {
+      override def run() = {
+        while(!Thread.interrupted()){
+          //some intense calculation
+          scala.collection.immutable.Range(1,10000,1).reduce(_ + _)
+        }
+      }
+    }
+    thread.start()
+    takesAtLeast(100) {
+      Thread.sleep(100)
+      thread.interrupt()
+    }
+    thread.join(5000)
+    assertEquals(Thread.State.TERMINATED, thread.getState)
+  }
 }
