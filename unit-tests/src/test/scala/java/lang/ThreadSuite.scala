@@ -188,7 +188,7 @@ object ThreadSuite extends tests.Suite {
     assert(detector.wasException)
   }
 
-  test("Thread.join should wait until timeout") {
+  test("Thread.join(ms) should wait until timeout") {
     val thread = new Thread {
       override def run(): Unit = {
         Thread.sleep(2000)
@@ -197,6 +197,19 @@ object ThreadSuite extends tests.Suite {
     thread.start()
     takesAtLeast(100) {
       thread.join(100)
+    }
+    assert(thread.isAlive)
+  }
+
+  test("Thread.join(ms,ns) should wait until timeout") {
+    val thread = new Thread {
+      override def run(): Unit = {
+        Thread.sleep(2000)
+      }
+    }
+    thread.start()
+    takesAtLeast(100, 50) {
+      thread.join(100, 50)
     }
     assert(thread.isAlive)
   }
