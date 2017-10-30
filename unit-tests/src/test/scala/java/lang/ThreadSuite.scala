@@ -240,7 +240,7 @@ object ThreadSuite extends tests.Suite {
     assertNot(thread.isAlive)
   }
 
-  test("Thread.getState") {
+  test("Thread.getState and Thread.isAlive") {
     val thread = new Thread {
       override def run(): Unit = {
         Thread.sleep(100)
@@ -251,6 +251,7 @@ object ThreadSuite extends tests.Suite {
     assertEquals(Thread.State.RUNNABLE, thread.getState)
     thread.join()
     assertEquals(Thread.State.TERMINATED, thread.getState)
+    assertNot(thread.isAlive)
   }
 
   test("Thread.clone should fail") {
