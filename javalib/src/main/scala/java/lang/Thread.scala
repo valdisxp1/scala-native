@@ -111,6 +111,9 @@ class Thread private (
 
   final def checkAccess(): Unit = ()
 
+  override final def clone(): AnyRef =
+    throw new CloneNotSupportedException("Thread.clone() is not meaningful")
+
   @deprecated
   def countStackFrames: Int = 0 //deprecated
 

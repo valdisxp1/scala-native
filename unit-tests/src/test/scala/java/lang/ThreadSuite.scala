@@ -239,4 +239,9 @@ object ThreadSuite extends tests.Suite {
     thread.join()
     assertEquals(Thread.State.TERMINATED, thread.getState)
   }
+
+  test("Thread.clone should fail") {
+    val thread = new Thread("abc")
+    expectThrows(classOf[CloneNotSupportedException], thread.clone())
+  }
 }
