@@ -1,13 +1,13 @@
 package scala.scalanative.runtime
 
-final class Monitor private[runtime] () {
-  import scala.scalanative.posix.pthread._
-  import scala.scalanative.posix.sys.types.pthread_mutex_t
-  import scala.scalanative.native._
-  import scala.scalanative.native.stdlib.malloc
+import scala.scalanative.posix.pthread._
+import scala.scalanative.posix.sys.types.{pthread_mutex_t, pthread_mutexattr_t}
+import scala.scalanative.native._
+import scala.scalanative.native.stdlib.malloc
+final class Monitor private () {
 
   private val mutexPtr: Ptr[pthread_mutex_t] = malloc(pthread_mutex_t_size).asInstanceOf[Ptr[pthread_mutex_t]]
-  PTHREAD_MUTEX_INITIALIZER(mutexPtr)
+  pthread_mutex_init(mutexPtr, Monitor.mutexAttrPtr)
 
   def _notify(): Unit                              = ()
   def _notifyAll(): Unit                           = ()
@@ -19,5 +19,9 @@ final class Monitor private[runtime] () {
 }
 
 object Monitor {
+  private val mutexAttrPtr: Ptr[pthread_mutexattr_t] = malloc(pthread_mutexattr_t_size).asInstanceOf[Ptr[pthread_mutexattr_t]]
+  pthread_mutexattr_init(mutexAttrPtr)
+  pthread_mutexattr_settype(mutexAttrPtr, PTHREAD_MUTEX_RECURSIVE)
+
   val global: Monitor = new Monitor()
 }

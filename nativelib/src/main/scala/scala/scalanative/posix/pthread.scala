@@ -299,4 +299,7 @@ object pthread {
 
   @name("scalanative_size_of_pthread_mutex_t")
   def pthread_mutex_t_size: CSize = extern
+
+  @name("scalanative_size_of_pthread_mutexattr_t")
+  def pthread_mutexattr_t_size: CSize = extern
 }

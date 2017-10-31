@@ -10,6 +10,10 @@ size_t scalanative_size_of_pthread_mutex_t () {
     return sizeof(pthread_mutex_t);
 }
 
+size_t scalanative_size_of_pthread_mutexattr_t () {
+    return sizeof(pthread_mutexattr_t);
+}
+
 int scalanative_pthread_cancel_asynchronous() {
     return PTHREAD_CANCEL_ASYNCHRONOUS;
 }
