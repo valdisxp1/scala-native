@@ -289,9 +289,14 @@ object pthread {
   def PTHREAD_COND_INITIALIZER: pthread_cond_t = extern
 
   @name("scalanative_pthread_mutex_initializer")
-  def PTHREAD_MUTEX_INITIALIZER: pthread_mutex_t = extern
+  def PTHREAD_MUTEX_INITIALIZER(ptr: Ptr[pthread_mutex_t]): Unit = extern
 
   @name("scalanative_pthread_rwlock_initializer")
   def PTHREAD_RWLOCK_INITIALIZER: pthread_rwlock_t = extern
 
+  @name("scalanative_size_of_pthread_t")
+  def pthread_t_size: CSize = extern
+
+  @name("scalanative_size_of_pthread_mutex_t")
+  def pthread_mutex_t_size: CSize = extern
 }

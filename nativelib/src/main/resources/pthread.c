@@ -1,5 +1,14 @@
 #include <pthread.h>
 #include <sys/types.h>
+#include <string.h>
+
+size_t scalanative_size_of_pthread_t () {
+    return sizeof(pthread_t);
+}
+
+size_t scalanative_size_of_pthread_mutex_t () {
+    return sizeof(pthread_mutex_t);
+}
 
 int scalanative_pthread_cancel_asynchronous() {
     return PTHREAD_CANCEL_ASYNCHRONOUS;
@@ -90,8 +99,9 @@ pthread_cond_t scalanative_pthread_cond_initializer() {
     return (pthread_cond_t)PTHREAD_COND_INITIALIZER;
 }
 
-pthread_mutex_t scalanative_pthread_mutex_initializer() {
-    return (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+void scalanative_pthread_mutex_initializer(pthread_mutex_t* ptr) {
+    pthread_mutex_t tmp = PTHREAD_MUTEX_INITIALIZER;
+    memcpy(ptr, &tmp, sizeof(pthread_mutex_t));
 }
 
 pthread_rwlock_t scalanative_pthread_rwlock_initializer() {
