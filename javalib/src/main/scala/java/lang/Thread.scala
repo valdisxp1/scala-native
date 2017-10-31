@@ -5,7 +5,15 @@ import java.lang.Thread._
 import java.lang.Thread.State
 
 import scala.scalanative.runtime.NativeThread
-import scala.scalanative.native.{CFunctionPtr, CInt, Ptr, ULong, stackalloc}
+import scala.scalanative.native.{
+  CFunctionPtr,
+  CInt,
+  Ptr,
+  ULong,
+  stackalloc,
+  sizeof
+}
+import scala.scalanative.native.stdlib.{malloc, free}
 import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_t}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
@@ -244,7 +252,7 @@ class Thread private (
       // adding the thread to the thread group
       group.add(this)
 
-      val threadPtr = stackalloc[Thread]
+      val threadPtr = malloc(sizeof[Thread]).asInstanceOf[Ptr[Thread]]
       !threadPtr = this
 
       val id = stackalloc[pthread_t]
@@ -260,23 +268,8 @@ class Thread private (
       underlying = !id
       THREAD_LIST(underlying) = this
 
-      // wjw -- why are we *waiting* for a child thread to actually start running?
-      // this *guarantees* two context switches
-      // nothing in j.l.Thread spec says we have to do this
-      // my guess is that this actually masks an underlying race condition that we need to fix.
-
-      val interrupted =
-        try {
-          while (!this.started) {
-            lock.wait()
-          }
-          false
-        } catch {
-          case e: InterruptedException =>
-            true
-        }
-
-      if (interrupted) Thread.currentThread.interrupt()
+      alive = true
+      started = true
     }
   }
 
@@ -351,8 +344,7 @@ object Thread {
   // called as Ptr[Thread] => Ptr[Void]
   private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
     val thread = !p.asInstanceOf[Ptr[Thread]]
-    pre(thread)
-
+    free(p)
     try {
       thread.run()
     } catch {
@@ -370,14 +362,6 @@ object Thread {
     thread synchronized {
       thread.alive = false
       thread.notifyAll()
-    }
-  }
-
-  private def pre(thread: Thread) = {
-    lock synchronized {
-      thread.alive = true
-      thread.started = true
-      lock.notifyAll()
     }
   }
 
