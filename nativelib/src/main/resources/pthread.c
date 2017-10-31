@@ -98,16 +98,3 @@ int scalanative_pthread_scope_process() {
 int scalanative_pthread_scope_system() {
     return PTHREAD_SCOPE_SYSTEM;
 }
-
-pthread_cond_t scalanative_pthread_cond_initializer() {
-    return (pthread_cond_t)PTHREAD_COND_INITIALIZER;
-}
-
-void scalanative_pthread_mutex_initializer(pthread_mutex_t* ptr) {
-    pthread_mutex_t tmp = PTHREAD_MUTEX_INITIALIZER;
-    memcpy(ptr, &tmp, sizeof(pthread_mutex_t));
-}
-
-pthread_rwlock_t scalanative_pthread_rwlock_initializer() {
-    return (pthread_rwlock_t)PTHREAD_RWLOCK_INITIALIZER;
-}
