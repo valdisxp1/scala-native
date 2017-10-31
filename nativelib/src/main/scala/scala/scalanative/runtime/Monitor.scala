@@ -6,7 +6,8 @@ import scala.scalanative.native._
 import scala.scalanative.native.stdlib.malloc
 final class Monitor private () {
 
-  private val mutexPtr: Ptr[pthread_mutex_t] = malloc(pthread_mutex_t_size).asInstanceOf[Ptr[pthread_mutex_t]]
+  private val mutexPtr: Ptr[pthread_mutex_t] = malloc(pthread_mutex_t_size)
+    .asInstanceOf[Ptr[pthread_mutex_t]]
   pthread_mutex_init(mutexPtr, Monitor.mutexAttrPtr)
 
   def _notify(): Unit                              = ()
@@ -19,7 +20,8 @@ final class Monitor private () {
 }
 
 object Monitor {
-  private val mutexAttrPtr: Ptr[pthread_mutexattr_t] = malloc(pthread_mutexattr_t_size).asInstanceOf[Ptr[pthread_mutexattr_t]]
+  private val mutexAttrPtr: Ptr[pthread_mutexattr_t] = malloc(
+    pthread_mutexattr_t_size).asInstanceOf[Ptr[pthread_mutexattr_t]]
   pthread_mutexattr_init(mutexAttrPtr)
   pthread_mutexattr_settype(mutexAttrPtr, PTHREAD_MUTEX_RECURSIVE)
 

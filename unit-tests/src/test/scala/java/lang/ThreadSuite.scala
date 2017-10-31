@@ -259,9 +259,9 @@ object ThreadSuite extends tests.Suite {
     expectThrows(classOf[CloneNotSupportedException], thread.clone())
   }
 
-  test("Synchronized block should be executed by at most 1 thread"){
+  test("Synchronized block should be executed by at most 1 thread") {
     val mutex = new Object
-    var tmp = 0
+    var tmp   = 0
     val runnable = new Runnable {
       def run(): Unit = mutex.synchronized {
         tmp *= 2
