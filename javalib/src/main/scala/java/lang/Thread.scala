@@ -370,15 +370,15 @@ object Thread {
     }
   }
 
-  final class State
+  final class State private(override val toString: String)
 
   object State {
-    final val NEW           = new State
-    final val RUNNABLE      = new State
-    final val BLOCKED       = new State
-    final val WAITING       = new State
-    final val TIMED_WAITING = new State
-    final val TERMINATED    = new State
+    final val NEW           = new State("NEW")
+    final val RUNNABLE      = new State("RUNNABLE")
+    final val BLOCKED       = new State("BLOCKED")
+    final val WAITING       = new State("WAITING")
+    final val TIMED_WAITING = new State("TIMED_WAITING")
+    final val TERMINATED    = new State("TERMINATED")
   }
 
   private val callRunRoutine = CFunctionPtr.fromFunction1(callRun)
