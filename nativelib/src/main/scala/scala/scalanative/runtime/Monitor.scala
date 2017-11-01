@@ -18,13 +18,17 @@ final class Monitor private () {
   def _wait(timeout: scala.Long, nanos: Int): Unit = ()
   def enter(): Unit = {
     if (pthread_mutex_trylock(mutexPtr) == EBUSY) {
-      // couldn't get the lock immediately
       val thread = Thread.currentThread().asInstanceOf[ThreadBase]
-      thread.setBlocked(true)
-      // try again and block until you get one
-      pthread_mutex_lock(mutexPtr)
-      // finally got the lock
-      thread.setBlocked(false)
+      if (thread != null) {
+        thread.setBlocked(true)
+        // try again and block until you get one
+        pthread_mutex_lock(mutexPtr)
+        // finally got the lock
+        thread.setBlocked(false)
+      } else {
+        // Thread class in not initialized yet, just try again
+        pthread_mutex_lock(mutexPtr)
+      }
     }
   }
   def exit(): Unit = pthread_mutex_unlock(mutexPtr)
