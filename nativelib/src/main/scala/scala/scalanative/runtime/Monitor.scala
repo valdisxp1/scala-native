@@ -1,6 +1,7 @@
 package scala.scalanative.runtime
 
 import scala.scalanative.posix.pthread._
+import scala.scalanative.posix.errno.EBUSY
 import scala.scalanative.posix.sys.types.{pthread_mutex_t, pthread_mutexattr_t}
 import scala.scalanative.native._
 import scala.scalanative.native.stdlib.malloc
@@ -15,8 +16,24 @@ final class Monitor private () {
   def _wait(): Unit                                = ()
   def _wait(timeout: scala.Long): Unit             = ()
   def _wait(timeout: scala.Long, nanos: Int): Unit = ()
-  def enter(): Unit                                = pthread_mutex_lock(mutexPtr)
-  def exit(): Unit                                 = pthread_mutex_unlock(mutexPtr)
+  def enter(): Unit = {
+    if (pthread_mutex_trylock(mutexPtr) == EBUSY) {
+      // couldn't get the lock immediately
+      val thread = Thread.currentThread().asInstanceOf[ThreadBase]
+      thread.setBlocked(true)
+      // try again and block until you get one
+      pthread_mutex_lock(mutexPtr)
+      // finally got the lock
+      thread.setBlocked(false)
+    }
+  }
+  def exit(): Unit = pthread_mutex_unlock(mutexPtr)
+}
+
+abstract class ThreadBase {
+  private var blocked                               = false
+  final protected def isBlocked                     = blocked
+  private[runtime] def setBlocked(b: Boolean): Unit = blocked = b
 }
 
 object Monitor {

@@ -4,16 +4,16 @@ import java.util
 import java.lang.Thread._
 import java.lang.Thread.State
 
-import scala.scalanative.runtime.NativeThread
+import scala.scalanative.runtime.{NativeThread, ThreadBase}
 import scala.scalanative.native.{
   CFunctionPtr,
   CInt,
   Ptr,
   ULong,
-  stackalloc,
-  sizeof
+  sizeof,
+  stackalloc
 }
-import scala.scalanative.native.stdlib.{malloc, free}
+import scala.scalanative.native.stdlib.{free, malloc}
 import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_t}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
@@ -29,7 +29,8 @@ class Thread private (
     // Stack size to be passes to VM for thread execution
     val stackSize: scala.Long,
     mainThread: scala.Boolean)
-    extends Runnable {
+    extends ThreadBase
+    with Runnable {
 
   private var interruptedState = false
 
@@ -277,7 +278,11 @@ class Thread private (
     if (!started) {
       State.NEW
     } else if (isAlive) {
-      State.RUNNABLE
+      if (isBlocked) {
+        State.BLOCKED
+      } else {
+        State.RUNNABLE
+      }
     } else {
       State.TERMINATED
     }
