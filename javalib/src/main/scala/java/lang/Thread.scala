@@ -4,7 +4,7 @@ import java.util
 import java.lang.Thread._
 import java.lang.Thread.State
 
-import scala.scalanative.runtime.{NativeThread, ThreadBase}
+import scala.scalanative.runtime.{CAtomicInt, NativeThread, ThreadBase}
 import scala.scalanative.native.{
   CFunctionPtr,
   CInt,
@@ -36,7 +36,7 @@ class Thread private (
     extends ThreadBase
     with Runnable {
 
-  private var interruptedState = false
+  private var livenessState = CAtomicInt(internalNew)
 
   // Thread's ID
   private val threadId: scala.Long = getNextThreadId
@@ -63,12 +63,10 @@ class Thread private (
   private var priority: Int = if (!mainThread) parentThread.priority else 5
 
   // Indicates if the thread was already started
-  var started: scala.Boolean = false
-
-  // Indicates if the thread is alive
-  // Note: this was originally named 'isAlive' in Harmony but
-  // conflicted with the 'isAlive' method
-  var alive: scala.Boolean = false
+  def started: scala.Boolean = {
+    val value = livenessState.load()
+    value > internalNew
+  }
 
   // Uncaught exception handler for this thread
   private var exceptionHandler: Thread.UncaughtExceptionHandler = _
@@ -147,17 +145,24 @@ class Thread private (
   def getId: scala.Long = threadId
 
   def interrupt(): Unit = {
-    lock.synchronized {
-      checkAccess()
-      if (started) interruptedState = true
-    }
+    checkAccess()
+    livenessState.compareAndSwapStrong(internalStarting, internalInterrupted)
+    livenessState.compareAndSwapStrong(internalRunnable, internalInterrupted)
   }
 
-  final def isAlive: scala.Boolean = lock.synchronized(alive)
+  var oldValue = -1
+
+  final def isAlive: scala.Boolean = {
+    val value = livenessState.load()
+    value == internalRunnable || value == internalStarting
+  }
 
   final def isDaemon: scala.Boolean = daemon
 
-  def isInterrupted: scala.Boolean = interruptedState
+  def isInterrupted: scala.Boolean = {
+    val value = livenessState.load()
+    value == internalInterrupted || value == internalInterruptedTerminated
+  }
 
   final def join(): Unit = synchronized {
     while (isAlive) wait()
@@ -249,39 +254,36 @@ class Thread private (
 
   //synchronized
   def start(): Unit = {
-    lock.synchronized {
-      if (started)
-        //this thread was started
-        throw new IllegalThreadStateException(
-          "This thread was already started!")
-      // adding the thread to the thread group
-      group.add(this)
-
-      val threadPtr = malloc(sizeof[Thread]).asInstanceOf[Ptr[Thread]]
-      !threadPtr = this
-
-      val id = stackalloc[pthread_t]
-      val status =
-        pthread_create(id,
-                       null.asInstanceOf[Ptr[pthread_attr_t]],
-                       callRunRoutine,
-                       threadPtr.asInstanceOf[Ptr[scala.Byte]])
-      if (status != 0)
-        throw new Exception(
-          "Failed to create new thread, pthread error " + status)
-
-      underlying = !id
-      THREAD_LIST(underlying) = this
-
-      alive = true
-      started = true
+    if (!livenessState.compareAndSwapStrong(internalNew, internalStarting)._1) {
+      //this thread was started
+      throw new IllegalThreadStateException("This thread was already started!")
     }
+    // adding the thread to the thread group
+    group.add(this)
+
+    val threadPtr = malloc(sizeof[Thread]).asInstanceOf[Ptr[Thread]]
+    !threadPtr = this
+
+    val id = stackalloc[pthread_t]
+    val status =
+      pthread_create(id,
+                     null.asInstanceOf[Ptr[pthread_attr_t]],
+                     callRunRoutine,
+                     threadPtr.asInstanceOf[Ptr[scala.Byte]])
+    if (status != 0)
+      throw new Exception(
+        "Failed to create new thread, pthread error " + status)
+
+    underlying = !id
   }
 
   def getState: State = {
-    if (!started) {
+    val value = livenessState.load()
+    if (value == internalNew) {
       State.NEW
-    } else if (isAlive) {
+    } else if (value == internalStarting) {
+      State.RUNNABLE
+    } else if (value == internalRunnable) {
       if (isBlocked) {
         State.BLOCKED
       } else {
@@ -305,7 +307,7 @@ class Thread private (
     if (throwable == null)
       throw new NullPointerException("The argument is null!")
     lock.synchronized {
-      if (isAlive && started) {
+      if (isAlive) {
         val status: Int = pthread_cancel(underlying)
         if (status != 0)
           throw new InternalError("Pthread error " + status)
@@ -353,14 +355,14 @@ object Thread {
     !ptr
   }
 
-  private final val THREAD_LIST = new mutable.HashMap[pthread_t, Thread]()
-
   // defined as Ptr[Void] => Ptr[Void]
   // called as Ptr[Thread] => Ptr[Void]
   private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
     val thread = !p.asInstanceOf[Ptr[Thread]]
     pthread_setspecific(myThreadKey, p)
     free(p)
+    thread.livenessState
+      .compareAndSwapStrong(internalStarting, internalRunnable)
     try {
       thread.run()
     } catch {
@@ -375,11 +377,23 @@ object Thread {
 
   private def post(thread: Thread) = {
     thread.group.remove(thread)
+    thread.livenessState
+      .compareAndSwapStrong(internalRunnable, internalTerminated)
+    thread.livenessState
+      .compareAndSwapStrong(internalInterrupted, internalInterruptedTerminated)
     thread synchronized {
-      thread.alive = false
       thread.notifyAll()
     }
   }
+
+  // internal liveness state values
+  // waiting and blocked handled separately
+  private final val internalNew                   = 0
+  private final val internalStarting              = 1
+  private final val internalRunnable              = 2
+  private final val internalInterrupted           = 3
+  private final val internalTerminated            = 4
+  private final val internalInterruptedTerminated = 5
 
   final class State private (override val toString: String)
 
@@ -496,9 +510,9 @@ object Thread {
   }
 
   def interrupted(): scala.Boolean = {
-    val ret = currentThread().isInterrupted
-    currentThread().interruptedState = false
-    ret
+    currentThread().livenessState
+      .compareAndSwapStrong(internalInterrupted, internalRunnable)
+      ._1
   }
 
   def sleep(millis: scala.Long, nanos: scala.Int): Unit = {
