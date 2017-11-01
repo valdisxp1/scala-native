@@ -14,7 +14,11 @@ import scala.scalanative.native.{
   stackalloc
 }
 import scala.scalanative.native.stdlib.{free, malloc}
-import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_t}
+import scala.scalanative.posix.sys.types.{
+  pthread_attr_t,
+  pthread_key_t,
+  pthread_t
+}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
 
@@ -343,12 +347,19 @@ object Thread {
 
   import scala.collection.mutable
 
+  val myThreadKey: pthread_key_t = {
+    val ptr = stackalloc[pthread_key_t]
+    pthread_key_create(ptr, null)
+    !ptr
+  }
+
   private final val THREAD_LIST = new mutable.HashMap[pthread_t, Thread]()
 
   // defined as Ptr[Void] => Ptr[Void]
   // called as Ptr[Thread] => Ptr[Void]
   private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
     val thread = !p.asInstanceOf[Ptr[Thread]]
+    pthread_setspecific(myThreadKey, p)
     free(p)
     try {
       thread.run()
@@ -370,7 +381,7 @@ object Thread {
     }
   }
 
-  final class State private(override val toString: String)
+  final class State private (override val toString: String)
 
   object State {
     final val NEW           = new State("NEW")
@@ -413,8 +424,10 @@ object Thread {
 
   def activeCount: Int = currentThread().group.activeCount()
 
-  def currentThread(): Thread =
-    lock.synchronized(THREAD_LIST.getOrElse(pthread_self(), MainThread))
+  def currentThread(): Thread = {
+    val ptr = pthread_getspecific(myThreadKey).asInstanceOf[Ptr[Thread]]
+    if (ptr != null) !ptr else MainThread
+  }
 
   def dumpStack(): Unit = {
     val stack: Array[StackTraceElement] = new Throwable().getStackTrace

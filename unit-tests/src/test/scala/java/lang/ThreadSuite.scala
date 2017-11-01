@@ -278,4 +278,13 @@ object ThreadSuite extends tests.Suite {
     t2.join()
     assertEquals(0, tmp)
   }
+
+  test("Thread.currentThread") {
+    new Thread {
+      override def run(): Unit = {
+        assertEquals(this, Thread.currentThread())
+      }
+    }.start()
+    assert(Thread.currentThread() != null)
+  }
 }
