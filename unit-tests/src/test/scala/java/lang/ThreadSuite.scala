@@ -248,6 +248,7 @@ object ThreadSuite extends tests.Suite {
     }
     assertEquals(Thread.State.NEW, thread.getState)
     thread.start()
+    assert(thread.isAlive)
     assertEquals(Thread.State.RUNNABLE, thread.getState)
     thread.join()
     assertEquals(Thread.State.TERMINATED, thread.getState)
