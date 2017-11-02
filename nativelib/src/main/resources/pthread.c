@@ -1,5 +1,18 @@
 #include <pthread.h>
 #include <sys/types.h>
+#include <string.h>
+
+size_t scalanative_size_of_pthread_t () {
+    return sizeof(pthread_t);
+}
+
+size_t scalanative_size_of_pthread_mutex_t () {
+    return sizeof(pthread_mutex_t);
+}
+
+size_t scalanative_size_of_pthread_mutexattr_t () {
+    return sizeof(pthread_mutexattr_t);
+}
 
 int scalanative_pthread_cancel_asynchronous() {
     return PTHREAD_CANCEL_ASYNCHRONOUS;
@@ -84,16 +97,4 @@ int scalanative_pthread_scope_process() {
 
 int scalanative_pthread_scope_system() {
     return PTHREAD_SCOPE_SYSTEM;
-}
-
-pthread_cond_t scalanative_pthread_cond_initializer() {
-    return (pthread_cond_t)PTHREAD_COND_INITIALIZER;
-}
-
-pthread_mutex_t scalanative_pthread_mutex_initializer() {
-    return (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
-}
-
-pthread_rwlock_t scalanative_pthread_rwlock_initializer() {
-    return (pthread_rwlock_t)PTHREAD_RWLOCK_INITIALIZER;
 }

@@ -4,9 +4,21 @@ import java.util
 import java.lang.Thread._
 import java.lang.Thread.State
 
-import scala.scalanative.runtime.NativeThread
-import scala.scalanative.native.{CFunctionPtr, CInt, Ptr, ULong, stackalloc}
-import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_t}
+import scala.scalanative.runtime.{NativeThread, ThreadBase}
+import scala.scalanative.native.{
+  CFunctionPtr,
+  CInt,
+  Ptr,
+  ULong,
+  sizeof,
+  stackalloc
+}
+import scala.scalanative.native.stdlib.{free, malloc}
+import scala.scalanative.posix.sys.types.{
+  pthread_attr_t,
+  pthread_key_t,
+  pthread_t
+}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
 
@@ -21,7 +33,8 @@ class Thread private (
     // Stack size to be passes to VM for thread execution
     val stackSize: scala.Long,
     mainThread: scala.Boolean)
-    extends Runnable {
+    extends ThreadBase
+    with Runnable {
 
   private var interruptedState = false
 
@@ -244,7 +257,7 @@ class Thread private (
       // adding the thread to the thread group
       group.add(this)
 
-      val threadPtr = stackalloc[Thread]
+      val threadPtr = malloc(sizeof[Thread]).asInstanceOf[Ptr[Thread]]
       !threadPtr = this
 
       val id = stackalloc[pthread_t]
@@ -260,23 +273,8 @@ class Thread private (
       underlying = !id
       THREAD_LIST(underlying) = this
 
-      // wjw -- why are we *waiting* for a child thread to actually start running?
-      // this *guarantees* two context switches
-      // nothing in j.l.Thread spec says we have to do this
-      // my guess is that this actually masks an underlying race condition that we need to fix.
-
-      val interrupted =
-        try {
-          while (!this.started) {
-            lock.wait()
-          }
-          false
-        } catch {
-          case e: InterruptedException =>
-            true
-        }
-
-      if (interrupted) Thread.currentThread.interrupt()
+      alive = true
+      started = true
     }
   }
 
@@ -284,7 +282,11 @@ class Thread private (
     if (!started) {
       State.NEW
     } else if (isAlive) {
-      State.RUNNABLE
+      if (isBlocked) {
+        State.BLOCKED
+      } else {
+        State.RUNNABLE
+      }
     } else {
       State.TERMINATED
     }
@@ -345,14 +347,20 @@ object Thread {
 
   import scala.collection.mutable
 
+  val myThreadKey: pthread_key_t = {
+    val ptr = stackalloc[pthread_key_t]
+    pthread_key_create(ptr, null)
+    !ptr
+  }
+
   private final val THREAD_LIST = new mutable.HashMap[pthread_t, Thread]()
 
   // defined as Ptr[Void] => Ptr[Void]
   // called as Ptr[Thread] => Ptr[Void]
   private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
     val thread = !p.asInstanceOf[Ptr[Thread]]
-    pre(thread)
-
+    pthread_setspecific(myThreadKey, p)
+    free(p)
     try {
       thread.run()
     } catch {
@@ -373,23 +381,15 @@ object Thread {
     }
   }
 
-  private def pre(thread: Thread) = {
-    lock synchronized {
-      thread.alive = true
-      thread.started = true
-      lock.notifyAll()
-    }
-  }
-
-  final class State
+  final class State private (override val toString: String)
 
   object State {
-    final val NEW           = new State
-    final val RUNNABLE      = new State
-    final val BLOCKED       = new State
-    final val WAITING       = new State
-    final val TIMED_WAITING = new State
-    final val TERMINATED    = new State
+    final val NEW           = new State("NEW")
+    final val RUNNABLE      = new State("RUNNABLE")
+    final val BLOCKED       = new State("BLOCKED")
+    final val WAITING       = new State("WAITING")
+    final val TIMED_WAITING = new State("TIMED_WAITING")
+    final val TERMINATED    = new State("TERMINATED")
   }
 
   private val callRunRoutine = CFunctionPtr.fromFunction1(callRun)
@@ -424,8 +424,10 @@ object Thread {
 
   def activeCount: Int = currentThread().group.activeCount()
 
-  def currentThread(): Thread =
-    lock.synchronized(THREAD_LIST.getOrElse(pthread_self(), MainThread))
+  def currentThread(): Thread = {
+    val ptr = pthread_getspecific(myThreadKey).asInstanceOf[Ptr[Thread]]
+    if (ptr != null) !ptr else MainThread
+  }
 
   def dumpStack(): Unit = {
     val stack: Array[StackTraceElement] = new Throwable().getStackTrace

@@ -72,7 +72,7 @@ package object runtime {
   def getType(obj: Object): Ptr[ClassType] = !obj.cast[Ptr[Ptr[ClassType]]]
 
   /** Get monitor for given object. */
-  def getMonitor(obj: Object): Monitor = Monitor.dummy
+  def getMonitor(obj: Object): Monitor = Monitor.global
 
   /** Initialize runtime with given arguments and return the
    *  rest as Java-style array.
