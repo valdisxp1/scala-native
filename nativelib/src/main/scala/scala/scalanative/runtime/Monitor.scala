@@ -2,11 +2,19 @@ package scala.scalanative.runtime
 
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.errno.{EBUSY, EPERM}
-import scala.scalanative.posix.sys.types.{pthread_cond_t, pthread_condattr_t, pthread_mutex_t, pthread_mutexattr_t}
+import scala.scalanative.posix.sys.types.{
+  pthread_cond_t,
+  pthread_condattr_t,
+  pthread_mutex_t,
+  pthread_mutexattr_t
+}
 import scala.scalanative.native._
 import scala.scalanative.native.stdlib.malloc
-import scala.scalanative.posix.sys.time.timespec
-final class Monitor private () {
+import scala.scalanative.posix.sys.time.{
+  timespec,
+  CLOCK_REALTIME,
+  clock_gettime
+}
 final class Monitor private[runtime] () {
 
   private val mutexPtr: Ptr[pthread_mutex_t] = malloc(pthread_mutex_t_size)
@@ -24,19 +32,30 @@ final class Monitor private[runtime] () {
       throw new IllegalMonitorStateException()
     }
   }
-  def _wait(timeout: scala.Long): Unit = _wait(timeout, 0)
-  def _wait(timeout: scala.Long, nanos: Int): Unit = {
-    val time = System.nanoTime()
-    val diff = nanos.toLong + timeout * 10000000
-    val deadline = time + diff
+  def _wait(millis: scala.Long): Unit = _wait(millis, 0)
+  def _wait(millis: scala.Long, nanos: Int): Unit = {
     val tsPtr = stackalloc[timespec]
-    !tsPtr._1 = deadline / 10000000
-    !tsPtr._2 = deadline % 10000000
+    clock_gettime(CLOCK_REALTIME, tsPtr)
+    val curSeconds = !tsPtr._1
+    val curNanos   = !tsPtr._2
+    println("start:    " + curSeconds + "." + curNanos)
+    val overflownNanos = curNanos + nanos + (millis % 1000) * 1000000
+
+    val deadlineNanos   = overflownNanos % 1000000000
+    val deadLineSeconds = curSeconds + overflownNanos / 1000000000
+
+    !tsPtr._1 = deadLineSeconds
+    !tsPtr._2 = deadlineNanos
+
+    println("deadline: " + !tsPtr._1 + "." + !tsPtr._2)
 
     val returnVal = pthread_cond_timedwait(condPtr, mutexPtr, tsPtr)
     if (returnVal == EPERM) {
       throw new IllegalMonitorStateException()
     }
+    clock_gettime(CLOCK_REALTIME, tsPtr)
+    println("time:    " + !tsPtr._1 + "." + !tsPtr._2)
+    println("!!!" + returnVal)
   }
   def enter(): Unit = {
     if (pthread_mutex_trylock(mutexPtr) == EBUSY) {

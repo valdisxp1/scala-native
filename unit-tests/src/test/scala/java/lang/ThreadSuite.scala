@@ -419,7 +419,7 @@ object ThreadSuite extends tests.Suite {
     }
     Thread.sleep(100)
     assertEquals(timesNotified, 2)
-  }*/
+  }
 
   test("Multiple locks should not conflict") {
     val mutex1 = new Object
