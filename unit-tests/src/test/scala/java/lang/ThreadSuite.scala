@@ -126,13 +126,14 @@ object ThreadSuite extends tests.Suite {
         }
       }
     }
-    new Thread(new Runnable {
+    val t = new Thread(new Runnable {
       def run(): Unit = {
         hasTwoArgMethod.call("abc", 123)
         hasTwoArgMethod.call("abc", 123)
       }
-    }).start()
-    Thread.sleep(100)
+    })
+    t.start()
+    t.join()
     assertEquals(hasTwoArgMethod.timesCalled, 2)
   }
 
