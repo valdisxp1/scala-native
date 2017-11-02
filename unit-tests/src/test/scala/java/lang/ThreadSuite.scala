@@ -248,6 +248,7 @@ object ThreadSuite extends tests.Suite {
     }
     assertEquals(Thread.State.NEW, thread.getState)
     thread.start()
+    assert(thread.isAlive)
     assertEquals(Thread.State.RUNNABLE, thread.getState)
     thread.join()
     assertEquals(Thread.State.TERMINATED, thread.getState)
@@ -257,5 +258,34 @@ object ThreadSuite extends tests.Suite {
   test("Thread.clone should fail") {
     val thread = new Thread("abc")
     expectThrows(classOf[CloneNotSupportedException], thread.clone())
+  }
+
+  test("Synchronized block should be executed by at most 1 thread") {
+    val mutex = new Object
+    var tmp   = 0
+    val runnable = new Runnable {
+      def run(): Unit = mutex.synchronized {
+        tmp *= 2
+        tmp += 1
+        Thread.sleep(100)
+        tmp -= 1
+      }
+    }
+    val t1 = new Thread(runnable)
+    t1.start()
+    val t2 = new Thread(runnable)
+    t2.start()
+    t1.join()
+    t2.join()
+    assertEquals(0, tmp)
+  }
+
+  test("Thread.currentThread") {
+    new Thread {
+      override def run(): Unit = {
+        assertEquals(this, Thread.currentThread())
+      }
+    }.start()
+    assert(Thread.currentThread() != null)
   }
 }
