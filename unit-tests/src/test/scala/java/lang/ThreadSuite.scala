@@ -388,9 +388,11 @@ object ThreadSuite extends tests.Suite {
     Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 0)
     mutex.notify()
+    Thread.sleep(100)
     Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 1)
     mutex.notify()
+    Thread.sleep(100)
     Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 2)
   }
@@ -403,6 +405,7 @@ object ThreadSuite extends tests.Suite {
     waiter2.start()
     assertEquals(timesNotified, 0)
     mutex.notifyAll()
+    Thread.sleep(100)
     assertEquals(timesNotified, 2)
   }*/
 
