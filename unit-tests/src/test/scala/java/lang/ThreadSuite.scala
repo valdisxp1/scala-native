@@ -361,7 +361,9 @@ object ThreadSuite extends tests.Suite {
     def timesNotified = if (notified) 1 else 0
 
     override def run(): Unit = {
-      mutex.wait()
+      mutex.synchronized {
+        mutex.wait()
+      }
       Console.out.println(">>> IM OUT")
       notified = true
     }
@@ -371,11 +373,15 @@ object ThreadSuite extends tests.Suite {
     new Thread {
       override def run() = {
         Thread.sleep(100)
-        mutex.notify()
+        mutex.synchronized {
+          mutex.notify()
+        }
       }
     }.start()
     takesAtLeast(100) {
-      mutex.wait(1000)
+      mutex.synchronized {
+        mutex.wait(1000)
+      }
     }
   }
   test("wait-notify 2") {
@@ -387,11 +393,15 @@ object ThreadSuite extends tests.Suite {
     waiter2.start()
     Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 0)
-    mutex.notify()
+    mutex.synchronized {
+      mutex.notify()
+    }
     Thread.sleep(100)
     Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 1)
-    mutex.notify()
+    mutex.synchronized {
+      mutex.notify()
+    }
     Thread.sleep(100)
     Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 2)
@@ -404,7 +414,9 @@ object ThreadSuite extends tests.Suite {
     waiter1.start()
     waiter2.start()
     assertEquals(timesNotified, 0)
-    mutex.notifyAll()
+    mutex.synchronized {
+      mutex.notifyAll()
+    }
     Thread.sleep(100)
     assertEquals(timesNotified, 2)
   }*/
