@@ -19,8 +19,8 @@ final class Monitor private[runtime] () {
     .asInstanceOf[Ptr[pthread_cond_t]]
   pthread_cond_init(condPtr, Monitor.condAttrPtr)
 
-  def _notify(): Unit    = ()
-  def _notifyAll(): Unit = ()
+  def _notify(): Unit    = pthread_cond_signal(condPtr)
+  def _notifyAll(): Unit = pthread_cond_broadcast(condPtr)
   def _wait(): Unit = {
     val returnVal = pthread_cond_wait(condPtr, mutexPtr)
     if (returnVal == EPERM) {
