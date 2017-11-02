@@ -366,15 +366,15 @@ object ThreadSuite extends tests.Suite {
       notified = true
     }
   }
-/*  test("wait-notify") {
+  test("wait-notify") {
     val mutex = new Object
-    new Thread{
+    new Thread {
       override def run() = {
         Thread.sleep(100)
         mutex.notify()
       }
     }.start()
-    takesAtLeast(100){
+    takesAtLeast(100) {
       mutex.wait(1000)
     }
   }
@@ -385,13 +385,13 @@ object ThreadSuite extends tests.Suite {
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
-    Console.out.println(">>"+timesNotified)
+    Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 0)
     mutex.notify()
-    Console.out.println(">>"+timesNotified)
+    Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 1)
     mutex.notify()
-    Console.out.println(">>"+timesNotified)
+    Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 2)
   }
   test("wait-notifyAll") {
