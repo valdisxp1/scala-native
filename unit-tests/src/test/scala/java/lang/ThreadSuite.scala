@@ -21,6 +21,34 @@ object ThreadSuite extends tests.Suite {
 
   }
 
+
+  class FatObject(val id: Int = 0) {
+    var x1, x2, x3, x4, x5, x6, x7, x8 = 0L
+
+    def nextOne = new FatObject(id + 1)
+  }
+
+  class MemoryMuncher(times: Int) extends Thread {
+    var visibleState = new FatObject()
+
+    override def run(): Unit = {
+      var remainingCount = times
+      while (remainingCount > 0) {
+        visibleState = visibleState.nextOne
+        remainingCount -= 1
+      }
+    }
+  }
+
+  test("GC should not crash with multiple threads") {
+    val muncher1 = new MemoryMuncher(10000)
+    val muncher2 = new MemoryMuncher(10000)
+    muncher1.start()
+    muncher2.start()
+    muncher1.join()
+    muncher2.join()
+  }
+
   def takesAtLeast[R](expectedDelayMs: scala.Long)(f: => R): R = {
     val start  = System.currentTimeMillis()
     val result = f
