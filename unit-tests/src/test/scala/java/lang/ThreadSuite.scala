@@ -199,6 +199,7 @@ object ThreadSuite extends tests.Suite {
     })
     t.start()
     t.join()
+    Console.out.println("hasTwoArgMethod.timesCalled: "+ hasTwoArgMethod.timesCalled)
     assertEquals(hasTwoArgMethod.timesCalled, 2)
   }
 
@@ -262,7 +263,13 @@ object ThreadSuite extends tests.Suite {
     }
     thread.start()
     takesAtLeast(100) {
-      thread.join(100)
+      try {
+        thread.join(100)
+      } catch {
+        case e: Throwable =>
+          e.printStackTrace(Console.out)
+          throw e
+      }
     }
     assert(thread.isAlive)
   }

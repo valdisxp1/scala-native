@@ -15,7 +15,7 @@ import scala.scalanative.posix.sys.time.{
   CLOCK_REALTIME,
   clock_gettime
 }
-final class Monitor private[runtime] () {
+final class Monitor private[runtime] (private val debug: Boolean) {
 
   private val mutexPtr: Ptr[pthread_mutex_t] = malloc(pthread_mutex_t_size)
     .asInstanceOf[Ptr[pthread_mutex_t]]
@@ -38,7 +38,7 @@ final class Monitor private[runtime] () {
     clock_gettime(CLOCK_REALTIME, tsPtr)
     val curSeconds = !tsPtr._1
     val curNanos   = !tsPtr._2
-    println("start:    " + curSeconds + "." + curNanos)
+    println(""+System.identityHashCode(this)+" start:    " + curSeconds + "." + curNanos)
     val overflownNanos = curNanos + nanos + (millis % 1000) * 1000000
 
     val deadlineNanos   = overflownNanos % 1000000000
@@ -47,7 +47,7 @@ final class Monitor private[runtime] () {
     !tsPtr._1 = deadLineSeconds
     !tsPtr._2 = deadlineNanos
 
-    println("deadline: " + !tsPtr._1 + "." + !tsPtr._2)
+    println(""+System.identityHashCode(this)+" deadline: " + !tsPtr._1 + "." + !tsPtr._2)
 
     val returnVal = pthread_cond_timedwait(condPtr, mutexPtr, tsPtr)
     if (returnVal == EPERM) {
@@ -58,6 +58,9 @@ final class Monitor private[runtime] () {
     println("!!!" + returnVal)
   }
   def enter(): Unit = {
+    if(debug) {
+      println("" + System.identityHashCode(this) + " try getLock")
+    }
     if (pthread_mutex_trylock(mutexPtr) == EBUSY) {
       val thread = Thread.currentThread().asInstanceOf[ThreadBase]
       if (thread != null) {
@@ -71,8 +74,16 @@ final class Monitor private[runtime] () {
         pthread_mutex_lock(mutexPtr)
       }
     }
+    if(debug) {
+      println("" + System.identityHashCode(this) + " gotLock")
+    }
   }
-  def exit(): Unit = pthread_mutex_unlock(mutexPtr)
+  def exit(): Unit = {
+    if(debug) {
+      println("" + System.identityHashCode(this) + " releaseLock")
+    }
+    pthread_mutex_unlock(mutexPtr)
+  }
 }
 
 abstract class ThreadBase {
@@ -103,13 +114,11 @@ object Monitor {
     } else {
       try {
         pthread_mutex_lock(monitorCreationMutexPtr)
-        o.__monitor = new Monitor()
+        o.__monitor = new Monitor(x.isInstanceOf[Thread])
         o.__monitor
       } finally {
         pthread_mutex_unlock(monitorCreationMutexPtr)
       }
     }
   }
-
-  val global: Monitor = new Monitor()
 }
