@@ -46,8 +46,7 @@ object Monitor {
   pthread_mutexattr_init(mutexAttrPtr)
   pthread_mutexattr_settype(mutexAttrPtr, PTHREAD_MUTEX_RECURSIVE)
 
-  private[runtime] val monitorCreationMutexPtr: Ptr[pthread_mutex_t] = malloc(
-    pthread_mutex_t_size)
+  private[runtime] val monitorCreationMutexPtr : Ptr[pthread_mutex_t] = malloc(pthread_mutex_t_size)
     .asInstanceOf[Ptr[pthread_mutex_t]]
   pthread_mutex_init(monitorCreationMutexPtr, Monitor.mutexAttrPtr)
 
