@@ -289,4 +289,30 @@ object ThreadSuite extends tests.Suite {
     }.start()
     assert(Thread.currentThread() != null)
   }
+
+  test("Multiple locks should not conflict") {
+    val mutex1 = new Object
+    val mutex2 = new Object
+    var goOn = true
+    new Thread {
+      override def run() =
+        mutex1.synchronized{
+          while (goOn) {
+            Thread.sleep(10)
+        }
+      }
+    }.start()
+
+    val stopper = new Thread {
+      override def run() = {
+        Thread.sleep(100)
+        mutex2.synchronized {
+          goOn = false
+        }
+      }
+    }
+    stopper.start()
+    stopper.join(1000)
+    assertNot(stopper.isAlive)
+  }
 }
