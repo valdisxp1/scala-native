@@ -426,8 +426,8 @@ lazy val tests =
     .settings(projectSettings)
     .settings(noPublishSettings)
     .settings(
-      // nativeOptimizerReporter := OptimizerReporter.toDirectory(
-      //   crossTarget.value),
+       nativeOptimizerReporter := OptimizerReporter.toDirectory(
+         crossTarget.value),
       libraryDependencies += "org.scala-native" %%% "test-interface" % nativeVersion,
       testFrameworks += new TestFramework("tests.NativeFramework"),
       envVars in (Test, test) ++= Map(
