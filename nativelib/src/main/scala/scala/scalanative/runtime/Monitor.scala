@@ -114,7 +114,11 @@ object Monitor {
     } else {
       try {
         pthread_mutex_lock(monitorCreationMutexPtr)
-        o.__monitor = new Monitor(x.isInstanceOf[Thread])
+        val isThread = x.isInstanceOf[Thread]
+        o.__monitor = new Monitor(isThread)
+        if(isThread){
+          println(s" ${System.identityHashCode{x}} -> ${System.identityHashCode{o.__monitor}}")
+        }
         o.__monitor
       } finally {
         pthread_mutex_unlock(monitorCreationMutexPtr)

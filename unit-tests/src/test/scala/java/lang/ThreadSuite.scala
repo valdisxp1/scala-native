@@ -106,23 +106,25 @@ object ThreadSuite extends tests.Suite {
     }
   }
 
+  val mutexLOL            = new Thread()
   test("wait suspends execution by at least the requested amount") {
-    val mutex            = new Object()
     val millisecondTests = Seq(0, 1, 5, 100)
     millisecondTests.foreach { ms =>
-      mutex.synchronized {
+      mutexLOL.synchronized {
         takesAtLeast(ms) {
-          mutex.wait(ms)
+          mutexLOL.wait(ms)
         }
       }
     }
     millisecondTests.foreach { ms =>
-      mutex.synchronized {
+      mutexLOL.synchronized {
         takesAtLeast(ms) {
-          mutex.wait(ms, 0)
+          mutexLOL.wait(ms, 0)
         }
       }
     }
+  }
+  test("wait suspends execution by at least the requested amount"){
 
     val tests = Seq(0 -> 0,
                     0   -> 1,
@@ -135,9 +137,9 @@ object ThreadSuite extends tests.Suite {
 
     tests.foreach {
       case (ms, nanos) =>
-        mutex.synchronized {
+        mutexLOL.synchronized {
           takesAtLeast(ms, nanos) {
-            mutex.wait(ms, nanos)
+            mutexLOL.wait(ms, nanos)
           }
         }
     }
