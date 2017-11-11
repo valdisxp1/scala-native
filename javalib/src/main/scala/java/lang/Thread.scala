@@ -164,11 +164,9 @@ class Thread private (
     value == internalInterrupted || value == internalInterruptedTerminated
   }
 
-  final def join(): Unit = this.synchronized {
-    while (isAlive) this.wait()
-  }
+  final def join(): Unit = while (isAlive) synchronized { wait()}
 
-  final def join(ml: scala.Long): Unit = this.synchronized {
+  final def join(ml: scala.Long): Unit = {
     var millis: scala.Long = ml
     if (millis == 0)
       join()
@@ -176,7 +174,9 @@ class Thread private (
       val end: scala.Long         = System.currentTimeMillis() + millis
       var continue: scala.Boolean = true
       while (isAlive && continue) {
-        this.wait(millis)
+        synchronized {
+          wait(millis)
+        }
         millis = end - System.currentTimeMillis()
         if (millis <= 0)
           continue = false
@@ -184,19 +184,21 @@ class Thread private (
     }
   }
 
-  final def join(ml: scala.Long, n: Int): Unit = this.synchronized {
+  final def join(ml: scala.Long, n: Int): Unit = {
     var nanos: Int         = n
     var millis: scala.Long = ml
     if (millis < 0 || nanos < 0 || nanos > 999999)
       throw new IllegalArgumentException()
     else if (millis == 0 && nanos == 0)
-      this.join()
+      join()
     else {
       val end: scala.Long         = System.nanoTime() + 1000000 * millis + nanos.toLong
       var rest: scala.Long        = 0L
       var continue: scala.Boolean = true
       while (isAlive && continue) {
-        this.wait(millis, nanos)
+        synchronized {
+          wait(millis, nanos)
+        }
         rest = end - System.nanoTime()
         if (rest <= 0)
           continue = false
