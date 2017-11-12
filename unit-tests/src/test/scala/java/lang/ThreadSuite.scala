@@ -405,13 +405,15 @@ object ThreadSuite extends tests.Suite {
     mutex.synchronized {
       mutex.notify()
     }
-    Thread.sleep(100)
+    waiter1.join(300)
+    waiter2.join(300)
     Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 1)
     mutex.synchronized {
       mutex.notify()
     }
-    Thread.sleep(100)
+    waiter1.join(300)
+    waiter2.join(300)
     Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 2)
   }
@@ -426,7 +428,8 @@ object ThreadSuite extends tests.Suite {
     mutex.synchronized {
       mutex.notifyAll()
     }
-    Thread.sleep(100)
+    waiter1.join(300)
+    waiter2.join(300)
     assertEquals(timesNotified, 2)
   }
 
