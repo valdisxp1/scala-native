@@ -394,7 +394,7 @@ object ThreadSuite extends tests.Suite {
     }
   }
   test("wait-notify 2") {
-    val mutex         = new Object
+    val mutex         = new Thread
     val waiter1       = new WaitingThread(mutex)
     val waiter2       = new WaitingThread(mutex)
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
