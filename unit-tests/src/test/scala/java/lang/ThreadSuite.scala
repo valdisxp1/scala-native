@@ -398,6 +398,7 @@ object ThreadSuite extends tests.Suite {
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
+    Thread.sleep(200)
     Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 0)
     mutex.synchronized {
@@ -422,6 +423,7 @@ object ThreadSuite extends tests.Suite {
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
+    Thread.sleep(200)
     Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 0)
     mutex.synchronized {
