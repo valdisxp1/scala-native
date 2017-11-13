@@ -1,20 +1,22 @@
 package scala.scalanative.runtime
 
-import scala.scalanative.posix.pthread._
+import scala.scalanative.native._
+import scala.scalanative.native.stdlib.malloc
 import scala.scalanative.posix.errno.{EBUSY, EPERM}
+import scala.scalanative.posix.pthread._
+import scala.scalanative.posix.sys.time.{
+  CLOCK_REALTIME,
+  clock_gettime,
+  timespec
+}
 import scala.scalanative.posix.sys.types.{
   pthread_cond_t,
   pthread_condattr_t,
   pthread_mutex_t,
   pthread_mutexattr_t
 }
-import scala.scalanative.native._
-import scala.scalanative.native.stdlib.malloc
-import scala.scalanative.posix.sys.time.{
-  timespec,
-  CLOCK_REALTIME,
-  clock_gettime
-}
+import scala.scalanative.runtime.ThreadBase._
+
 final class Monitor private[runtime] () {
 
   private val mutexPtr: Ptr[pthread_mutex_t] = malloc(pthread_mutex_t_size)
@@ -27,14 +29,18 @@ final class Monitor private[runtime] () {
   def _notify(): Unit    = pthread_cond_signal(condPtr)
   def _notifyAll(): Unit = pthread_cond_broadcast(condPtr)
   def _wait(): Unit = {
+    val thread = Thread.currentThread().asInstanceOf[ThreadBase]
+    thread.setState(Waiting)
     val returnVal = pthread_cond_wait(condPtr, mutexPtr)
+    thread.setState(Normal)
     if (returnVal == EPERM) {
       throw new IllegalMonitorStateException()
     }
   }
   def _wait(millis: scala.Long): Unit = _wait(millis, 0)
   def _wait(millis: scala.Long, nanos: Int): Unit = {
-    val tsPtr = stackalloc[timespec]
+    val thread = Thread.currentThread().asInstanceOf[ThreadBase]
+    val tsPtr  = stackalloc[timespec]
     clock_gettime(CLOCK_REALTIME, tsPtr)
     val curSeconds     = !tsPtr._1
     val curNanos       = !tsPtr._2
@@ -46,7 +52,9 @@ final class Monitor private[runtime] () {
     !tsPtr._1 = deadLineSeconds
     !tsPtr._2 = deadlineNanos
 
+    thread.setState(TimedWaiting)
     val returnVal = pthread_cond_timedwait(condPtr, mutexPtr, tsPtr)
+    thread.setState(Normal)
     if (returnVal == EPERM) {
       throw new IllegalMonitorStateException()
     }
@@ -55,11 +63,11 @@ final class Monitor private[runtime] () {
     if (pthread_mutex_trylock(mutexPtr) == EBUSY) {
       val thread = Thread.currentThread().asInstanceOf[ThreadBase]
       if (thread != null) {
-        thread.setBlocked(true)
+        thread.setState(Blocked)
         // try again and block until you get one
         pthread_mutex_lock(mutexPtr)
         // finally got the lock
-        thread.setBlocked(false)
+        thread.setState(Normal)
       } else {
         // Thread class in not initialized yet, just try again
         pthread_mutex_lock(mutexPtr)
@@ -70,9 +78,16 @@ final class Monitor private[runtime] () {
 }
 
 abstract class ThreadBase {
-  private var blocked                               = false
-  final protected def isBlocked                     = blocked
-  private[runtime] def setBlocked(b: Boolean): Unit = blocked = b
+  private var state                           = Normal
+  final protected def getLockState: Int       = state
+  private[runtime] def setState(s: Int): Unit = state = s
+}
+
+object ThreadBase {
+  final val Normal       = 0
+  final val Blocked      = 1
+  final val Waiting      = 2
+  final val TimedWaiting = 3
 }
 
 object Monitor {

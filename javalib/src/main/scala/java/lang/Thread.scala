@@ -286,8 +286,13 @@ class Thread private (
     } else if (value == internalStarting) {
       State.RUNNABLE
     } else if (value == internalRunnable) {
-      if (isBlocked) {
+      val lockState = getLockState
+      if (lockState == ThreadBase.Blocked) {
         State.BLOCKED
+      } else if (lockState == ThreadBase.Waiting) {
+        State.WAITING
+      } else if (lockState == ThreadBase.TimedWaiting) {
+        State.TIMED_WAITING
       } else {
         State.RUNNABLE
       }
