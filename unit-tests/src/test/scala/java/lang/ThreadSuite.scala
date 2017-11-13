@@ -387,10 +387,8 @@ object ThreadSuite extends tests.Suite {
         }
       }
     }.start()
-    takesAtLeast(100) {
-      mutex.synchronized {
-        mutex.wait(1000)
-      }
+    mutex.synchronized {
+      mutex.wait(1000)
     }
   }
   test("wait-notify 2") {
@@ -424,12 +422,14 @@ object ThreadSuite extends tests.Suite {
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
+    Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 0)
     mutex.synchronized {
       mutex.notifyAll()
     }
     waiter1.join(300)
     waiter2.join(300)
+    Console.out.println(">>" + timesNotified)
     assertEquals(timesNotified, 2)
   }
 
