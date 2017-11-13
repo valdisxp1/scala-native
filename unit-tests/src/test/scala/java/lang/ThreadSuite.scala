@@ -21,7 +21,6 @@ object ThreadSuite extends tests.Suite {
 
   }
 
-
   class FatObject(val id: Int = 0) {
     var x1, x2, x3, x4, x5, x6, x7, x8 = 0L
 
@@ -102,6 +101,43 @@ object ThreadSuite extends tests.Suite {
       case (ms, nanos) =>
         takesAtLeast(ms, nanos) {
           Thread.sleep(ms, nanos)
+        }
+    }
+  }
+
+  test("wait suspends execution by at least the requested amount") {
+    val mutex            = new Object()
+    val millisecondTests = Seq(0, 1, 5, 100)
+    millisecondTests.foreach { ms =>
+      mutex.synchronized {
+        takesAtLeast(ms) {
+          mutex.wait(ms)
+        }
+      }
+    }
+    millisecondTests.foreach { ms =>
+      mutex.synchronized {
+        takesAtLeast(ms) {
+          mutex.wait(ms, 0)
+        }
+      }
+    }
+
+    val tests = Seq(0 -> 0,
+                    0   -> 1,
+                    0   -> 999999,
+                    1   -> 0,
+                    1   -> 1,
+                    5   -> 0,
+                    100 -> 0,
+                    100 -> 50)
+
+    tests.foreach {
+      case (ms, nanos) =>
+        mutex.synchronized {
+          takesAtLeast(ms, nanos) {
+            mutex.wait(ms, nanos)
+          }
         }
     }
   }
@@ -316,6 +352,71 @@ object ThreadSuite extends tests.Suite {
       }
     }.start()
     assert(Thread.currentThread() != null)
+  }
+
+  class WaitingThread(mutex: AnyRef) extends Thread {
+    private var notified = false
+
+    def timesNotified = if (notified) 1 else 0
+
+    override def run(): Unit = {
+      mutex.synchronized {
+        mutex.wait()
+      }
+      notified = true
+    }
+  }
+  test("wait-notify") {
+    val mutex = new Object
+    new Thread {
+      override def run() = {
+        Thread.sleep(100)
+        mutex.synchronized {
+          mutex.notify()
+        }
+      }
+    }.start()
+    mutex.synchronized {
+      mutex.wait(1000)
+    }
+  }
+  test("wait-notify 2") {
+    val mutex         = new Thread
+    val waiter1       = new WaitingThread(mutex)
+    val waiter2       = new WaitingThread(mutex)
+    def timesNotified = waiter1.timesNotified + waiter2.timesNotified
+    waiter1.start()
+    waiter2.start()
+    Thread.sleep(200)
+    assertEquals(timesNotified, 0)
+    mutex.synchronized {
+      mutex.notify()
+    }
+    waiter1.join(300)
+    waiter2.join(300)
+    assertEquals(timesNotified, 1)
+    mutex.synchronized {
+      mutex.notify()
+    }
+    waiter1.join(300)
+    waiter2.join(300)
+    assertEquals(timesNotified, 2)
+  }
+  test("wait-notifyAll") {
+    val mutex         = new Object
+    val waiter1       = new WaitingThread(mutex)
+    val waiter2       = new WaitingThread(mutex)
+    def timesNotified = waiter1.timesNotified + waiter2.timesNotified
+    waiter1.start()
+    waiter2.start()
+    Thread.sleep(200)
+    assertEquals(timesNotified, 0)
+    mutex.synchronized {
+      mutex.notifyAll()
+    }
+    waiter1.join(300)
+    waiter2.join(300)
+    assertEquals(timesNotified, 2)
   }
 
   test("Multiple locks should not conflict") {
