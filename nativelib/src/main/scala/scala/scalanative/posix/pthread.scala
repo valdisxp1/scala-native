@@ -72,6 +72,7 @@ object pthread {
   def pthread_attr_setstacksize(attr: Ptr[pthread_attr_t],
                                 stacksize: CSize): CInt = extern
 
+  @name("scalanative_pthread_cancel")
   def pthread_cancel(thread: pthread_t): CInt = extern
 
   def pthread_cond_broadcast(cond: Ptr[pthread_cond_t]): CInt = extern
@@ -100,15 +101,18 @@ object pthread {
   def pthread_condattr_setpshared(attr: Ptr[pthread_condattr_t],
                                   pshared: CInt): CInt = extern
 
+  @name("scalanative_pthread_create")
   def pthread_create(thread: Ptr[pthread_t],
                      attr: Ptr[pthread_attr_t],
                      startroutine: CFunctionPtr1[Ptr[Byte], Ptr[Byte]],
                      args: Ptr[Byte]): CInt = extern
 
+  @name("scalanative_pthread_detach")
   def pthread_detach(thread: pthread_t): CInt = extern
 
   def pthread_equal(thread1: pthread_t, thread2: pthread_t): CInt = extern
 
+  @name("scalanative_pthread_exit")
   def pthread_exit(retval: Ptr[Byte]): Unit = extern
 
   def pthread_getconcurrency(): CInt = extern
@@ -119,6 +123,7 @@ object pthread {
 
   def pthread_getspecific(key: pthread_key_t): Ptr[Byte] = extern
 
+  @name("scalanative_pthread_join")
   def pthread_join(thread: pthread_t, value_ptr: Ptr[Ptr[Byte]]): CInt = extern
 
   def pthread_key_create(key: Ptr[pthread_key_t],
