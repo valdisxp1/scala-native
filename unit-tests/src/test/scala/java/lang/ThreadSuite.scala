@@ -387,8 +387,11 @@ object ThreadSuite extends tests.Suite {
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
+    // wait for the threads to start waiting
     Thread.sleep(200)
     assertEquals(timesNotified, 0)
+    assertEquals(waiter1.getState, Thread.State.WAITING)
+    assertEquals(waiter2.getState, Thread.State.WAITING)
     mutex.synchronized {
       mutex.notify()
     }
@@ -409,6 +412,7 @@ object ThreadSuite extends tests.Suite {
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
+    // wait for the threads to start waiting
     Thread.sleep(200)
     assertEquals(timesNotified, 0)
     mutex.synchronized {
@@ -418,7 +422,26 @@ object ThreadSuite extends tests.Suite {
     waiter2.join(300)
     assertEquals(timesNotified, 2)
   }
-
+  test("Object.wait puts the Thread into TIMED_WAITING state") {
+    val mutex = new Thread
+    val thread = new Thread {
+      override def run() = {
+        mutex.synchronized {
+          mutex.wait(1000)
+        }
+        Thread.sleep(2000)
+      }
+    }
+    thread.start()
+    // wait for the thread to start waiting
+    Thread.sleep(200)
+    assertEquals(thread.getState, Thread.State.TIMED_WAITING)
+    thread.synchronized {
+      thread.notify()
+    }
+    Thread.sleep(200)
+    assertEquals(thread.getState, Thread.State.RUNNABLE)
+  }
   test("Multiple locks should not conflict") {
     val mutex1 = new Object
     val mutex2 = new Object
