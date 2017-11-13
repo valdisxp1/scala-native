@@ -44,7 +44,7 @@ class StringLowering(implicit top: Top) extends Pass {
         case StringCountName          => charsLength
         case StringCachedHashCodeName => Val.Int(stringHashCode(v))
         case StringMonitorName        => Val.Null
-        case x                        => println("!!!" + x); util.unreachable
+        case x                        => util.unreachable
       }
 
       Val.Const(Val.Struct(Global.None, StringCls.rtti.const +: fieldValues))
