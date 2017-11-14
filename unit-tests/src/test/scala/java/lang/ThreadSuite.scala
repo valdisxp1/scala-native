@@ -48,22 +48,20 @@ object ThreadSuite extends tests.Suite {
     muncher2.join()
   }
 
-  def takesAtLeast[R](expectedDelayMs: scala.Long, label: String = "It")(
-      f: => R): R = {
+  def takesAtLeast[R](expectedDelayMs: scala.Long)(f: => R): R = {
     val start  = System.currentTimeMillis()
     val result = f
     val end    = System.currentTimeMillis()
     val actual = end - start
     Console.out.println(
-      label + " took " + actual + " ms, expected at least " + expectedDelayMs + " ms")
+      "It took " + actual + " ms, expected at least " + expectedDelayMs + " ms")
     assert(actual >= expectedDelayMs)
 
     result
   }
 
   def takesAtLeast[R](expectedDelayMs: scala.Long,
-                      expectedDelayNanos: scala.Int,
-                      label: String = "It")(f: => R): R = {
+                      expectedDelayNanos: scala.Int)(f: => R): R = {
     val expectedDelay = expectedDelayMs * 1000000 + expectedDelayMs
     val start         = System.nanoTime()
     val result        = f
@@ -71,7 +69,7 @@ object ThreadSuite extends tests.Suite {
 
     val actual = end - start
     Console.out.println(
-      label + " took " + actual + " ns, expected at least " + expectedDelay + " ns")
+      "It took " + actual + " ns, expected at least " + expectedDelay + " ns")
     assert(actual >= expectedDelay)
 
     result
@@ -419,23 +417,17 @@ object ThreadSuite extends tests.Suite {
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
-    // wait for the threads to start waiting
-    Thread.sleep(200)
-    assertEquals(timesNotified, 0)
-    assertEquals(waiter1.getState, Thread.State.WAITING)
-    assertEquals(waiter2.getState, Thread.State.WAITING)
+    eventuallyEquals()(timesNotified, 0)
+    eventuallyEquals()(waiter1.getState, Thread.State.WAITING)
+    eventuallyEquals()(waiter2.getState, Thread.State.WAITING)
     mutex.synchronized {
       mutex.notify()
     }
-    waiter1.join(300)
-    waiter2.join(300)
-    assertEquals(timesNotified, 1)
+    eventuallyEquals()(timesNotified, 1)
     mutex.synchronized {
       mutex.notify()
     }
-    waiter1.join(300)
-    waiter2.join(300)
-    assertEquals(timesNotified, 2)
+    eventuallyEquals()(timesNotified, 2)
   }
   test("wait-notifyAll") {
     val mutex         = new Object
@@ -444,15 +436,11 @@ object ThreadSuite extends tests.Suite {
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
-    // wait for the threads to start waiting
-    Thread.sleep(200)
-    assertEquals(timesNotified, 0)
+    eventuallyEquals()(timesNotified, 0)
     mutex.synchronized {
       mutex.notifyAll()
     }
-    waiter1.join(300)
-    waiter2.join(300)
-    assertEquals(timesNotified, 2)
+    eventuallyEquals()(timesNotified, 2)
   }
   test("Object.wait puts the Thread into TIMED_WAITING state") {
     val mutex = new Thread
@@ -465,14 +453,11 @@ object ThreadSuite extends tests.Suite {
       }
     }
     thread.start()
-    // wait for the thread to start waiting
-    Thread.sleep(200)
-    assertEquals(thread.getState, Thread.State.TIMED_WAITING)
+    eventuallyEquals()(thread.getState, Thread.State.TIMED_WAITING)
     thread.synchronized {
       thread.notify()
     }
-    Thread.sleep(200)
-    assertEquals(thread.getState, Thread.State.RUNNABLE)
+    eventuallyEquals()(thread.getState, Thread.State.RUNNABLE)
   }
   test("Multiple locks should not conflict") {
     val mutex1 = new Object
