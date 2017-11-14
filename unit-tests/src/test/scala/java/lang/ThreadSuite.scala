@@ -103,6 +103,10 @@ object ThreadSuite extends tests.Suite {
     }
   }
 
+  def eventuallyEquals[T](maxDelay: scala.Long = 5000,
+                          recheckEvery: scala.Long = 50)(left: T, right: T) =
+    eventually(maxDelay, recheckEvery, "Equal values")(left == right)
+
   test("sleep suspends execution by at least the requested amount") {
     val millisecondTests = Seq(0, 1, 5, 100)
     millisecondTests.foreach { ms =>
