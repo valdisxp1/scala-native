@@ -1,5 +1,7 @@
 package java.lang
 
+import scala.scalanative.runtime.BoringLock
+
 object ThreadSuite extends tests.Suite {
 
   test("Runtime static variables access and currentThread do not crash") {
@@ -87,7 +89,12 @@ object ThreadSuite extends tests.Suite {
       if (p) {
         continue = false
       }
+//      Thread.`yield`()
       Thread.sleep(recheckEvery)
+//      val o = new BoringLock
+//      o.synchronized {
+//        o.wait(recheckEvery)
+//      }
     }
     if (current <= deadline) {
       // all is good
@@ -102,8 +109,8 @@ object ThreadSuite extends tests.Suite {
   }
 
   def eventuallyEquals[T](maxDelay: scala.Long = 30000,
-                          recheckEvery: scala.Long = 50)(left: T, right: T) =
-    eventually(maxDelay, recheckEvery, "Equal values")(left == right)
+                          recheckEvery: scala.Long = 50, label: String = "Equal values")(left: T, right: T) =
+    eventually(maxDelay, recheckEvery, label)(left == right)
 
   test("sleep suspends execution by at least the requested amount") {
     val millisecondTests = Seq(0, 1, 5, 100)
@@ -390,10 +397,15 @@ object ThreadSuite extends tests.Suite {
     def timesNotified = if (notified) 1 else 0
 
     override def run(): Unit = {
+      Console.out.println(this.toString +">start")
       mutex.synchronized {
+        Console.out.println(this.toString +">sync in")
         mutex.wait()
+        Console.out.println(this.toString +">sync wait end")
       }
+      Console.out.println(this.toString +">sync out")
       notified = true
+      Console.out.println(this.toString +">end")
     }
   }
   test("wait-notify") {
@@ -422,16 +434,16 @@ object ThreadSuite extends tests.Suite {
     waiter1.start()
     waiter2.start()
     assertEquals(timesNotified, 0)
-    eventuallyEquals()(waiter1.getState, Thread.State.WAITING)
-    eventuallyEquals()(waiter2.getState, Thread.State.WAITING)
+    eventuallyEquals(label = "waiter1.getState == Thread.State.WAITING")(waiter1.getState, Thread.State.WAITING)
+    eventuallyEquals(label = "waiter2.getState == Thread.State.WAITING")(waiter2.getState, Thread.State.WAITING)
     mutex.synchronized {
       mutex.notify()
     }
-    eventuallyEquals()(timesNotified, 1)
+    eventuallyEquals(label = "timesNotified == 1")(timesNotified, 1)
     mutex.synchronized {
       mutex.notify()
     }
-    eventuallyEquals()(timesNotified, 2)
+    eventuallyEquals(label = "timesNotified == 2")(timesNotified, 2)
   }
   test("wait-notifyAll") {
     val mutex         = new Object{
@@ -443,12 +455,12 @@ object ThreadSuite extends tests.Suite {
     waiter1.start()
     waiter2.start()
     assertEquals(timesNotified, 0)
-    eventuallyEquals()(waiter1.getState, Thread.State.WAITING)
-    eventuallyEquals()(waiter2.getState, Thread.State.WAITING)
+    eventuallyEquals(label = "waiter1.getState == Thread.State.WAITING")(waiter1.getState, Thread.State.WAITING)
+    eventuallyEquals(label = "waiter2.getState == Thread.State.WAITING")(waiter2.getState, Thread.State.WAITING)
     mutex.synchronized {
       mutex.notifyAll()
     }
-    eventuallyEquals()(timesNotified, 2)
+    eventuallyEquals(label = "timesNotified == 2")(timesNotified, 2)
   }
   test("Object.wait puts the Thread into TIMED_WAITING state") {
     val mutex = new Object{
@@ -463,11 +475,11 @@ object ThreadSuite extends tests.Suite {
       }
     }
     thread.start()
-    eventuallyEquals()(thread.getState, Thread.State.TIMED_WAITING)
+    eventuallyEquals(label = "thread.getState == Thread.State.TIMED_WAITING")(thread.getState, Thread.State.TIMED_WAITING)
     thread.synchronized {
       thread.notify()
     }
-    eventuallyEquals()(thread.getState, Thread.State.RUNNABLE)
+    eventuallyEquals(label = "thread.getState == Thread.State.RUNNABLE")(thread.getState, Thread.State.RUNNABLE)
   }
   test("Multiple locks should not conflict") {
     val mutex1 = new Object
