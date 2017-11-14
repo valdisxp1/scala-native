@@ -48,20 +48,22 @@ object ThreadSuite extends tests.Suite {
     muncher2.join()
   }
 
-  def takesAtLeast[R](expectedDelayMs: scala.Long)(f: => R): R = {
+  def takesAtLeast[R](expectedDelayMs: scala.Long, label: String = "It")(
+      f: => R): R = {
     val start  = System.currentTimeMillis()
     val result = f
     val end    = System.currentTimeMillis()
     val actual = end - start
     Console.out.println(
-      "It took " + actual + " ms, expected at least " + expectedDelayMs + " ms")
+      label + " took " + actual + " ms, expected at least " + expectedDelayMs + " ms")
     assert(actual >= expectedDelayMs)
 
     result
   }
 
   def takesAtLeast[R](expectedDelayMs: scala.Long,
-                      expectedDelayNanos: scala.Int)(f: => R): R = {
+                      expectedDelayNanos: scala.Int,
+                      label: String = "It")(f: => R): R = {
     val expectedDelay = expectedDelayMs * 1000000 + expectedDelayMs
     val start         = System.nanoTime()
     val result        = f
@@ -69,10 +71,36 @@ object ThreadSuite extends tests.Suite {
 
     val actual = end - start
     Console.out.println(
-      "It took " + actual + " ns, expected at least " + expectedDelay + " ns")
+      label + " took " + actual + " ns, expected at least " + expectedDelay + " ns")
     assert(actual >= expectedDelay)
 
     result
+  }
+
+  def eventually(maxDelay: scala.Long = 5000,
+                 recheckEvery: scala.Long = 50,
+                 label: String = "Condition")(p: => scala.Boolean): Unit = {
+    val start    = System.currentTimeMillis()
+    val deadline = start + maxDelay
+    var current  = 0L
+    var continue = true
+    while (continue && current <= deadline) {
+      current = System.currentTimeMillis()
+      if (p) {
+        continue = false
+      }
+      Thread.sleep(recheckEvery)
+    }
+    if (current <= deadline) {
+      // all is good
+      Console.out.println(
+        label + " reached after " + (current - start) + " ms; max delay: " + maxDelay + " ms")
+      assert(true)
+    } else {
+      Console.out.println(
+        "Timeout: " + label + " not reached after " + maxDelay + " ms")
+      assert(false)
+    }
   }
 
   test("sleep suspends execution by at least the requested amount") {
