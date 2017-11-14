@@ -59,7 +59,7 @@ final class Monitor private[runtime] (debug: Boolean, owner: Object) {
     val overflownNanos = curNanos + nanos + (millis % 1000) * 1000000
 
     val deadlineNanos   = overflownNanos % 1000000000
-    val deadLineSeconds = curSeconds + overflownNanos / 1000000000
+    val deadLineSeconds = curSeconds + millis / 1000 + overflownNanos / 1000000000
 
     !tsPtr._1 = deadLineSeconds
     !tsPtr._2 = deadlineNanos

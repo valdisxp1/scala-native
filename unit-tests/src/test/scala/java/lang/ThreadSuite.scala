@@ -469,8 +469,8 @@ object ThreadSuite extends tests.Suite {
     val thread = new Thread {
       override def run() = {
         mutex.synchronized {
-          takesAtLeast(550) {
-            mutex.wait(550)
+          takesAtLeast(1000) {
+            mutex.wait(1000)
           }
         }
         Thread.sleep(2000)
