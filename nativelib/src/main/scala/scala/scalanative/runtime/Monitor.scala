@@ -40,9 +40,10 @@ final class Monitor private[runtime] (debug: Boolean, owner: Object) {
   }
   def _wait(): Unit = {
     val thread = Thread.currentThread().asInstanceOf[ThreadBase]
-    thread.setState(Waiting)
+    thread.setLockState(Waiting)
+    println("!!!"+ thread.getLockState)
     val returnVal = pthread_cond_wait(condPtr, mutexPtr)
-    thread.setState(Normal)
+    thread.setLockState(Normal)
     if (returnVal == EPERM) {
       throw new IllegalMonitorStateException()
     }
@@ -50,6 +51,7 @@ final class Monitor private[runtime] (debug: Boolean, owner: Object) {
   def _wait(millis: scala.Long): Unit = _wait(millis, 0)
   def _wait(millis: scala.Long, nanos: Int): Unit = {
     val thread = Thread.currentThread().asInstanceOf[ThreadBase]
+    thread.setLockState(TimedWaiting)
     val tsPtr  = stackalloc[timespec]
     clock_gettime(CLOCK_REALTIME, tsPtr)
     val curSeconds     = !tsPtr._1
@@ -62,9 +64,8 @@ final class Monitor private[runtime] (debug: Boolean, owner: Object) {
     !tsPtr._1 = deadLineSeconds
     !tsPtr._2 = deadlineNanos
 
-    thread.setState(TimedWaiting)
     val returnVal = pthread_cond_timedwait(condPtr, mutexPtr, tsPtr)
-    thread.setState(Normal)
+    thread.setLockState(Normal)
     if (returnVal == EPERM) {
       throw new IllegalMonitorStateException()
     }
@@ -73,11 +74,11 @@ final class Monitor private[runtime] (debug: Boolean, owner: Object) {
     if (pthread_mutex_trylock(mutexPtr) == EBUSY) {
       val thread = Thread.currentThread().asInstanceOf[ThreadBase]
       if (thread != null) {
-        thread.setState(Blocked)
+        thread.setLockState(Blocked)
         // try again and block until you get one
         pthread_mutex_lock(mutexPtr)
         // finally got the lock
-        thread.setState(Normal)
+        thread.setLockState(Normal)
       } else {
         // Thread class in not initialized yet, just try again
         pthread_mutex_lock(mutexPtr)
@@ -89,8 +90,8 @@ final class Monitor private[runtime] (debug: Boolean, owner: Object) {
 
 abstract class ThreadBase {
   private var state                           = Normal
-  final protected def getLockState: Int       = state
-  private[runtime] def setState(s: Int): Unit = state = s
+  final def getLockState: Int       = state
+  private[runtime] def setLockState(s: Int): Unit = state = s
 }
 
 object ThreadBase {

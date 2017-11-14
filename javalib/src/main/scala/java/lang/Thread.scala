@@ -269,12 +269,14 @@ class Thread private (
 
   def getState: State = {
     val value = livenessState.load()
+    Console.out.println(">"+value)
     if (value == internalNew) {
       State.NEW
     } else if (value == internalStarting) {
       State.RUNNABLE
     } else if (value == internalRunnable) {
       val lockState = getLockState
+      Console.out.println(">>"+lockState)
       if (lockState == ThreadBase.Blocked) {
         State.BLOCKED
       } else if (lockState == ThreadBase.Waiting) {

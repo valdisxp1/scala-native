@@ -78,7 +78,7 @@ object ThreadSuite extends tests.Suite {
   }
 
   def eventually(maxDelay: scala.Long = 30000,
-                 recheckEvery: scala.Long = 50,
+                 recheckEvery: scala.Long = 200,
                  label: String = "Condition")(p: => scala.Boolean): Unit = {
     val start    = System.currentTimeMillis()
     val deadline = start + maxDelay
@@ -109,7 +109,7 @@ object ThreadSuite extends tests.Suite {
   }
 
   def eventuallyEquals[T](maxDelay: scala.Long = 30000,
-                          recheckEvery: scala.Long = 50, label: String = "Equal values")(left: T, right: T) =
+                          recheckEvery: scala.Long = 200, label: String = "Equal values")(left: => T, right: => T) =
     eventually(maxDelay, recheckEvery, label)(left == right)
 
   test("sleep suspends execution by at least the requested amount") {
@@ -144,7 +144,7 @@ object ThreadSuite extends tests.Suite {
 
   test("wait suspends execution by at least the requested amount") {
     val mutex            = new Object()
-    val millisecondTests = Seq(0, 1, 5, 100)
+    val millisecondTests = Seq(0, 1, 5, 100, 1000)
     millisecondTests.foreach { ms =>
       mutex.synchronized {
         takesAtLeast(ms) {
@@ -469,7 +469,9 @@ object ThreadSuite extends tests.Suite {
     val thread = new Thread {
       override def run() = {
         mutex.synchronized {
-          mutex.wait(1000)
+          takesAtLeast(550) {
+            mutex.wait(550)
+          }
         }
         Thread.sleep(2000)
       }
