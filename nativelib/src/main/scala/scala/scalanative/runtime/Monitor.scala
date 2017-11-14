@@ -17,7 +17,7 @@ import scala.scalanative.posix.sys.types.{
 }
 import scala.scalanative.runtime.ThreadBase._
 
-final class Monitor private[runtime] () {
+final class Monitor private[runtime] (debug: Boolean, owner: Object) {
 
   private val mutexPtr: Ptr[pthread_mutex_t] = malloc(pthread_mutex_t_size)
     .asInstanceOf[Ptr[pthread_mutex_t]]
@@ -26,8 +26,18 @@ final class Monitor private[runtime] () {
     .asInstanceOf[Ptr[pthread_cond_t]]
   pthread_cond_init(condPtr, Monitor.condAttrPtr)
 
-  def _notify(): Unit    = pthread_cond_signal(condPtr)
-  def _notifyAll(): Unit = pthread_cond_broadcast(condPtr)
+  def _notify(): Unit    = {
+    if(debug) {
+      Console.out.println("NOTIFY!!!   " + System.identityHashCode(owner) + ":" + owner)
+    }
+    pthread_cond_signal(condPtr)
+  }
+  def _notifyAll(): Unit = {
+    if(debug) {
+      Console.out.println("NOTIFYALL!!!" + System.identityHashCode(owner) + ":" + owner)
+    }
+    pthread_cond_broadcast(condPtr)
+  }
   def _wait(): Unit = {
     val thread = Thread.currentThread().asInstanceOf[ThreadBase]
     thread.setState(Waiting)
@@ -113,7 +123,7 @@ object Monitor {
     } else {
       try {
         pthread_mutex_lock(monitorCreationMutexPtr)
-        o.__monitor = new Monitor()
+        o.__monitor = new Monitor(!x.isInstanceOf[Thread] && !x.isInstanceOf[BoringLock],owner = x)
         o.__monitor
       } finally {
         pthread_mutex_unlock(monitorCreationMutexPtr)
@@ -121,3 +131,5 @@ object Monitor {
     }
   }
 }
+
+class BoringLock{}

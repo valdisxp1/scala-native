@@ -75,7 +75,7 @@ object ThreadSuite extends tests.Suite {
     result
   }
 
-  def eventually(maxDelay: scala.Long = 5000,
+  def eventually(maxDelay: scala.Long = 30000,
                  recheckEvery: scala.Long = 50,
                  label: String = "Condition")(p: => scala.Boolean): Unit = {
     val start    = System.currentTimeMillis()
@@ -101,7 +101,7 @@ object ThreadSuite extends tests.Suite {
     }
   }
 
-  def eventuallyEquals[T](maxDelay: scala.Long = 5000,
+  def eventuallyEquals[T](maxDelay: scala.Long = 30000,
                           recheckEvery: scala.Long = 50)(left: T, right: T) =
     eventually(maxDelay, recheckEvery, "Equal values")(left == right)
 
@@ -397,7 +397,9 @@ object ThreadSuite extends tests.Suite {
     }
   }
   test("wait-notify") {
-    val mutex = new Object
+    val mutex = new Object{
+      override val toString = "wait-notify"
+    }
     new Thread {
       override def run() = {
         Thread.sleep(100)
@@ -411,13 +413,15 @@ object ThreadSuite extends tests.Suite {
     }
   }
   test("wait-notify 2") {
-    val mutex         = new Thread
+    val mutex         = new Object{
+      override val toString = "wait-notify 2"
+    }
     val waiter1       = new WaitingThread(mutex)
     val waiter2       = new WaitingThread(mutex)
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
-    eventuallyEquals()(timesNotified, 0)
+    assertEquals(timesNotified, 0)
     eventuallyEquals()(waiter1.getState, Thread.State.WAITING)
     eventuallyEquals()(waiter2.getState, Thread.State.WAITING)
     mutex.synchronized {
@@ -430,20 +434,26 @@ object ThreadSuite extends tests.Suite {
     eventuallyEquals()(timesNotified, 2)
   }
   test("wait-notifyAll") {
-    val mutex         = new Object
+    val mutex         = new Object{
+      override val toString = "wait-notifyAll"
+    }
     val waiter1       = new WaitingThread(mutex)
     val waiter2       = new WaitingThread(mutex)
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
-    eventuallyEquals()(timesNotified, 0)
+    assertEquals(timesNotified, 0)
+    eventuallyEquals()(waiter1.getState, Thread.State.WAITING)
+    eventuallyEquals()(waiter2.getState, Thread.State.WAITING)
     mutex.synchronized {
       mutex.notifyAll()
     }
     eventuallyEquals()(timesNotified, 2)
   }
   test("Object.wait puts the Thread into TIMED_WAITING state") {
-    val mutex = new Thread
+    val mutex = new Object{
+      override val toString = "wait-notify timed_wating"
+    }
     val thread = new Thread {
       override def run() = {
         mutex.synchronized {

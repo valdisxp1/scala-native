@@ -4,21 +4,10 @@ import java.util
 import java.lang.Thread._
 import java.lang.Thread.State
 
-import scala.scalanative.runtime.{CAtomicInt, NativeThread, ThreadBase}
-import scala.scalanative.native.{
-  CFunctionPtr,
-  CInt,
-  Ptr,
-  ULong,
-  sizeof,
-  stackalloc
-}
+import scala.scalanative.runtime.{BoringLock, CAtomicInt, NativeThread, ThreadBase}
+import scala.scalanative.native.{CFunctionPtr, CInt, Ptr, ULong, sizeof, stackalloc}
 import scala.scalanative.native.stdlib.{free, malloc}
-import scala.scalanative.posix.sys.types.{
-  pthread_attr_t,
-  pthread_key_t,
-  pthread_t
-}
+import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_key_t, pthread_t}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
 
@@ -79,8 +68,7 @@ class Thread private (
   private[this] var underlying: pthread_t = 0.asInstanceOf[ULong]
 
   // Synchronization is done using internal lock
-  val lock: Object = new Object()
-
+  val lock: Object = new BoringLock
   // ThreadLocal values : local and inheritable
   var localValues: ThreadLocal.Values = _
 
@@ -415,7 +403,7 @@ object Thread {
 
   private val callRunRoutine = CFunctionPtr.fromFunction1(callRun)
 
-  private val lock: Object = new Object()
+  private val lock: Object = new BoringLock
 
   final val MAX_PRIORITY: Int = NativeThread.THREAD_MAX_PRIORITY
 
