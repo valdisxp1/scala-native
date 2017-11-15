@@ -10,6 +10,7 @@ import scala.scalanative.native.{
   CInt,
   Ptr,
   ULong,
+  signal,
   sizeof,
   stackalloc
 }
@@ -147,6 +148,7 @@ class Thread private (
     checkAccess()
     livenessState.compareAndSwapStrong(internalStarting, internalInterrupted)
     livenessState.compareAndSwapStrong(internalRunnable, internalInterrupted)
+    pthread_kill(underlying, signal.SIGALRM)
   }
 
   var oldValue = -1
@@ -542,6 +544,9 @@ object Thread {
     val usecs = (millis % 1000) * 1000 + nanos / 1000
     if (secs > 0 && unistd.sleep(secs.toUInt) != 0) checkErrno()
     if (usecs > 0 && unistd.usleep(usecs.toUInt) != 0) checkErrno()
+    if (Thread.currentThread().isInterrupted) {
+      throw new InterruptedException("Sleep was interrupted")
+    }
   }
 
   def sleep(millis: scala.Long): Unit = sleep(millis, 0)

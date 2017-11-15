@@ -476,9 +476,9 @@ object ThreadSuite extends tests.Suite {
       Thread.State.RUNNABLE)
   }
   test("Multiple locks should not conflict") {
-    val mutex1 = new Object
-    val mutex2 = new Object
-    var goOn   = true
+    val mutex1     = new Object
+    val mutex2     = new Object
+    var goOn       = true
     var doingStuff = false
     val waiter = new Thread {
       override def run() =
