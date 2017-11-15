@@ -21,7 +21,6 @@ object ThreadSuite extends tests.Suite {
 
   }
 
-
   class FatObject(val id: Int = 0) {
     var x1, x2, x3, x4, x5, x6, x7, x8 = 0L
 
@@ -76,6 +75,39 @@ object ThreadSuite extends tests.Suite {
     result
   }
 
+  val eternity = 300000 //ms
+  def eventually(maxDelay: scala.Long = eternity,
+                 recheckEvery: scala.Long = 200,
+                 label: String = "Condition")(p: => scala.Boolean): Unit = {
+    val start    = System.currentTimeMillis()
+    val deadline = start + maxDelay
+    var current  = 0L
+    var continue = true
+    while (continue && current <= deadline) {
+      current = System.currentTimeMillis()
+      if (p) {
+        continue = false
+      }
+      Thread.sleep(recheckEvery)
+    }
+    if (current <= deadline) {
+      // all is good
+      Console.out.println(
+        label + " reached after " + (current - start) + " ms; max delay: " + maxDelay + " ms")
+      assert(true)
+    } else {
+      Console.out.println(
+        "Timeout: " + label + " not reached after " + maxDelay + " ms")
+      assert(false)
+    }
+  }
+
+  def eventuallyEquals[T](
+      maxDelay: scala.Long = eternity,
+      recheckEvery: scala.Long = 200,
+      label: String = "Equal values")(left: => T, right: => T) =
+    eventually(maxDelay, recheckEvery, label)(left == right)
+
   test("sleep suspends execution by at least the requested amount") {
     val millisecondTests = Seq(0, 1, 5, 100)
     millisecondTests.foreach { ms =>
@@ -108,7 +140,7 @@ object ThreadSuite extends tests.Suite {
 
   test("wait suspends execution by at least the requested amount") {
     val mutex            = new Object()
-    val millisecondTests = Seq(0, 1, 5, 100)
+    val millisecondTests = Seq(0, 1, 5, 100, 1000)
     millisecondTests.foreach { ms =>
       mutex.synchronized {
         takesAtLeast(ms) {
@@ -150,8 +182,7 @@ object ThreadSuite extends tests.Suite {
         shared = 1
       }
     }).start()
-    Thread.sleep(100)
-    assertEquals(shared, 1)
+    eventuallyEquals()(shared, 1)
   }
 
   test("Thread should be able to change its internal state") {
@@ -163,8 +194,7 @@ object ThreadSuite extends tests.Suite {
     }
     val t = new StatefulThread
     t.start()
-    Thread.sleep(100)
-    assertEquals(t.internal, 1)
+    eventuallyEquals()(t.internal, 1)
   }
 
   test("Thread should be able to change runnable's internal state") {
@@ -176,8 +206,7 @@ object ThreadSuite extends tests.Suite {
     }
     val runnable = new StatefulRunnable
     new Thread(runnable).start()
-    Thread.sleep(100)
-    assertEquals(runnable.internal, 1)
+    eventuallyEquals()(runnable.internal, 1)
   }
 
   test("Thread should be able to call a method") {
@@ -198,7 +227,7 @@ object ThreadSuite extends tests.Suite {
       }
     })
     t.start()
-    t.join()
+    t.join(eternity)
     assertEquals(hasTwoArgMethod.timesCalled, 2)
   }
 
@@ -213,8 +242,7 @@ object ThreadSuite extends tests.Suite {
     thread.setUncaughtExceptionHandler(detector)
 
     thread.start()
-    Thread.sleep(100)
-    assert(detector.wasException)
+    eventually()(detector.wasException)
   }
 
   def withExceptionHandler[U](handler: Thread.UncaughtExceptionHandler)(
@@ -251,6 +279,7 @@ object ThreadSuite extends tests.Suite {
       thread.start()
       Thread.sleep(100)
     }
+    thread.join(eternity)
     assert(detector.wasException)
   }
 
@@ -382,26 +411,27 @@ object ThreadSuite extends tests.Suite {
     }
   }
   test("wait-notify 2") {
-    val mutex         = new Thread
+    val mutex         = new Object
     val waiter1       = new WaitingThread(mutex)
     val waiter2       = new WaitingThread(mutex)
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
-    Thread.sleep(200)
     assertEquals(timesNotified, 0)
+    eventuallyEquals(label = "waiter1.getState == Thread.State.WAITING")(
+      waiter1.getState,
+      Thread.State.WAITING)
+    eventuallyEquals(label = "waiter2.getState == Thread.State.WAITING")(
+      waiter2.getState,
+      Thread.State.WAITING)
     mutex.synchronized {
       mutex.notify()
     }
-    waiter1.join(300)
-    waiter2.join(300)
-    assertEquals(timesNotified, 1)
+    eventuallyEquals(label = "timesNotified == 1")(timesNotified, 1)
     mutex.synchronized {
       mutex.notify()
     }
-    waiter1.join(300)
-    waiter2.join(300)
-    assertEquals(timesNotified, 2)
+    eventuallyEquals(label = "timesNotified == 2")(timesNotified, 2)
   }
   test("wait-notifyAll") {
     val mutex         = new Object
@@ -410,16 +440,41 @@ object ThreadSuite extends tests.Suite {
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
-    Thread.sleep(200)
     assertEquals(timesNotified, 0)
+    eventuallyEquals(label = "waiter1.getState == Thread.State.WAITING")(
+      waiter1.getState,
+      Thread.State.WAITING)
+    eventuallyEquals(label = "waiter2.getState == Thread.State.WAITING")(
+      waiter2.getState,
+      Thread.State.WAITING)
     mutex.synchronized {
       mutex.notifyAll()
     }
-    waiter1.join(300)
-    waiter2.join(300)
-    assertEquals(timesNotified, 2)
+    eventuallyEquals(label = "timesNotified == 2")(timesNotified, 2)
   }
-
+  test("Object.wait puts the Thread into TIMED_WAITING state") {
+    val mutex = new Object
+    val thread = new Thread {
+      override def run() = {
+        mutex.synchronized {
+          takesAtLeast(1000) {
+            mutex.wait(1000)
+          }
+        }
+        Thread.sleep(2000)
+      }
+    }
+    thread.start()
+    eventuallyEquals(label = "thread.getState == Thread.State.TIMED_WAITING")(
+      thread.getState,
+      Thread.State.TIMED_WAITING)
+    thread.synchronized {
+      thread.notify()
+    }
+    eventuallyEquals(label = "thread.getState == Thread.State.RUNNABLE")(
+      thread.getState,
+      Thread.State.RUNNABLE)
+  }
   test("Multiple locks should not conflict") {
     val mutex1 = new Object
     val mutex2 = new Object
@@ -442,7 +497,7 @@ object ThreadSuite extends tests.Suite {
       }
     }
     stopper.start()
-    stopper.join(1000)
+    stopper.join(eternity)
     assertNot(stopper.isAlive)
   }
 }

@@ -79,8 +79,7 @@ class Thread private (
   private[this] var underlying: pthread_t = 0.asInstanceOf[ULong]
 
   // Synchronization is done using internal lock
-  val lock: Object = new Object()
-
+  val lock: Object = new Object
   // ThreadLocal values : local and inheritable
   var localValues: ThreadLocal.Values = _
 
@@ -164,11 +163,9 @@ class Thread private (
     value == internalInterrupted || value == internalInterruptedTerminated
   }
 
-  final def join(): Unit = synchronized {
-    while (isAlive) wait()
-  }
+  final def join(): Unit = while (isAlive) synchronized { wait() }
 
-  final def join(ml: scala.Long): Unit = synchronized {
+  final def join(ml: scala.Long): Unit = {
     var millis: scala.Long = ml
     if (millis == 0)
       join()
@@ -176,7 +173,9 @@ class Thread private (
       val end: scala.Long         = System.currentTimeMillis() + millis
       var continue: scala.Boolean = true
       while (isAlive && continue) {
-        wait(millis)
+        synchronized {
+          wait(millis)
+        }
         millis = end - System.currentTimeMillis()
         if (millis <= 0)
           continue = false
@@ -184,7 +183,7 @@ class Thread private (
     }
   }
 
-  final def join(ml: scala.Long, n: Int): Unit = synchronized {
+  final def join(ml: scala.Long, n: Int): Unit = {
     var nanos: Int         = n
     var millis: scala.Long = ml
     if (millis < 0 || nanos < 0 || nanos > 999999)
@@ -196,7 +195,9 @@ class Thread private (
       var rest: scala.Long        = 0L
       var continue: scala.Boolean = true
       while (isAlive && continue) {
-        wait(millis, nanos)
+        synchronized {
+          wait(millis, nanos)
+        }
         rest = end - System.nanoTime()
         if (rest <= 0)
           continue = false
@@ -284,8 +285,13 @@ class Thread private (
     } else if (value == internalStarting) {
       State.RUNNABLE
     } else if (value == internalRunnable) {
-      if (isBlocked) {
+      val lockState = getLockState
+      if (lockState == ThreadBase.Blocked) {
         State.BLOCKED
+      } else if (lockState == ThreadBase.Waiting) {
+        State.WAITING
+      } else if (lockState == ThreadBase.TimedWaiting) {
+        State.TIMED_WAITING
       } else {
         State.RUNNABLE
       }
@@ -408,7 +414,7 @@ object Thread {
 
   private val callRunRoutine = CFunctionPtr.fromFunction1(callRun)
 
-  private val lock: Object = new Object()
+  private val lock: Object = new Object
 
   final val MAX_PRIORITY: Int = NativeThread.THREAD_MAX_PRIORITY
 
