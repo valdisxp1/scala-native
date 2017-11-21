@@ -78,6 +78,8 @@ class Thread private (
    */
   private[this] var underlying: pthread_t = 0.asInstanceOf[ULong]
 
+  private val sleepMutex = new Object
+
   // Synchronization is done using internal lock
   val lock: Object = new Object
   // ThreadLocal values : local and inheritable
@@ -147,6 +149,9 @@ class Thread private (
     checkAccess()
     livenessState.compareAndSwapStrong(internalStarting, internalInterrupted)
     livenessState.compareAndSwapStrong(internalRunnable, internalInterrupted)
+    sleepMutex.synchronized {
+      sleepMutex.notify()
+    }
   }
 
   var oldValue = -1
@@ -522,26 +527,13 @@ object Thread {
   }
 
   def sleep(millis: scala.Long, nanos: scala.Int): Unit = {
-    import scala.scalanative.posix.errno.EINTR
-    import scala.scalanative.native._
-    import scala.scalanative.posix.unistd
-
-    def checkErrno() =
-      if (errno.errno == EINTR) {
-        throw new InterruptedException("Sleep was interrupted")
-      }
-
-    if (millis < 0) {
-      throw new IllegalArgumentException("millis must be >= 0")
+    val sleepMutex: Object = currentThread().sleepMutex
+    sleepMutex.synchronized {
+      sleepMutex.wait(millis, nanos)
     }
-    if (nanos < 0 || nanos > 999999) {
-      throw new IllegalArgumentException("nanos value out of range")
+    if (interrupted()) {
+      throw new InterruptedException("Interrupted during sleep")
     }
-
-    val secs  = millis / 1000
-    val usecs = (millis % 1000) * 1000 + nanos / 1000
-    if (secs > 0 && unistd.sleep(secs.toUInt) != 0) checkErrno()
-    if (usecs > 0 && unistd.usleep(usecs.toUInt) != 0) checkErrno()
   }
 
   def sleep(millis: scala.Long): Unit = sleep(millis, 0)
