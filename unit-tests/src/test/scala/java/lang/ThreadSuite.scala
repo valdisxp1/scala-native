@@ -336,15 +336,17 @@ object ThreadSuite extends tests.Suite {
   }
 
   test("Thread.getState and Thread.isAlive") {
+    var goOn = true
     val thread = new Thread {
       override def run(): Unit = {
-        Thread.sleep(100)
+        while (goOn) {}
       }
     }
     assertEquals(Thread.State.NEW, thread.getState)
     thread.start()
     assert(thread.isAlive)
     assertEquals(Thread.State.RUNNABLE, thread.getState)
+    goOn = false
     thread.join()
     assertEquals(Thread.State.TERMINATED, thread.getState)
     assertNot(thread.isAlive)
@@ -454,6 +456,7 @@ object ThreadSuite extends tests.Suite {
   }
   test("Object.wait puts the Thread into TIMED_WAITING state") {
     val mutex = new Object
+    var goOn  = true
     val thread = new Thread {
       override def run() = {
         mutex.synchronized {
@@ -461,7 +464,7 @@ object ThreadSuite extends tests.Suite {
             mutex.wait(1000)
           }
         }
-        Thread.sleep(2000)
+        while (goOn) {}
       }
     }
     thread.start()
@@ -474,19 +477,27 @@ object ThreadSuite extends tests.Suite {
     eventuallyEquals(label = "thread.getState == Thread.State.RUNNABLE")(
       thread.getState,
       Thread.State.RUNNABLE)
+    goOn = false
+    eventuallyEquals(label = "thread.getState == Thread.State.TERMINATED")(
+      thread.getState,
+      Thread.State.TERMINATED)
   }
   test("Multiple locks should not conflict") {
-    val mutex1 = new Object
-    val mutex2 = new Object
-    var goOn   = true
-    new Thread {
+    val mutex1     = new Object
+    val mutex2     = new Object
+    var goOn       = true
+    var doingStuff = false
+    val waiter = new Thread {
       override def run() =
         mutex1.synchronized {
           while (goOn) {
+            doingStuff = true
             Thread.sleep(10)
           }
         }
-    }.start()
+    }
+    waiter.start()
+    eventually()(doingStuff)
 
     val stopper = new Thread {
       override def run() = {
@@ -499,5 +510,33 @@ object ThreadSuite extends tests.Suite {
     stopper.start()
     stopper.join(eternity)
     assertNot(stopper.isAlive)
+  }
+
+  test("Thread.interrupt should interrupt sleep") {
+    val thread = new Thread {
+      override def run() = {
+        expectThrows(classOf[InterruptedException], Thread.sleep(10 * eternity))
+      }
+    }
+    thread.start()
+    eventuallyEquals()(Thread.State.TIMED_WAITING, thread.getState)
+    thread.interrupt()
+    eventuallyEquals()(Thread.State.TERMINATED, thread.getState)
+  }
+  test("Thread.interrupt should interrupt between calculations") {
+    var doingStuff = false
+    val thread = new Thread {
+      override def run() = {
+        while (!Thread.interrupted()) {
+          doingStuff = true
+          //some intense calculation
+          scala.collection.immutable.Range(1, 10000, 1).reduce(_ + _)
+        }
+      }
+    }
+    thread.start()
+    eventually()(doingStuff)
+    thread.interrupt()
+    eventuallyEquals()(Thread.State.TERMINATED, thread.getState)
   }
 }
