@@ -336,15 +336,17 @@ object ThreadSuite extends tests.Suite {
   }
 
   test("Thread.getState and Thread.isAlive") {
+    var goOn = true
     val thread = new Thread {
       override def run(): Unit = {
-        Thread.sleep(100)
+        while(goOn){}
       }
     }
     assertEquals(Thread.State.NEW, thread.getState)
     thread.start()
     assert(thread.isAlive)
     assertEquals(Thread.State.RUNNABLE, thread.getState)
+    goOn = false
     thread.join()
     assertEquals(Thread.State.TERMINATED, thread.getState)
     assertNot(thread.isAlive)
@@ -454,6 +456,7 @@ object ThreadSuite extends tests.Suite {
   }
   test("Object.wait puts the Thread into TIMED_WAITING state") {
     val mutex = new Object
+    var goOn = true
     val thread = new Thread {
       override def run() = {
         mutex.synchronized {
@@ -461,7 +464,7 @@ object ThreadSuite extends tests.Suite {
             mutex.wait(1000)
           }
         }
-        Thread.sleep(2000)
+        while(goOn){}
       }
     }
     thread.start()
@@ -474,6 +477,10 @@ object ThreadSuite extends tests.Suite {
     eventuallyEquals(label = "thread.getState == Thread.State.RUNNABLE")(
       thread.getState,
       Thread.State.RUNNABLE)
+    goOn = false
+    eventuallyEquals(label = "thread.getState == Thread.State.TERMINATED")(
+      thread.getState,
+      Thread.State.TERMINATED)
   }
   test("Multiple locks should not conflict") {
     val mutex1     = new Object
