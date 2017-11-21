@@ -528,6 +528,7 @@ object Thread {
     import scala.scalanative.native._
     import scala.scalanative.posix.unistd
 
+    currentThread().asInstanceOf[ThreadBase].setLockState(ThreadBase.TimedWaiting)
     def checkErrno() =
       if (errno.errno == EINTR) {
         throw new InterruptedException("Sleep was interrupted")
@@ -547,6 +548,7 @@ object Thread {
     if (Thread.currentThread().isInterrupted) {
       throw new InterruptedException("Sleep was interrupted")
     }
+    currentThread().asInstanceOf[ThreadBase].setLockState(ThreadBase.Normal)
   }
 
   def sleep(millis: scala.Long): Unit = sleep(millis, 0)

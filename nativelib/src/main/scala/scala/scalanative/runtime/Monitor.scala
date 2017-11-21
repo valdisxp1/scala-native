@@ -83,7 +83,7 @@ final class Monitor private[runtime] () {
 abstract class ThreadBase {
   private var state                               = Normal
   final def getLockState: Int                     = state
-  private[runtime] def setLockState(s: Int): Unit = state = s
+  def setLockState(s: Int): Unit = state = s
 }
 
 object ThreadBase {
