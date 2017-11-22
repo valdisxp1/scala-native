@@ -226,7 +226,24 @@ class Thread private (
     }
   }
 
-  def getStackTrace: Array[StackTraceElement] = new Throwable().getStackTrace
+  private var stackTraceTs = 0L
+  private var lastStackTrace: Array[StackTraceElement] = Array.empty[StackTraceElement]
+  private val stackTraceMutex = new Object
+  def getStackTrace: Array[StackTraceElement] = {
+    if(this == Thread.currentThread()) {
+      lastStackTrace = new Throwable().getStackTrace
+      stackTraceTs += 1
+    } else {
+      val oldTs = stackTraceTs
+      // TODO trigger getStackTrace on that thread
+      do {
+        stackTraceMutex.synchronized {
+          stackTraceMutex.wait()
+        }
+      } while(stackTraceTs <= oldTs)
+    }
+    lastStackTrace
+  }
 
   def setContextClassLoader(classLoader: ClassLoader): Unit =
     lock.synchronized(contextClassLoader = classLoader)
