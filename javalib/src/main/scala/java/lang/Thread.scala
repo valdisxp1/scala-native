@@ -10,6 +10,7 @@ import scala.scalanative.native.{
   CInt,
   Ptr,
   ULong,
+  signal,
   sizeof,
   stackalloc
 }
@@ -227,20 +228,25 @@ class Thread private (
   }
 
   private var stackTraceTs = 0L
-  private var lastStackTrace: Array[StackTraceElement] = Array.empty[StackTraceElement]
+  private var lastStackTrace: Array[StackTraceElement] =
+    Array.empty[StackTraceElement]
   private val stackTraceMutex = new Object
   def getStackTrace: Array[StackTraceElement] = {
-    if(this == Thread.currentThread()) {
+    if (this == Thread.currentThread()) {
       lastStackTrace = new Throwable().getStackTrace
       stackTraceTs += 1
+      stackTraceMutex.synchronized {
+        stackTraceMutex.notifyAll()
+      }
     } else {
       val oldTs = stackTraceTs
-      // TODO trigger getStackTrace on that thread
+      // trigger getStackTrace on that thread
+      pthread_kill(underlying, currentThreadStackTraceSignal)
       do {
         stackTraceMutex.synchronized {
           stackTraceMutex.wait()
         }
-      } while(stackTraceTs <= oldTs)
+      } while (stackTraceTs <= oldTs)
     }
     lastStackTrace
   }
@@ -566,4 +572,12 @@ object Thread {
                                       "main",
                                       0,
                                       mainThread = true)
+
+  private def currentThreadStackTrace(signal: CInt): Unit = {
+    currentThread().getStackTrace
+  }
+  private val currentThreadStackTracePtr =
+    CFunctionPtr.fromFunction1(currentThreadStackTrace _)
+  private val currentThreadStackTraceSignal = 30 // 30 is one of the SIGUSR1 values
+  signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
 }
