@@ -228,7 +228,7 @@ class Thread private (
     }
   }
 
-  def getStackTrace: Array[StackTraceElement] = new Array[StackTraceElement](0)
+  def getStackTrace: Array[StackTraceElement] = new Throwable().getStackTrace
 
   def setContextClassLoader(classLoader: ClassLoader): Unit =
     lock.synchronized(contextClassLoader = classLoader)
