@@ -501,7 +501,6 @@ object ThreadSuite extends tests.Suite {
 
     val stopper = new Thread {
       override def run() = {
-        Thread.sleep(100)
         mutex2.synchronized {
           goOn = false
         }
@@ -538,5 +537,40 @@ object ThreadSuite extends tests.Suite {
     eventually()(doingStuff)
     thread.interrupt()
     eventuallyEquals()(Thread.State.TERMINATED, thread.getState)
+  }
+
+  test("Thread should not keep the lock if it crashes") {
+    val mutex      = new Object
+    var doingStuff = false
+    var explode    = false
+    val waiter = new Thread {
+      override def run() = {
+        assertThrows[Exception] {
+          mutex.synchronized {
+            while (true) {
+              doingStuff = true
+              Thread.sleep(10)
+              if (explode) {
+                throw new Exception("oops")
+              }
+            }
+          }
+        }
+      }
+    }
+    waiter.start()
+    eventually()(doingStuff)
+
+    val stopper = new Thread {
+      override def run() = {
+        explode = true
+        mutex.synchronized {
+          //just get the lock
+        }
+      }
+    }
+    stopper.start()
+    stopper.join(eternity)
+    assertNot(stopper.isAlive)
   }
 }
