@@ -154,8 +154,6 @@ class Thread private (
     }
   }
 
-  var oldValue = -1
-
   final def isAlive: scala.Boolean = {
     val value = livenessState.load()
     value == internalRunnable || value == internalStarting
