@@ -1,5 +1,7 @@
 package java.lang
 
+import scala.collection.mutable
+
 object ThreadSuite extends tests.Suite {
 
   test("Runtime static variables access and currentThread do not crash") {
@@ -538,5 +540,46 @@ object ThreadSuite extends tests.Suite {
     eventually()(doingStuff)
     thread.interrupt()
     eventuallyEquals()(Thread.State.TERMINATED, thread.getState)
+  }
+
+    test("Thread.dumpStack should contain the method name"){
+    object Something {
+      def aMethodWithoutAnInterestingName = {
+        Thread.dumpStack()
+      }
+    }
+    val outputStream = new java.io.ByteArrayOutputStream()
+    Console.withErr(outputStream){
+      Something.aMethodWithoutAnInterestingName
+    }
+    assert(outputStream.toString.contains("aMethodWithoutAnInterestingName"))
+  }
+  test("Thread.getStackTrace should contain the method name") {
+    object Something {
+      def aMethodWithoutAnInterestingName = {
+        Thread.currentThread().getStackTrace
+      }
+    }
+    val rawStackTrace = Something.aMethodWithoutAnInterestingName
+    assert(
+      mutable.WrappedArray
+        .make[StackTraceElement](rawStackTrace)
+        .exists(_.getMethodName == "aMethodWithoutAnInterestingName"))
+  }
+  test("Thread.getAllStackTraces should contain our own thread") {
+    object Something {
+      def aMethodWithoutAnInterestingName = {
+        Thread.getAllStackTraces
+      }
+    }
+    val rawStackTraces = Something.aMethodWithoutAnInterestingName
+    val currentThread  = Thread.currentThread()
+    Console.out.println("rawStackTraces.containsKey(currentThread): "+rawStackTraces.containsKey(currentThread))
+    assert(rawStackTraces.containsKey(currentThread))
+    val currentThreadStackTrace = rawStackTraces.get(currentThread)
+    assert(
+      mutable.WrappedArray
+        .make[StackTraceElement](currentThreadStackTrace)
+        .exists(_.getMethodName == "aMethodWithoutAnInterestingName"))
   }
 }
