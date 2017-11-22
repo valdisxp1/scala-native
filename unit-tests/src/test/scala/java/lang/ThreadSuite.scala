@@ -570,7 +570,56 @@ object ThreadSuite extends tests.Suite {
       }
     }
     stopper.start()
-    stopper.join(eternity)
+    stopper.join(5000)
+    assertNot(stopper.isAlive)
+  }
+
+  def safeSynchronized[T](o: AnyRef)(f: => T): T = {
+    var exception: Throwable = null
+    val result = o.synchronized{
+      try{
+        f
+      } catch {
+        case t => exception = t
+      }
+    }
+    if(exception != null){
+      throw exception
+    } else {
+      result.asInstanceOf[T]
+    }
+  }
+
+  test("Thread should not keep the lock if it crashes with div/0") {
+    val mutex      = new Object
+    var doingStuff = false
+    var explode = false
+    val waiter = new Thread {
+      override def run() = {
+        safeSynchronized(mutex) {
+          while (true) {
+            doingStuff = true
+            Thread.sleep(10)
+            if (explode) {
+              Console.out.println(1 / 0)
+            }
+          }
+        }
+      }
+    }
+    waiter.start()
+    eventually()(doingStuff)
+
+    val stopper = new Thread {
+      override def run() = {
+        explode = true
+        mutex.synchronized {
+          //just get the lock
+        }
+      }
+    }
+    stopper.start()
+    stopper.join(5000)
     assertNot(stopper.isAlive)
   }
 }
