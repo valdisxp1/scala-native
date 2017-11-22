@@ -132,6 +132,8 @@ object pthread {
 
   def pthread_key_delete(key: pthread_key_t): CInt = extern
 
+  def pthread_kill(key: pthread_t, sig: CInt): CInt = extern
+
   def pthread_mutex_destroy(mutex: Ptr[pthread_mutex_t]): CInt = extern
 
   def pthread_mutex_getprioceiling(mutex: Ptr[pthread_mutex_t],
