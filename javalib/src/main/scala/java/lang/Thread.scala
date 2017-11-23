@@ -63,6 +63,12 @@ class Thread private (
   // Thread's priority
   private var priority: Int = if (!mainThread) parentThread.priority else 5
 
+  // main thread is not started via Thread.start, set it up manually
+  if (mainThread) {
+    group.add(this)
+    livenessState.store(internalRunnable)
+  }
+
   // Indicates if the thread was already started
   def started: scala.Boolean = {
     val value = livenessState.load()
@@ -240,13 +246,14 @@ class Thread private (
       }
     } else {
       val oldTs = stackTraceTs
-      // trigger getStackTrace on that thread
-      pthread_kill(underlying, currentThreadStackTraceSignal)
-      do {
+      while (stackTraceTs <= oldTs && isAlive) {
+        // trigger getStackTrace on that thread
+        pthread_kill(underlying, currentThreadStackTraceSignal)
         stackTraceMutex.synchronized {
-          stackTraceMutex.wait()
+//          Console.out.println("???")
+          stackTraceMutex.wait(100)
         }
-      } while (stackTraceTs <= oldTs)
+      }
     }
     lastStackTrace
   }
@@ -472,7 +479,7 @@ object Thread {
 
   def currentThread(): Thread = {
     val ptr = pthread_getspecific(myThreadKey).asInstanceOf[Ptr[Thread]]
-    if (ptr != null) !ptr else MainThread
+    if (ptr != null) !ptr else mainThread
   }
 
   def dumpStack(): Unit = {
@@ -570,7 +577,7 @@ object Thread {
   private val mainThreadGroup: ThreadGroup =
     new ThreadGroup(parent = null, name = "system", mainGroup = true)
 
-  private val MainThread = new Thread(parentThread = null,
+  private val mainThread = new Thread(parentThread = null,
                                       mainThreadGroup,
                                       target = null,
                                       "main",
@@ -578,6 +585,7 @@ object Thread {
                                       mainThread = true)
 
   private def currentThreadStackTrace(signal: CInt): Unit = {
+    Console.out.println("!!!")
     currentThread().getStackTrace
   }
   private val currentThreadStackTracePtr =
