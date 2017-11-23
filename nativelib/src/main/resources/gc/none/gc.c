@@ -45,20 +45,13 @@ void scalanative_init() {
 
 void *scalanative_alloc(void *info, size_t size) {
     size = size + (8 - size % 8);
-    void *current, *new_current;
-    long current_as_long;
-    do {
-        current = (void *) current_atomic;
-        // possible end of the current alloc
-        new_current = current + size;
-        if (new_current >= end) {
-            allocateChunksUpTo(new_current);
-        }
-        current_as_long = (long) current;
-    // repeat until no other thread interferes
-    } while(!atomic_compare_exchange_strong(&current_atomic, &current_as_long, (long) new_current));
+    void *new_current;
+    new_current = (void*) atomic_fetch_add(&current_atomic, size);
+    if (new_current >= end) {
+        allocateChunksUpTo(new_current);
+    }
 
-    void **alloc = current;
+    void **alloc = new_current;
     *alloc = info;
     return alloc;
 }
