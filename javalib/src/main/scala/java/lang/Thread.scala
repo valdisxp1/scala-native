@@ -10,6 +10,7 @@ import scala.scalanative.native.{
   CInt,
   Ptr,
   ULong,
+  signal,
   sizeof,
   stackalloc
 }
@@ -61,6 +62,12 @@ class Thread private (
 
   // Thread's priority
   private var priority: Int = if (!mainThread) parentThread.priority else 5
+
+  // main thread is not started via Thread.start, set it up manually
+  if (mainThread) {
+    group.add(this)
+    livenessState.store(internalRunnable)
+  }
 
   // Indicates if the thread was already started
   def started: scala.Boolean = {
@@ -154,8 +161,6 @@ class Thread private (
     }
   }
 
-  var oldValue = -1
-
   final def isAlive: scala.Boolean = {
     val value = livenessState.load()
     value == internalRunnable || value == internalStarting
@@ -228,7 +233,30 @@ class Thread private (
     }
   }
 
-  def getStackTrace: Array[StackTraceElement] = new Array[StackTraceElement](0)
+  private var stackTraceTs = 0L
+  private var lastStackTrace: Array[StackTraceElement] =
+    Array.empty[StackTraceElement]
+  private val stackTraceMutex = new Object
+  def getStackTrace: Array[StackTraceElement] = {
+    if (this == Thread.currentThread()) {
+      lastStackTrace = new Throwable().getStackTrace
+      stackTraceTs += 1
+      stackTraceMutex.synchronized {
+        stackTraceMutex.notifyAll()
+      }
+    } else {
+      val oldTs = stackTraceTs
+      while (stackTraceTs <= oldTs && isAlive) {
+        // trigger getStackTrace on that thread
+        pthread_kill(underlying, currentThreadStackTraceSignal)
+        stackTraceMutex.synchronized {
+//          Console.out.println("???")
+          stackTraceMutex.wait(100)
+        }
+      }
+    }
+    lastStackTrace
+  }
 
   def setContextClassLoader(classLoader: ClassLoader): Unit =
     lock.synchronized(contextClassLoader = classLoader)
@@ -451,7 +479,7 @@ object Thread {
 
   def currentThread(): Thread = {
     val ptr = pthread_getspecific(myThreadKey).asInstanceOf[Ptr[Thread]]
-    if (ptr != null) !ptr else MainThread
+    if (ptr != null) !ptr else mainThread
   }
 
   def dumpStack(): Unit = {
@@ -488,7 +516,7 @@ object Thread {
     var break: scala.Boolean       = false
     while (!break) {
       liveThreads = new Array[Thread](threadsCount)
-      count = parent.enumerate(liveThreads)
+      count = parent.enumerateThreads(liveThreads, 0, recurse = true)
       if (count == threadsCount) {
         threadsCount *= 2
       } else
@@ -545,10 +573,18 @@ object Thread {
   private val mainThreadGroup: ThreadGroup =
     new ThreadGroup(parent = null, name = "system", mainGroup = true)
 
-  private val MainThread = new Thread(parentThread = null,
+  private val mainThread = new Thread(parentThread = null,
                                       mainThreadGroup,
                                       target = null,
                                       "main",
                                       0,
                                       mainThread = true)
+
+  private def currentThreadStackTrace(signal: CInt): Unit = {
+    currentThread().getStackTrace
+  }
+  private val currentThreadStackTracePtr =
+    CFunctionPtr.fromFunction1(currentThreadStackTrace _)
+  private val currentThreadStackTraceSignal = signal.SIGUSR2
+  signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
 }

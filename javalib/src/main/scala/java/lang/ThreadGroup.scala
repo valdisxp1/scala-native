@@ -96,22 +96,22 @@ class ThreadGroup private[lang] (
 
   def enumerate(list: Array[Thread]): Int = {
     checkAccess()
-    enumerate(list, 0, true)
+    enumerateThreads(list, 0, true)
   }
 
   def enumerate(list: Array[Thread], recurse: scala.Boolean): Int = {
     checkAccess()
-    enumerate(list, 0, recurse)
+    enumerateThreads(list, 0, recurse)
   }
 
   def enumerate(list: Array[ThreadGroup]): Int = {
     checkAccess()
-    enumerate(list, 0, true)
+    enumerateGroups(list, 0, true)
   }
 
   def enumerate(list: Array[ThreadGroup], recurse: scala.Boolean): Int = {
     checkAccess()
-    enumerate(list, 0, recurse)
+    enumerateGroups(list, 0, recurse)
   }
 
   def getMaxPriority: Int = maxPriority
@@ -281,9 +281,9 @@ class ThreadGroup private[lang] (
 
   }
 
-  private def enumerate(list: Array[Thread],
-                        of: Int,
-                        recurse: scala.Boolean): Int = {
+  private[lang] def enumerateThreads(list: Array[Thread],
+                                     of: Int,
+                                     recurse: scala.Boolean): Int = {
     var offset: Int = of
     if (list.isEmpty) return 0
     var groupsCopy: util.List[ThreadGroup] = null // a copy of subgroups list
@@ -305,15 +305,15 @@ class ThreadGroup private[lang] (
         val it: util.Iterator[ThreadGroup] = groupsCopy.iterator()
         while (offset < list.length && it.hasNext) it
           .next()
-          .enumerate(list, offset, true)
+          .enumerateThreads(list, offset, true)
       }
     }
     offset
   }
 
-  private def enumerate(list: Array[ThreadGroup],
-                        of: Int,
-                        recurse: scala.Boolean): Int = {
+  private[lang] def enumerateGroups(list: Array[ThreadGroup],
+                                    of: Int,
+                                    recurse: scala.Boolean): Int = {
     var offset: Int = of
     if (destroyed)
       return offset
@@ -330,7 +330,7 @@ class ThreadGroup private[lang] (
       val lastGroupIdx: Int = offset
       var i: Int            = firstGroupIdx
       while (offset < list.length && i < lastGroupIdx) {
-        offset = list(i).enumerate(list, offset, true)
+        offset = list(i).enumerateGroups(list, offset, true)
         i += 1
       }
     }
