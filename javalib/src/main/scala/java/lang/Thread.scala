@@ -585,11 +585,10 @@ object Thread {
                                       mainThread = true)
 
   private def currentThreadStackTrace(signal: CInt): Unit = {
-    Console.out.println("!!!")
     currentThread().getStackTrace
   }
   private val currentThreadStackTracePtr =
     CFunctionPtr.fromFunction1(currentThreadStackTrace _)
-  private val currentThreadStackTraceSignal = 30 // 30 is one of the SIGUSR1 values
+  private val currentThreadStackTraceSignal = 17 // 17 is one of the SIGUSR2 values
   signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
 }
