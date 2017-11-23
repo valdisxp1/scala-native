@@ -1,5 +1,7 @@
 package java.lang
 
+import scala.collection.mutable
+
 object ThreadSuite extends tests.Suite {
 
   test("Runtime static variables access and currentThread do not crash") {
@@ -538,5 +540,92 @@ object ThreadSuite extends tests.Suite {
     eventually()(doingStuff)
     thread.interrupt()
     eventuallyEquals()(Thread.State.TERMINATED, thread.getState)
+  }
+
+  test("currentThread().getStackTrace should contain the running method name") {
+    object Something {
+      def aMethodWithoutAnInterestingName = {
+        Thread.currentThread().getStackTrace
+      }
+    }
+    val rawStackTrace = Something.aMethodWithoutAnInterestingName
+    assert(
+      mutable.WrappedArray
+        .make[StackTraceElement](rawStackTrace)
+        .exists(_.getMethodName == "aMethodWithoutAnInterestingName"))
+  }
+  test("Thread.getAllStackTraces should contain our own thread") {
+    object Something {
+      def aMethodWithoutAnInterestingName = {
+        Thread.getAllStackTraces
+      }
+    }
+    val rawStackTraces = Something.aMethodWithoutAnInterestingName
+    val currentThread  = Thread.currentThread()
+    Console.out.println(
+      "rawStackTraces.containsKey(currentThread): " + rawStackTraces
+        .containsKey(currentThread))
+    Console.out.println("rawStackTraces.size: " + rawStackTraces.size())
+    assert(rawStackTraces.containsKey(currentThread))
+    val currentThreadStackTrace = rawStackTraces.get(currentThread)
+    assert(
+      mutable.WrappedArray
+        .make[StackTraceElement](currentThreadStackTrace)
+        .exists(_.getMethodName == "aMethodWithoutAnInterestingName"))
+  }
+  test("thread.getStackTrace should be a stacktrace for that thread") {
+    object Something {
+      def aMethodWithoutAnInterestingName = {
+        Thread.sleep(2000)
+      }
+    }
+    val thread = new Thread {
+      override def run() = {
+        Something.aMethodWithoutAnInterestingName
+      }
+    }
+    thread.start()
+    eventuallyEquals(label = "thread.getState == Thread.State.TIMED_WAITING")(
+      thread.getState,
+      Thread.State.TIMED_WAITING)
+    val rawStackTrace = thread.getStackTrace
+    assert(
+      mutable.WrappedArray
+        .make[StackTraceElement](rawStackTrace)
+        .exists(_.getMethodName == "aMethodWithoutAnInterestingName"))
+  }
+  test("newly created threads should show up in Thread.getAllStackTraces") {
+    val mutex   = new Object
+    val thread1 = new WaitingThread(mutex)
+    val thread2 = new WaitingThread(mutex)
+
+    {
+      val stackTraces = Thread.getAllStackTraces
+      assertEquals(stackTraces.containsKey(thread1), false)
+      assertEquals(stackTraces.containsKey(thread2), false)
+    }
+
+    thread1.start()
+
+    {
+      val stackTraces = Thread.getAllStackTraces
+      assertEquals(stackTraces.containsKey(thread1), true)
+      assertEquals(stackTraces.containsKey(thread2), false)
+    }
+
+    thread2.start()
+
+    {
+      val stackTraces = Thread.getAllStackTraces
+      assertEquals(stackTraces.containsKey(thread1), true)
+      assertEquals(stackTraces.containsKey(thread2), true)
+    }
+
+    mutex.notifyAll()
+
+    eventually() {
+      val stackTraces = Thread.getAllStackTraces
+      !stackTraces.containsKey(thread1) && !stackTraces.containsKey(thread2)
+    }
   }
 }
