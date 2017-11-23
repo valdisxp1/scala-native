@@ -499,17 +499,20 @@ object Thread {
       new ThreadGroup(currentThread().getThreadGroup, "Temporary")
     var newParent: ThreadGroup = parent.getParent
     parent.destroy()
+    //TODO why not just the main group?
     while (newParent != null) {
       parent = newParent
       newParent = parent.getParent
     }
-    var threadsCount: Int          = parent.activeCount() + 1
+    var threadsCount: Int = parent.activeCount() + 1
+    Console.out.println("activeCount+1:" + threadsCount)
     var count: Int                 = 0
     var liveThreads: Array[Thread] = Array.empty
     var break: scala.Boolean       = false
     while (!break) {
       liveThreads = new Array[Thread](threadsCount)
-      count = parent.enumerate(liveThreads)
+      count = parent.enumerateThreads(liveThreads, 0, recurse = true)
+      Console.out.println("XXX:" + count)
       if (count == threadsCount) {
         threadsCount *= 2
       } else
@@ -519,6 +522,7 @@ object Thread {
     val map: java.util.Map[Thread, Array[StackTraceElement]] =
       new util.HashMap[Thread, Array[StackTraceElement]](count + 1)
     var i: Int = 0
+    Console.out.println("ThreadCount:" + count)
     while (i < count) {
       val ste: Array[StackTraceElement] = liveThreads(i).getStackTrace
       if (ste.length != 0)
