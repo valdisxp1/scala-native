@@ -250,7 +250,6 @@ class Thread private (
         // trigger getStackTrace on that thread
         pthread_kill(underlying, currentThreadStackTraceSignal)
         stackTraceMutex.synchronized {
-//          Console.out.println("???")
           stackTraceMutex.wait(100)
         }
       }
@@ -502,21 +501,13 @@ object Thread {
   }
 
   def getAllStackTraces: java.util.Map[Thread, Array[StackTraceElement]] = {
-    var parent: ThreadGroup =
-      new ThreadGroup(currentThread().getThreadGroup, "Temporary")
-    var newParent: ThreadGroup = parent.getParent
-    parent.destroy()
-    while (newParent != null) {
-      parent = newParent
-      newParent = parent.getParent
-    }
-    var threadsCount: Int          = parent.activeCount() + 1
+    var threadsCount: Int          = mainThreadGroup.activeCount() + 1
     var count: Int                 = 0
     var liveThreads: Array[Thread] = Array.empty
     var break: scala.Boolean       = false
     while (!break) {
       liveThreads = new Array[Thread](threadsCount)
-      count = parent.enumerateThreads(liveThreads, 0, recurse = true)
+      count = mainThreadGroup.enumerateThreads(liveThreads, 0, recurse = true)
       if (count == threadsCount) {
         threadsCount *= 2
       } else
