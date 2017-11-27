@@ -276,8 +276,10 @@ class Thread private (
     checkAccess()
     if (priority > 10 || priority < 1)
       throw new IllegalArgumentException("Wrong Thread priority value")
-//    val threadGroup: ThreadGroup = group
-    this.priority = priority
+    println(">>>"+group)
+    val maxPriorityInGroup = group.getMaxPriority
+    // min(priority,maxPriorityInGroup)
+    this.priority = if (priority > maxPriorityInGroup) maxPriorityInGroup else priority
     if (started)
       NativeThread.setPriority(underlying, priority)
   }
