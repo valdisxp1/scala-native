@@ -494,8 +494,6 @@ object Thread {
   def enumerate(list: Array[Thread]): Int =
     currentThread().group.enumerate(list)
 
-  def holdsLock(obj: Object): scala.Boolean = ???
-
   def `yield`(): Unit = {
     sched_yield()
   }

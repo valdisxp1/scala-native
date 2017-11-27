@@ -1,20 +1,13 @@
 package scala.scalanative.runtime
 
+import java.util
+
 import scala.scalanative.native._
 import scala.scalanative.native.stdlib.malloc
 import scala.scalanative.posix.errno.{EBUSY, EPERM}
 import scala.scalanative.posix.pthread._
-import scala.scalanative.posix.sys.time.{
-  CLOCK_REALTIME,
-  clock_gettime,
-  timespec
-}
-import scala.scalanative.posix.sys.types.{
-  pthread_cond_t,
-  pthread_condattr_t,
-  pthread_mutex_t,
-  pthread_mutexattr_t
-}
+import scala.scalanative.posix.sys.time.{CLOCK_REALTIME, clock_gettime, timespec}
+import scala.scalanative.posix.sys.types.{pthread_cond_t, pthread_condattr_t, pthread_mutex_t, pthread_mutexattr_t}
 import scala.scalanative.runtime.ThreadBase._
 
 final class Monitor private[runtime] () {
@@ -76,14 +69,41 @@ final class Monitor private[runtime] () {
         pthread_mutex_lock(mutexPtr)
       }
     }
+    pushLock()
   }
-  def exit(): Unit = pthread_mutex_unlock(mutexPtr)
+
+  def exit(): Unit = {
+    popLock()
+    pthread_mutex_unlock(mutexPtr)
+  }
+
+//  @inline
+  private def pushLock(): Unit = {
+    val thread = Thread.currentThread().asInstanceOf[ThreadBase]
+    thread.locks(thread.size) = this
+    thread.size += 1
+    if (thread.size >= thread.locks.length) {
+      val oldArray = thread.locks
+      val newArray = new scala.Array[Monitor](oldArray.length * 2)
+      System.arraycopy(oldArray, 0, newArray, 0, oldArray.length)
+      thread.locks = newArray
+    }
+  }
+
+//  @inline
+  private def popLock(): Unit = {
+    Thread.currentThread().asInstanceOf[ThreadBase].size -= 1
+  }
 }
 
 abstract class ThreadBase {
   private var state                               = Normal
   final def getLockState: Int                     = state
   private[runtime] def setLockState(s: Int): Unit = state = s
+  // only here to implement holdsLock
+  private[runtime] var locks = new scala.Array[Monitor](8)
+  private[runtime] var size = 0
+  final def holdsLock(obj: Object): scala.Boolean = locks.contains(Monitor(obj))
 }
 
 object ThreadBase {
