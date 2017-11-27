@@ -2,7 +2,7 @@ package java.lang
 
 import scala.collection.mutable
 
-object ThreadSuite extends tests.Suite {
+object ThreadSuite extends tests.Suite with tests.MultiThreadingUtils {
 
   test("Runtime static variables access and currentThread do not crash") {
 
@@ -23,24 +23,6 @@ object ThreadSuite extends tests.Suite {
 
   }
 
-  class FatObject(val id: Int = 0) {
-    var x1, x2, x3, x4, x5, x6, x7, x8 = 0L
-
-    def nextOne = new FatObject(id + 1)
-  }
-
-  class MemoryMuncher(times: Int) extends Thread {
-    var visibleState = new FatObject()
-
-    override def run(): Unit = {
-      var remainingCount = times
-      while (remainingCount > 0) {
-        visibleState = visibleState.nextOne
-        remainingCount -= 1
-      }
-    }
-  }
-
   test("GC should not crash with multiple threads") {
     val muncher1 = new MemoryMuncher(10000)
     val muncher2 = new MemoryMuncher(10000)
@@ -49,66 +31,6 @@ object ThreadSuite extends tests.Suite {
     muncher1.join()
     muncher2.join()
   }
-
-  def takesAtLeast[R](expectedDelayMs: scala.Long)(f: => R): R = {
-    val start  = System.currentTimeMillis()
-    val result = f
-    val end    = System.currentTimeMillis()
-    val actual = end - start
-    Console.out.println(
-      "It took " + actual + " ms, expected at least " + expectedDelayMs + " ms")
-    assert(actual >= expectedDelayMs)
-
-    result
-  }
-
-  def takesAtLeast[R](expectedDelayMs: scala.Long,
-                      expectedDelayNanos: scala.Int)(f: => R): R = {
-    val expectedDelay = expectedDelayMs * 1000000 + expectedDelayMs
-    val start         = System.nanoTime()
-    val result        = f
-    val end           = System.nanoTime()
-
-    val actual = end - start
-    Console.out.println(
-      "It took " + actual + " ns, expected at least " + expectedDelay + " ns")
-    assert(actual >= expectedDelay)
-
-    result
-  }
-
-  val eternity = 300000 //ms
-  def eventually(maxDelay: scala.Long = eternity,
-                 recheckEvery: scala.Long = 200,
-                 label: String = "Condition")(p: => scala.Boolean): Unit = {
-    val start    = System.currentTimeMillis()
-    val deadline = start + maxDelay
-    var current  = 0L
-    var continue = true
-    while (continue && current <= deadline) {
-      current = System.currentTimeMillis()
-      if (p) {
-        continue = false
-      }
-      Thread.sleep(recheckEvery)
-    }
-    if (current <= deadline) {
-      // all is good
-      Console.out.println(
-        label + " reached after " + (current - start) + " ms; max delay: " + maxDelay + " ms")
-      assert(true)
-    } else {
-      Console.out.println(
-        "Timeout: " + label + " not reached after " + maxDelay + " ms")
-      assert(false)
-    }
-  }
-
-  def eventuallyEquals[T](
-      maxDelay: scala.Long = eternity,
-      recheckEvery: scala.Long = 200,
-      label: String = "Equal values")(left: => T, right: => T) =
-    eventually(maxDelay, recheckEvery, label)(left == right)
 
   test("sleep suspends execution by at least the requested amount") {
     val millisecondTests = Seq(0, 1, 5, 100)
@@ -245,28 +167,6 @@ object ThreadSuite extends tests.Suite {
 
     thread.start()
     eventually()(detector.wasException)
-  }
-
-  def withExceptionHandler[U](handler: Thread.UncaughtExceptionHandler)(
-      f: => U): U = {
-    val oldHandler = Thread.getDefaultUncaughtExceptionHandler
-    Thread.setDefaultUncaughtExceptionHandler(handler)
-    try {
-      f
-    } finally {
-      Thread.setDefaultUncaughtExceptionHandler(oldHandler)
-    }
-  }
-
-  class ExceptionDetector(thread: Thread, exception: Throwable)
-      extends Thread.UncaughtExceptionHandler {
-    private var _wasException       = false
-    def wasException: scala.Boolean = _wasException
-    def uncaughtException(t: Thread, e: Throwable): Unit = {
-      assertEquals(t, thread)
-      assertEquals(e, exception)
-      _wasException = true
-    }
   }
 
   test("Exceptions in Threads should be handled") {
