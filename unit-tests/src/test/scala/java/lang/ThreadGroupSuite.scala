@@ -54,4 +54,21 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     }
     assertNot(fail)
   }
+
+  test("Thread.setPriority respects threadGroups maxPriority") {
+    val fastGroup = new ThreadGroup("fastGroup")
+    assertEquals(fastGroup.getMaxPriority, Thread.MAX_PRIORITY)
+
+    val fastThread = new Thread(fastGroup, "fastThread")
+    fastThread.setPriority(Thread.MAX_PRIORITY)
+    assertEquals(fastThread.getPriority, Thread.MAX_PRIORITY)
+
+    val slowGroup = new ThreadGroup("slowGroup")
+    slowGroup.setMaxPriority(Thread.MIN_PRIORITY)
+    assertEquals(slowGroup.getMaxPriority, Thread.MIN_PRIORITY)
+
+    val slowThread = new Thread(slowGroup,"slowThread")
+    slowThread.setPriority(Thread.MAX_PRIORITY)
+    assertEquals(slowThread.getPriority, Thread.MIN_PRIORITY)
+  }
 }
