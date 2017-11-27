@@ -2,7 +2,7 @@ package java.lang
 
 import scala.collection.mutable
 
-object ThreadSuite extends tests.Suite with tests.MultiThreadingUtils {
+object ThreadSuite extends tests.MultiThreadSuite {
 
   test("Runtime static variables access and currentThread do not crash") {
 
