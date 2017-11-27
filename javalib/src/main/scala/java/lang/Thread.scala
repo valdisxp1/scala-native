@@ -276,13 +276,12 @@ class Thread private (
     checkAccess()
     if (priority > 10 || priority < 1)
       throw new IllegalArgumentException("Wrong Thread priority value")
-    val threadGroup: ThreadGroup = group
+//    val threadGroup: ThreadGroup = group
     this.priority = priority
     if (started)
       NativeThread.setPriority(underlying, priority)
   }
 
-  //synchronized
   def start(): Unit = {
     if (!livenessState.compareAndSwapStrong(internalNew, internalStarting)._1) {
       //this thread was started
@@ -303,6 +302,9 @@ class Thread private (
     if (status != 0)
       throw new Exception(
         "Failed to create new thread, pthread error " + status)
+
+    // update the priority for the native thread
+    setPriority(priority)
 
     underlying = !id
   }
