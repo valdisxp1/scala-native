@@ -1,5 +1,7 @@
 package java.lang
 
+import java.io.{OutputStream, PrintStream}
+
 import scala.collection.mutable
 
 object ThreadSuite extends tests.MultiThreadSuite {
@@ -442,6 +444,16 @@ object ThreadSuite extends tests.MultiThreadSuite {
     eventuallyEquals()(Thread.State.TERMINATED, thread.getState)
   }
 
+  def withErr[T](stream: OutputStream)(f: => T): T = {
+    val old = System.err
+    try {
+      System.setErr(new PrintStream(stream))
+      f
+    } finally {
+      System.setErr(old)
+    }
+  }
+
   test("Thread.dumpStack should contain the method name") {
     object Something {
       def aMethodWithoutAnInterestingName = {
@@ -449,11 +461,9 @@ object ThreadSuite extends tests.MultiThreadSuite {
       }
     }
     val outputStream = new java.io.ByteArrayOutputStream()
-    Console.withErr(outputStream) {
-      Console.err.println("WHAT is going on?")
+    withErr(outputStream) {
       Something.aMethodWithoutAnInterestingName
     }
-    Console.out.println(">>>>"+outputStream.toString)
     assert(outputStream.toString.contains("aMethodWithoutAnInterestingName"))
   }
   test("currentThread().getStackTrace should contain the running method name") {
