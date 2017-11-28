@@ -1,5 +1,7 @@
 package scala.scalanative.runtime
 
+import java.util
+
 import scala.scalanative.native._
 import scala.scalanative.native.stdlib.malloc
 import scala.scalanative.posix.errno.{EBUSY, EPERM}
@@ -17,7 +19,7 @@ import scala.scalanative.posix.sys.types.{
 }
 import scala.scalanative.runtime.ThreadBase._
 
-final class Monitor private[runtime] () {
+final class Monitor private[runtime] (shadow: Boolean) {
   // memory leak
   // TODO destroy the mutex and release the memory
   private val mutexPtr: Ptr[pthread_mutex_t] = malloc(pthread_mutex_t_size)
@@ -76,14 +78,56 @@ final class Monitor private[runtime] () {
         pthread_mutex_lock(mutexPtr)
       }
     }
+    if (!shadow) {
+      pushLock()
+    }
   }
-  def exit(): Unit = pthread_mutex_unlock(mutexPtr)
+
+  def exit(): Unit = {
+    if (!shadow) {
+      popLock()
+    }
+    pthread_mutex_unlock(mutexPtr)
+  }
+
+  @inline
+  private def pushLock(): Unit = {
+    val thread = Thread.currentThread().asInstanceOf[ThreadBase]
+    thread.locks(thread.size) = this
+    thread.size += 1
+    if (thread.size >= thread.locks.length) {
+      val oldArray = thread.locks
+      val newArray = new scala.Array[Monitor](oldArray.length * 2)
+      System.arraycopy(oldArray, 0, newArray, 0, oldArray.length)
+      thread.locks = newArray
+    }
+  }
+
+  @inline
+  private def popLock(): Unit = {
+    Thread.currentThread().asInstanceOf[ThreadBase].size -= 1
+  }
 }
 
 abstract class ThreadBase {
   private var state                               = Normal
   final def getLockState: Int                     = state
   private[runtime] def setLockState(s: Int): Unit = state = s
+  // only here to implement holdsLock
+  private[runtime] var locks = new scala.Array[Monitor](8)
+  private[runtime] var size  = 0
+  final def holdsLock(obj: Object): scala.Boolean = {
+    if (size == 0) {
+      false
+    } else {
+      val target = Monitor(obj)
+      var i: Int = 0
+      while (i < size && locks(i) != target) {
+        i += 1
+      }
+      i < size
+    }
+  }
 }
 
 object ThreadBase {
@@ -116,7 +160,7 @@ object Monitor {
     } else {
       try {
         pthread_mutex_lock(monitorCreationMutexPtr)
-        o.__monitor = new Monitor()
+        o.__monitor = new Monitor(x.isInstanceOf[ShadowLock])
         o.__monitor
       } finally {
         pthread_mutex_unlock(monitorCreationMutexPtr)
@@ -124,3 +168,8 @@ object Monitor {
     }
   }
 }
+
+/**
+ * Cannot be checked with Thread.holdsLock
+ */
+class ShadowLock

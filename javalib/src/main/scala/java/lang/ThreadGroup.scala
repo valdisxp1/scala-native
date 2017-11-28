@@ -2,7 +2,9 @@ package java.lang
 
 import java.util
 import java.lang.Thread.UncaughtExceptionHandler
+
 import scala.collection.JavaConversions._
+import scala.scalanative.runtime.ShadowLock
 
 // Ported from Harmony
 
@@ -435,6 +437,6 @@ object ThreadGroup {
   private final val LISTING_INDENT = "    "
 
   // ThreadGroup lock object
-  private class ThreadGroupLock {}
+  private final class ThreadGroupLock extends ShadowLock
   private final val lock: ThreadGroupLock = new ThreadGroupLock
 }

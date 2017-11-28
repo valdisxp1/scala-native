@@ -233,10 +233,9 @@ class Thread private (
     }
   }
 
-  private var stackTraceTs = 0L
-  private var lastStackTrace: Array[StackTraceElement] =
-    Array.empty[StackTraceElement]
-  private val stackTraceMutex = new Object
+  private var stackTraceTs                             = 0L
+  private var lastStackTrace: Array[StackTraceElement] = _
+  private val stackTraceMutex                          = new Object
   def getStackTrace: Array[StackTraceElement] = {
     if (this == Thread.currentThread()) {
       lastStackTrace = new Throwable().getStackTrace
@@ -494,7 +493,8 @@ object Thread {
   def enumerate(list: Array[Thread]): Int =
     currentThread().group.enumerate(list)
 
-  def holdsLock(obj: Object): scala.Boolean = ???
+  def holdsLock(obj: Object): scala.Boolean =
+    currentThread().asInstanceOf[ThreadBase].holdsLock(obj)
 
   def `yield`(): Unit = {
     sched_yield()
