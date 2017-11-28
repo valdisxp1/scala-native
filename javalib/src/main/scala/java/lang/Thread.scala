@@ -52,10 +52,6 @@ class Thread private (
     if (rawGroup != null) rawGroup else parentThread.group
   group.checkGroup()
 
-  // This thread's context class loader
-  private var contextClassLoader: ClassLoader =
-    if (!mainThread) parentThread.contextClassLoader else null
-
   // Indicates whether this thread was marked as daemon
   private var daemon: scala.Boolean =
     if (!mainThread) parentThread.daemon else false
@@ -140,9 +136,6 @@ class Thread private (
   def destroy(): Unit =
     // this method is not implemented
     throw new NoSuchMethodError()
-
-  def getContextClassLoader: ClassLoader =
-    lock.synchronized(contextClassLoader)
 
   final def getName: String = name
 
@@ -256,8 +249,11 @@ class Thread private (
     lastStackTrace
   }
 
-  def setContextClassLoader(classLoader: ClassLoader): Unit =
-    lock.synchronized(contextClassLoader = classLoader)
+  private def classLoadersNotSupported = throw new NotImplementedError("Custom class loaders not supported")
+  @deprecated
+  def setContextClassLoader(classLoader: ClassLoader): Unit = classLoadersNotSupported
+  @deprecated
+  def getContextClassLoader: ClassLoader = classLoadersNotSupported
 
   final def setDaemon(daemon: scala.Boolean): Unit = {
     lock.synchronized {
