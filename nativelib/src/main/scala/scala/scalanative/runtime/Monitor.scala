@@ -116,7 +116,18 @@ abstract class ThreadBase {
   // only here to implement holdsLock
   private[runtime] var locks                      = new scala.Array[Monitor](8)
   private[runtime] var size                       = 0
-  final def holdsLock(obj: Object): scala.Boolean = locks.contains(Monitor(obj))
+  final def holdsLock(obj: Object): scala.Boolean = {
+    if (size == 0) {
+      false
+    } else {
+      val target = Monitor(obj)
+      var i: Int = 0
+      while(i < size && locks(i) != target) {
+        i += 1
+      }
+      i < size
+    }
+  }
 }
 
 object ThreadBase {
