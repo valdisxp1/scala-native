@@ -44,6 +44,15 @@ object ThreadSuite extends tests.MultiThreadSuite {
     thread.join()
   }
 
+  test("Thread.checkAccess does not crash") {
+    Thread.currentThread().checkAccess()
+    val thread = new Thread {
+      override def run() = checkAccess()
+    }
+    thread.start()
+    thread.join()
+  }
+
   test("GC should not crash with multiple threads") {
     val muncher1 = new MemoryMuncher(10000)
     val muncher2 = new MemoryMuncher(10000)
