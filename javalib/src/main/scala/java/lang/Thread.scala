@@ -552,6 +552,8 @@ object Thread {
     }
   }
 
+  def holdsLock(obj: Object): scala.Boolean = currentThread().asInstanceOf[ThreadBase].holdsLock(obj)
+
   def sleep(millis: scala.Long): Unit = sleep(millis, 0)
 
   trait UncaughtExceptionHandler {
