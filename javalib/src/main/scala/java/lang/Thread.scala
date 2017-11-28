@@ -249,9 +249,11 @@ class Thread private (
     lastStackTrace
   }
 
-  private def classLoadersNotSupported = throw new NotImplementedError("Custom class loaders not supported")
+  private def classLoadersNotSupported =
+    throw new NotImplementedError("Custom class loaders not supported")
   @deprecated
-  def setContextClassLoader(classLoader: ClassLoader): Unit = classLoadersNotSupported
+  def setContextClassLoader(classLoader: ClassLoader): Unit =
+    classLoadersNotSupported
   @deprecated
   def getContextClassLoader: ClassLoader = classLoadersNotSupported
 

@@ -582,8 +582,10 @@ object ThreadSuite extends tests.MultiThreadSuite {
     thread.start()
     thread.join()
   }
-  test("contextClassLoaders not supported"){
-    assertThrows[NotImplementedError](Thread.currentThread().setContextClassLoader(new ClassLoader() {}))
-    assertThrows[NotImplementedError](Thread.currentThread().getContextClassLoader)
+  test("contextClassLoaders not supported") {
+    assertThrows[NotImplementedError](
+      Thread.currentThread().setContextClassLoader(new ClassLoader() {}))
+    assertThrows[NotImplementedError](
+      Thread.currentThread().getContextClassLoader)
   }
 }
