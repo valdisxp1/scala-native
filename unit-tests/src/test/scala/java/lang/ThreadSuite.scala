@@ -35,6 +35,15 @@ object ThreadSuite extends tests.MultiThreadSuite {
     assert(thread.getPriority == 2)
   }
 
+  test("Thread.yield does not crash") {
+    Thread.`yield`()
+    val thread = new Thread {
+      override def run() = Thread.`yield`()
+    }
+    thread.start()
+    thread.join()
+  }
+
   test("GC should not crash with multiple threads") {
     val muncher1 = new MemoryMuncher(10000)
     val muncher2 = new MemoryMuncher(10000)
