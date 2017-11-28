@@ -6,23 +6,33 @@ import scala.collection.mutable
 
 object ThreadSuite extends tests.MultiThreadSuite {
 
-  test("Runtime static variables access and currentThread do not crash") {
+  test("Priority constants are valid") {
 
     val max  = Thread.MAX_PRIORITY
     val min  = Thread.MIN_PRIORITY
     val norm = Thread.NORM_PRIORITY
 
-    val current = Thread.currentThread()
-
+    assert(min <= max)
+    assert(min <= norm)
+    assert(norm <= max)
   }
 
   test("Get/Set Priority work as it should with currentThread") {
+    val currentThread = Thread.currentThread()
+    val old           = currentThread.getPriority
+    try {
+      currentThread.setPriority(3)
+      assert(currentThread.getPriority == 3)
+    } finally {
+      currentThread.setPriority(old)
+    }
+  }
 
-    val current = Thread.currentThread()
+  test("Get/Set Priority work as it should with other thread") {
+    val thread = new Thread()
 
-    current.setPriority(3)
-    assert(current.getPriority == 3)
-
+    thread.setPriority(2)
+    assert(thread.getPriority == 2)
   }
 
   test("GC should not crash with multiple threads") {
