@@ -3,10 +3,16 @@
 // Every GC must include this file.
 
 #include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int scalanative_pthread_create(pthread_t *thread, const pthread_attr_t *attr,
                                void *(*start_routine) (void *), void *arg) {
-    return pthread_create(thread, attr, start_routine, arg);
+    perror("Tried to create a thread when using immix GC\n");
+    perror("This is not supported\n");
+    exit(-1);
+
+    return -1;
 }
 
 int scalanative_pthread_join(pthread_t thread, void **value_ptr) {
