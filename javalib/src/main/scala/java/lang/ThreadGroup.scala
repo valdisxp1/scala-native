@@ -2,7 +2,9 @@ package java.lang
 
 import java.util
 import java.lang.Thread.UncaughtExceptionHandler
+
 import scala.collection.JavaConversions._
+import scala.scalanative.runtime.ShadowLock
 
 // Ported from Harmony
 
@@ -210,20 +212,20 @@ class ThreadGroup private[lang] (
   }
 
   def add(thread: Thread): Unit = {
-//    lock.synchronized {
+    lock.synchronized {
       if (destroyed)
         throw new IllegalThreadStateException(
           "The thread group is already destroyed!")
       threads.add(thread)
-//    }
+    }
   }
 
   def checkGroup(): Unit = {
-//    lock.synchronized {
+    lock.synchronized {
       if (destroyed)
         throw new IllegalThreadStateException(
           "The thread group is already destroyed!")
-//    }
+    }
   }
 
   def remove(thread: Thread): Unit = {
@@ -435,6 +437,6 @@ object ThreadGroup {
   private final val LISTING_INDENT = "    "
 
   // ThreadGroup lock object
-  private class ThreadGroupLock {}
+  private final class ThreadGroupLock extends ShadowLock
   private final val lock: ThreadGroupLock = new ThreadGroupLock
 }

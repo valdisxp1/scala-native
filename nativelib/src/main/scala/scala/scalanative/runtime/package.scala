@@ -79,6 +79,8 @@ package object runtime {
    */
   def init(argc: Int, argv: Ptr[Ptr[Byte]]): ObjectArray = {
     val args = new scala.Array[String](argc - 1)
+//    Thread.MAX_PRIORITY
+    System.lineSeparator()
 
     // skip the executable name in argv(0)
     var c = 0

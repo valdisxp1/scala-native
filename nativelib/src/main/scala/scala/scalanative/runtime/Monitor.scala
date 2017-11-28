@@ -6,11 +6,20 @@ import scala.scalanative.native._
 import scala.scalanative.native.stdlib.malloc
 import scala.scalanative.posix.errno.{EBUSY, EPERM}
 import scala.scalanative.posix.pthread._
-import scala.scalanative.posix.sys.time.{CLOCK_REALTIME, clock_gettime, timespec}
-import scala.scalanative.posix.sys.types.{pthread_cond_t, pthread_condattr_t, pthread_mutex_t, pthread_mutexattr_t}
+import scala.scalanative.posix.sys.time.{
+  CLOCK_REALTIME,
+  clock_gettime,
+  timespec
+}
+import scala.scalanative.posix.sys.types.{
+  pthread_cond_t,
+  pthread_condattr_t,
+  pthread_mutex_t,
+  pthread_mutexattr_t
+}
 import scala.scalanative.runtime.ThreadBase._
 
-final class Monitor private[runtime] () {
+final class Monitor private[runtime] (shadow: Boolean) {
   // memory leak
   // TODO destroy the mutex and release the memory
   private val mutexPtr: Ptr[pthread_mutex_t] = malloc(pthread_mutex_t_size)
@@ -69,11 +78,15 @@ final class Monitor private[runtime] () {
         pthread_mutex_lock(mutexPtr)
       }
     }
-    pushLock()
+    if (!shadow) {
+      pushLock()
+    }
   }
 
   def exit(): Unit = {
-    popLock()
+    if (!shadow) {
+      popLock()
+    }
     pthread_mutex_unlock(mutexPtr)
   }
 
@@ -101,8 +114,8 @@ abstract class ThreadBase {
   final def getLockState: Int                     = state
   private[runtime] def setLockState(s: Int): Unit = state = s
   // only here to implement holdsLock
-  private[runtime] var locks = new scala.Array[Monitor](8)
-  private[runtime] var size = 0
+  private[runtime] var locks                      = new scala.Array[Monitor](8)
+  private[runtime] var size                       = 0
   final def holdsLock(obj: Object): scala.Boolean = locks.contains(Monitor(obj))
 }
 
@@ -136,7 +149,7 @@ object Monitor {
     } else {
       try {
         pthread_mutex_lock(monitorCreationMutexPtr)
-        o.__monitor = new Monitor()
+        o.__monitor = new Monitor(x.isInstanceOf[ShadowLock])
         o.__monitor
       } finally {
         pthread_mutex_unlock(monitorCreationMutexPtr)
@@ -144,3 +157,8 @@ object Monitor {
     }
   }
 }
+
+/**
+ * Cannot be check with Thread.holdsLock
+ */
+class ShadowLock
