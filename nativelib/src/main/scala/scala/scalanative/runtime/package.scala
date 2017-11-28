@@ -80,6 +80,10 @@ package object runtime {
   def init(argc: Int, argv: Ptr[Ptr[Byte]]): ObjectArray = {
     val args = new scala.Array[String](argc - 1)
 
+    // force Thread class initialization
+    // to make sure it is initialized from the main thread
+    Thread.currentThread()
+
     // skip the executable name in argv(0)
     var c = 0
     while (c < argc - 1) {
