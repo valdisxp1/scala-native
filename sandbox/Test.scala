@@ -11,12 +11,12 @@ object Test {
     System.err.println("2b")
 
     // does not compile: cannot link: @java.lang.System$::setErr_java.io.PrintStream_unit
-    System.setErr(System.out)
+//    System.setErr(System.out)
     Console.err.println("3a")
     System.err.println("3b")
 
     // does not compile: reassignment to val
-    System.err = System.out
+//    System.err = System.out
     Console.err.println("4a")
     System.err.println("4b")
   }
