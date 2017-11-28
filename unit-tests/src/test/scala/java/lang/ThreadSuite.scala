@@ -442,6 +442,20 @@ object ThreadSuite extends tests.MultiThreadSuite {
     eventuallyEquals()(Thread.State.TERMINATED, thread.getState)
   }
 
+  test("Thread.dumpStack should contain the method name") {
+    object Something {
+      def aMethodWithoutAnInterestingName = {
+        Thread.dumpStack()
+      }
+    }
+    val outputStream = new java.io.ByteArrayOutputStream()
+    Console.withErr(outputStream) {
+      Console.err.println("WHAT is going on?")
+      Something.aMethodWithoutAnInterestingName
+    }
+    Console.out.println(">>>>"+outputStream.toString)
+    assert(outputStream.toString.contains("aMethodWithoutAnInterestingName"))
+  }
   test("currentThread().getStackTrace should contain the running method name") {
     object Something {
       def aMethodWithoutAnInterestingName = {

@@ -482,10 +482,10 @@ object Thread {
 
   def dumpStack(): Unit = {
     val stack: Array[StackTraceElement] = new Throwable().getStackTrace
-    System.err.println("Stack trace")
+    Console.err.println("Stack trace")
     var i: Int = 0
     while (i < stack.length) {
-      System.err.println(STACK_TRACE_INDENT + stack(i))
+      Console.err.println(STACK_TRACE_INDENT + stack(i))
       i += 1
     }
   }
