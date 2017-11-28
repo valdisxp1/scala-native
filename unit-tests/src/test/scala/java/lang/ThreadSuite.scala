@@ -528,4 +528,34 @@ object ThreadSuite extends tests.MultiThreadSuite {
       !stackTraces.containsKey(thread1) && !stackTraces.containsKey(thread2)
     }
   }
+
+  test("holdsLock") {
+    def twoMutexTest = {
+      val mutex1 = new Object
+      val mutex2 = new Object
+
+      assertEquals(Thread.holdsLock(mutex1), false)
+      assertEquals(Thread.holdsLock(mutex2), false)
+      mutex1.synchronized {
+        assertEquals(Thread.holdsLock(mutex1), true)
+        assertEquals(Thread.holdsLock(mutex2), false)
+        mutex2.synchronized {
+          assertEquals(Thread.holdsLock(mutex1), true)
+          assertEquals(Thread.holdsLock(mutex2), true)
+        }
+        assertEquals(Thread.holdsLock(mutex1), true)
+        assertEquals(Thread.holdsLock(mutex2), false)
+      }
+      assertEquals(Thread.holdsLock(mutex1), false)
+      assertEquals(Thread.holdsLock(mutex2), false)
+    }
+
+    twoMutexTest
+
+    val thread = new Thread {
+      override def run() = twoMutexTest
+    }
+    thread.start()
+    thread.join()
+  }
 }
