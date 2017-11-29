@@ -79,7 +79,7 @@ class Thread private (
    * NOTE: This is used to keep track of the pthread linked to this Thread,
    * it might be easier/better to handle this at lower level
    */
-  private[this] var underlying: pthread_t = 0.asInstanceOf[ULong]
+  private var underlying: pthread_t = 0.asInstanceOf[ULong]
 
   private val sleepMutex = new Object
 
@@ -227,15 +227,18 @@ class Thread private (
   }
 
   private var stackTraceTs                             = 0L
+  // not initializing to empty to no trigger System class initialization
   private var lastStackTrace: Array[StackTraceElement] = _
   private val stackTraceMutex                          = new Object
   def getStackTrace: Array[StackTraceElement] = {
     if (this == Thread.currentThread()) {
-      lastStackTrace = new Throwable().getStackTrace
+      val stackTrace = new Throwable().getStackTrace
+      lastStackTrace = stackTrace
       stackTraceTs += 1
       stackTraceMutex.synchronized {
         stackTraceMutex.notifyAll()
       }
+      stackTrace
     } else {
       val oldTs = stackTraceTs
       while (stackTraceTs <= oldTs && isAlive) {
@@ -245,8 +248,8 @@ class Thread private (
           stackTraceMutex.wait(100)
         }
       }
+      if (lastStackTrace != null) lastStackTrace else new Array[StackTraceElement](0)
     }
-    lastStackTrace
   }
 
   private def classLoadersNotSupported =
@@ -274,14 +277,18 @@ class Thread private (
 
   final def setPriority(priority: Int): Unit = {
     checkAccess()
-    if (priority > 10 || priority < 1)
+    if (priority > Thread.MAX_PRIORITY || priority < Thread.MIN_PRIORITY)
       throw new IllegalArgumentException("Wrong Thread priority value")
-    println(">>>"+group)
-    val maxPriorityInGroup = group.getMaxPriority
-    // min(priority,maxPriorityInGroup)
-    this.priority = if (priority > maxPriorityInGroup) maxPriorityInGroup else priority
-    if (started)
-      NativeThread.setPriority(underlying, priority)
+    val groupLocal = group
+    if (groupLocal != null) {
+      val maxPriorityInGroup = groupLocal.getMaxPriority
+      // min(priority,maxPriorityInGroup)
+      if (maxPriorityInGroup > Thread.MAX_PRIORITY || maxPriorityInGroup < Thread.MIN_PRIORITY)
+        throw new IllegalArgumentException("Wrong ThreadGroup priority value")
+      this.priority = if (priority > maxPriorityInGroup) maxPriorityInGroup else priority
+      if (isAlive)
+        NativeThread.setPriority(underlying, priority)
+    }
   }
 
   def start(): Unit = {
@@ -305,10 +312,10 @@ class Thread private (
       throw new Exception(
         "Failed to create new thread, pthread error " + status)
 
+    underlying = !id
+
     // update the priority for the native thread
     setPriority(priority)
-
-    underlying = !id
   }
 
   def getState: State = {
@@ -400,6 +407,11 @@ object Thread {
     val thread = !p.asInstanceOf[Ptr[Thread]]
     pthread_setspecific(myThreadKey, p)
     free(p)
+    if (thread.underlying == 0L.asInstanceOf[ULong]) {
+      // the called hasn't set the underlying thread id yet
+      // make sure it is initialized
+      thread.underlying = pthread_self()
+    }
     thread.livenessState
       .compareAndSwapStrong(internalStarting, internalRunnable)
     try {
@@ -565,6 +577,9 @@ object Thread {
 
   private val mainThreadGroup: ThreadGroup =
     new ThreadGroup(parent = null, name = "system", mainGroup = true)
+//  println(MAX_PRIORITY)
+//  println(mainThreadGroup.getMaxPriority)
+  mainThreadGroup.setMaxPriority(5)
 
   private val mainThread = new Thread(parentThread = null,
                                       mainThreadGroup,
