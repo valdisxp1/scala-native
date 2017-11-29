@@ -228,17 +228,15 @@ class Thread private (
 
   private var stackTraceTs                             = 0L
   // not initializing to empty to no trigger System class initialization
-  private var lastStackTrace: Array[StackTraceElement] = _
+  private var lastStackTrace: Array[StackTraceElement] = new Array[StackTraceElement](0)
   private val stackTraceMutex                          = new Object
   def getStackTrace: Array[StackTraceElement] = {
     if (this == Thread.currentThread()) {
-      val stackTrace = new Throwable().getStackTrace
-      lastStackTrace = stackTrace
+      lastStackTrace = new Throwable().getStackTrace
       stackTraceTs += 1
       stackTraceMutex.synchronized {
         stackTraceMutex.notifyAll()
       }
-      stackTrace
     } else {
       val oldTs = stackTraceTs
       while (stackTraceTs <= oldTs && isAlive) {
@@ -248,8 +246,8 @@ class Thread private (
           stackTraceMutex.wait(100)
         }
       }
-      if (lastStackTrace != null) lastStackTrace else new Array[StackTraceElement](0)
     }
+    lastStackTrace
   }
 
   private def classLoadersNotSupported =
