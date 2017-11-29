@@ -39,16 +39,16 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
       new SleepyThread(subgroup, "SG-2")
     )
     threads.foreach(_.start())
-    threads.foreach { thread =>
+    threads.foreach { thread: Thread =>
       eventuallyEquals(
-        label = thread.toString + "is in Thread.State.TIMED_WAITING")(
+        label = thread.getName + "is in Thread.State.TIMED_WAITING")(
         Thread.State.TIMED_WAITING,
         thread.getState)
     }
     group.interrupt()
-    threads.foreach { thread =>
+    threads.foreach { thread: Thread =>
       eventuallyEquals(
-        label = thread.toString + "is in Thread.State.TERMINATED")(
+        label = thread.getName + "is in Thread.State.TERMINATED")(
         Thread.State.TERMINATED,
         thread.getState)
     }
