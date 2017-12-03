@@ -79,7 +79,7 @@ class Thread private (
    * NOTE: This is used to keep track of the pthread linked to this Thread,
    * it might be easier/better to handle this at lower level
    */
-  private[this] var underlying: pthread_t = 0.asInstanceOf[ULong]
+  private var underlying: pthread_t = 0.asInstanceOf[ULong]
 
   private val sleepMutex = new Object
 
@@ -227,7 +227,8 @@ class Thread private (
   }
 
   private var stackTraceTs                             = 0L
-  private var lastStackTrace: Array[StackTraceElement] = _
+  // not initializing to empty to no trigger System class initialization
+  private var lastStackTrace: Array[StackTraceElement] = new Array[StackTraceElement](0)
   private val stackTraceMutex                          = new Object
   def getStackTrace: Array[StackTraceElement] = {
     if (this == Thread.currentThread()) {
@@ -398,6 +399,11 @@ object Thread {
     val thread = !p.asInstanceOf[Ptr[Thread]]
     pthread_setspecific(myThreadKey, p)
     free(p)
+    if (thread.underlying == 0L.asInstanceOf[ULong]) {
+      // the called hasn't set the underlying thread id yet
+      // make sure it is initialized
+      thread.underlying = pthread_self()
+    }
     thread.livenessState
       .compareAndSwapStrong(internalStarting, internalRunnable)
     try {
