@@ -6,6 +6,10 @@ size_t scalanative_size_of_pthread_t () {
     return sizeof(pthread_t);
 }
 
+size_t scalanative_pthread_attr_t () {
+    return sizeof(pthread_attr_t);
+}
+
 size_t scalanative_size_of_pthread_cond_t () {
     return sizeof(pthread_cond_t);
 }

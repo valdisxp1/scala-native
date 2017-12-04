@@ -309,9 +309,13 @@ class Thread private (
     !threadPtr = this
 
     val id = stackalloc[pthread_t]
+    // pthread_attr_t is a struct, not a ULong
+    val attrs = stackalloc[scala.Byte](pthread_attr_t_size).asInstanceOf[Ptr[pthread_attr_t]]
+    pthread_attr_init(attrs)
+
     val status =
       pthread_create(id,
-                     null.asInstanceOf[Ptr[pthread_attr_t]],
+                     attrs,
                      callRunRoutine,
                      threadPtr.asInstanceOf[Ptr[scala.Byte]])
     if (status != 0)
@@ -321,7 +325,7 @@ class Thread private (
     underlying = !id
 
     // update the priority for the native thread
-    setPriority(priority)
+//    setPriority(priority)
   }
 
   def getState: State = {
