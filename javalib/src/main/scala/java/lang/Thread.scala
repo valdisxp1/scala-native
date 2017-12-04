@@ -315,6 +315,9 @@ class Thread private (
       .asInstanceOf[Ptr[pthread_attr_t]]
     pthread_attr_init(attrs)
     NativeThread.attrSetPriority(attrs, Thread.toNativePriority(priority))
+    if (stackSize > 0) {
+      pthread_attr_setstacksize(attrs, stackSize)
+    }
 
     val status =
       pthread_create(id,
