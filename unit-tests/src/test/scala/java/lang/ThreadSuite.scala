@@ -6,6 +6,100 @@ import scala.collection.mutable
 
 object ThreadSuite extends tests.MultiThreadSuite {
 
+  test("Constructors") {
+    {
+      val thread = new Thread
+      //just do not crash
+      thread.start()
+      thread.join()
+    }
+
+    {
+      val name        = "Dave"
+      val threadGroup = new ThreadGroup("MyGroup")
+      val thread      = new Thread(threadGroup, name)
+      assertEquals(thread.getName, name)
+      assertEquals(thread.getThreadGroup, threadGroup)
+      thread.start()
+      assertEquals(thread.getName, name)
+      // threadGroup may be null or the value, because it may have already ended
+      thread.join()
+      assertEquals(thread.getName, name)
+      assertEquals(thread.getThreadGroup, null)
+    }
+
+    {
+      val name   = "Dave"
+      val thread = new Thread(name)
+      assertEquals(thread.getName, name)
+      thread.start()
+      assertEquals(thread.getName, name)
+      thread.join()
+      assertEquals(thread.getName, name)
+    }
+
+    {
+      val name         = "Dave"
+      var didSomething = false
+      val runnable = new Runnable {
+        def run(): Unit = {
+          didSomething = true
+        }
+      }
+      val thread = new Thread(runnable, name)
+      assertEquals(thread.getName, name)
+      thread.start()
+      assertEquals(thread.getName, name)
+      thread.join()
+      assert(didSomething)
+      assertEquals(thread.getName, name)
+    }
+
+    {
+      val name         = "Dave"
+      var didSomething = false
+      val threadGroup  = new ThreadGroup("MyGroup")
+      val runnable = new Runnable {
+        def run(): Unit = {
+          didSomething = true
+        }
+      }
+      val thread = new Thread(threadGroup, runnable, name)
+      assertEquals(thread.getName, name)
+      assertEquals(thread.getThreadGroup, threadGroup)
+      thread.start()
+      assertEquals(thread.getName, name)
+      // threadGroup may be null or the value, because it may have already ended
+      thread.join()
+      assert(didSomething)
+      assertEquals(thread.getName, name)
+      assertEquals(thread.getThreadGroup, null)
+    }
+
+    {
+      val name         = "Dave"
+      var didSomething = false
+      val threadGroup  = new ThreadGroup("MyGroup")
+      val runnable = new Runnable {
+        def run(): Unit = {
+          didSomething = true
+        }
+      }
+      val stackSize = 6L * 1024L * 1024L
+      val thread    = new Thread(threadGroup, runnable, name, stackSize)
+      // no way to check stack size yet, just do not crash
+      assertEquals(thread.getName, name)
+      assertEquals(thread.getThreadGroup, threadGroup)
+      thread.start()
+      assertEquals(thread.getName, name)
+      // threadGroup may be null or the value, because it may have already ended
+      thread.join()
+      assert(didSomething)
+      assertEquals(thread.getName, name)
+      assertEquals(thread.getThreadGroup, null)
+    }
+  }
+
   test("Priority constants are valid") {
 
     val max  = Thread.MAX_PRIORITY
