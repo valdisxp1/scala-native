@@ -84,10 +84,12 @@ object pthread {
 
   def pthread_cond_signal(cond: Ptr[pthread_cond_t]): CInt = extern
 
+  @name("scalanative_pthread_cond_timedwait")
   def pthread_cond_timedwait(cond: Ptr[pthread_cond_t],
                              mutex: Ptr[pthread_mutex_t],
                              timespec: Ptr[timespec]): CInt = extern
 
+  @name("scalanative_pthread_cond_wait")
   def pthread_cond_wait(cond: Ptr[pthread_cond_t],
                         mutex: Ptr[pthread_mutex_t]): CInt = extern
 
