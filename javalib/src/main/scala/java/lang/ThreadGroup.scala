@@ -19,7 +19,13 @@ class ThreadGroup private[lang] (
   import ThreadGroup._
 
   // This group's max priority
-  var maxPriority: Int = Thread.MAX_PRIORITY
+  var maxPriority: Int = {
+    val initialValue = Thread.MAX_PRIORITY
+    import scala.scalanative.native.stdio._
+    import scala.scalanative.native._
+//    fprintf(stderr, c">>y %d\n", initialValue)
+    initialValue
+  }
 
   // Indicated if this thread group was marked as daemon
   private var daemon: scala.Boolean = false
