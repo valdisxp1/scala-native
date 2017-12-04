@@ -24,21 +24,18 @@ void init() {
 int get_max_priority() {
 	if(!initialized) init();
 	int initialValue = sched_get_priority_max(PTHREAD_DEFAULT_POLICY);
-	fprintf(stderr,">>max %d\n", initialValue);
 	return initialValue;
 }
 
 int get_min_priority() {
 	if(!initialized) init();
 	int initialValue =  sched_get_priority_min(PTHREAD_DEFAULT_POLICY);
-	fprintf(stderr,">>min %d\n", initialValue);
 	return initialValue;
 }
 
 int get_norm_priority() {
 	if(!initialized) init();
 	int initialValue = PTHREAD_DEFAULT_SCHED_PARAM.sched_priority;
-	fprintf(stderr,">>normal %d\n", initialValue);
 	return initialValue;
 }
 
