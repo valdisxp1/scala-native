@@ -27,6 +27,22 @@ int scalanative_pthread_cancel(pthread_t thread) {
     return pthread_cancel(thread);
 }
 
+int scalanative_pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex) {
+    return pthread_cond_wait(cond, mutex);
+}
+
+int scalanative_pthread_cond_timedwait(pthread_cond_t *cond, pthread_mutex_t *mutex, const struct timespec *abstime) {
+    return pthread_cond_timedwait(cond, mutex, abstime);
+}
+
+int scalanative_pthread_cond_signal(pthread_cond_t *cond) {
+    return pthread_cond_signal(cond);
+}
+
+int scalanative_pthread_cond_broadcast(pthread_cond_t *cond) {
+    return pthread_cond_broadcast(cond);
+}
+
 void scalanative_pthread_exit(void *retval) { pthread_exit(retval); }
 
 // not bound in scala-native
