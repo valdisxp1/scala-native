@@ -166,7 +166,12 @@ class Thread private (
     value == internalInterrupted || value == internalInterruptedTerminated
   }
 
-  final def join(): Unit = while (isAlive) synchronized { wait() }
+  final def join(): Unit = {
+    () // workaround the synchronized methods not generating monitor calls
+    synchronized {
+      while (isAlive) wait()
+    }
+  }
 
   final def join(ml: scala.Long): Unit = {
     var millis: scala.Long = ml
@@ -177,7 +182,9 @@ class Thread private (
       var continue: scala.Boolean = true
       while (isAlive && continue) {
         synchronized {
-          wait(millis)
+          if (isAlive) {
+            wait(millis)
+          }
         }
         millis = end - System.currentTimeMillis()
         if (millis <= 0)
@@ -199,7 +206,9 @@ class Thread private (
       var continue: scala.Boolean = true
       while (isAlive && continue) {
         synchronized {
-          wait(millis, nanos)
+          if (isAlive) {
+            wait(millis, nanos)
+          }
         }
         rest = end - System.nanoTime()
         if (rest <= 0)
@@ -229,21 +238,20 @@ class Thread private (
   private var stackTraceTs                             = 0L
   // not initializing to empty to no trigger System class initialization
   private var lastStackTrace: Array[StackTraceElement] = new Array[StackTraceElement](0)
-  private val stackTraceMutex                          = new Object
   def getStackTrace: Array[StackTraceElement] = {
     if (this == Thread.currentThread()) {
       lastStackTrace = new Throwable().getStackTrace
-      stackTraceTs += 1
-      stackTraceMutex.synchronized {
-        stackTraceMutex.notifyAll()
+      synchronized {
+        stackTraceTs += 1
+        notifyAll()
       }
     } else {
       val oldTs = stackTraceTs
-      while (stackTraceTs <= oldTs && isAlive) {
-        // trigger getStackTrace on that thread
-        pthread_kill(underlying, currentThreadStackTraceSignal)
-        stackTraceMutex.synchronized {
-          stackTraceMutex.wait(100)
+      pthread_kill(underlying, currentThreadStackTraceSignal)
+      synchronized {
+        while (stackTraceTs <= oldTs && isAlive) {
+          // trigger getStackTrace on that thread
+          wait()
         }
       }
     }
@@ -426,11 +434,12 @@ object Thread {
 
   private def post(thread: Thread) = {
     thread.group.remove(thread)
-    thread.livenessState
-      .compareAndSwapStrong(internalRunnable, internalTerminated)
-    thread.livenessState
-      .compareAndSwapStrong(internalInterrupted, internalInterruptedTerminated)
     thread synchronized {
+      thread.livenessState
+        .compareAndSwapStrong(internalRunnable, internalTerminated)
+      thread.livenessState
+        .compareAndSwapStrong(internalInterrupted,
+                              internalInterruptedTerminated)
       thread.notifyAll()
     }
   }
