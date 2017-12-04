@@ -14,6 +14,8 @@ object ThreadSuite extends tests.MultiThreadSuite {
       thread.join()
     }
 
+    Console.out.println("1")
+
     {
       val name        = "Dave"
       val threadGroup = new ThreadGroup("MyGroup")
@@ -28,6 +30,8 @@ object ThreadSuite extends tests.MultiThreadSuite {
       assertEquals(thread.getThreadGroup, null)
     }
 
+    Console.out.println("2")
+
     {
       val name   = "Dave"
       val thread = new Thread(name)
@@ -37,6 +41,8 @@ object ThreadSuite extends tests.MultiThreadSuite {
       thread.join()
       assertEquals(thread.getName, name)
     }
+
+    Console.out.println("3")
 
     {
       val name         = "Dave"
@@ -54,6 +60,8 @@ object ThreadSuite extends tests.MultiThreadSuite {
       assert(didSomething)
       assertEquals(thread.getName, name)
     }
+
+    Console.out.println("4")
 
     {
       val name         = "Dave"
@@ -75,6 +83,8 @@ object ThreadSuite extends tests.MultiThreadSuite {
       assertEquals(thread.getName, name)
       assertEquals(thread.getThreadGroup, null)
     }
+
+    Console.out.println("5")
 
     {
       val name         = "Dave"
