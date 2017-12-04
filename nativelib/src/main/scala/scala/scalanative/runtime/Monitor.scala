@@ -29,10 +29,21 @@ final class Monitor private[runtime] (shadow: Boolean) {
   // TODO destroy the condition and release the memory
   private val condPtr: Ptr[pthread_cond_t] = malloc(pthread_cond_t_size)
     .asInstanceOf[Ptr[pthread_cond_t]]
+//  pthread_cond_init(condPtr, null.asInstanceOf[Ptr[pthread_condattr_t]])
   pthread_cond_init(condPtr, Monitor.condAttrPtr)
 
-  def _notify(): Unit    = pthread_cond_signal(condPtr)
-  def _notifyAll(): Unit = pthread_cond_broadcast(condPtr)
+  def _notify(): Unit    = {
+    val returnVal = pthread_cond_signal(condPtr)
+    if (returnVal != 0) {
+      throw new Error("Error code"+returnVal)
+    }
+  }
+  def _notifyAll(): Unit = {
+    val returnVal =  pthread_cond_broadcast(condPtr)
+    if (returnVal != 0) {
+      throw new Error("Error code"+returnVal)
+    }
+  }
   def _wait(): Unit = {
     val thread = Thread.currentThread().asInstanceOf[ThreadBase]
     thread.setLockState(Waiting)
@@ -40,6 +51,8 @@ final class Monitor private[runtime] (shadow: Boolean) {
     thread.setLockState(Normal)
     if (returnVal == EPERM) {
       throw new IllegalMonitorStateException()
+    } else if (returnVal != 0) {
+      throw new Error("Error code"+returnVal)
     }
   }
   def _wait(millis: scala.Long): Unit = _wait(millis, 0)
@@ -62,6 +75,8 @@ final class Monitor private[runtime] (shadow: Boolean) {
     thread.setLockState(Normal)
     if (returnVal == EPERM) {
       throw new IllegalMonitorStateException()
+    } else if (returnVal != 0) {
+      throw new Error("Error code"+returnVal)
     }
   }
   def enter(): Unit = {
