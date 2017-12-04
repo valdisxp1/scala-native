@@ -477,12 +477,12 @@ object Thread {
   final val MIN_PRIORITY: Int  = 1
   final val NORM_PRIORITY: Int = 5
 
-  private def toNativePriority(priotity: Int) = {
+  private def toNativePriority(priority: Int) = {
     val range = NativeThread.THREAD_MAX_PRIORITY - NativeThread.THREAD_MIN_PRIORITY
     if (range == 0) {
       NativeThread.THREAD_MAX_PRIORITY
     } else {
-      priotity * range / 10
+      priority * range / 10
     }
   }
 
