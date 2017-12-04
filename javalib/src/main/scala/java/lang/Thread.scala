@@ -284,12 +284,18 @@ class Thread private (
 
   final def setPriority(priority: Int): Unit = {
     checkAccess()
-    if (priority > 10 || priority < 1)
+    if (priority > Thread.MAX_PRIORITY || priority < Thread.MIN_PRIORITY)
       throw new IllegalArgumentException("Wrong Thread priority value")
-//    val threadGroup: ThreadGroup = group
-    this.priority = priority
-    if (started)
-      NativeThread.setPriority(underlying, priority)
+    val groupLocal = group
+    if (groupLocal != null) {
+      val maxPriorityInGroup = groupLocal.getMaxPriority
+      // min(priority,maxPriorityInGroup)
+      this.priority =
+        if (priority > maxPriorityInGroup) maxPriorityInGroup else priority
+      if (isAlive) {
+        NativeThread.setPriority(underlying, Thread.toNativePriority(priority))
+      }
+    }
   }
 
   def start(): Unit = {
@@ -304,19 +310,23 @@ class Thread private (
     !threadPtr = this
 
     val id = stackalloc[pthread_t]
+    // pthread_attr_t is a struct, not a ULong
+    val attrs = stackalloc[scala.Byte](pthread_attr_t_size)
+      .asInstanceOf[Ptr[pthread_attr_t]]
+    pthread_attr_init(attrs)
+    NativeThread.attrSetPriority(attrs, Thread.toNativePriority(priority))
+
     val status =
       pthread_create(id,
-                     null.asInstanceOf[Ptr[pthread_attr_t]],
+                     attrs,
                      callRunRoutine,
                      threadPtr.asInstanceOf[Ptr[scala.Byte]])
     if (status != 0)
       throw new Exception(
         "Failed to create new thread, pthread error " + status)
 
-    // update the priority for the native thread
-    setPriority(priority)
-
     underlying = !id
+
   }
 
   def getState: State = {
@@ -463,11 +473,18 @@ object Thread {
 
   private val lock: Object = new Object
 
-  final val MAX_PRIORITY: Int = NativeThread.THREAD_MAX_PRIORITY
+  final val MAX_PRIORITY: Int  = 10
+  final val MIN_PRIORITY: Int  = 1
+  final val NORM_PRIORITY: Int = 5
 
-  final val MIN_PRIORITY: Int = NativeThread.THREAD_MIN_PRIORITY
-
-  final val NORM_PRIORITY: Int = NativeThread.THREAD_NORM_PRIORITY
+  private def toNativePriority(priotity: Int) = {
+    val range = NativeThread.THREAD_MAX_PRIORITY - NativeThread.THREAD_MIN_PRIORITY
+    if (range == 0) {
+      NativeThread.THREAD_MAX_PRIORITY
+    } else {
+      priotity * range / 10
+    }
+  }
 
   final val STACK_TRACE_INDENT: String = "    "
 

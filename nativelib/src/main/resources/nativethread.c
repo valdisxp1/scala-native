@@ -13,49 +13,65 @@ size_t PTHREAD_DEFAULT_STACK_SIZE;
 int initialized = 0;
 
 void init() {
-	pthread_attr_init(&PTHREAD_DEFAULT_ATTR);
-	pthread_attr_getschedparam(&PTHREAD_DEFAULT_ATTR, &PTHREAD_DEFAULT_SCHED_PARAM);
-	pthread_attr_getschedpolicy(&PTHREAD_DEFAULT_ATTR, &PTHREAD_DEFAULT_POLICY);
-	pthread_attr_getstacksize(&PTHREAD_DEFAULT_ATTR, &PTHREAD_DEFAULT_STACK_SIZE);
+    pthread_attr_init(&PTHREAD_DEFAULT_ATTR);
+    pthread_attr_getschedparam(&PTHREAD_DEFAULT_ATTR,
+                               &PTHREAD_DEFAULT_SCHED_PARAM);
+    pthread_attr_getschedpolicy(&PTHREAD_DEFAULT_ATTR, &PTHREAD_DEFAULT_POLICY);
+    pthread_attr_getstacksize(&PTHREAD_DEFAULT_ATTR,
+                              &PTHREAD_DEFAULT_STACK_SIZE);
 
-	initialized = 1;
+    initialized = 1;
 }
 
 int get_max_priority() {
-	if(!initialized) init();
-	return sched_get_priority_max(PTHREAD_DEFAULT_POLICY);
+    if (!initialized)
+        init();
+    return sched_get_priority_max(PTHREAD_DEFAULT_POLICY);
 }
 
 int get_min_priority() {
-	if(!initialized) init();
-	return sched_get_priority_min(PTHREAD_DEFAULT_POLICY);
+    if (!initialized)
+        init();
+    return sched_get_priority_min(PTHREAD_DEFAULT_POLICY);
 }
 
 int get_norm_priority() {
-	if(!initialized) init();
-	return PTHREAD_DEFAULT_SCHED_PARAM.sched_priority;
+    if (!initialized)
+        init();
+    return PTHREAD_DEFAULT_SCHED_PARAM.sched_priority;
 }
 
 size_t get_stack_size() {
-	if(!initialized) init();
-	return PTHREAD_DEFAULT_STACK_SIZE;
+    if (!initialized)
+        init();
+    return PTHREAD_DEFAULT_STACK_SIZE;
+}
+
+void attr_set_priority(pthread_attr_t *attr, int priority) {
+    struct sched_param param;
+
+    pthread_attr_setschedparam(attr, &param);
+    param.sched_priority = priority;
+
+    pthread_attr_setschedparam(attr, &param);
 }
 
 void set_priority(pthread_t thread, int priority) {
-	struct sched_param param;
-	int policy;
+    struct sched_param param;
+    int policy;
 
-	pthread_getschedparam(thread, &policy, &param);
-	param.sched_priority = priority;
+    pthread_getschedparam(thread, &policy, &param);
+    param.sched_priority = priority;
 
-	pthread_setschedparam(thread, policy, &param);
+    pthread_setschedparam(thread, policy, &param);
 }
 
 /*
  * Thread suspend handling
 */
 
-// ported from http://ptgmedia.pearsoncmg.com/images/0201633922/sourcecode/susp.c
+// ported from
+// http://ptgmedia.pearsoncmg.com/images/0201633922/sourcecode/susp.c
 
 pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
 volatile int sentinel = 0;
@@ -68,18 +84,16 @@ int inited = 0;
  * Handle SIGUSR1 in the target thread, to suspend it until
  * receiving SIGUSR2 (resume).
  */
-void
-suspend_signal_handler (int sig)
-{
+void suspend_signal_handler(int sig) {
     sigset_t signal_set;
 
     /*
      * Block all signals except SIGUSR2 while suspended.
      */
-    sigfillset (&signal_set);
-    sigdelset (&signal_set, SIGUSR2);
+    sigfillset(&signal_set);
+    sigdelset(&signal_set, SIGUSR2);
     sentinel = 1;
-    sigsuspend (&signal_set);
+    sigsuspend(&signal_set);
 
     return;
 }
@@ -87,19 +101,13 @@ suspend_signal_handler (int sig)
 /*
  * Handle SIGUSR2 in the target thread.
  */
-void
-resume_signal_handler (int sig)
-{
-    return;
-}
+void resume_signal_handler(int sig) { return; }
 
 /*
  * Dynamically initialize the "suspend package" when first used
  * (called by pthread_once).
  */
-void
-suspend_init_routine (void)
-{
+void suspend_init_routine(void) {
     int status;
     struct sigaction sigusr1, sigusr2;
 
@@ -108,7 +116,7 @@ suspend_init_routine (void)
      * to guarentee idempotency
      */
     bottom = 10;
-    array = (pthread_t*) calloc (bottom, sizeof (pthread_t));
+    array = (pthread_t *)calloc(bottom, sizeof(pthread_t));
 
     /*
      * Install the signal handlers for suspend/resume.
@@ -116,16 +124,16 @@ suspend_init_routine (void)
     sigusr1.sa_flags = 0;
     sigusr1.sa_handler = suspend_signal_handler;
 
-    sigemptyset (&sigusr1.sa_mask);
+    sigemptyset(&sigusr1.sa_mask);
     sigusr2.sa_flags = 0;
     sigusr2.sa_handler = resume_signal_handler;
     sigusr2.sa_mask = sigusr1.sa_mask;
 
-    status = sigaction (SIGUSR1, &sigusr1, NULL);
+    status = sigaction(SIGUSR1, &sigusr1, NULL);
     if (status == -1)
         perror("Installing suspend handler");
 
-    status = sigaction (SIGUSR2, &sigusr2, NULL);
+    status = sigaction(SIGUSR2, &sigusr2, NULL);
     if (status == -1)
         perror("Installing resume handler");
 
@@ -141,9 +149,7 @@ suspend_init_routine (void)
  * additional effect on the thread -- a single thd_continue
  * call will cause it to resume execution.
  */
-int
-thd_suspend (pthread_t target_thread)
-{
+int thd_suspend(pthread_t target_thread) {
     int status;
     int i = 0;
 
@@ -151,14 +157,14 @@ thd_suspend (pthread_t target_thread)
      * The first call to thd_suspend will initialize the
      * package.
      */
-    status = pthread_once (&once, suspend_init_routine);
+    status = pthread_once(&once, suspend_init_routine);
     if (status != 0)
         return status;
 
     /*
      * Serialize access to suspend, makes life easier
      */
-    status = pthread_mutex_lock (&mut);
+    status = pthread_mutex_lock(&mut);
     if (status != 0)
         return status;
 
@@ -170,7 +176,7 @@ thd_suspend (pthread_t target_thread)
      */
     while (i < bottom)
         if (array[i++] == target_thread) {
-            status = pthread_mutex_unlock (&mut);
+            status = pthread_mutex_unlock(&mut);
             return status;
         }
 
@@ -179,23 +185,22 @@ thd_suspend (pthread_t target_thread)
         i++;
 
     if (i == bottom) {
-        array = (pthread_t*) realloc (
-            array, (++bottom * sizeof (pthread_t)));
+        array = (pthread_t *)realloc(array, (++bottom * sizeof(pthread_t)));
         if (array == NULL) {
-            pthread_mutex_unlock (&mut);
+            pthread_mutex_unlock(&mut);
             perror("Null pointer");
         }
 
-        array[bottom] = null_pthread;   /* Clear new entry */
+        array[bottom] = null_pthread; /* Clear new entry */
     }
 
     /*
      * Clear the sentinel and signal the thread to suspend.
      */
     sentinel = 0;
-    status = pthread_kill (target_thread, SIGUSR1);
+    status = pthread_kill(target_thread, SIGUSR1);
     if (status != 0) {
-        pthread_mutex_unlock (&mut);
+        pthread_mutex_unlock(&mut);
         return status;
     }
 
@@ -203,11 +208,11 @@ thd_suspend (pthread_t target_thread)
      * Wait for the sentinel to change.
      */
     while (sentinel == 0)
-        sched_yield ();
+        sched_yield();
 
     array[i] = target_thread;
 
-    status = pthread_mutex_unlock (&mut);
+    status = pthread_mutex_unlock(&mut);
     return status;
 }
 
@@ -216,18 +221,16 @@ thd_suspend (pthread_t target_thread)
  * it out of the sigsuspend() in which it's waiting. If the
  * target thread isn't suspended, return with success.
  */
-int
-thd_continue (pthread_t target_thread)
-{
+int thd_continue(pthread_t target_thread) {
     int status;
     int i = 0;
 
-    status = pthread_mutex_lock (&mut);
+    status = pthread_mutex_lock(&mut);
     if (status != 0)
         return status;
 
     if (!inited) {
-        status = pthread_mutex_unlock (&mut);
+        status = pthread_mutex_unlock(&mut);
         return status;
     }
 
@@ -239,7 +242,7 @@ thd_continue (pthread_t target_thread)
         i++;
 
     if (i >= bottom) {
-        pthread_mutex_unlock (&mut);
+        pthread_mutex_unlock(&mut);
         return 0;
     }
 
@@ -247,14 +250,14 @@ thd_continue (pthread_t target_thread)
      * Signal the thread to continue, and remove the thread from
      * the suspended array.
      */
-    status = pthread_kill (target_thread, SIGUSR2);
+    status = pthread_kill(target_thread, SIGUSR2);
     if (status != 0) {
-        pthread_mutex_unlock (&mut);
+        pthread_mutex_unlock(&mut);
         return status;
     }
 
-    array[i] = 0;               /* Clear array element */
-    status = pthread_mutex_unlock (&mut);
+    array[i] = 0; /* Clear array element */
+    status = pthread_mutex_unlock(&mut);
     return status;
 }
 

@@ -295,6 +295,9 @@ object pthread {
   @name("scalanative_size_of_pthread_t")
   def pthread_t_size: CSize = extern
 
+  @name("scalanative_pthread_attr_t")
+  def pthread_attr_t_size: CSize = extern
+
   @name("scalanative_size_of_pthread_cond_t")
   def pthread_cond_t_size: CSize = extern
 

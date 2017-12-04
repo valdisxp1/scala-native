@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 int scalanative_pthread_create(pthread_t *thread, const pthread_attr_t *attr,
-                               void *(*start_routine) (void *), void *arg) {
+                               void *(*start_routine)(void *), void *arg) {
     perror("Tried to create a thread when using immix GC\n");
     perror("This is not supported\n");
     exit(-1);
@@ -27,9 +27,7 @@ int scalanative_pthread_cancel(pthread_t thread) {
     return pthread_cancel(thread);
 }
 
-void scalanative_pthread_exit(void *retval) {
-    pthread_exit(retval);
-}
+void scalanative_pthread_exit(void *retval) { pthread_exit(retval); }
 
 // not bound in scala-native
 /*

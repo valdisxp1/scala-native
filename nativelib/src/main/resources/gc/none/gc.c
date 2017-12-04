@@ -29,10 +29,10 @@ void allocateChunksUpTo(void *target) {
     pthread_mutex_lock(&chunk_alloc_mutex);
     // do not allocate multiple chunks at once
     if (target >= end) {
-        void *current = (void *) current_atomic;
+        void *current = (void *)current_atomic;
         current = mmap(NULL, CHUNK, DUMMY_GC_PROT, DUMMY_GC_FLAGS, DUMMY_GC_FD,
                        DUMMY_GC_FD_OFFSET);
-        current_atomic = (long) current;
+        current_atomic = (long)current;
         end = current + CHUNK;
     }
     pthread_mutex_unlock(&chunk_alloc_mutex);
@@ -46,7 +46,7 @@ void scalanative_init() {
 void *scalanative_alloc(void *info, size_t size) {
     size = size + (8 - size % 8);
     void *new_current;
-    new_current = (void*) atomic_fetch_add(&current_atomic, size);
+    new_current = (void *)atomic_fetch_add(&current_atomic, size);
     if (new_current >= end) {
         allocateChunksUpTo(new_current);
     }

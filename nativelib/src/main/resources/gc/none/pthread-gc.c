@@ -5,7 +5,7 @@
 #include <pthread.h>
 
 int scalanative_pthread_create(pthread_t *thread, const pthread_attr_t *attr,
-                               void *(*start_routine) (void *), void *arg) {
+                               void *(*start_routine)(void *), void *arg) {
     return pthread_create(thread, attr, start_routine, arg);
 }
 
@@ -21,9 +21,7 @@ int scalanative_pthread_cancel(pthread_t thread) {
     return pthread_cancel(thread);
 }
 
-void scalanative_pthread_exit(void *retval) {
-    pthread_exit(retval);
-}
+void scalanative_pthread_exit(void *retval) { pthread_exit(retval); }
 
 // not bound in scala-native
 /*
