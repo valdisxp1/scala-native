@@ -289,11 +289,10 @@ class Thread private (
     if (groupLocal != null) {
       val maxPriorityInGroup = groupLocal.getMaxPriority
       // min(priority,maxPriorityInGroup)
-      if (maxPriorityInGroup > Thread.MAX_PRIORITY || maxPriorityInGroup < Thread.MIN_PRIORITY)
-        throw new IllegalArgumentException("Wrong ThreadGroup priority value")
       this.priority = if (priority > maxPriorityInGroup) maxPriorityInGroup else priority
-      if (isAlive)
-        NativeThread.setPriority(underlying, priority)
+      if (isAlive) {
+        NativeThread.setPriority(underlying, Thread.toNativePriority(priority))
+      }
     }
   }
 
@@ -312,6 +311,8 @@ class Thread private (
     // pthread_attr_t is a struct, not a ULong
     val attrs = stackalloc[scala.Byte](pthread_attr_t_size).asInstanceOf[Ptr[pthread_attr_t]]
     pthread_attr_init(attrs)
+    NativeThread.attrSetPriority(attrs, Thread.toNativePriority(priority))
+//    pthread_attr_setstacksize(attrs,...)
 
     val status =
       pthread_create(id,
@@ -324,8 +325,6 @@ class Thread private (
 
     underlying = !id
 
-    // update the priority for the native thread
-//    setPriority(priority)
   }
 
   def getState: State = {
@@ -472,11 +471,18 @@ object Thread {
 
   private val lock: Object = new Object
 
-  final val MAX_PRIORITY: Int = NativeThread.THREAD_MAX_PRIORITY
+  final val MAX_PRIORITY: Int = 10
+  final val MIN_PRIORITY: Int = 1
+  final val NORM_PRIORITY: Int = 5
 
-  final val MIN_PRIORITY: Int = NativeThread.THREAD_MIN_PRIORITY
-
-  final val NORM_PRIORITY: Int = NativeThread.THREAD_NORM_PRIORITY
+  private def toNativePriority(priotity: Int) = {
+    val range = NativeThread.THREAD_MAX_PRIORITY - NativeThread.THREAD_MIN_PRIORITY
+    if (range == 0) {
+      NativeThread.THREAD_MAX_PRIORITY
+    } else {
+      priotity * range / 10
+    }
+  }
 
   final val STACK_TRACE_INDENT: String = "    "
 
@@ -588,9 +594,6 @@ object Thread {
 
   private val mainThreadGroup: ThreadGroup =
     new ThreadGroup(parent = null, name = "system", mainGroup = true)
-//  println(MAX_PRIORITY)
-//  println(mainThreadGroup.getMaxPriority)
-  mainThreadGroup.setMaxPriority(5)
 
   private val mainThread = new Thread(parentThread = null,
                                       mainThreadGroup,

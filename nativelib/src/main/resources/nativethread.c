@@ -47,6 +47,15 @@ size_t get_stack_size() {
 	return PTHREAD_DEFAULT_STACK_SIZE;
 }
 
+void attr_set_priority(pthread_attr_t* attr, int priority) {
+	struct sched_param param;
+
+	pthread_attr_setschedparam(attr, &param);
+	param.sched_priority = priority;
+
+	pthread_attr_setschedparam(attr, &param);
+}
+
 void set_priority(pthread_t thread, int priority) {
 	struct sched_param param;
 	int policy;
