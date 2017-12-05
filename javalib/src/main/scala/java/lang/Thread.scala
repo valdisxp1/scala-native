@@ -3,11 +3,28 @@ package java.lang
 import java.util
 
 import scala.scalanative.native.stdlib.{free, malloc}
-import scala.scalanative.native.{CFunctionPtr, CInt, Ptr, ULong, signal, sizeof, stackalloc}
+import scala.scalanative.native.{
+  CFunctionPtr,
+  CInt,
+  Ptr,
+  ULong,
+  signal,
+  sizeof,
+  stackalloc
+}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
-import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_key_t, pthread_t}
-import scala.scalanative.runtime.{CAtomicInt, NativeThread, ShadowLock, ThreadBase}
+import scala.scalanative.posix.sys.types.{
+  pthread_attr_t,
+  pthread_key_t,
+  pthread_t
+}
+import scala.scalanative.runtime.{
+  CAtomicInt,
+  NativeThread,
+  ShadowLock,
+  ThreadBase
+}
 
 // Ported from Harmony
 
@@ -610,8 +627,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     mainThread.livenessState
       .compareAndSwapStrong(internalRunnable, internalTerminated)
     mainThread.livenessState
-      .compareAndSwapStrong(internalInterrupted,
-        internalInterruptedTerminated)
+      .compareAndSwapStrong(internalInterrupted, internalInterruptedTerminated)
     shutdownMutex.synchronized {
       mainThreadGroup.remove(mainThread)
       shutdownMutex.notifyAll()

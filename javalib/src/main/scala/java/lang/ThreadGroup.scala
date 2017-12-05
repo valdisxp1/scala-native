@@ -432,12 +432,12 @@ class ThreadGroup private[lang] (
   def nonDaemonThreadExists: scala.Boolean = {
     lock.synchronized {
       val threadIt = threads.iterator()
-      var exists = false
-      while(!exists && threadIt.hasNext){
+      var exists   = false
+      while (!exists && threadIt.hasNext) {
         exists |= !threadIt.next().isDaemon
       }
       val groupIt = groups.iterator()
-      while(!exists && groupIt.hasNext){
+      while (!exists && groupIt.hasNext) {
         exists |= groupIt.next().nonDaemonThreadExists
       }
       exists

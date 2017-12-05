@@ -99,7 +99,8 @@ package object runtime {
    *  generated C-style after the application's main method terminates.
    */
   def loop(): Unit = {
-    val threadBase = Thread.currentThread().asInstanceOf[ThreadBase].threadModuleBase
+    val threadBase =
+      Thread.currentThread().asInstanceOf[ThreadBase].threadModuleBase
     threadBase.mainThreadEnds()
     ExecutionContext.loop()
     threadBase.shutdownCheckLoop()
