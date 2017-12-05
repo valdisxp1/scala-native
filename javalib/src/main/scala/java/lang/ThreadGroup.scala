@@ -438,7 +438,7 @@ class ThreadGroup private[lang] (
       }
       val groupIt = groups.iterator()
       while(!exists && groupIt.hasNext){
-        exists |= !groupIt.next().isDaemon
+        exists |= groupIt.next().nonDaemonThreadExists
       }
       exists
     }
