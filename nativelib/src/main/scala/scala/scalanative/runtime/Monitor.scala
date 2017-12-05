@@ -175,7 +175,9 @@ object Monitor {
     } else {
       try {
         pthread_mutex_lock(monitorCreationMutexPtr)
-        o.__monitor = new Monitor(x.isInstanceOf[ShadowLock])
+        if (o.__monitor == null) {
+          o.__monitor = new Monitor(x.isInstanceOf[ShadowLock])
+        }
         o.__monitor
       } finally {
         pthread_mutex_unlock(monitorCreationMutexPtr)
