@@ -1,27 +1,15 @@
 package java.lang
 
-import java.util
 import java.lang.Thread._
-import java.lang.Thread.State
+import java.util
 
-import scala.scalanative.runtime.{CAtomicInt, NativeThread, ThreadBase}
-import scala.scalanative.native.{
-  CFunctionPtr,
-  CInt,
-  Ptr,
-  ULong,
-  signal,
-  sizeof,
-  stackalloc
-}
 import scala.scalanative.native.stdlib.{free, malloc}
-import scala.scalanative.posix.sys.types.{
-  pthread_attr_t,
-  pthread_key_t,
-  pthread_t
-}
+import scala.scalanative.native.{CFunctionPtr, CInt, Ptr, ULong, signal, sizeof, stackalloc}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
+import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_key_t, pthread_t}
+import scala.scalanative.runtime.thread.ThreadModuleBase
+import scala.scalanative.runtime.{CAtomicInt, NativeThread, ThreadBase}
 
 // Ported from Harmony
 
@@ -405,9 +393,7 @@ class Thread private (
     exceptionHandler = eh
 }
 
-object Thread {
-
-  import scala.collection.mutable
+object Thread extends ThreadModuleBase {
 
   val myThreadKey: pthread_key_t = {
     val ptr = stackalloc[pthread_key_t]
@@ -614,4 +600,6 @@ object Thread {
     CFunctionPtr.fromFunction1(currentThreadStackTrace _)
   private val currentThreadStackTraceSignal = signal.SIGUSR2
   signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
+
+  def nonDaemonThreadExists = mainThreadGroup.nonDaemonThreadExists
 }
