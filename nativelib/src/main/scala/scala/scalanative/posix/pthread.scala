@@ -75,25 +75,19 @@ object pthread {
   @name("scalanative_pthread_cancel")
   def pthread_cancel(thread: pthread_t): CInt = extern
 
-  @name("scalanative_pthread_cond_broadcast")
   def pthread_cond_broadcast(cond: Ptr[pthread_cond_t]): CInt = extern
 
-  @name("scalanative_pthread_cond_destroy")
   def pthread_cond_destroy(cond: Ptr[pthread_cond_t]): CInt = extern
 
-  @name("scalanative_pthread_cond_init")
   def pthread_cond_init(cond: Ptr[pthread_cond_t],
                         attr: Ptr[pthread_condattr_t]): CInt = extern
 
-  @name("scalanative_pthread_cond_signal")
   def pthread_cond_signal(cond: Ptr[pthread_cond_t]): CInt = extern
 
-  @name("scalanative_pthread_cond_timedwait")
   def pthread_cond_timedwait(cond: Ptr[pthread_cond_t],
                              mutex: Ptr[pthread_mutex_t],
                              timespec: Ptr[timespec]): CInt = extern
 
-  @name("scalanative_pthread_cond_wait")
   def pthread_cond_wait(cond: Ptr[pthread_cond_t],
                         mutex: Ptr[pthread_mutex_t]): CInt = extern
 
