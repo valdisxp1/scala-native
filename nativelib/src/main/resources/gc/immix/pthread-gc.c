@@ -43,6 +43,14 @@ int scalanative_pthread_cond_broadcast(pthread_cond_t *cond) {
     return pthread_cond_broadcast(cond);
 }
 
+int  scalanative_pthread_cond_init(pthread_cond_t *restrict cond, const pthread_condattr_t *restrict attr) {
+    return pthread_cond_init(cond, attr);
+}
+
+int  scalanative_pthread_cond_destroy(pthread_cond_t *cond) {
+    return pthread_cond_destroy(cond);
+}
+
 void scalanative_pthread_exit(void *retval) { pthread_exit(retval); }
 
 // not bound in scala-native

@@ -78,8 +78,10 @@ object pthread {
   @name("scalanative_pthread_cond_broadcast")
   def pthread_cond_broadcast(cond: Ptr[pthread_cond_t]): CInt = extern
 
+  @name("scalanative_pthread_cond_destroy")
   def pthread_cond_destroy(cond: Ptr[pthread_cond_t]): CInt = extern
 
+  @name("scalanative_pthread_cond_init")
   def pthread_cond_init(cond: Ptr[pthread_cond_t],
                         attr: Ptr[pthread_condattr_t]): CInt = extern
 
