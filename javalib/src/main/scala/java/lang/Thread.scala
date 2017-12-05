@@ -391,6 +391,8 @@ class Thread private (
 
   def setUncaughtExceptionHandler(eh: Thread.UncaughtExceptionHandler): Unit =
     exceptionHandler = eh
+
+  def threadModuleBase = Thread
 }
 
 object Thread extends scala.scalanative.runtime.ThreadModuleBase {
@@ -602,4 +604,12 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
 
   def nonDaemonThreadExists = mainThreadGroup.nonDaemonThreadExists
+
+  def mainThreadEnds(): Unit = {
+    mainThread.livenessState
+      .compareAndSwapStrong(internalRunnable, internalTerminated)
+    mainThread.livenessState
+      .compareAndSwapStrong(internalInterrupted,
+        internalInterruptedTerminated)
+  }
 }
