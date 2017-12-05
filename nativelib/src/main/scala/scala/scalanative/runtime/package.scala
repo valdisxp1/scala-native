@@ -102,5 +102,6 @@ package object runtime {
     val threadBase = Thread.currentThread().asInstanceOf[ThreadBase].threadModuleBase
     threadBase.mainThreadEnds()
     ExecutionContext.loop()
+    threadBase.shutdownCheckLoop()
   }
 }

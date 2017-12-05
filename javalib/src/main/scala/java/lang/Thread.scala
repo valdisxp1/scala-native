@@ -7,7 +7,7 @@ import scala.scalanative.native.{CFunctionPtr, CInt, Ptr, ULong, signal, sizeof,
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
 import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_key_t, pthread_t}
-import scala.scalanative.runtime.{CAtomicInt, NativeThread, ThreadBase}
+import scala.scalanative.runtime.{CAtomicInt, NativeThread, ShadowLock, ThreadBase}
 
 // Ported from Harmony
 
@@ -429,7 +429,10 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   }
 
   private def post(thread: Thread) = {
-    thread.group.remove(thread)
+    shutdownMutex.synchronized {
+      thread.group.remove(thread)
+      shutdownMutex.notifyAll()
+    }
     thread synchronized {
       thread.livenessState
         .compareAndSwapStrong(internalRunnable, internalTerminated)
@@ -603,13 +606,25 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   private val currentThreadStackTraceSignal = signal.SIGUSR2
   signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
 
-  def nonDaemonThreadExists = mainThreadGroup.nonDaemonThreadExists
-
   def mainThreadEnds(): Unit = {
     mainThread.livenessState
       .compareAndSwapStrong(internalRunnable, internalTerminated)
     mainThread.livenessState
       .compareAndSwapStrong(internalInterrupted,
         internalInterruptedTerminated)
+    shutdownMutex.synchronized {
+      mainThreadGroup.remove(mainThread)
+      shutdownMutex.notifyAll()
+    }
+  }
+
+  private val shutdownMutex = new ShadowLock
+
+  def shutdownCheckLoop(): Unit = {
+    shutdownMutex.synchronized {
+      while (mainThreadGroup.nonDaemonThreadExists) {
+        shutdownMutex.wait()
+      }
+    }
   }
 }

@@ -139,7 +139,7 @@ object ThreadBase {
 }
 
 abstract class ThreadModuleBase {
-  def nonDaemonThreadExists: Boolean
+  def shutdownCheckLoop(): Unit
   protected[runtime] def mainThreadEnds(): Unit
 }
 
