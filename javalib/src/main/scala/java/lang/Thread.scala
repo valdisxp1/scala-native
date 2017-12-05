@@ -1,10 +1,8 @@
 package java.lang
 
 import java.util
-import java.lang.Thread._
-import java.lang.Thread.State
 
-import scala.scalanative.runtime.{CAtomicInt, NativeThread, ThreadBase}
+import scala.scalanative.native.stdlib.{free, malloc}
 import scala.scalanative.native.{
   CFunctionPtr,
   CInt,
@@ -14,14 +12,19 @@ import scala.scalanative.native.{
   sizeof,
   stackalloc
 }
-import scala.scalanative.native.stdlib.{free, malloc}
+import scala.scalanative.posix.pthread._
+import scala.scalanative.posix.sched._
 import scala.scalanative.posix.sys.types.{
   pthread_attr_t,
   pthread_key_t,
   pthread_t
 }
-import scala.scalanative.posix.pthread._
-import scala.scalanative.posix.sched._
+import scala.scalanative.runtime.{
+  CAtomicInt,
+  NativeThread,
+  ShadowLock,
+  ThreadBase
+}
 
 // Ported from Harmony
 
@@ -36,6 +39,8 @@ class Thread private (
     mainThread: scala.Boolean)
     extends ThreadBase
     with Runnable {
+
+  import java.lang.Thread._
 
   private var livenessState = CAtomicInt(internalNew)
 
@@ -108,16 +113,16 @@ class Thread private (
          mainThread = false)
   }
 
-  def this() = this(null, null, THREAD, 0)
+  def this() = this(null, null, Thread.THREAD, 0)
 
-  def this(target: Runnable) = this(null, target, THREAD, 0)
+  def this(target: Runnable) = this(null, target, Thread.THREAD, 0)
 
   def this(target: Runnable, name: String) = this(null, target, name, 0)
 
   def this(name: String) = this(null, null, name, 0)
 
   def this(group: ThreadGroup, target: Runnable) =
-    this(group, target, THREAD, 0)
+    this(group, target, Thread.THREAD, 0)
 
   def this(group: ThreadGroup, target: Runnable, name: String) =
     this(group, target, name, 0)
@@ -403,11 +408,11 @@ class Thread private (
 
   def setUncaughtExceptionHandler(eh: Thread.UncaughtExceptionHandler): Unit =
     exceptionHandler = eh
+
+  def threadModuleBase = Thread
 }
 
-object Thread {
-
-  import scala.collection.mutable
+object Thread extends scala.scalanative.runtime.ThreadModuleBase {
 
   val myThreadKey: pthread_key_t = {
     val ptr = stackalloc[pthread_key_t]
@@ -441,7 +446,10 @@ object Thread {
   }
 
   private def post(thread: Thread) = {
-    thread.group.remove(thread)
+    shutdownMutex.synchronized {
+      thread.group.remove(thread)
+      shutdownMutex.notifyAll()
+    }
     thread synchronized {
       thread.livenessState
         .compareAndSwapStrong(internalRunnable, internalTerminated)
@@ -614,4 +622,29 @@ object Thread {
     CFunctionPtr.fromFunction1(currentThreadStackTrace _)
   private val currentThreadStackTraceSignal = signal.SIGUSR2
   signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
+
+  def mainThreadEnds(): Unit = {
+    shutdownMutex.synchronized {
+      mainThreadGroup.remove(mainThread)
+      shutdownMutex.notifyAll()
+    }
+    mainThread.synchronized {
+      mainThread.livenessState
+        .compareAndSwapStrong(internalRunnable, internalTerminated)
+      mainThread.livenessState
+        .compareAndSwapStrong(internalInterrupted,
+                              internalInterruptedTerminated)
+      mainThread.notifyAll()
+    }
+  }
+
+  private val shutdownMutex = new ShadowLock
+
+  def shutdownCheckLoop(): Unit = {
+    shutdownMutex.synchronized {
+      while (mainThreadGroup.nonDaemonThreadExists) {
+        shutdownMutex.wait()
+      }
+    }
+  }
 }

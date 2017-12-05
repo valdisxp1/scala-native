@@ -110,6 +110,7 @@ final class Monitor private[runtime] (shadow: Boolean) {
 }
 
 abstract class ThreadBase {
+  def threadModuleBase: ThreadModuleBase
   private var state                               = Normal
   final def getLockState: Int                     = state
   private[runtime] def setLockState(s: Int): Unit = state = s
@@ -135,6 +136,11 @@ object ThreadBase {
   final val Blocked      = 1
   final val Waiting      = 2
   final val TimedWaiting = 3
+}
+
+abstract class ThreadModuleBase {
+  def shutdownCheckLoop(): Unit
+  protected[runtime] def mainThreadEnds(): Unit
 }
 
 object Monitor {
