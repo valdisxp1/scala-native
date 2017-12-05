@@ -624,13 +624,16 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
 
   def mainThreadEnds(): Unit = {
-    mainThread.livenessState
-      .compareAndSwapStrong(internalRunnable, internalTerminated)
-    mainThread.livenessState
-      .compareAndSwapStrong(internalInterrupted, internalInterruptedTerminated)
     shutdownMutex.synchronized {
       mainThreadGroup.remove(mainThread)
       shutdownMutex.notifyAll()
+    }
+    mainThread.synchronized {
+      mainThread.livenessState
+        .compareAndSwapStrong(internalRunnable, internalTerminated)
+      mainThread.livenessState
+        .compareAndSwapStrong(internalInterrupted, internalInterruptedTerminated)
+      mainThread.notifyAll()
     }
   }
 
