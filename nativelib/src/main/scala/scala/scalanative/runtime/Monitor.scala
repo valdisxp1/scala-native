@@ -75,7 +75,7 @@ final class Monitor private[runtime] (shadow: Boolean) {
     thread.setLockState(Normal)
     if (returnVal == EPERM) {
       throw new IllegalMonitorStateException()
-    } else if (returnVal != 0) {
+    } else if (returnVal != 110 && returnVal != 0) {
       throw new Error("Error code"+returnVal)
     }
   }
