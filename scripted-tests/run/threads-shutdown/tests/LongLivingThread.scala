@@ -1,5 +1,6 @@
 object LongLivingThread {
   def main(args: Array[String]): Unit = {
+    println("Main thread starts")
     val mainThread = Thread.currentThread()
     val longLivingThread = new Thread("LivesALongTime") {
       override def run() = {
