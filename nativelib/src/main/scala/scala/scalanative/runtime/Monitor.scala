@@ -137,6 +137,10 @@ object ThreadBase {
   final val TimedWaiting = 3
 }
 
+abstract class ThreadModuleBase {
+  def nonDaemonThreadExists: Boolean
+}
+
 object Monitor {
   private val mutexAttrPtr: Ptr[pthread_mutexattr_t] = malloc(
     pthread_mutexattr_t_size).asInstanceOf[Ptr[pthread_mutexattr_t]]
