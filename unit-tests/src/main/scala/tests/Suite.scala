@@ -235,4 +235,15 @@ trait MultiThreadSuite extends Suite {
       _wasException = true
     }
   }
+
+  class Counter extends Thread {
+    var count = 0L
+    var goOn  = true
+    override def run() = {
+      while (goOn) {
+        count += 1
+        Thread.sleep(10)
+      }
+    }
+  }
 }

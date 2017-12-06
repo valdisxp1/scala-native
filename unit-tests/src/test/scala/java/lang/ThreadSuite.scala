@@ -710,16 +710,6 @@ object ThreadSuite extends tests.MultiThreadSuite {
   }
 
   test("*DEPRECATED* Thread.suspend and Thread.resume") {
-    class Counter extends Thread {
-      var count = 0L
-      var goOn  = true
-      override def run() = {
-        while (goOn) {
-          count += 1
-          Thread.sleep(10)
-        }
-      }
-    }
     val counter = new Counter
     counter.start()
     eventually()(counter.count > 1)
@@ -732,35 +722,47 @@ object ThreadSuite extends tests.MultiThreadSuite {
   }
 
   test("*DEPRECATED* Thread.destroy") {
-    val mutex = new Object
+    val mutex  = new Object
     val thread = new WaitingThread(mutex)
     thread.start()
-    eventuallyEquals(label = "thread WAITING")(
-      thread.getState,
-      Thread.State.WAITING)
+    eventuallyEquals(label = "thread WAITING")(thread.getState,
+                                               Thread.State.WAITING)
     thread.destroy()
     eventually(label = "thread stopped")(!thread.isAlive)
   }
 
   test("*DEPRECATED* Thread.stop()") {
-    val mutex = new Object
+    val mutex  = new Object
     val thread = new WaitingThread(mutex)
     thread.start()
-    eventuallyEquals(label = "thread WAITING")(
-      thread.getState,
-      Thread.State.WAITING)
+    eventuallyEquals(label = "thread WAITING")(thread.getState,
+                                               Thread.State.WAITING)
     thread.stop()
     eventually(label = "thread stopped")(!thread.isAlive)
   }
 
   test("*DEPRECATED* Thread.stop(throwable)") {
-    val mutex = new Object
+    val mutex  = new Object
     val thread = new WaitingThread(mutex)
     thread.start()
-    eventuallyEquals(label = "thread WAITING")(
-      thread.getState,
-      Thread.State.WAITING)
+    eventuallyEquals(label = "thread WAITING")(thread.getState,
+                                               Thread.State.WAITING)
     thread.stop(new Error("something went wrong"))
     eventually(label = "thread stopped")(!thread.isAlive)
+  }
+
+  test("*DEPRECATED* Thread.countStackFrames") {
+    val counter = new Counter
+    counter.start()
+    eventually()(counter.count > 1)
+    // thread not suspended, throw exception ... sure why not
+    assertThrows[IllegalThreadStateException](counter.countStackFrames())
+    counter.suspend()
+    val value = eventuallyConstant()(counter.count)
+    assert(counter.countStackFrames() > 0)
+    counter.resume()
+    eventually()(counter.count > value.get)
+    counter.goOn = false
+    counter.join()
   }
 }

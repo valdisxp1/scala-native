@@ -89,7 +89,7 @@ class Thread private (
   private val sleepMutex = new Object
 
   private val suspendMutex = new Object
-  private var suspended = false
+  private var suspended    = false
 
   // ThreadLocal values : local and inheritable
   var localValues: ThreadLocal.Values = _
@@ -136,7 +136,12 @@ class Thread private (
     throw new CloneNotSupportedException("Thread.clone() is not meaningful")
 
   @deprecated
-  def countStackFrames: Int = 0 //deprecated
+  def countStackFrames: Int =
+    if (suspended) {
+      getStackTrace.length
+    } else {
+      throw new IllegalThreadStateException()
+    }
 
   final def getName: String = name
 
@@ -356,8 +361,6 @@ class Thread private (
       State.TERMINATED
     }
   }
-
-
   @deprecated
   def destroy(): Unit = stop()
 
@@ -371,14 +374,15 @@ class Thread private (
 
     val shouldTerminate = synchronized {
       val terminated = livenessState
-        .compareAndSwapStrong(internalRunnable, internalTerminated)._1
+        .compareAndSwapStrong(internalRunnable, internalTerminated)
+        ._1
       val interruptedTerminated = livenessState
         .compareAndSwapStrong(internalInterrupted,
-          internalInterruptedTerminated)._1
+                              internalInterruptedTerminated)
+        ._1
       notifyAll()
       terminated || interruptedTerminated
     }
-
 
     if (shouldTerminate) {
       // it is we that would terminate the thread
