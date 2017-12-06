@@ -24,11 +24,4 @@ object NativeThread {
 
   @name("attr_set_priority")
   def attrSetPriority(attr: Ptr[pthread_attr_t], priority: CInt): Unit = extern
-
-  @name("thd_continue")
-  def resume(thread: pthread_t): CInt = extern
-
-  @name("thd_suspend")
-  def suspend(thread: pthread_t): CInt = extern
-
 }

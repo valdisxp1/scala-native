@@ -88,6 +88,9 @@ class Thread private (
 
   private val sleepMutex = new Object
 
+  private val suspendMutex = new Object
+  private var suspended = false
+
   // Synchronization is done using internal lock
   val lock: Object = new Object
   // ThreadLocal values : local and inheritable
@@ -229,9 +232,10 @@ class Thread private (
   @deprecated
   final def resume(): Unit = {
     checkAccess()
-    if (started && NativeThread.resume(underlying) != 0)
-      throw new RuntimeException(
-        "Error while trying to unpark thread " + toString)
+    suspendMutex.synchronized {
+      suspended = false
+      suspendMutex.notifyAll()
+    }
   }
 
   def run(): Unit = {
@@ -383,9 +387,16 @@ class Thread private (
   @deprecated
   final def suspend(): Unit = {
     checkAccess()
-    if (started && NativeThread.suspend(underlying) != 0)
-      throw new RuntimeException(
-        "Error while trying to park thread " + toString)
+    if (this == Thread.currentThread()) {
+      suspendMutex.synchronized {
+        suspended = true
+        while (suspended) {
+          suspendMutex.wait()
+        }
+      }
+    } else {
+      pthread_kill(underlying, suspendSignal)
+    }
   }
 
   override def toString: String = {
@@ -622,6 +633,14 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     CFunctionPtr.fromFunction1(currentThreadStackTrace _)
   private val currentThreadStackTraceSignal = signal.SIGUSR2
   signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
+
+  private def currentThreadSuspend(signal: CInt): Unit = {
+    currentThread().suspend()
+  }
+  private val currentThreadSuspendPtr =
+    CFunctionPtr.fromFunction1(currentThreadSuspend _)
+  private val suspendSignal = signal.SIGUSR1
+  signal.signal(suspendSignal, currentThreadSuspendPtr)
 
   def mainThreadEnds(): Unit = {
     shutdownMutex.synchronized {
