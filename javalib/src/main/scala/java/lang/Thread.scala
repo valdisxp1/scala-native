@@ -138,9 +138,6 @@ class Thread private (
   @deprecated
   def countStackFrames: Int = 0 //deprecated
 
-  @deprecated
-  def destroy(): Unit = stop()
-
   final def getName: String = name
 
   final def getPriority: Int = priority
@@ -360,6 +357,10 @@ class Thread private (
     }
   }
 
+
+  @deprecated
+  def destroy(): Unit = stop()
+
   @deprecated
   final def stop(): Unit = stop(new ThreadDeath())
 
@@ -367,11 +368,26 @@ class Thread private (
   final def stop(throwable: Throwable): Unit = {
     if (throwable == null)
       throw new NullPointerException("The argument is null!")
-    if (isAlive) {
-      val status: Int = pthread_cancel(underlying)
-      if (status != 0)
-        throw new InternalError("Pthread error " + status)
+
+    val shouldTerminate = synchronized {
+      val terminated = livenessState
+        .compareAndSwapStrong(internalRunnable, internalTerminated)._1
+      val interruptedTerminated = livenessState
+        .compareAndSwapStrong(internalInterrupted,
+          internalInterruptedTerminated)._1
+      notifyAll()
+      terminated || interruptedTerminated
     }
+
+
+    if (shouldTerminate) {
+      // it is we that would terminate the thread
+      val status: Int = pthread_cancel(underlying)
+      if (status != 0) {
+        throw new InternalError("Pthread error " + status)
+      }
+    }
+
   }
 
   @deprecated
