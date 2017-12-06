@@ -355,9 +355,7 @@ object ThreadSuite extends tests.MultiThreadSuite {
       }
     }
     thread.start()
-    takesAtLeast(100) {
-      thread.join()
-    }
+    thread.join()
     assertNot(thread.isAlive)
   }
 
