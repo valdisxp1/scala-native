@@ -178,7 +178,7 @@ trait MultiThreadSuite extends Suite {
   def eventuallyConstant[T](maxDelay: scala.Long = eternity,
                             recheckEvery: scala.Long = 200,
                             minDuration: scala.Long = 1000,
-                            label: String = "Value")(value: => T): Unit = {
+                            label: String = "Value")(value: => T): Option[T] = {
     val start        = System.currentTimeMillis()
     val deadline     = start + maxDelay + minDuration
     var current      = 0L
@@ -205,10 +205,12 @@ trait MultiThreadSuite extends Suite {
       Console.out.println(
         label + " remained constant after " + (lastValueTs - start) + " ms for at least " + minDuration + "ms ; max delay: " + maxDelay + " ms")
       assert(true)
+      Some(lastValue)
     } else {
       Console.out.println(
         "Timeout: " + label + " not remained constant after " + maxDelay + " ms")
       assert(false)
+      None
     }
   }
 

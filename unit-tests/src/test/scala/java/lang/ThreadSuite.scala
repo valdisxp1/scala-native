@@ -710,4 +710,26 @@ object ThreadSuite extends tests.MultiThreadSuite {
     assertThrows[NotImplementedError](
       Thread.currentThread().getContextClassLoader)
   }
+
+  test("*DEPRECATED* Thread.suspend and Thread.resume") {
+    class Counter extends Thread {
+      var count = 0L
+      var goOn  = true
+      override def run() = {
+        while (goOn) {
+          count += 1
+          Thread.sleep(10)
+        }
+      }
+    }
+    val counter = new Counter
+    counter.start()
+    eventually()(counter.count > 1)
+    counter.suspend()
+    val value = eventuallyConstant()(counter.count)
+    counter.resume()
+    eventually()(counter.count > value.get)
+    counter.goOn = false
+    counter.join()
+  }
 }
