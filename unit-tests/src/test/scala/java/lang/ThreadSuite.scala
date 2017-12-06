@@ -730,4 +730,37 @@ object ThreadSuite extends tests.MultiThreadSuite {
     counter.goOn = false
     counter.join()
   }
+
+  test("*DEPRECATED* Thread.destroy") {
+    val mutex = new Object
+    val thread = new WaitingThread(mutex)
+    thread.start()
+    eventuallyEquals(label = "thread WAITING")(
+      thread.getState,
+      Thread.State.WAITING)
+    thread.destroy()
+    eventually(label = "thread stopped")(!thread.isAlive)
+  }
+
+  test("*DEPRECATED* Thread.stop()") {
+    val mutex = new Object
+    val thread = new WaitingThread(mutex)
+    thread.start()
+    eventuallyEquals(label = "thread WAITING")(
+      thread.getState,
+      Thread.State.WAITING)
+    thread.stop()
+    eventually(label = "thread stopped")(!thread.isAlive)
+  }
+
+  test("*DEPRECATED* Thread.stop(throwable)") {
+    val mutex = new Object
+    val thread = new WaitingThread(mutex)
+    thread.start()
+    eventuallyEquals(label = "thread WAITING")(
+      thread.getState,
+      Thread.State.WAITING)
+    thread.stop(new Error("something went wrong"))
+    eventually(label = "thread stopped")(!thread.isAlive)
+  }
 }
