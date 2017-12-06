@@ -175,6 +175,43 @@ trait MultiThreadSuite extends Suite {
       label: String = "Equal values")(left: => T, right: => T): Unit =
     eventually(maxDelay, recheckEvery, label)(left == right)
 
+  def eventuallyConstant[T](maxDelay: scala.Long = eternity,
+                            recheckEvery: scala.Long = 200,
+                            minDuration: scala.Long = 1000,
+                            label: String = "Value")(value: => T): Unit = {
+    val start        = System.currentTimeMillis()
+    val deadline     = start + maxDelay + minDuration
+    var current      = 0L
+    var continue     = true
+    var reached      = false
+    var lastValue: T = value
+    var lastValueTs  = start
+    while (continue && current <= deadline) {
+      current = System.currentTimeMillis()
+      val currentValue = value
+      if (currentValue == value) {
+        if (current >= lastValueTs + minDuration) {
+          continue = false
+          reached = true
+        }
+      } else {
+        lastValueTs = current
+        lastValue = currentValue
+      }
+      Thread.sleep(recheckEvery)
+    }
+    if (reached) {
+      // all is good
+      Console.out.println(
+        label + " remained constant after " + (lastValueTs - start) + " ms for at least " + minDuration + "ms ; max delay: " + maxDelay + " ms")
+      assert(true)
+    } else {
+      Console.out.println(
+        "Timeout: " + label + " not remained constant after " + maxDelay + " ms")
+      assert(false)
+    }
+  }
+
   def withExceptionHandler[U](handler: Thread.UncaughtExceptionHandler)(
       f: => U): U = {
     val oldHandler = Thread.getDefaultUncaughtExceptionHandler
