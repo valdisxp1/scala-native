@@ -91,8 +91,6 @@ class Thread private (
   private val suspendMutex = new Object
   private var suspended = false
 
-  // Synchronization is done using internal lock
-  val lock: Object = new Object
   // ThreadLocal values : local and inheritable
   var localValues: ThreadLocal.Values = _
 
@@ -141,9 +139,7 @@ class Thread private (
   def countStackFrames: Int = 0 //deprecated
 
   @deprecated
-  def destroy(): Unit =
-    // this method is not implemented
-    throw new NoSuchMethodError()
+  def destroy(): Unit = stop()
 
   final def getName: String = name
 
@@ -365,23 +361,16 @@ class Thread private (
   }
 
   @deprecated
-  final def stop(): Unit = {
-    lock.synchronized {
-      if (isAlive)
-        stop(new ThreadDeath())
-    }
-  }
+  final def stop(): Unit = stop(new ThreadDeath())
 
   @deprecated
   final def stop(throwable: Throwable): Unit = {
     if (throwable == null)
       throw new NullPointerException("The argument is null!")
-    lock.synchronized {
-      if (isAlive) {
-        val status: Int = pthread_cancel(underlying)
-        if (status != 0)
-          throw new InternalError("Pthread error " + status)
-      }
+    if (isAlive) {
+      val status: Int = pthread_cancel(underlying)
+      if (status != 0)
+        throw new InternalError("Pthread error " + status)
     }
   }
 
@@ -493,8 +482,6 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   }
 
   private val callRunRoutine = CFunctionPtr.fromFunction1(callRun)
-
-  private val lock: Object = new Object
 
   final val MAX_PRIORITY: Int  = 10
   final val MIN_PRIORITY: Int  = 1
