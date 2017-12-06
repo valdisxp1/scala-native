@@ -277,12 +277,13 @@ class Thread private (
   def getContextClassLoader: ClassLoader = classLoadersNotSupported
 
   final def setDaemon(daemon: scala.Boolean): Unit = {
-    lock.synchronized {
-      checkAccess()
-      if (isAlive)
-        throw new IllegalThreadStateException()
-      this.daemon = daemon
-    }
+    checkAccess()
+    if (livenessState.load() != internalNew)
+      throw new IllegalThreadStateException()
+    // There is a chance to set the even if the thread is already started.
+    // However, it is just a boolean variable, that can be safely changed
+    // even when the thread has started.
+    this.daemon = daemon
   }
 
   final def setName(name: String): Unit = {
