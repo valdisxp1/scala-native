@@ -111,6 +111,7 @@ final class Monitor private[runtime] (shadow: Boolean) {
 
 abstract class ThreadBase {
   def threadModuleBase: ThreadModuleBase
+  def initMainThread(): Unit
   private var state                               = Normal
   final def getLockState: Int                     = state
   private[runtime] def setLockState(s: Int): Unit = state = s

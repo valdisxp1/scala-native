@@ -223,6 +223,23 @@ object ThreadSuite extends tests.MultiThreadSuite {
     }
   }
 
+  test("wait duration should not be reduced by getStackTrace") {
+    val mainThread = Thread.currentThread()
+    val mutex      = new Object
+    val wantsStackTrace = new Thread {
+      override def run() = {
+        eventuallyEquals()(mainThread.getState, Thread.State.WAITING)
+        mainThread.getStackTrace
+      }
+    }
+    wantsStackTrace.start()
+    mutex.synchronized {
+      takesAtLeast(2000) {
+        mutex.wait(2000)
+      }
+    }
+  }
+
   test("Thread should be able to change a shared var") {
     var shared: Int = 0
     new Thread(new Runnable {
