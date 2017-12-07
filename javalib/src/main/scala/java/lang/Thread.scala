@@ -65,13 +65,10 @@ class Thread private (
   private var priority: Int = if (!mainThread) parentThread.priority else 5
 
   // main thread is not started via Thread.start, set it up manually
-  if (mainThread) {
+  def initMainThread(): Unit = {
     group.add(this)
     livenessState.store(internalRunnable)
     underlying = pthread_self()
-    import scala.scalanative.native.stdio._
-    import scala.scalanative.native._
-    fprintf(stderr,c"%d",underlying)
   }
 
   // Indicates if the thread was already started
@@ -544,9 +541,6 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
 
   def currentThread(): Thread = {
     val ptr = pthread_getspecific(myThreadKey).asInstanceOf[Ptr[Thread]]
-    import scala.scalanative.native.stdio._
-    import scala.scalanative.native._
-    fprintf(stderr,c"at %d\n",ptr)
     if (ptr != null) !ptr else mainThread
   }
 

@@ -82,7 +82,7 @@ package object runtime {
 
     // force Thread class initialization
     // to make sure it is initialized from the main thread
-    Thread.currentThread()
+    Thread.currentThread().asInstanceOf[ThreadBase].initMainThread()
 
     // skip the executable name in argv(0)
     var c = 0
