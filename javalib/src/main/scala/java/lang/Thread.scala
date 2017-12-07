@@ -228,15 +228,6 @@ class Thread private (
     }
   }
 
-  @deprecated
-  final def resume(): Unit = {
-    checkAccess()
-    suspendMutex.synchronized {
-      suspended = false
-      suspendMutex.notifyAll()
-    }
-  }
-
   def run(): Unit = {
     if (target != null) {
       target.run()
@@ -406,7 +397,22 @@ class Thread private (
         }
       }
     } else {
-      pthread_kill(underlying, suspendSignal)
+      if (!suspended) {
+        suspendMutex.synchronized {
+          if (!suspended) {
+            pthread_kill(underlying, suspendSignal)
+          }
+        }
+      }
+    }
+  }
+
+  @deprecated
+  final def resume(): Unit = {
+    checkAccess()
+    suspendMutex.synchronized {
+      suspended = false
+      suspendMutex.notifyAll()
     }
   }
 

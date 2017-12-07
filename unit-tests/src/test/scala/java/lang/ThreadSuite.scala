@@ -738,6 +738,19 @@ object ThreadSuite extends tests.MultiThreadSuite {
     counter.join()
   }
 
+  test("*DEPRECATED* second Thread.suspend call should affect anything") {
+    val counter = new Counter
+    counter.start()
+    eventually()(counter.count > 1)
+    counter.suspend()
+    counter.suspend()
+    val value = eventuallyConstant()(counter.count)
+    counter.resume()
+    eventually()(counter.count > value.get)
+    counter.goOn = false
+    counter.join()
+  }
+
   test("*DEPRECATED* Thread.destroy") {
     val mutex  = new Object
     val thread = new WaitingThread(mutex)
