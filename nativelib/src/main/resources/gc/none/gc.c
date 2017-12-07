@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <sys/mman.h>
 #include <pthread.h>
 #include <stdatomic.h>
@@ -12,6 +13,8 @@
 
 // Map 4GB
 #define CHUNK (4 * 1024 * 1024 * 1024L)
+// Map 16MB
+#define BLOCK (16 * 1024 * 1024L)
 // Allow read and write
 #define DUMMY_GC_PROT (PROT_READ | PROT_WRITE)
 // Map private anonymous memory, and prevent from reserving swap
@@ -23,7 +26,13 @@
 atomic_long current_atomic = 0;
 void *end = 0;
 
+typedef struct blockBounds {
+    void *current;
+    void *end;
+} blockBounds;
+
 pthread_mutex_t chunk_alloc_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_key_t blockKey;
 
 void allocateChunksUpTo(void *target) {
     pthread_mutex_lock(&chunk_alloc_mutex);
@@ -39,17 +48,37 @@ void allocateChunksUpTo(void *target) {
 }
 
 void scalanative_init() {
+    pthread_key_create(&blockKey, NULL);
     // get some space initially
     allocateChunksUpTo((void *)1);
 }
 
-void *scalanative_alloc(void *info, size_t size) {
-    size = size + (8 - size % 8);
+void *allocBlock() {
     void *new_current;
-    new_current = (void *)atomic_fetch_add(&current_atomic, size);
+    new_current = (void *)atomic_fetch_add(&current_atomic, BLOCK);
     if (new_current >= end) {
         allocateChunksUpTo(new_current);
     }
+    return new_current;
+}
+
+void *scalanative_alloc(void *info, size_t size) {
+    size = size + (8 - size % 8);
+    blockBounds *bounds = (blockBounds *)pthread_getspecific(blockKey);
+    if (bounds == NULL) {
+        bounds = malloc(sizeof(blockBounds));
+        pthread_setspecific(blockKey, bounds);
+        bounds->current = (void*) 0;
+        bounds->end = (void*) 0;
+    }
+    void *new_current = bounds->current + size;
+    if (new_current >= bounds->end) {
+        void *new_start = allocBlock();
+        new_current = new_start + size;
+        bounds->end = new_start + BLOCK;
+    }
+    bounds->current = new_current;
+    fprintf(stderr,"X>%ld\n", (long) new_current);
 
     void **alloc = new_current;
     *alloc = info;
