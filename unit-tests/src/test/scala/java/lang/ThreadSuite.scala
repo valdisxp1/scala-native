@@ -796,13 +796,37 @@ object ThreadSuite extends tests.MultiThreadSuite {
     counter.join()
   }
 
-  test("toString should contain the name and the name of the group"){
-    val groupName = "veryNiceGroupName"
-    val group = new ThreadGroup(groupName)
+  test("toString should contain the name and the name of the group") {
+    val groupName  = "veryNiceGroupName"
+    val group      = new ThreadGroup(groupName)
     val threadName = "descriptiveNameGivenToAThread"
-    val thread = new Thread(group,threadName)
-    val toString = thread.toString
+    val thread     = new Thread(group, threadName)
+    val toString   = thread.toString
     assert(toString.contains(groupName))
     assert(toString.contains(threadName))
+  }
+
+  test("can set name for new and running threads") {
+    var goOn = true
+    val thread = new Thread {
+      override def run() = while (goOn) {
+        Thread.sleep(20)
+      }
+    }
+    val name1  = "Larry"
+    thread.setName(name1)
+    assertEquals(thread.getName, name1)
+
+    thread.start()
+    val name2 = "Curly"
+    thread.setName(name2)
+    assertEquals(thread.getName, name2)
+
+    goOn = false
+    thread.join()
+
+    val name3 = "Moe"
+    thread.setName(name3)
+    assertEquals(thread.getName, name3)
   }
 }
