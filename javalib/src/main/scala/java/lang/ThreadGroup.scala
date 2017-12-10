@@ -359,6 +359,7 @@ class ThreadGroup private[lang] (
     var groupsCopy: util.List[ThreadGroup] = null
 
     lock.synchronized {
+      println(threads)
       if (threads.size > 0)
         throw new IllegalThreadStateException(
           "The thread group " + name + "is not empty")

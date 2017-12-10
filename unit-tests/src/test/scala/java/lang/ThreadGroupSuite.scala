@@ -120,6 +120,11 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     threads.foreach { thread: Counter =>
       eventually()(thread.count > countMap(thread))
     }
+
+    threads.foreach { thread: Counter =>
+      thread.goOn = false
+      thread.join
+    }
   }
 
   test(
@@ -173,5 +178,41 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     threads.foreach { thread: Counter =>
       eventually()(thread.count > countMap4(thread))
     }
+
+    threads.foreach { thread: Counter =>
+      thread.goOn = false
+      thread.join
+    }
+  }
+
+  test("ThreadGroup.destroy") {
+    val threadGroup = new ThreadGroup("abc")
+    val thread      = new Counter(threadGroup, "active")
+    assertNot(threadGroup.isDestroyed)
+
+    thread.start()
+    eventually()(thread.count > 1)
+    println(
+      s"cannot destroy group with running threads ${threadGroup.activeCount()}")
+    //cannot destroy group with running threads
+    assertThrows[IllegalThreadStateException](threadGroup.destroy())
+    assertNot(threadGroup.isDestroyed)
+    thread.goOn = false
+    thread.join()
+
+    threadGroup.destroy()
+    assert(threadGroup.isDestroyed)
+
+    println("cannot destroy it twice")
+    // cannot destroy it twice
+    assertThrows[IllegalThreadStateException](threadGroup.destroy())
+    assert(threadGroup.isDestroyed)
+
+    println("cannot add new threads or threadGroups")
+    // cannot add new threads or threadGroups
+    assertThrows[IllegalThreadStateException](
+      new Thread(threadGroup, "Sad Thread"))
+    assertThrows[IllegalThreadStateException](
+      new ThreadGroup(threadGroup, "Sad ThreadGroup"))
   }
 }
