@@ -475,7 +475,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   }
 
   private def post(thread: Thread) = {
-    shutdownMutex.synchronized {
+    shutdownMutex.safeSynchronized {
       thread.group.remove(thread)
       shutdownMutex.notifyAll()
     }
