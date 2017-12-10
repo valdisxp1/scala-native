@@ -21,6 +21,7 @@ import scala.scalanative.posix.sys.types.{
 }
 import scala.scalanative.runtime.{
   CAtomicInt,
+  CAtomicLong,
   NativeThread,
   ShadowLock,
   ThreadBase
@@ -529,7 +530,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   private var defaultExceptionHandler: UncaughtExceptionHandler = _
 
   // Counter used to generate thread's ID
-  private var threadOrdinalNum: scala.Long = 0L
+  private val threadOrdinalNum = CAtomicLong(0L)
 
   // used to generate a default thread name
   private final val THREAD: String = "Thread-"
@@ -603,11 +604,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   def setDefaultUncaughtExceptionHandler(eh: UncaughtExceptionHandler): Unit =
     defaultExceptionHandler = eh
 
-  //synchronized
-  private def getNextThreadId: scala.Long = {
-    threadOrdinalNum += 1
-    threadOrdinalNum
-  }
+  private def getNextThreadId: scala.Long = threadOrdinalNum.addFetch(1)
 
   def interrupted(): scala.Boolean = {
     currentThread().livenessState

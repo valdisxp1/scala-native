@@ -813,7 +813,7 @@ object ThreadSuite extends tests.MultiThreadSuite {
         Thread.sleep(20)
       }
     }
-    val name1  = "Larry"
+    val name1 = "Larry"
     thread.setName(name1)
     assertEquals(thread.getName, name1)
 
@@ -828,5 +828,16 @@ object ThreadSuite extends tests.MultiThreadSuite {
     val name3 = "Moe"
     thread.setName(name3)
     assertEquals(thread.getName, name3)
+  }
+
+  test("threadIds increment") {
+    var oldId        = -1L
+    var timeToRepeat = 10
+    while (timeToRepeat > 0) {
+      val id = new Thread().getId
+      assert(id > oldId)
+      oldId = id
+      timeToRepeat -= 1
+    }
   }
 }
