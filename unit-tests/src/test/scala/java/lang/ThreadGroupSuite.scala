@@ -38,12 +38,17 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
       makeTread(group, "G-2"),
       makeTread(group, "G-3"))
 
-    val subgroup = new ThreadGroup(group, "subgroup")
-    val subgroupThreads: Seq[T] = scala.Seq(
-      makeTread(subgroup, "SG-1"),
-      makeTread(subgroup, "SG-2"))
+    val subgroup1 = new ThreadGroup(group, "subgroup")
+    val subgroup1Threads: Seq[T] = scala.Seq(
+      makeTread(subgroup1, "SG-1"),
+      makeTread(subgroup1, "SG-2"))
 
-    val threads: Seq[T] = groupThreads ++ subgroupThreads
+    val subgroup2 = new ThreadGroup(group, "subgroup")
+    val subgroup2Threads: Seq[T] = scala.Seq(
+      makeTread(subgroup2, "SG-A"),
+      makeTread(subgroup2, "SG-B"))
+
+    val threads: Seq[T] = groupThreads ++ subgroup1Threads ++ subgroup2Threads
   }
 
   test("ThreadGroup.interrupt should interrupt sleep for all threads") {
