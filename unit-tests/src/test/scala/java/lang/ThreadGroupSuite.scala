@@ -2,12 +2,12 @@ package java.lang
 
 object ThreadGroupSuite extends tests.MultiThreadSuite {
   test("Constructors") {
-    val groupName = "groupNameGoesHere"
+    val groupName   = "groupNameGoesHere"
     val threadGroup = new ThreadGroup(groupName)
     assertEquals(threadGroup.getName, groupName)
 
     val subgroupName = "this is a subgroup"
-    val subgroup = new ThreadGroup(threadGroup, subgroupName)
+    val subgroup     = new ThreadGroup(threadGroup, subgroupName)
     assertEquals(subgroup.getName, subgroupName)
     assertEquals(subgroup.getParent, threadGroup)
   }
@@ -32,21 +32,18 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
   abstract class Structure[T <: Thread] {
     def makeTread(group: ThreadGroup, name: String): T
 
-    val group    = new ThreadGroup("group")
-    val groupThreads: Seq[T] = scala.Seq(
-      makeTread(group, "G-1"),
-      makeTread(group, "G-2"),
-      makeTread(group, "G-3"))
+    val group = new ThreadGroup("group")
+    val groupThreads: Seq[T] = scala.Seq(makeTread(group, "G-1"),
+                                         makeTread(group, "G-2"),
+                                         makeTread(group, "G-3"))
 
     val subgroup1 = new ThreadGroup(group, "subgroup")
-    val subgroup1Threads: Seq[T] = scala.Seq(
-      makeTread(subgroup1, "SG-1"),
-      makeTread(subgroup1, "SG-2"))
+    val subgroup1Threads: Seq[T] =
+      scala.Seq(makeTread(subgroup1, "SG-1"), makeTread(subgroup1, "SG-2"))
 
     val subgroup2 = new ThreadGroup(group, "subgroup")
-    val subgroup2Threads: Seq[T] = scala.Seq(
-      makeTread(subgroup2, "SG-A"),
-      makeTread(subgroup2, "SG-B"))
+    val subgroup2Threads: Seq[T] =
+      scala.Seq(makeTread(subgroup2, "SG-A"), makeTread(subgroup2, "SG-B"))
 
     val threads: Seq[T] = groupThreads ++ subgroup1Threads ++ subgroup2Threads
   }
@@ -63,7 +60,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
       }
     }
     val structure = new Structure[SleepyThread] {
-      def makeTread(group: ThreadGroup, name: String) = new SleepyThread(group, name)
+      def makeTread(group: ThreadGroup, name: String) =
+        new SleepyThread(group, name)
     }
     import structure._
     threads.foreach(_.start())
@@ -109,10 +107,69 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     threads.foreach { thread: Counter =>
       eventually()(thread.count > 1)
     }
-    threads.foreach(_.suspend())
+
+    group.suspend()
+    val countMap: scala.collection.immutable.Map[Counter, scala.Long] =
+      threads.map { thread: Counter =>
+        thread -> eventuallyConstant()(thread.count).get
+      }.toMap
+    group.resume()
+
     threads.foreach { thread: Counter =>
-      eventuallyConstant()(thread.count)
+      eventually()(thread.count > countMap(thread))
     }
-    threads.foreach(_.resume())
+  }
+
+  test(
+    "*DEPRECATED*  ThreadGroup.suspend and resume should respect allowThreadSuspension") {
+    val structure = new Structure[Counter] {
+      def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
+    }
+    import structure._
+    threads.foreach(_.start())
+    group.allowThreadSuspension(false)
+
+    val countMap1: scala.collection.immutable.Map[Counter, scala.Long] =
+      threads.map { thread: Counter =>
+        eventually()(thread.count > 1)
+        thread -> thread.count
+      }.toMap
+
+    group.suspend()
+    val countMap2: scala.collection.immutable.Map[Counter, scala.Long] =
+      threads.map { thread: Counter =>
+        eventually()(thread.count > countMap1(thread))
+        thread -> thread.count
+      }.toMap
+    group.resume()
+
+    group.allowThreadSuspension(true)
+    subgroup1.allowThreadSuspension(false)
+
+    val countMap3: scala.collection.immutable.Map[Counter, scala.Long] =
+      threads.map { thread: Counter =>
+        eventually()(thread.count > countMap2(thread))
+        thread -> thread.count
+      }.toMap
+
+    group.suspend()
+
+    val countMap4a: scala.collection.immutable.Map[Counter, scala.Long] =
+      (groupThreads ++ subgroup2Threads).map { thread: Counter =>
+        eventually()(thread.count > countMap3(thread))
+        thread -> thread.count
+      }.toMap
+
+    val countMap4
+      : scala.collection.immutable.Map[Counter, scala.Long] = countMap4a ++ subgroup1Threads
+      .map { thread: Counter =>
+        thread -> eventuallyConstant()(thread.count).get
+      }
+
+    group.resume()
+
+    threads.foreach { thread: Counter =>
+      eventually()(thread.count > countMap4(thread))
+    }
   }
 }
