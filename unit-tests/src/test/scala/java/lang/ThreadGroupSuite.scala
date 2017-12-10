@@ -29,6 +29,23 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     thread.join()
   }
 
+  abstract class Structure[T <: Thread] {
+    def makeTread(group: ThreadGroup, name: String): T
+
+    val group    = new ThreadGroup("group")
+    val groupThreads: Seq[T] = scala.Seq(
+      makeTread(group, "G-1"),
+      makeTread(group, "G-2"),
+      makeTread(group, "G-3"))
+
+    val subgroup = new ThreadGroup(group, "subgroup")
+    val subgroupThreads: Seq[T] = scala.Seq(
+      makeTread(subgroup, "SG-1"),
+      makeTread(subgroup, "SG-2"))
+
+    val threads: Seq[T] = groupThreads ++ subgroupThreads
+  }
+
   test("ThreadGroup.interrupt should interrupt sleep for all threads") {
     var fail = false
     class SleepyThread(group: ThreadGroup, name: String)
@@ -40,15 +57,10 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
         })
       }
     }
-    val group    = new ThreadGroup("group")
-    val subgroup = new ThreadGroup(group, "subgroup")
-    val threads = scala.Seq(
-      new SleepyThread(group, "G-1"),
-      new SleepyThread(group, "G-2"),
-      new SleepyThread(group, "G-3"),
-      new SleepyThread(subgroup, "SG-1"),
-      new SleepyThread(subgroup, "SG-2")
-    )
+    val structure = new Structure[SleepyThread] {
+      def makeTread(group: ThreadGroup, name: String) = new SleepyThread(group, name)
+    }
+    import structure._
     threads.foreach(_.start())
     threads.foreach { thread: Thread =>
       eventuallyEquals(
@@ -84,15 +96,10 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
   }
 
   test("*DEPRECATED*  ThreadGroup.suspend and resume should affect all threads") {
-    val group    = new ThreadGroup("group")
-    val subgroup = new ThreadGroup(group, "subgroup")
-    val threads = scala.Seq(
-      new Counter(group, "G-1"),
-      new Counter(group, "G-2"),
-      new Counter(group, "G-3"),
-      new Counter(subgroup, "SG-1"),
-      new Counter(subgroup, "SG-2")
-    )
+    val structure = new Structure[Counter] {
+      def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
+    }
+    import structure._
     threads.foreach(_.start())
     threads.foreach { thread: Counter =>
       eventually()(thread.count > 1)
