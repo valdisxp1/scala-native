@@ -59,6 +59,7 @@ void *allocBlock() {
     if (new_current >= end) {
         allocateChunksUpTo(new_current);
     }
+    fprintf(stderr,"B>%ld\n", (long) new_current);
     return new_current;
 }
 
@@ -68,11 +69,17 @@ void *scalanative_alloc(void *info, size_t size) {
     if (bounds == NULL) {
         bounds = malloc(sizeof(blockBounds));
         pthread_setspecific(blockKey, bounds);
-        bounds->current = (void*) 0;
-        bounds->end = (void*) 0;
+        void *new_start = allocBlock();
+        bounds->current = new_start + size;
+        bounds->end = new_start + BLOCK;
+        fprintf(stderr,"INIT\n");
     }
     void *new_current = bounds->current + size;
-    if (new_current >= bounds->end) {
+    fprintf(stderr, "%ld->%ld and %ld->%ld\n",
+     (long) bounds->current, (long) bounds->end,
+     (long) new_current, (long) bounds->end);
+    if (new_current >= (bounds->end)) {
+        fprintf(stderr, "INSIDE\n");
         void *new_start = allocBlock();
         new_current = new_start + size;
         bounds->end = new_start + BLOCK;

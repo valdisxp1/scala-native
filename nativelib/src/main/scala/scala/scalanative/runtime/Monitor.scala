@@ -22,8 +22,17 @@ import scala.scalanative.runtime.ThreadBase._
 final class Monitor private[runtime] (shadow: Boolean) {
   // memory leak
   // TODO destroy the mutex and release the memory
-  private val mutexPtr: Ptr[pthread_mutex_t] = malloc(pthread_mutex_t_size)
-    .asInstanceOf[Ptr[pthread_mutex_t]]
+  private val mutexPtr: Ptr[pthread_mutex_t] = {
+    val result = malloc(pthread_mutex_t_size)
+      .asInstanceOf[Ptr[pthread_mutex_t]]
+
+    {
+      import scala.scalanative.native.stdio._
+      import scala.scalanative.runtime._
+      fprintf(stderr,c"WHAT? %ld\n",result)
+    }
+    result
+  }
   pthread_mutex_init(mutexPtr, Monitor.mutexAttrPtr)
   // memory leak
   // TODO destroy the condition and release the memory
