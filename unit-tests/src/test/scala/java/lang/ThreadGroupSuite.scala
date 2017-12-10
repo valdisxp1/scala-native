@@ -134,15 +134,76 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     import structure._
     threads.foreach(_.start())
     threads.foreach { thread: Counter =>
-      eventually()(thread.count > 1)
+      eventually(label = s"$thread.count > 1")(thread.count > 1)
     }
+
     group.suspend()
-    val countsMap = threads.map { thread: Counter =>
-      thread -> eventuallyConstant()(thread.count).get
-    }.toMap
+    val countMap: scala.collection.immutable.Map[Counter, scala.Long] =
+      threads.map { thread: Counter =>
+        thread -> eventuallyConstant()(thread.count).get
+      }.toMap
     group.resume()
+
     threads.foreach { thread: Counter =>
-      eventually()(thread.count > countsMap(thread))
+      eventually(label = s"$thread.count > countMap")(thread.count > countMap(thread))
+    }
+
+    threads.foreach { thread: Counter =>
+      thread.goOn = false
+      thread.join()
+    }
+  }
+
+  test(
+    "*DEPRECATED*  ThreadGroup.suspend and resume should respect allowThreadSuspension") {
+    val structure = new Structure[Counter] {
+      def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
+    }
+    import structure._
+    threads.foreach(_.start())
+    group.allowThreadSuspension(false)
+
+    val countMap1: scala.collection.immutable.Map[Counter, scala.Long] =
+      threads.map { thread: Counter =>
+        eventually(label = s"$thread.count > 1")(thread.count > 1)
+        thread -> thread.count
+      }.toMap
+
+    group.suspend()
+    val countMap2: scala.collection.immutable.Map[Counter, scala.Long] =
+      threads.map { thread: Counter =>
+        eventually(label = s"$thread.count > countMap1")(thread.count > countMap1(thread))
+        thread -> thread.count
+      }.toMap
+    group.resume()
+
+    group.allowThreadSuspension(true)
+    subgroup1.allowThreadSuspension(false)
+
+    val countMap3: scala.collection.immutable.Map[Counter, scala.Long] =
+      threads.map { thread: Counter =>
+        eventually(label = s"$thread.count > countMap2")(thread.count > countMap2(thread))
+        thread -> thread.count
+      }.toMap
+
+    group.suspend()
+
+    val countMap4a: scala.collection.immutable.Map[Counter, scala.Long] =
+      (groupThreads ++ subgroup2Threads).map { thread: Counter =>
+        eventually(label = s"$thread.count > countMap3")(thread.count > countMap3(thread))
+        thread -> thread.count
+      }.toMap
+
+    val countMap4
+      : scala.collection.immutable.Map[Counter, scala.Long] = countMap4a ++ subgroup1Threads
+      .map { thread: Counter =>
+        thread -> eventuallyConstant()(thread.count).get
+      }
+
+    group.resume()
+
+    threads.foreach { thread: Counter =>
+      eventually(label = s"$thread.count > countMap4")(thread.count > countMap4(thread))
     }
 
     threads.foreach { thread: Counter =>
