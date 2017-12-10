@@ -82,4 +82,25 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     slowThread.setPriority(Thread.MAX_PRIORITY)
     assertEquals(slowThread.getPriority, Thread.MIN_PRIORITY)
   }
+
+  test("*DEPRECATED*  ThreadGroup.suspend and resume should affect all threads") {
+    val group    = new ThreadGroup("group")
+    val subgroup = new ThreadGroup(group, "subgroup")
+    val threads = scala.Seq(
+      new Counter(group, "G-1"),
+      new Counter(group, "G-2"),
+      new Counter(group, "G-3"),
+      new Counter(subgroup, "SG-1"),
+      new Counter(subgroup, "SG-2")
+    )
+    threads.foreach(_.start())
+    threads.foreach { thread: Counter =>
+      eventually()(thread.count > 1)
+    }
+    threads.foreach(_.suspend())
+    threads.foreach { thread: Counter =>
+      eventuallyConstant()(thread.count)
+    }
+    threads.foreach(_.resume())
+  }
 }

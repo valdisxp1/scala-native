@@ -236,7 +236,8 @@ trait MultiThreadSuite extends Suite {
     }
   }
 
-  class Counter extends Thread {
+  class Counter(threadGroup: ThreadGroup, name: String) extends Thread {
+    def this() = this(Thread.currentThread().getThreadGroup, "Counter")
     var count = 0L
     var goOn  = true
     override def run() = {
