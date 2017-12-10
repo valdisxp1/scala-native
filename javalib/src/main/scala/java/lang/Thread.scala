@@ -479,6 +479,8 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
       thread.group.remove(thread)
       shutdownMutex.notifyAll()
     }
+    // workaround release all locks that might be kept after exception
+    thread.asInstanceOf[ThreadBase].freeAllLocks()
     thread synchronized {
       thread.livenessState
         .compareAndSwapStrong(internalRunnable, internalTerminated)
@@ -655,18 +657,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   signal.signal(suspendSignal, currentThreadSuspendPtr)
 
   def mainThreadEnds(): Unit = {
-    shutdownMutex.synchronized {
-      mainThreadGroup.remove(mainThread)
-      shutdownMutex.notifyAll()
-    }
-    mainThread.synchronized {
-      mainThread.livenessState
-        .compareAndSwapStrong(internalRunnable, internalTerminated)
-      mainThread.livenessState
-        .compareAndSwapStrong(internalInterrupted,
-                              internalInterruptedTerminated)
-      mainThread.notifyAll()
-    }
+    post(mainThread)
   }
 
   private val shutdownMutex = new ShadowLock

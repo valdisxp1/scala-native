@@ -130,6 +130,13 @@ abstract class ThreadBase {
       i < size
     }
   }
+  final def freeAllLocks(): Unit = {
+    var i: Int = 0
+    while (i < size) {
+      locks(i).exit()
+      i += 1
+    }
+  }
 }
 
 object ThreadBase {
