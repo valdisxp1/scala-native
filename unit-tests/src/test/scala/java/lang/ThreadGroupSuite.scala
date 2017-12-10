@@ -10,6 +10,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     val subgroup     = new ThreadGroup(threadGroup, subgroupName)
     assertEquals(subgroup.getName, subgroupName)
     assertEquals(subgroup.getParent, threadGroup)
+    assert(threadGroup.parentOf(subgroup))
+    assertNot(subgroup.parentOf(threadGroup))
   }
 
   test("ThreadGroup.checkAccess does not crash") {
