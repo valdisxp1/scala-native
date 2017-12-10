@@ -1,6 +1,17 @@
 package java.lang
 
 object ThreadGroupSuite extends tests.MultiThreadSuite {
+  test("Constructors") {
+    val groupName = "groupNameGoesHere"
+    val threadGroup = new ThreadGroup(groupName)
+    assertEquals(threadGroup.getName, groupName)
+
+    val subgroupName = "this is a subgroup"
+    val subgroup = new ThreadGroup(threadGroup, subgroupName)
+    assertEquals(subgroup.getName, subgroupName)
+    assertEquals(subgroup.getParent, threadGroup)
+  }
+
   test("ThreadGroup.checkAccess does not crash") {
     val mainThreadGroup = Thread.currentThread().getThreadGroup
     val threadGroup     = new ThreadGroup("abc")
