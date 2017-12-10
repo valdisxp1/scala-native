@@ -795,4 +795,14 @@ object ThreadSuite extends tests.MultiThreadSuite {
     counter.goOn = false
     counter.join()
   }
+
+  test("toString should contain the name and the name of the group"){
+    val groupName = "veryNiceGroupName"
+    val group = new ThreadGroup(groupName)
+    val threadName = "descriptiveNameGivenToAThread"
+    val thread = new Thread(group,threadName)
+    val toString = thread.toString
+    assert(toString.contains(groupName))
+    assert(toString.contains(threadName))
+  }
 }
