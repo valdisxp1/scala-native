@@ -83,6 +83,33 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     assertNot(fail)
   }
 
+  test("ThreadGroup.destroy") {
+    val threadGroup = new ThreadGroup("abc")
+    val thread      = new Counter(threadGroup, "active")
+    assertNot(threadGroup.isDestroyed)
+
+    thread.start()
+    eventually()(thread.count > 1)
+    //cannot destroy group with running threads
+    assertThrows[IllegalThreadStateException](threadGroup.destroy())
+    assertNot(threadGroup.isDestroyed)
+    thread.goOn = false
+    thread.join()
+
+    threadGroup.destroy()
+    assert(threadGroup.isDestroyed)
+
+    // cannot destroy it twice
+    assertThrows[IllegalThreadStateException](threadGroup.destroy())
+    assert(threadGroup.isDestroyed)
+
+    // cannot add new threads or threadGroups
+    assertThrows[IllegalThreadStateException](
+      new Thread(threadGroup, "Sad Thread"))
+    assertThrows[IllegalThreadStateException](
+      new ThreadGroup(threadGroup, "Sad ThreadGroup"))
+  }
+
   test("Thread.setPriority respects threadGroups maxPriority") {
     val fastGroup = new ThreadGroup("fastGroup")
     assertEquals(fastGroup.getMaxPriority, Thread.MAX_PRIORITY)
@@ -111,7 +138,7 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     }
     group.suspend()
     val countsMap = threads.map { thread: Counter =>
-       thread -> eventuallyConstant()(thread.count).get
+      thread -> eventuallyConstant()(thread.count).get
     }.toMap
     group.resume()
     threads.foreach { thread: Counter =>
