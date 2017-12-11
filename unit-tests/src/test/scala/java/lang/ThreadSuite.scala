@@ -305,6 +305,7 @@ object ThreadSuite extends tests.MultiThreadSuite {
     })
     val detector = new ExceptionDetector(thread, exception)
     thread.setUncaughtExceptionHandler(detector)
+    assertEquals(thread.getUncaughtExceptionHandler, detector)
 
     thread.start()
     eventually()(detector.wasException)
@@ -319,8 +320,9 @@ object ThreadSuite extends tests.MultiThreadSuite {
     })
     val detector = new ExceptionDetector(thread, exception)
     withExceptionHandler(detector) {
+      assertEquals(Thread.getDefaultUncaughtExceptionHandler, detector)
       thread.start()
-      Thread.sleep(100)
+      thread.join()
     }
     thread.join(eternity)
     assert(detector.wasException)
