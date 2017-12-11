@@ -155,7 +155,7 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     assert(group.isDaemon)
   }
 
-  test("activeCount, activeGroupCount and Thread.enumerate") {
+  test("activeCount, activeGroupCount, Thread.enumerate and list") {
     val structure = new Structure[Counter] {
       def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
     }
@@ -215,6 +215,19 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
       thread.join()
       assertEquals(count, threads.size + 1)
       assert(success)
+    }
+
+    // also test list
+    {
+      val outputStream = new java.io.ByteArrayOutputStream()
+      Console.withOut(outputStream) {
+        group.list()
+      }
+      val string = outputStream.toString
+      assert(string.contains(group.getName))
+      assert(string.contains(subgroup1.getName))
+      assert(string.contains(subgroup2.getName))
+      assert(threads.forall(t => string.contains(t.getName)))
     }
 
     threads.foreach { thread: Counter =>
