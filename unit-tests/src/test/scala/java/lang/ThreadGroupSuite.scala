@@ -231,6 +231,12 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     assertEquals(subgroup2.activeGroupCount(), 0)
   }
 
+  test("toString should contain the group's name") {
+    val name = "a very long and descriptive name"
+    val threadGroup = new ThreadGroup(name)
+    assert(threadGroup.toString.contains(name))
+  }
+
   test("*DEPRECATED*  ThreadGroup.suspend and resume should affect all threads") {
     val structure = new Structure[Counter] {
       def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
