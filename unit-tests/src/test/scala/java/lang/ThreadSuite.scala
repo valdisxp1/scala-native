@@ -429,18 +429,6 @@ object ThreadSuite extends tests.MultiThreadSuite {
     assert(Thread.currentThread() != null)
   }
 
-  class WaitingThread(mutex: AnyRef) extends Thread {
-    private var notified = false
-
-    def timesNotified = if (notified) 1 else 0
-
-    override def run(): Unit = {
-      mutex.synchronized {
-        mutex.wait()
-      }
-      notified = true
-    }
-  }
   test("wait-notify") {
     val mutex = new Object
     new Thread {

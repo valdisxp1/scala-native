@@ -489,6 +489,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
                               internalInterruptedTerminated)
       thread.notifyAll()
     }
+    pthread_setspecific(myThreadKey, null.asInstanceOf[Ptr[scala.Byte]])
   }
 
   // internal liveness state values
