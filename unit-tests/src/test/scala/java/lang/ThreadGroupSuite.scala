@@ -286,4 +286,28 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
       thread.join()
     }
   }
+
+  test("*DEPRECATED* ThreadGroup.stop should stop sleep all threads") {
+    val mutex = new Object
+    val structure = new Structure[WaitingThread] {
+      def makeTread(group: ThreadGroup, name: String) =
+        new WaitingThread(mutex, group, name)
+    }
+    import structure._
+    threads.foreach(_.start())
+    threads.foreach { thread: Thread =>
+      eventuallyEquals(
+        label = thread.getName + "is in Thread.State.TIMED_WAITING")(
+        Thread.State.WAITING,
+        thread.getState
+      )
+    }
+    group.stop()
+    threads.foreach { thread: Thread =>
+      eventuallyEquals(
+        label = thread.getName + "is in Thread.State.TERMINATED")(
+        Thread.State.TERMINATED,
+        thread.getState)
+    }
+  }
 }

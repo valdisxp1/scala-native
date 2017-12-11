@@ -236,6 +236,23 @@ trait MultiThreadSuite extends Suite {
     }
   }
 
+  class WaitingThread(mutex: AnyRef,
+                      threadGroup: ThreadGroup =
+                        Thread.currentThread().getThreadGroup,
+                      name: String = "WaitingThread")
+      extends Thread(threadGroup, name) {
+    private var notified = false
+
+    def timesNotified = if (notified) 1 else 0
+
+    override def run(): Unit = {
+      mutex.synchronized {
+        mutex.wait()
+      }
+      notified = true
+    }
+  }
+
   class Counter(threadGroup: ThreadGroup, name: String)
       extends Thread(threadGroup, name) {
     def this() = this(Thread.currentThread().getThreadGroup, "Counter")
@@ -244,7 +261,7 @@ trait MultiThreadSuite extends Suite {
     override def run() = {
       while (goOn) {
         count += 1
-        Thread.sleep(10)
+        Thread.sleep(100)
       }
     }
   }
