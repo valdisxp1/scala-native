@@ -245,9 +245,24 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
   }
 
   test("toString should contain the group's name") {
-    val name = "a very long and descriptive name"
+    val name        = "a very long and descriptive name"
     val threadGroup = new ThreadGroup(name)
     assert(threadGroup.toString.contains(name))
+  }
+
+  test("unhandled exception should be correctly delegated") {
+    val thread    = new Thread()
+    val exception = new Error("delegate me")
+    val detector  = new ExceptionDetector(thread, exception)
+    val threadGroup = new ThreadGroup("top") {
+      override def uncaughtException(t: Thread, e: Throwable) =
+        detector.uncaughtException(t, e)
+    }
+
+    val subGroup = new ThreadGroup(threadGroup, "sub")
+    subGroup.uncaughtException(thread, exception)
+
+    assert(detector.wasException)
   }
 
   test("*DEPRECATED*  ThreadGroup.suspend and resume should affect all threads") {
