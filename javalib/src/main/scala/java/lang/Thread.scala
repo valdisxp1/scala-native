@@ -565,7 +565,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   }
 
   def enumerate(list: Array[Thread]): Int =
-    currentThread().group.enumerate(list)
+    currentThread().getThreadGroup.enumerateThreads(list, 0, true)
 
   def holdsLock(obj: Object): scala.Boolean =
     currentThread().asInstanceOf[ThreadBase].holdsLock(obj)

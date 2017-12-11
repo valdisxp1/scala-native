@@ -299,9 +299,11 @@ class ThreadGroup private[lang] (
         offset += 1
         if (offset == list.length) return offset
       }
-      if (recurse) {
-        val it: util.Iterator[ThreadGroup] = groupsCopy.iterator()
-        while (offset < list.length && it.hasNext) it
+    }
+    if (recurse) {
+      val it: util.Iterator[ThreadGroup] = groupsCopy.iterator()
+      while (offset < list.length && it.hasNext) {
+        offset = it
           .next()
           .enumerateThreads(list, offset, true)
       }

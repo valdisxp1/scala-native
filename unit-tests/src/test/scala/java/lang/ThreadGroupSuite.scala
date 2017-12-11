@@ -1,5 +1,7 @@
 package java.lang
 
+import scala.collection.mutable
+
 object ThreadGroupSuite extends tests.MultiThreadSuite {
   test("Constructors") {
     val groupName   = "groupNameGoesHere"
@@ -153,7 +155,7 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     assert(group.isDaemon)
   }
 
-  test("activeCount and activeGroupCount") {
+  test("activeCount, activeGroupCount and Thread.enumerate") {
     val structure = new Structure[Counter] {
       def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
     }
@@ -172,15 +174,47 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     assertEquals(subgroup1.activeGroupCount(), 0)
     assertEquals(subgroup2.activeGroupCount(), 0)
 
-    // also test Thread.activeCount
+    // also test Thread.activeCount and Thread.enumerate
     {
-      var count = 0
-      val thread = new Thread {
-        count = Thread.activeCount()
+      var count   = 0
+      var success = false
+      val thread = new Thread(group, "checker") {
+        override def run() = {
+          count = Thread.activeCount()
+          assertEquals(Thread.enumerate(new Array[Thread](0)), 0)
+
+          val partialArray = new Array[Thread](threads.size - 1)
+          assertEquals(Thread.enumerate(partialArray), threads.size - 1)
+          val correctValuesPartial = mutable.WrappedArray
+            .make[Thread](partialArray)
+            .forall { t =>
+              threads.contains(t) || t == this
+            }
+          assert(correctValuesPartial)
+
+          val fullArray = new Array[Thread](threads.size + 1)
+          assertEquals(Thread.enumerate(fullArray), threads.size + 1)
+          val wrappedArrayFull = mutable.WrappedArray.make[Thread](fullArray)
+          val correctValuesFull: scala.Boolean = threads.forall(
+            wrappedArrayFull.contains) && wrappedArrayFull.contains(this)
+          assert(correctValuesFull)
+
+          val largeArray = new Array[Thread](threads.size + 50)
+          assertEquals(Thread.enumerate(largeArray), threads.size + 1)
+          val wrappedArrayLarge = mutable.WrappedArray.make[Thread](largeArray)
+          val (prefix, suffix)  = wrappedArrayLarge.splitAt(threads.size + 1)
+          val correctValuesLarge: scala.Boolean = threads.forall(
+            prefix.contains) && prefix.contains(this)
+          assert(correctValuesLarge)
+          assert(suffix.forall(_ == null))
+
+          success = true
+        }
       }
       thread.start()
       thread.join()
       assertEquals(count, threads.size + 1)
+      assert(success)
     }
 
     threads.foreach { thread: Counter =>
