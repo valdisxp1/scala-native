@@ -35,8 +35,13 @@ trait Suite {
   def assertThrows[T: ClassTag](f: => Unit): Unit =
     assertThrowsAnd[T](f)(_ => true)
 
-  def assertEquals[T](left: T, right: T): Unit =
-    assert(left == right)
+  def assertEquals[T](left: T, right: T): Unit = {
+    val result = left == right
+    if (!result) {
+      Console.err.println(s"Assert failed: $left =/= $right")
+      throw AssertionFailed
+    }
+  }
 
   private def assertThrowsImpl(cls: Class[_], f: => Unit): Unit = {
     try {
