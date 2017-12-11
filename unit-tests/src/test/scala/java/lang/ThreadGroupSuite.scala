@@ -152,6 +152,39 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     assert(group.isDaemon)
   }
 
+  test("activeCount and activeGroupCount") {
+    val structure = new Structure[Counter] {
+      def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
+    }
+    import structure._
+    threads.foreach(_.start())
+
+    threads.foreach { thread: Counter =>
+      eventually(label = s"$thread.count > 1")(thread.count > 1)
+    }
+
+    assertEquals(group.activeCount(), threads.size)
+    assertEquals(subgroup1.activeCount(), subgroup1Threads.size)
+    assertEquals(subgroup2.activeCount(), subgroup2Threads.size)
+
+    assertEquals(group.activeGroupCount(), 2)
+    assertEquals(subgroup1.activeGroupCount(), 0)
+    assertEquals(subgroup2.activeGroupCount(), 0)
+
+    threads.foreach { thread: Counter =>
+      thread.goOn = false
+      thread.join()
+    }
+
+    assertEquals(group.activeCount(), 0)
+    assertEquals(subgroup1.activeCount(), 0)
+    assertEquals(subgroup2.activeCount(), 0)
+
+    assertEquals(group.activeGroupCount(), 2)
+    assertEquals(subgroup1.activeGroupCount(), 0)
+    assertEquals(subgroup2.activeGroupCount(), 0)
+  }
+
   test("*DEPRECATED*  ThreadGroup.suspend and resume should affect all threads") {
     val structure = new Structure[Counter] {
       def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
