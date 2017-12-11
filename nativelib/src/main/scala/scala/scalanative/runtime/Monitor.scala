@@ -29,7 +29,7 @@ final class Monitor private[runtime] (shadow: Boolean) {
     {
       import scala.scalanative.native.stdio._
       import scala.scalanative.runtime._
-      fprintf(stderr,c"WHAT? %ld\n",result)
+      fprintf(stderr,c"WHAT? %ld -> %ld\n", pthread_self() , result)
     }
     result
   }
@@ -74,7 +74,33 @@ final class Monitor private[runtime] (shadow: Boolean) {
     }
   }
   def enter(): Unit = {
+    if (this == null) {
+      import scala.scalanative.native.stdio._
+      import scala.scalanative.runtime._
+      fprintf(stderr,c"NPE?@ %ld ", pthread_self())
+      printf(c"NPE?@ %ld ", pthread_self())
+    }
+    if (mutexPtr == null) {
+      import scala.scalanative.native.stdio._
+      import scala.scalanative.runtime._
+      fprintf(stderr,c"NPE@ %ld ", pthread_self())
+      printf(c"NPE@ %ld ", pthread_self())
+    }
+
+    {
+      import scala.scalanative.native.stdio._
+      import scala.scalanative.runtime._
+      fprintf(stderr,c"before trylock@ %ld ", pthread_self())
+      printf(c"before trylock@ %ld ", pthread_self())
+    }
+
     if (pthread_mutex_trylock(mutexPtr) == EBUSY) {
+      {
+        import scala.scalanative.native.stdio._
+        import scala.scalanative.runtime._
+        fprintf(stderr,c"trylock@ %ld ", pthread_self())
+        printf(c"trylock@ %ld ", pthread_self())
+      }
       val thread = Thread.currentThread().asInstanceOf[ThreadBase]
       if (thread != null) {
         thread.setLockState(Blocked)
@@ -201,6 +227,13 @@ class ShadowLock {
   // workaround so lock is freed when exception is thrown
   def safeSynchronized[T](f: => T): T = {
     var throwable: Throwable = null
+
+    if (Monitor(this) == null) {
+      import scala.scalanative.native.stdio._
+      import scala.scalanative.runtime._
+      fprintf(stderr,c"safeSynchronized %ld ", pthread_self())
+      printf(c"safeSynchronized %ld ", pthread_self())
+    }
     val result = synchronized {
       try {
         f
