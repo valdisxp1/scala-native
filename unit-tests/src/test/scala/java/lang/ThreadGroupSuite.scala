@@ -172,6 +172,17 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     assertEquals(subgroup1.activeGroupCount(), 0)
     assertEquals(subgroup2.activeGroupCount(), 0)
 
+    // also test Thread.activeCount
+    {
+      var count = 0
+      val thread = new Thread {
+        count = Thread.activeCount()
+      }
+      thread.start()
+      thread.join()
+      assertEquals(count, threads.size + 1)
+    }
+
     threads.foreach { thread: Counter =>
       thread.goOn = false
       thread.join()
