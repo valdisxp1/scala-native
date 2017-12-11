@@ -50,35 +50,31 @@ class ThreadGroup private[lang] (
   def this(name: String) = this(Thread.currentThread.group, name)
 
   def activeCount(): Int = {
-    var count: Int                         = 0
-    var groupsCopy: util.List[ThreadGroup] = null
-    var threadsCopy: util.List[Thread]     = null
-    lock.safeSynchronized {
-      if (destroyed) return 0
-      threadsCopy = threads.clone().asInstanceOf[util.List[Thread]]
-      groupsCopy = groups.clone().asInstanceOf[util.List[ThreadGroup]]
-    }
+    val (groupsCopy: util.List[ThreadGroup], threadsCopy: util.List[Thread]) =
+      lock.safeSynchronized {
+        if (destroyed) {
+          new util.ArrayList[ThreadGroup](0) -> new util.ArrayList[Thread](0)
+        } else {
+          val copyOfGroups  = groups.clone().asInstanceOf[util.List[ThreadGroup]]
+          val copyOfThreads = threads.clone().asInstanceOf[util.List[Thread]]
+          copyOfGroups -> copyOfThreads
+        }
+      }
 
-    count += threadsCopy.toList.count(_.isAlive)
-
-    groupsCopy.toList.foldLeft(count)((c, group) => c + group.activeCount())
-
-    count
+    threadsCopy.toList.count(_.isAlive) + groupsCopy.map(_.activeCount()).sum
   }
 
   def activeGroupCount(): Int = {
-    var count: Int                         = 0
-    var groupsCopy: util.List[ThreadGroup] = null
-    lock.safeSynchronized {
-      if (destroyed) return 0
-      count = groups.size
-      groupsCopy = groups.clone().asInstanceOf[util.List[ThreadGroup]]
-    }
+    val groupsCopy: util.List[ThreadGroup] =
+      lock.safeSynchronized {
+        if (destroyed) {
+          new util.ArrayList[ThreadGroup](0)
+        } else {
+          groups.clone().asInstanceOf[util.List[ThreadGroup]]
+        }
+      }
 
-    groupsCopy.toList.foldLeft(count)(
-      (c, group) => c + group.activeGroupCount())
-
-    count
+    groupsCopy.size + groupsCopy.toList.map(_.activeGroupCount()).sum
   }
 
   @deprecated

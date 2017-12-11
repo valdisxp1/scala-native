@@ -127,7 +127,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     assertEquals(slowThread.getPriority, Thread.MIN_PRIORITY)
   }
 
-  test("A daemon thread group is automatically destroyed when its last thread is stopped or its last thread group is destroyed.") {
+  test(
+    "A daemon thread group is automatically destroyed when its last thread is stopped or its last thread group is destroyed.") {
     val structure = new Structure[Counter] {
       def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
     }
@@ -203,7 +204,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     group.resume()
 
     threads.foreach { thread: Counter =>
-      eventually(label = s"$thread.count > countMap")(thread.count > countMap(thread))
+      eventually(label = s"$thread.count > countMap")(
+        thread.count > countMap(thread))
     }
 
     threads.foreach { thread: Counter =>
@@ -230,7 +232,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     group.suspend()
     val countMap2: scala.collection.immutable.Map[Counter, scala.Long] =
       threads.map { thread: Counter =>
-        eventually(label = s"$thread.count > countMap1")(thread.count > countMap1(thread))
+        eventually(label = s"$thread.count > countMap1")(
+          thread.count > countMap1(thread))
         thread -> thread.count
       }.toMap
     group.resume()
@@ -240,7 +243,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
 
     val countMap3: scala.collection.immutable.Map[Counter, scala.Long] =
       threads.map { thread: Counter =>
-        eventually(label = s"$thread.count > countMap2")(thread.count > countMap2(thread))
+        eventually(label = s"$thread.count > countMap2")(
+          thread.count > countMap2(thread))
         thread -> thread.count
       }.toMap
 
@@ -248,7 +252,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
 
     val countMap4a: scala.collection.immutable.Map[Counter, scala.Long] =
       (groupThreads ++ subgroup2Threads).map { thread: Counter =>
-        eventually(label = s"$thread.count > countMap3")(thread.count > countMap3(thread))
+        eventually(label = s"$thread.count > countMap3")(
+          thread.count > countMap3(thread))
         thread -> thread.count
       }.toMap
 
@@ -261,7 +266,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     group.resume()
 
     threads.foreach { thread: Counter =>
-      eventually(label = s"$thread.count > countMap4")(thread.count > countMap4(thread))
+      eventually(label = s"$thread.count > countMap4")(
+        thread.count > countMap4(thread))
     }
 
     threads.foreach { thread: Counter =>
