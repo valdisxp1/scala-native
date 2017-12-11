@@ -127,6 +127,31 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     assertEquals(slowThread.getPriority, Thread.MIN_PRIORITY)
   }
 
+  test("A daemon thread group is automatically destroyed when its last thread is stopped or its last thread group is destroyed.") {
+    val structure = new Structure[Counter] {
+      def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
+    }
+    import structure._
+    threads.foreach(_.start())
+    group.setDaemon(true)
+    subgroup1.setDaemon(true)
+    subgroup2.setDaemon(true)
+    assert(group.isDaemon)
+    assert(subgroup1.isDaemon)
+    assert(subgroup2.isDaemon)
+
+    threads.foreach { thread: Counter =>
+      eventually(label = s"$thread.count > 1")(thread.count > 1)
+    }
+
+    threads.foreach { thread: Counter =>
+      thread.goOn = false
+      thread.join()
+    }
+    assert(group.isDestroyed)
+    assert(group.isDaemon)
+  }
+
   test("*DEPRECATED*  ThreadGroup.suspend and resume should affect all threads") {
     val structure = new Structure[Counter] {
       def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
