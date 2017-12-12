@@ -381,9 +381,9 @@ class ThreadGroup private[lang] (
   }
 
   private def nonsecureSuspend(): Unit = {
-    if(_allowThreadSuspension) {
+    if (_allowThreadSuspension) {
       lock.safeSynchronized {
-        for (thread: Thread <- _threads) thread.suspend()
+        for (thread: Thread     <- _threads) thread.suspend()
         for (group: ThreadGroup <- _groups)
           group.nonsecureSuspend
       }
@@ -405,16 +405,7 @@ class ThreadGroup private[lang] (
 
   def nonDaemonThreadExists: scala.Boolean = {
     lock.safeSynchronized {
-      val threadIt = _threads.iterator()
-      var exists   = false
-      while (!exists && threadIt.hasNext) {
-        exists |= !threadIt.next().isDaemon
-      }
-      val groupIt = _groups.iterator()
-      while (!exists && groupIt.hasNext) {
-        exists |= groupIt.next().nonDaemonThreadExists
-      }
-      exists
+      threads.exists(t => !t.isDaemon) || groups.exists(_.nonDaemonThreadExists)
     }
   }
 
