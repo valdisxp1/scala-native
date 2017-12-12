@@ -28,6 +28,8 @@ class ThreadGroup private[lang] (
   // Indicates if this thread group was already destroyed
   private var destroyed: scala.Boolean = false
 
+  private var _allowThreadSuspension: scala.Boolean = true
+
   // List of subgroups of this thread group
   private var _groups: immutable.List[ThreadGroup] = immutable.Nil
 
@@ -80,7 +82,10 @@ class ThreadGroup private[lang] (
   }
 
   @deprecated
-  def allowThreadSuspension(b: scala.Boolean): scala.Boolean = false
+  def allowThreadSuspension(b: scala.Boolean): scala.Boolean = {
+    _allowThreadSuspension = b
+    true
+  }
 
   def checkAccess(): Unit = ()
 
@@ -376,10 +381,12 @@ class ThreadGroup private[lang] (
   }
 
   private def nonsecureSuspend(): Unit = {
-    lock.safeSynchronized {
-      for (thread: Thread     <- _threads) thread.suspend()
-      for (group: ThreadGroup <- _groups)
-        group.nonsecureSuspend
+    if(_allowThreadSuspension) {
+      lock.safeSynchronized {
+        for (thread: Thread <- _threads) thread.suspend()
+        for (group: ThreadGroup <- _groups)
+          group.nonsecureSuspend
+      }
     }
   }
 
