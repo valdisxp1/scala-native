@@ -445,8 +445,8 @@ object ThreadSuite extends tests.MultiThreadSuite {
   }
   test("wait-notify 2") {
     val mutex         = new Object
-    val waiter1       = new WaitingThread(mutex)
-    val waiter2       = new WaitingThread(mutex)
+    val waiter1       = new WaitingThread(mutex, name = "wait-notify 1")
+    val waiter2       = new WaitingThread(mutex, name = "wait-notify 2")
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
@@ -468,8 +468,8 @@ object ThreadSuite extends tests.MultiThreadSuite {
   }
   test("wait-notifyAll") {
     val mutex         = new Object
-    val waiter1       = new WaitingThread(mutex)
-    val waiter2       = new WaitingThread(mutex)
+    val waiter1       = new WaitingThread(mutex, name = "wait-notifyAll 1")
+    val waiter2       = new WaitingThread(mutex, name = "wait-notifyAll 2")
     def timesNotified = waiter1.timesNotified + waiter2.timesNotified
     waiter1.start()
     waiter2.start()
@@ -646,14 +646,17 @@ object ThreadSuite extends tests.MultiThreadSuite {
         .exists(_.getMethodName == "aMethodWithoutAnInterestingName"))
   }
   test("newly created threads should show up in Thread.getAllStackTraces") {
-    val mutex   = new Object
-    val thread1 = new WaitingThread(mutex)
-    val thread2 = new WaitingThread(mutex)
+    val mutex = new Object
+    val thread1 =
+      new WaitingThread(mutex, name = "waiter nc Thread.getAllStackTraces1")
+    val thread2 =
+      new WaitingThread(mutex, name = "waiter nc Thread.getAllStackTraces2")
 
     {
       val stackTraces = Thread.getAllStackTraces
       assertEquals(stackTraces.containsKey(thread1), false)
       assertEquals(stackTraces.containsKey(thread2), false)
+      Console.out.println("none of threads present as expected")
     }
 
     thread1.start()
@@ -662,6 +665,7 @@ object ThreadSuite extends tests.MultiThreadSuite {
       val stackTraces = Thread.getAllStackTraces
       assertEquals(stackTraces.containsKey(thread1), true)
       assertEquals(stackTraces.containsKey(thread2), false)
+      Console.out.println("thread1 present as expected")
     }
 
     thread2.start()
@@ -670,11 +674,15 @@ object ThreadSuite extends tests.MultiThreadSuite {
       val stackTraces = Thread.getAllStackTraces
       assertEquals(stackTraces.containsKey(thread1), true)
       assertEquals(stackTraces.containsKey(thread2), true)
+      Console.out.println("both threads present as expected")
     }
+
+    eventuallyEquals()(thread1.getState, Thread.State.WAITING)
+    eventuallyEquals()(thread2.getState, Thread.State.WAITING)
 
     mutex.notifyAll()
 
-    eventually() {
+    eventually(label = "both threads not present") {
       val stackTraces = Thread.getAllStackTraces
       !stackTraces.containsKey(thread1) && !stackTraces.containsKey(thread2)
     }
@@ -743,7 +751,7 @@ object ThreadSuite extends tests.MultiThreadSuite {
 
   test("*DEPRECATED* Thread.destroy") {
     val mutex  = new Object
-    val thread = new WaitingThread(mutex)
+    val thread = new WaitingThread(mutex, name = "waiter Thread.destroy")
     thread.start()
     eventuallyEquals(label = "thread WAITING")(thread.getState,
                                                Thread.State.WAITING)
@@ -753,7 +761,7 @@ object ThreadSuite extends tests.MultiThreadSuite {
 
   test("*DEPRECATED* Thread.stop()") {
     val mutex  = new Object
-    val thread = new WaitingThread(mutex)
+    val thread = new WaitingThread(mutex, name = "waiter Thread.stop")
     thread.start()
     eventuallyEquals(label = "thread WAITING")(thread.getState,
                                                Thread.State.WAITING)
@@ -763,7 +771,7 @@ object ThreadSuite extends tests.MultiThreadSuite {
 
   test("*DEPRECATED* Thread.stop(throwable)") {
     val mutex  = new Object
-    val thread = new WaitingThread(mutex)
+    val thread = new WaitingThread(mutex, name = "waiter Thread.stop 2")
     thread.start()
     eventuallyEquals(label = "thread WAITING")(thread.getState,
                                                Thread.State.WAITING)

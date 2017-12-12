@@ -66,7 +66,9 @@ trait Suite {
         body
         true
       } catch {
-        case _: Throwable => false
+        case t: Throwable =>
+          t.printStackTrace()
+          false
       }
     })
 
@@ -76,7 +78,9 @@ trait Suite {
         body
         false
       } catch {
-        case _: Throwable => true
+        case t: Throwable =>
+          t.printStackTrace()
+          true
       }
     })
 

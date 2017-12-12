@@ -70,6 +70,9 @@ class Thread private (
     group.add(this)
     livenessState.store(internalRunnable)
     underlying = pthread_self()
+    val threadPtr = malloc(sizeof[Thread]).asInstanceOf[Ptr[Thread]]
+    !threadPtr = this
+    pthread_setspecific(myThreadKey, threadPtr.asInstanceOf[Ptr[scala.Byte]])
   }
 
   // Indicates if the thread was already started
@@ -248,6 +251,7 @@ class Thread private (
       }
     } else {
       val oldTs = stackTraceTs
+      // Console.out.println(s"Trigger @$this")
       pthread_kill(underlying, currentThreadStackTraceSignal)
       synchronized {
         while (stackTraceTs <= oldTs && isAlive) {
@@ -551,7 +555,28 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
 
   def currentThread(): Thread = {
     val ptr = pthread_getspecific(myThreadKey).asInstanceOf[Ptr[Thread]]
-    if (ptr != null) !ptr else mainThread
+    if (ptr != null) { !ptr } else {
+      if (mainThread.underlying == 0L.asInstanceOf[ULong]) {
+        // main thread uninitialized, so it must be the only thread
+        mainThread
+      } else {
+        // the thread is handling a signal before it has initialized
+        findSelf(pthread_self(), mainThreadGroup).getOrElse {
+          throw new IllegalThreadStateException(
+            "Unknown thread. Is it a non-Scala thread?")
+        }
+      }
+    }
+  }
+
+  private def findSelf(id: pthread_t, group: ThreadGroup): Option[Thread] = {
+    val threads: scala.collection.immutable.List[Thread]     = group.threads
+    val groups: scala.collection.immutable.List[ThreadGroup] = group.groups
+    threads.find(_.underlying == id).orElse {
+      val it: scala.collection.Iterator[Option[Thread]] =
+        groups.iterator.map(g => findSelf(id, g))
+      it.find(_.isDefined).flatten
+    }
   }
 
   def dumpStack(): Unit = {
@@ -610,9 +635,14 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   private def getNextThreadId: scala.Long = threadOrdinalNum.addFetch(1)
 
   def interrupted(): scala.Boolean = {
-    currentThread().livenessState
-      .compareAndSwapStrong(internalInterrupted, internalRunnable)
-      ._1
+    val current = currentThread()
+    if (current.livenessState.load() == internalInterrupted) {
+      current.livenessState
+        .compareAndSwapStrong(internalInterrupted, internalRunnable)
+        ._1
+    } else {
+      false
+    }
   }
 
   def sleep(millis: scala.Long, nanos: scala.Int): Unit = {

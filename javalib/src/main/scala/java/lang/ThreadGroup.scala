@@ -5,6 +5,7 @@ import java.lang.Thread.UncaughtExceptionHandler
 
 import scala.collection.JavaConversions._
 import scala.scalanative.runtime.ShadowLock
+import scala.collection.immutable
 
 // Ported from Harmony
 
@@ -28,11 +29,13 @@ class ThreadGroup private[lang] (
   private var destroyed: scala.Boolean = false
 
   // List of subgroups of this thread group
-  private val groups: util.LinkedList[ThreadGroup] =
-    new util.LinkedList[ThreadGroup]()
+  private var _groups: immutable.List[ThreadGroup] = immutable.Nil
 
   // All threads in the group
-  private val threads: util.LinkedList[Thread] = new util.LinkedList[Thread]()
+  private var _threads: immutable.List[Thread] = immutable.Nil
+
+  def threads: immutable.List[Thread]     = _threads
+  def groups: immutable.List[ThreadGroup] = _groups
 
   def this(parent: ThreadGroup, name: String) = {
     this(parent, name, mainGroup = false)
@@ -47,30 +50,31 @@ class ThreadGroup private[lang] (
     parent.add(this)
   }
 
-  def this(name: String) = this(Thread.currentThread.group, name)
+  def this(name: String) = this(Thread.currentThread.getThreadGroup, name)
 
   def activeCount(): Int = {
-    val (groupsCopy: util.List[ThreadGroup], threadsCopy: util.List[Thread]) =
+    val (groupsCopy: immutable.List[ThreadGroup],
+         threadsCopy: immutable.List[Thread]) =
       lock.safeSynchronized {
         if (destroyed) {
-          new util.ArrayList[ThreadGroup](0) -> new util.ArrayList[Thread](0)
+          immutable.Nil -> immutable.Nil
         } else {
-          val copyOfGroups  = groups.clone().asInstanceOf[util.List[ThreadGroup]]
-          val copyOfThreads = threads.clone().asInstanceOf[util.List[Thread]]
+          val copyOfGroups  = _groups
+          val copyOfThreads = _threads
           copyOfGroups -> copyOfThreads
         }
       }
 
-    threadsCopy.toList.count(_.isAlive) + groupsCopy.map(_.activeCount()).sum
+    threadsCopy.count(_.isAlive) + groupsCopy.map(_.activeCount()).sum
   }
 
   def activeGroupCount(): Int = {
     val groupsCopy: util.List[ThreadGroup] =
       lock.safeSynchronized {
         if (destroyed) {
-          new util.ArrayList[ThreadGroup](0)
+          immutable.Nil
         } else {
-          groups.clone().asInstanceOf[util.List[ThreadGroup]]
+          _groups
         }
       }
 
@@ -212,7 +216,7 @@ class ThreadGroup private[lang] (
       if (destroyed)
         throw new IllegalThreadStateException(
           "The thread group is already destroyed!")
-      threads.add(thread)
+      _threads ::= thread
     }
   }
 
@@ -227,9 +231,9 @@ class ThreadGroup private[lang] (
   def remove(thread: Thread): Unit = {
     lock.safeSynchronized {
       if (destroyed) return
-      threads.remove(thread)
+      _threads = _threads.filter(_ != thread)
       thread.group = null
-      if (daemon && threads.isEmpty && groups.isEmpty) {
+      if (daemon && _threads.isEmpty && _groups.isEmpty) {
         // destroy this group
         if (parent != null) {
           parent.remove(this)
@@ -244,7 +248,7 @@ class ThreadGroup private[lang] (
       if (destroyed)
         throw new IllegalThreadStateException(
           "The thread group is already destroyed!")
-      groups.add(group)
+      _groups ::= group
     }
   }
 
@@ -253,16 +257,17 @@ class ThreadGroup private[lang] (
                                      recurse: scala.Boolean): Int = {
     var offset: Int = of
     if (list.isEmpty) return 0
-    var groupsCopy: util.List[ThreadGroup] = null // a copy of subgroups list
-    var threadsCopy: util.List[Thread]     = null // a copy of threads list
+    var groupsCopy
+      : immutable.List[ThreadGroup]         = null // a copy of subgroups list
+    var threadsCopy: immutable.List[Thread] = null // a copy of threads list
     lock.safeSynchronized {
       if (destroyed)
         return offset
-      threadsCopy = threads.clone().asInstanceOf[util.List[Thread]]
+      threadsCopy = _threads
       if (recurse)
-        groupsCopy = groups.clone().asInstanceOf[util.List[ThreadGroup]]
+        groupsCopy = _groups
     }
-    for (thread: Thread <- threadsCopy.toList) {
+    for (thread: Thread <- threadsCopy) {
       if (thread.isAlive) {
         list(offset) = thread
         offset += 1
@@ -270,7 +275,7 @@ class ThreadGroup private[lang] (
       }
     }
     if (recurse) {
-      val it: util.Iterator[ThreadGroup] = groupsCopy.iterator()
+      val it: scala.collection.Iterator[ThreadGroup] = groupsCopy.iterator()
       while (offset < list.length && it.hasNext) {
         offset = it
           .next()
@@ -288,7 +293,7 @@ class ThreadGroup private[lang] (
       return offset
     val firstGroupIdx: Int = offset
     lock.safeSynchronized {
-      for (group: ThreadGroup <- groups.toList) {
+      for (group: ThreadGroup <- _groups) {
         list(offset) = group
         offset += 1
         if (offset == list.length)
@@ -310,50 +315,51 @@ class ThreadGroup private[lang] (
     var prefix: String = pr
     println(prefix + toString)
     prefix += LISTING_INDENT
-    var groupsCopy: util.List[ThreadGroup] = null // a copy of subgroups list
-    var threadsCopy: util.List[Thread]     = null // a copy of threads list
+    var groupsCopy
+      : immutable.List[ThreadGroup]         = null // a copy of subgroups list
+    var threadsCopy: immutable.List[Thread] = null // a copy of threads list
     lock.safeSynchronized {
-      threadsCopy = threads.clone().asInstanceOf[util.List[Thread]]
-      groupsCopy = groups.clone().asInstanceOf[util.List[ThreadGroup]]
+      threadsCopy = _threads
+      groupsCopy = _groups
     }
-    for (thread: Thread <- threadsCopy.toList)
+    for (thread: Thread <- threadsCopy)
       println(prefix + thread)
-    for (group: ThreadGroup <- groupsCopy.toList)
+    for (group: ThreadGroup <- groupsCopy)
       group.list(prefix)
   }
 
   def nonsecureDestroy(): Unit = {
-    var groupsCopy: util.List[ThreadGroup] = null
+    var groupsCopy: immutable.List[ThreadGroup] = null
 
     lock.safeSynchronized {
-      if (threads.size > 0)
+      if (_threads.size > 0)
         throw new IllegalThreadStateException(
           "The thread group " + name + "is not empty")
       destroyed = true
-      groupsCopy = groups.clone().asInstanceOf[util.List[ThreadGroup]]
+      groupsCopy = _groups
     }
 
     if (parent != null)
       parent.remove(this)
 
-    for (group: ThreadGroup <- groupsCopy.toList)
+    for (group: ThreadGroup <- groupsCopy)
       group.nonsecureDestroy()
   }
 
   private def nonsecureInterrupt(): Unit = {
     lock.safeSynchronized {
-      for (thread: Thread <- threads.toList)
+      for (thread: Thread <- _threads)
         thread.interrupt()
-      for (group: ThreadGroup <- groups.toList)
+      for (group: ThreadGroup <- _groups)
         group.nonsecureInterrupt
     }
   }
 
   private def nonsecureResume(): Unit = {
     lock.safeSynchronized {
-      for (thread: Thread <- threads.toList)
+      for (thread: Thread <- _threads)
         thread.resume()
-      for (group: ThreadGroup <- groups.toList)
+      for (group: ThreadGroup <- _groups)
         group.nonsecureResume
     }
   }
@@ -362,31 +368,31 @@ class ThreadGroup private[lang] (
     lock.safeSynchronized {
       this.maxPriority = priority
 
-      for (group: ThreadGroup <- groups.toList)
+      for (group: ThreadGroup <- _groups)
         group.nonsecureSetMaxPriority(priority)
     }
   }
 
   private def nonsecureStop(): Unit = {
     lock.safeSynchronized {
-      for (thread: Thread <- threads.toList) thread.stop()
-      for (group: ThreadGroup  <- groups.toList)
+      for (thread: Thread     <- _threads) thread.stop()
+      for (group: ThreadGroup <- _groups)
         group.nonsecureStop
     }
   }
 
   private def nonsecureSuspend(): Unit = {
     lock.safeSynchronized {
-      for (thread: Thread <- threads.toList) thread.suspend()
-      for (group: ThreadGroup  <- groups.toList)
+      for (thread: Thread     <- _threads) thread.suspend()
+      for (group: ThreadGroup <- _groups)
         group.nonsecureSuspend
     }
   }
 
   private def remove(group: ThreadGroup): Unit = {
     lock.safeSynchronized {
-      groups.remove(group)
-      if (daemon && threads.isEmpty && groups.isEmpty) {
+      _groups = _groups.filter(_ != group)
+      if (daemon && _threads.isEmpty && _groups.isEmpty) {
         // destroy this group
         if (parent != null) {
           parent.remove(this)
@@ -398,12 +404,12 @@ class ThreadGroup private[lang] (
 
   def nonDaemonThreadExists: scala.Boolean = {
     lock.safeSynchronized {
-      val threadIt = threads.iterator()
+      val threadIt = _threads.iterator()
       var exists   = false
       while (!exists && threadIt.hasNext) {
         exists |= !threadIt.next().isDaemon
       }
-      val groupIt = groups.iterator()
+      val groupIt = _groups.iterator()
       while (!exists && groupIt.hasNext) {
         exists |= groupIt.next().nonDaemonThreadExists
       }
