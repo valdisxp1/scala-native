@@ -59,9 +59,7 @@ class ThreadGroup private[lang] (
         if (destroyed) {
           immutable.Nil -> immutable.Nil
         } else {
-          val copyOfGroups  = _groups
-          val copyOfThreads = _threads
-          copyOfGroups -> copyOfThreads
+          _groups -> _threads
         }
       }
 
@@ -257,16 +255,16 @@ class ThreadGroup private[lang] (
                                      recurse: scala.Boolean): Int = {
     var offset: Int = of
     if (list.isEmpty) return 0
-    var groupsCopy
-      : immutable.List[ThreadGroup]         = null // a copy of subgroups list
-    var threadsCopy: immutable.List[Thread] = null // a copy of threads list
-    lock.safeSynchronized {
-      if (destroyed)
-        return offset
-      threadsCopy = _threads
-      if (recurse)
-        groupsCopy = _groups
-    }
+    val (groupsCopy: immutable.List[ThreadGroup],
+         threadsCopy: immutable.List[Thread]) =
+      lock.safeSynchronized {
+        if (destroyed) {
+          immutable.Nil -> immutable.Nil
+        } else {
+          val copyOfGroups = if (recurse) _groups else immutable.Nil
+          copyOfGroups -> _threads
+        }
+      }
     for (thread: Thread <- threadsCopy) {
       if (thread.isAlive) {
         list(offset) = thread
@@ -312,16 +310,14 @@ class ThreadGroup private[lang] (
   }
 
   private def list(pr: String): Unit = {
-    var prefix: String = pr
-    println(prefix + toString)
-    prefix += LISTING_INDENT
-    var groupsCopy
-      : immutable.List[ThreadGroup]         = null // a copy of subgroups list
-    var threadsCopy: immutable.List[Thread] = null // a copy of threads list
-    lock.safeSynchronized {
-      threadsCopy = _threads
-      groupsCopy = _groups
-    }
+    println(pr + toString)
+    val prefix = pr + LISTING_INDENT
+    val (groupsCopy: immutable.List[ThreadGroup],
+         threadsCopy: immutable.List[Thread]) =
+      lock.safeSynchronized {
+        _groups -> _threads
+      }
+
     for (thread: Thread <- threadsCopy)
       println(prefix + thread)
     for (group: ThreadGroup <- groupsCopy)
@@ -329,14 +325,12 @@ class ThreadGroup private[lang] (
   }
 
   def nonsecureDestroy(): Unit = {
-    var groupsCopy: immutable.List[ThreadGroup] = null
-
-    lock.safeSynchronized {
+    val groupsCopy: immutable.List[ThreadGroup] = lock.safeSynchronized {
       if (_threads.size > 0)
         throw new IllegalThreadStateException(
           "The thread group " + name + "is not empty")
       destroyed = true
-      groupsCopy = _groups
+      _groups
     }
 
     if (parent != null)
