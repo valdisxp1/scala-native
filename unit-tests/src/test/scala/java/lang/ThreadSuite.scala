@@ -361,9 +361,7 @@ object ThreadSuite extends tests.MultiThreadSuite {
       }
     }
     thread.start()
-    takesAtLeast(100) {
-      thread.join(1000)
-    }
+    thread.join(1000)
     assertNot(thread.isAlive)
   }
   test("Thread.join should wait for thread finishing (no timeout)") {
