@@ -248,37 +248,6 @@ class ThreadGroup private[lang] (
     }
   }
 
-  @SuppressWarnings(Array("unused"))
-  private def getActiveChildren: Array[Object] = {
-    val threadsCopy: util.ArrayList[Thread] =
-      new util.ArrayList[Thread](threads.size)
-    val groupsCopy: util.ArrayList[ThreadGroup] =
-      new util.ArrayList[ThreadGroup](groups.size)
-
-    lock.safeSynchronized {
-      if (destroyed)
-        return Array[Object](null, null)
-      for (thread: Thread <- threads) {
-        threadsCopy.add(thread)
-      }
-      for (group: ThreadGroup <- groups) {
-        groupsCopy.add(group)
-      }
-    }
-
-    val activeThreads: util.ArrayList[Thread] =
-      new util.ArrayList[Thread](threadsCopy.size())
-
-    // filter out alive threads
-    for (thread: Thread <- threadsCopy) {
-      if (thread.isAlive)
-        activeThreads.add(thread)
-    }
-
-    Array[Object](activeThreads.toArray(), groupsCopy.toArray())
-
-  }
-
   private[lang] def enumerateThreads(list: Array[Thread],
                                      of: Int,
                                      recurse: scala.Boolean): Int = {
@@ -293,9 +262,9 @@ class ThreadGroup private[lang] (
       if (recurse)
         groupsCopy = groups.clone().asInstanceOf[util.List[ThreadGroup]]
     }
-    for (thread: Object <- threadsCopy.toList) {
-      if (thread.asInstanceOf[Thread].isAlive) {
-        list(offset) = thread.asInstanceOf[Thread]
+    for (thread: Thread <- threadsCopy.toList) {
+      if (thread.isAlive) {
+        list(offset) = thread
         offset += 1
         if (offset == list.length) return offset
       }
@@ -319,8 +288,8 @@ class ThreadGroup private[lang] (
       return offset
     val firstGroupIdx: Int = offset
     lock.safeSynchronized {
-      for (group: Object <- groups.toList) {
-        list(offset) = group.asInstanceOf[ThreadGroup]
+      for (group: ThreadGroup <- groups.toList) {
+        list(offset) = group
         offset += 1
         if (offset == list.length)
           return offset
@@ -347,10 +316,10 @@ class ThreadGroup private[lang] (
       threadsCopy = threads.clone().asInstanceOf[util.List[Thread]]
       groupsCopy = groups.clone().asInstanceOf[util.List[ThreadGroup]]
     }
-    for (thread: Object <- threadsCopy.toList)
-      println(prefix + thread.asInstanceOf[Thread])
-    for (group: Object <- groupsCopy.toList)
-      group.asInstanceOf[ThreadGroup].list(prefix)
+    for (thread: Thread <- threadsCopy.toList)
+      println(prefix + thread)
+    for (group: ThreadGroup <- groupsCopy.toList)
+      group.list(prefix)
   }
 
   def nonsecureDestroy(): Unit = {
@@ -367,25 +336,25 @@ class ThreadGroup private[lang] (
     if (parent != null)
       parent.remove(this)
 
-    for (group: Object <- groupsCopy.toList)
-      group.asInstanceOf[ThreadGroup].nonsecureDestroy()
+    for (group: ThreadGroup <- groupsCopy.toList)
+      group.nonsecureDestroy()
   }
 
   private def nonsecureInterrupt(): Unit = {
     lock.safeSynchronized {
-      for (thread: Object <- threads.toList)
-        thread.asInstanceOf[Thread].interrupt()
-      for (group: Object <- groups.toList)
-        group.asInstanceOf[ThreadGroup].nonsecureInterrupt
+      for (thread: Thread <- threads.toList)
+        thread.interrupt()
+      for (group: ThreadGroup <- groups.toList)
+        group.nonsecureInterrupt
     }
   }
 
   private def nonsecureResume(): Unit = {
     lock.safeSynchronized {
-      for (thread: Object <- threads.toList)
-        thread.asInstanceOf[Thread].resume()
-      for (group: Object <- groups.toList)
-        group.asInstanceOf[ThreadGroup].nonsecureResume
+      for (thread: Thread <- threads.toList)
+        thread.resume()
+      for (group: ThreadGroup <- groups.toList)
+        group.nonsecureResume
     }
   }
 
@@ -393,24 +362,24 @@ class ThreadGroup private[lang] (
     lock.safeSynchronized {
       this.maxPriority = priority
 
-      for (group: Object <- groups.toList)
-        group.asInstanceOf[ThreadGroup].nonsecureSetMaxPriority(priority)
+      for (group: ThreadGroup <- groups.toList)
+        group.nonsecureSetMaxPriority(priority)
     }
   }
 
   private def nonsecureStop(): Unit = {
     lock.safeSynchronized {
-      for (thread: Object <- threads.toList) thread.asInstanceOf[Thread].stop()
-      for (group: Object  <- groups.toList)
-        group.asInstanceOf[ThreadGroup].nonsecureStop
+      for (thread: Thread <- threads.toList) thread.stop()
+      for (group: ThreadGroup  <- groups.toList)
+        group.nonsecureStop
     }
   }
 
   private def nonsecureSuspend(): Unit = {
     lock.safeSynchronized {
-      for (thread: Object <- threads) thread.asInstanceOf[Thread].suspend()
-      for (group: Object  <- groups)
-        group.asInstanceOf[ThreadGroup].nonsecureSuspend
+      for (thread: Thread <- threads.toList) thread.suspend()
+      for (group: ThreadGroup  <- groups.toList)
+        group.nonsecureSuspend
     }
   }
 
