@@ -185,10 +185,7 @@ object Monitor {
   }
 }
 
-/**
- * Cannot be checked with Thread.holdsLock
- */
-class ShadowLock {
+class Lock {
   // workaround so lock is freed when exception is thrown
   def safeSynchronized[T](f: => T): T = {
     var throwable: Throwable = null
@@ -208,3 +205,8 @@ class ShadowLock {
 
   }
 }
+
+/**
+ * Cannot be checked with Thread.holdsLock
+ */
+class ShadowLock extends Lock
