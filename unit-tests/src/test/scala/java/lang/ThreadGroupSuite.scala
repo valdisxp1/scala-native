@@ -41,15 +41,21 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
                                          makeTread(group, "G-2"),
                                          makeTread(group, "G-3"))
 
-    val subgroup1 = new ThreadGroup(group, "subgroup")
+    val subgroup1 = new ThreadGroup(group, "subgroup1")
     val subgroup1Threads: Seq[T] =
       scala.Seq(makeTread(subgroup1, "SG-1"), makeTread(subgroup1, "SG-2"))
 
-    val subgroup2 = new ThreadGroup(group, "subgroup")
+    val subgroup2 = new ThreadGroup(group, "subgroup2")
     val subgroup2Threads: Seq[T] =
       scala.Seq(makeTread(subgroup2, "SG-A"), makeTread(subgroup2, "SG-B"))
 
     val threads: Seq[T] = groupThreads ++ subgroup1Threads ++ subgroup2Threads
+
+    def destroyAllGroups(): Unit = {
+      if(!group.isDestroyed) group.destroy()
+      if(!subgroup1.isDestroyed) subgroup1.destroy()
+      if(!subgroup1.isDestroyed) subgroup1.destroy()
+    }
   }
 
   test("ThreadGroup.interrupt should interrupt sleep for all threads") {
@@ -82,6 +88,9 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
         Thread.State.TERMINATED,
         thread.getState)
     }
+
+    destroyAllGroups()
+
     assertNot(fail)
   }
 
@@ -155,6 +164,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     }
     assert(group.isDestroyed)
     assert(group.isDaemon)
+
+    destroyAllGroups()
   }
 
   test("activeCount, activeGroupCount, Thread.enumerate and list") {
@@ -246,6 +257,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     assertEquals(group.activeGroupCount(), 2)
     assertEquals(subgroup1.activeGroupCount(), 0)
     assertEquals(subgroup2.activeGroupCount(), 0)
+
+    destroyAllGroups()
   }
 
   test("toString should contain the group's name") {
@@ -297,6 +310,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     threads.foreach { thread: Counter =>
       thread.join()
     }
+
+    destroyAllGroups()
   }
 
   test(
@@ -361,6 +376,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     threads.foreach { thread: Counter =>
       thread.join()
     }
+
+    destroyAllGroups()
   }
 
   test("*DEPRECATED* ThreadGroup.stop should stop all threads") {
@@ -385,5 +402,7 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
         Thread.State.TERMINATED,
         thread.getState)
     }
+
+    destroyAllGroups()
   }
 }
