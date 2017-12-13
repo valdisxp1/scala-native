@@ -91,8 +91,8 @@ class Thread private (
    */
   private var underlying: pthread_t = 0.asInstanceOf[ULong]
 
-  private val sleepMutex = new Object
-
+  private val sleepMutex   = new Object
+  private val joinMutex    = new Object
   private val suspendMutex = new Object
   private var suspended    = false
 
@@ -178,9 +178,8 @@ class Thread private (
   }
 
   final def join(): Unit = {
-    () // workaround the synchronized methods not generating monitor calls
-    synchronized {
-      while (isAlive) wait()
+    joinMutex.synchronized {
+      while (isAlive) joinMutex.wait()
     }
   }
 
@@ -192,9 +191,9 @@ class Thread private (
       val end: scala.Long         = System.currentTimeMillis() + millis
       var continue: scala.Boolean = true
       while (isAlive && continue) {
-        synchronized {
+        joinMutex.synchronized {
           if (isAlive) {
-            wait(millis)
+            joinMutex.wait(millis)
           }
         }
         millis = end - System.currentTimeMillis()
@@ -216,9 +215,9 @@ class Thread private (
       var rest: scala.Long        = 0L
       var continue: scala.Boolean = true
       while (isAlive && continue) {
-        synchronized {
+        joinMutex.synchronized {
           if (isAlive) {
-            wait(millis, nanos)
+            joinMutex.wait(millis, nanos)
           }
         }
         rest = end - System.nanoTime()
@@ -245,18 +244,17 @@ class Thread private (
   def getStackTrace: Array[StackTraceElement] = {
     if (this == Thread.currentThread()) {
       lastStackTrace = new Throwable().getStackTrace
-      synchronized {
+      joinMutex.synchronized {
         stackTraceTs += 1
-        notifyAll()
+        joinMutex.notifyAll()
       }
     } else {
       val oldTs = stackTraceTs
-      // Console.out.println(s"Trigger @$this")
       pthread_kill(underlying, currentThreadStackTraceSignal)
-      synchronized {
+      joinMutex.synchronized {
         while (stackTraceTs <= oldTs && isAlive) {
           // trigger getStackTrace on that thread
-          wait()
+          joinMutex.wait()
         }
       }
     }
@@ -369,7 +367,7 @@ class Thread private (
     if (throwable == null)
       throw new NullPointerException("The argument is null!")
 
-    val shouldTerminate = synchronized {
+    val shouldTerminate = joinMutex.synchronized {
       val terminated = livenessState
         .compareAndSwapStrong(internalRunnable, internalTerminated)
         ._1
@@ -485,13 +483,13 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     }
     // workaround release all locks that might be kept after exception
     thread.asInstanceOf[ThreadBase].freeAllLocks()
-    thread synchronized {
+    thread.joinMutex.synchronized {
       thread.livenessState
         .compareAndSwapStrong(internalRunnable, internalTerminated)
       thread.livenessState
         .compareAndSwapStrong(internalInterrupted,
                               internalInterruptedTerminated)
-      thread.notifyAll()
+      thread.joinMutex.notifyAll()
     }
     pthread_setspecific(myThreadKey, null.asInstanceOf[Ptr[scala.Byte]])
   }

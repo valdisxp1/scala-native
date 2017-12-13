@@ -33,29 +33,34 @@ abstract class ThreadBase {
 }
 
 object ThreadBase {
-  private val threadModule: ThreadModuleBase = Thread.currentThread().asInstanceOf[ThreadBase].threadModuleBase
+  private val threadModule: ThreadModuleBase =
+    Thread.currentThread().asInstanceOf[ThreadBase].threadModuleBase
   final val Normal       = 0
   final val Blocked      = 1
   final val Waiting      = 2
   final val TimedWaiting = 3
 
   protected[runtime] def initMainThread(): Unit = threadModule.initMainThread()
-  protected[runtime] def shutdownCheckLoop(): Unit = threadModule.shutdownCheckLoop()
+  protected[runtime] def shutdownCheckLoop(): Unit =
+    threadModule.shutdownCheckLoop()
   protected[runtime] def mainThreadEnds(): Unit = threadModule.mainThreadEnds()
 
   /**
-    *
-    * @return Some(currentThread) or None if:
-    *         1. it is a non-Scala thread
-    *         2. Scala thinks it is dead
-    *         3. it has not properly initialized because it is handling a signal
-    */
-  protected[runtime] def currentThreadOptionInternal(): Option[Thread with ThreadBase] = threadModule.currentThreadOptionInternal()
+   *
+   * @return Some(currentThread) or None if:
+   *         1. it is a non-Scala thread
+   *         2. Scala thinks it is dead
+   *         3. it has not properly initialized because it is handling a signal
+   */
+  protected[runtime] def currentThreadOptionInternal()
+    : Option[Thread with ThreadBase] =
+    threadModule.currentThreadOptionInternal()
 }
 
 abstract class ThreadModuleBase {
   protected[runtime] def shutdownCheckLoop(): Unit
   protected[runtime] def initMainThread(): Unit
   protected[runtime] def mainThreadEnds(): Unit
-  protected[runtime] def currentThreadOptionInternal(): Option[Thread with ThreadBase]
+  protected[runtime] def currentThreadOptionInternal()
+    : Option[Thread with ThreadBase]
 }
