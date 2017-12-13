@@ -149,6 +149,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
 
     threads.foreach { thread: Counter =>
       thread.goOn = false
+    }
+    threads.foreach { thread: Counter =>
       thread.join()
     }
     assert(group.isDestroyed)
@@ -232,6 +234,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
 
     threads.foreach { thread: Counter =>
       thread.goOn = false
+    }
+    threads.foreach { thread: Counter =>
       thread.join()
     }
 
@@ -289,6 +293,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
 
     threads.foreach { thread: Counter =>
       thread.goOn = false
+    }
+    threads.foreach { thread: Counter =>
       thread.join()
     }
   }
@@ -351,11 +357,13 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
 
     threads.foreach { thread: Counter =>
       thread.goOn = false
+    }
+    threads.foreach { thread: Counter =>
       thread.join()
     }
   }
 
-  test("*DEPRECATED* ThreadGroup.stop should stop sleep all threads") {
+  test("*DEPRECATED* ThreadGroup.stop should stop all threads") {
     val mutex = new Object
     val structure = new Structure[WaitingThread] {
       def makeTread(group: ThreadGroup, name: String) =

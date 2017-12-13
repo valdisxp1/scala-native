@@ -270,6 +270,7 @@ trait MultiThreadSuite extends Suite {
     override def run() = {
       while (goOn) {
         count += 1
+        Thread.`yield`()
         Thread.sleep(100)
       }
     }
