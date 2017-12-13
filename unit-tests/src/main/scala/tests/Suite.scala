@@ -79,7 +79,6 @@ trait Suite {
         false
       } catch {
         case t: Throwable =>
-          t.printStackTrace()
           true
       }
     })
