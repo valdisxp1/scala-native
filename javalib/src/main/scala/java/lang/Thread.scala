@@ -377,6 +377,7 @@ class Thread private (
         .compareAndSwapStrong(internalInterrupted,
                               internalInterruptedTerminated)
         ._1
+      group.remove(this)
       notifyAll()
       terminated || interruptedTerminated
     }
