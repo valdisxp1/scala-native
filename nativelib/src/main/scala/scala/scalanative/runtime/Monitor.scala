@@ -33,9 +33,13 @@ final class Monitor private[runtime] (shadow: Boolean) {
   def _notifyAll(): Unit = pthread_cond_broadcast(condPtr)
   def _wait(): Unit = {
     val thread = ThreadBase.currentThreadOptionInternal
-    thread.foreach(_.setLockState(Waiting))
+    if (thread != null) {
+      thread.setLockState(Waiting)
+    }
     val returnVal = pthread_cond_wait(condPtr, mutexPtr)
-    thread.foreach(_.setLockState(Normal))
+    if (thread != null) {
+      thread.setLockState(Normal)
+    }
     if (returnVal == EPERM) {
       throw new IllegalMonitorStateException()
     }
@@ -43,7 +47,9 @@ final class Monitor private[runtime] (shadow: Boolean) {
   def _wait(millis: scala.Long): Unit = _wait(millis, 0)
   def _wait(millis: scala.Long, nanos: Int): Unit = {
     val thread = ThreadBase.currentThreadOptionInternal
-    thread.foreach(_.setLockState(TimedWaiting))
+    if (thread != null) {
+      thread.setLockState(TimedWaiting)
+    }
     val tsPtr = stackalloc[timespec]
     clock_gettime(CLOCK_REALTIME, tsPtr)
     val curSeconds     = !tsPtr._1
@@ -57,25 +63,26 @@ final class Monitor private[runtime] (shadow: Boolean) {
     !tsPtr._2 = deadlineNanos
 
     val returnVal = pthread_cond_timedwait(condPtr, mutexPtr, tsPtr)
-    thread.foreach(_.setLockState(Normal))
+    if (thread != null) {
+      thread.setLockState(Normal)
+    }
     if (returnVal == EPERM) {
       throw new IllegalMonitorStateException()
     }
   }
   def enter(): Unit = {
     if (pthread_mutex_trylock(mutexPtr) == EBUSY) {
-      ThreadBase
-        .currentThreadOptionInternal()
-        .fold[Unit] {
-          // Thread class in not initialized yet, just try again
-          pthread_mutex_lock(mutexPtr)
-        } { thread: Thread with ThreadBase =>
-          thread.setLockState(Blocked)
-          // try again and block until you get one
-          pthread_mutex_lock(mutexPtr)
-          // finally got the lock
-          thread.setLockState(Normal)
-        }
+      val thread = ThreadBase.currentThreadOptionInternal()
+      if (thread != null) {
+        thread.setLockState(Blocked)
+        // try again and block until you get one
+        pthread_mutex_lock(mutexPtr)
+        // finally got the lock
+        thread.setLockState(Normal)
+      } else {
+        // Thread class in not initialized yet, just try again
+        pthread_mutex_lock(mutexPtr)
+      }
     }
     if (!shadow) {
       pushLock()
@@ -90,8 +97,9 @@ final class Monitor private[runtime] (shadow: Boolean) {
   }
 
   @inline
-  private def pushLock(): Unit =
-    ThreadBase.currentThreadOptionInternal().foreach { thread =>
+  private def pushLock(): Unit = {
+    val thread = ThreadBase.currentThreadOptionInternal()
+    if (thread != null) {
       thread.locks(thread.size) = this
       thread.size += 1
       if (thread.size >= thread.locks.length) {
@@ -101,15 +109,17 @@ final class Monitor private[runtime] (shadow: Boolean) {
         thread.locks = newArray
       }
     }
+  }
 
   @inline
-  private def popLock(): Unit =
-    ThreadBase.currentThreadOptionInternal().foreach {
-      thread: Thread with ThreadBase =>
-        if (thread.locks(thread.size - 1) == this) {
-          thread.size -= 1
-        }
+  private def popLock(): Unit = {
+    val thread = ThreadBase.currentThreadOptionInternal()
+    if (thread != null) {
+      if (thread.locks(thread.size - 1) == this) {
+        thread.size -= 1
+      }
     }
+  }
 }
 
 object Monitor {

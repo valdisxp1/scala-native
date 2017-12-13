@@ -47,13 +47,12 @@ object ThreadBase {
 
   /**
    *
-   * @return Some(currentThread) or None if:
-   *         1. it is a non-Scala thread
-   *         2. Scala thinks it is dead
+   * @return currentThread or `null` if:<br>
+   *         1. it is a non-Scala thread<br>
+   *         2. Scala thinks it is dead<br>
    *         3. it has not properly initialized because it is handling a signal
    */
-  protected[runtime] def currentThreadOptionInternal()
-    : Option[Thread with ThreadBase] =
+  protected[runtime] def currentThreadOptionInternal(): Thread with ThreadBase =
     threadModule.currentThreadOptionInternal()
 }
 
@@ -61,6 +60,5 @@ abstract class ThreadModuleBase {
   protected[runtime] def shutdownCheckLoop(): Unit
   protected[runtime] def initMainThread(): Unit
   protected[runtime] def mainThreadEnds(): Unit
-  protected[runtime] def currentThreadOptionInternal()
-    : Option[Thread with ThreadBase]
+  protected[runtime] def currentThreadOptionInternal(): Thread with ThreadBase
 }

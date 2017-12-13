@@ -52,9 +52,13 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     val threads: Seq[T] = groupThreads ++ subgroup1Threads ++ subgroup2Threads
 
     def destroyAllGroups(): Unit = {
-      if(!group.isDestroyed) group.destroy()
-      if(!subgroup1.isDestroyed) subgroup1.destroy()
-      if(!subgroup1.isDestroyed) subgroup1.destroy()
+      try {
+        if (!group.isDestroyed) group.destroy()
+        if (!subgroup1.isDestroyed) subgroup1.destroy()
+        if (!subgroup1.isDestroyed) subgroup1.destroy()
+      } catch {
+        case _: IllegalThreadStateException =>
+      }
     }
   }
 

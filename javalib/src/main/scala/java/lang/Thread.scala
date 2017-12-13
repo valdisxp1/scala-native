@@ -178,8 +178,10 @@ class Thread private (
   }
 
   final def join(): Unit = {
-    joinMutex.synchronized {
-      while (isAlive) joinMutex.wait()
+    if (isAlive) {
+      joinMutex.synchronized {
+        while (isAlive) joinMutex.wait()
+      }
     }
   }
 
@@ -551,17 +553,20 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
 
   def activeCount: Int = currentThread().group.activeCount()
 
-  def currentThreadOptionInternal(): Option[Thread with ThreadBase] = {
+  def currentThreadOptionInternal(): Thread with ThreadBase = {
     val ptr = pthread_getspecific(myThreadKey).asInstanceOf[Ptr[Thread]]
     if (ptr != null) {
-      Some(!ptr)
+      !ptr
     } else {
-      None
+      null
     }
   }
 
   def currentThread(): Thread = {
-    currentThreadOptionInternal().getOrElse {
+    val value = currentThreadOptionInternal()
+    if (value != null) {
+      value
+    } else {
       if (mainThread.underlying == 0L.asInstanceOf[ULong]) {
         // main thread uninitialized, so it must be the only thread
         mainThread
@@ -700,9 +705,11 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   private val shutdownMutex = new ShadowLock
 
   def shutdownCheckLoop(): Unit = {
-    shutdownMutex.synchronized {
-      while (mainThreadGroup.nonDaemonThreadExists) {
-        shutdownMutex.wait()
+    if (mainThreadGroup.nonDaemonThreadExists) {
+      shutdownMutex.synchronized {
+        while (mainThreadGroup.nonDaemonThreadExists) {
+          shutdownMutex.wait()
+        }
       }
     }
   }
