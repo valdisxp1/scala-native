@@ -553,9 +553,17 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
 
   def activeCount: Int = currentThread().group.activeCount()
 
-  def currentThread(): Thread = {
+  def currentThreadOptionInternal(): Option[Thread with ThreadBase] = {
     val ptr = pthread_getspecific(myThreadKey).asInstanceOf[Ptr[Thread]]
-    if (ptr != null) { !ptr } else {
+    if (ptr != null) {
+      Some(!ptr)
+    } else {
+      None
+    }
+  }
+
+  def currentThread(): Thread = {
+    currentThreadOptionInternal().getOrElse {
       if (mainThread.underlying == 0L.asInstanceOf[ULong]) {
         // main thread uninitialized, so it must be the only thread
         mainThread
@@ -700,4 +708,6 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
       }
     }
   }
+
+  def initMainThread(): Unit = mainThread.initMainThread()
 }

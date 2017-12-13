@@ -123,7 +123,7 @@ class ThreadGroup private[lang] (
     var offset: Int = of
     if (list.isEmpty) return 0
     val (groupsCopy: immutable.List[ThreadGroup],
-    threadsCopy: immutable.List[Thread]) =
+         threadsCopy: immutable.List[Thread]) =
       lock.safeSynchronized {
         if (destroyed) {
           immutable.Nil -> immutable.Nil
@@ -182,7 +182,7 @@ class ThreadGroup private[lang] (
     println(pr + toString)
     val prefix = pr + LISTING_INDENT
     val (groupsCopy: immutable.List[ThreadGroup],
-    threadsCopy: immutable.List[Thread]) =
+         threadsCopy: immutable.List[Thread]) =
       lock.safeSynchronized {
         _groups -> _threads
       }
@@ -284,9 +284,9 @@ class ThreadGroup private[lang] (
     }
   }
 
-  def getMaxPriority: Int = maxPriority
-  def getName: String = name
-  def isDaemon: scala.Boolean = daemon
+  def getMaxPriority: Int        = maxPriority
+  def getName: String            = name
+  def isDaemon: scala.Boolean    = daemon
   def isDestroyed: scala.Boolean = destroyed
 
   def setDaemon(daemon: scala.Boolean): Unit = {

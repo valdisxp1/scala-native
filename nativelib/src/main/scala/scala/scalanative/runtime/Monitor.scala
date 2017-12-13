@@ -1,7 +1,5 @@
 package scala.scalanative.runtime
 
-import java.util
-
 import scala.scalanative.native._
 import scala.scalanative.native.stdlib.malloc
 import scala.scalanative.posix.errno.{EBUSY, EPERM}
@@ -34,18 +32,18 @@ final class Monitor private[runtime] (shadow: Boolean) {
   def _notify(): Unit    = pthread_cond_signal(condPtr)
   def _notifyAll(): Unit = pthread_cond_broadcast(condPtr)
   def _wait(): Unit = {
-    val thread = Thread.currentThread().asInstanceOf[ThreadBase]
-    thread.setLockState(Waiting)
+    val thread = ThreadBase.currentThreadOptionInternal
+    thread.foreach(_.setLockState(Waiting))
     val returnVal = pthread_cond_wait(condPtr, mutexPtr)
-    thread.setLockState(Normal)
+    thread.foreach(_.setLockState(Normal))
     if (returnVal == EPERM) {
       throw new IllegalMonitorStateException()
     }
   }
   def _wait(millis: scala.Long): Unit = _wait(millis, 0)
   def _wait(millis: scala.Long, nanos: Int): Unit = {
-    val thread = Thread.currentThread().asInstanceOf[ThreadBase]
-    thread.setLockState(TimedWaiting)
+    val thread = ThreadBase.currentThreadOptionInternal
+    thread.foreach(_.setLockState(TimedWaiting))
     val tsPtr = stackalloc[timespec]
     clock_gettime(CLOCK_REALTIME, tsPtr)
     val curSeconds     = !tsPtr._1
@@ -59,24 +57,25 @@ final class Monitor private[runtime] (shadow: Boolean) {
     !tsPtr._2 = deadlineNanos
 
     val returnVal = pthread_cond_timedwait(condPtr, mutexPtr, tsPtr)
-    thread.setLockState(Normal)
+    thread.foreach(_.setLockState(Normal))
     if (returnVal == EPERM) {
       throw new IllegalMonitorStateException()
     }
   }
   def enter(): Unit = {
     if (pthread_mutex_trylock(mutexPtr) == EBUSY) {
-      val thread = Thread.currentThread().asInstanceOf[ThreadBase]
-      if (thread != null) {
-        thread.setLockState(Blocked)
-        // try again and block until you get one
-        pthread_mutex_lock(mutexPtr)
-        // finally got the lock
-        thread.setLockState(Normal)
-      } else {
-        // Thread class in not initialized yet, just try again
-        pthread_mutex_lock(mutexPtr)
-      }
+      ThreadBase
+        .currentThreadOptionInternal()
+        .fold[Unit] {
+          // Thread class in not initialized yet, just try again
+          pthread_mutex_lock(mutexPtr)
+        } { thread: Thread with ThreadBase =>
+          thread.setLockState(Blocked)
+          // try again and block until you get one
+          pthread_mutex_lock(mutexPtr)
+          // finally got the lock
+          thread.setLockState(Normal)
+        }
     }
     if (!shadow) {
       pushLock()
@@ -91,64 +90,26 @@ final class Monitor private[runtime] (shadow: Boolean) {
   }
 
   @inline
-  private def pushLock(): Unit = {
-    val thread = Thread.currentThread().asInstanceOf[ThreadBase]
-    thread.locks(thread.size) = this
-    thread.size += 1
-    if (thread.size >= thread.locks.length) {
-      val oldArray = thread.locks
-      val newArray = new scala.Array[Monitor](oldArray.length * 2)
-      System.arraycopy(oldArray, 0, newArray, 0, oldArray.length)
-      thread.locks = newArray
+  private def pushLock(): Unit =
+    ThreadBase.currentThreadOptionInternal().foreach { thread =>
+      thread.locks(thread.size) = this
+      thread.size += 1
+      if (thread.size >= thread.locks.length) {
+        val oldArray = thread.locks
+        val newArray = new scala.Array[Monitor](oldArray.length * 2)
+        System.arraycopy(oldArray, 0, newArray, 0, oldArray.length)
+        thread.locks = newArray
+      }
     }
-  }
 
   @inline
-  private def popLock(): Unit = {
-    Thread.currentThread().asInstanceOf[ThreadBase].size -= 1
-  }
-}
-
-abstract class ThreadBase {
-  def threadModuleBase: ThreadModuleBase
-  def initMainThread(): Unit
-  private var state                               = Normal
-  final def getLockState: Int                     = state
-  private[runtime] def setLockState(s: Int): Unit = state = s
-  // only here to implement holdsLock
-  private[runtime] var locks = new scala.Array[Monitor](8)
-  private[runtime] var size  = 0
-  final def holdsLock(obj: Object): scala.Boolean = {
-    if (size == 0) {
-      false
-    } else {
-      val target = Monitor(obj)
-      var i: Int = 0
-      while (i < size && locks(i) != target) {
-        i += 1
-      }
-      i < size
+  private def popLock(): Unit =
+    ThreadBase.currentThreadOptionInternal().foreach {
+      thread: Thread with ThreadBase =>
+        if (thread.locks(thread.size - 1) == this) {
+          thread.size -= 1
+        }
     }
-  }
-  final def freeAllLocks(): Unit = {
-    var i: Int = 0
-    while (i < size) {
-      locks(i).exit()
-      i += 1
-    }
-  }
-}
-
-object ThreadBase {
-  final val Normal       = 0
-  final val Blocked      = 1
-  final val Waiting      = 2
-  final val TimedWaiting = 3
-}
-
-abstract class ThreadModuleBase {
-  def shutdownCheckLoop(): Unit
-  protected[runtime] def mainThreadEnds(): Unit
 }
 
 object Monitor {
