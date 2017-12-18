@@ -1,0 +1,61 @@
+[0m[[0minfo[0m] [0mLoading global plugins from /home/valdis/.sbt/0.13/plugins[0m
+[0m[[0minfo[0m] [0mLoading project definition from /home/valdis/scala-native/project[0m
+Using default gc
+[0m[[0minfo[0m] [0mResolving key references (12281 settings) ...[0m
+[0m[[0minfo[0m] [0mSet current project to scala-native (in build file:/home/valdis/scala-native/)[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}benchmarks...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nativelib_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nativelib_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#javalib_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#javalib_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#auxlib_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#auxlib_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#scalalib_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#scalalib_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#test-interface_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#test-interface_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#test-interface-serialization_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#test-interface-serialization_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#test-interface-sbt-defs_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#test-interface-sbt-defs_native0.3.7-SNAPSHOT_2.11;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.12;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.12;0.3.7-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[0minfo[0m] [0mCompiling 72 Scala sources to /home/valdis/scala-native/benchmarks/target/scala-2.11/classes...[0m
+[0m[[0minfo[0m] [0mLinking (1999 ms)[0m
+[0m[[0minfo[0m] [0mDiscovered 1678 classes and 11988 methods[0m
+[0m[[0minfo[0m] [0mOptimizing (5467 ms)[0m
+[0m[[0minfo[0m] [0mGenerating intermediate code (1601 ms)[0m
+[0m[[0minfo[0m] [0mProduced 1 files[0m
+[0m[[0minfo[0m] [0mCompiling to native code (23467 ms)[0m
+[0m[[0minfo[0m] [0mLinking native code (150 ms)[0m
+Result Name                                iter  min [ms] max [ms] avg [ms] stddev [ms] median [ms] p05 [ms] p95 [ms] avg [ms]
+[OK]   brainfuck.BrainfuckBenchmark        1000  10.210   13.555   10.640   0.229       10.606      10.897   10.442   10.614  
+[OK]   cd.CDBenchmark                      20    3.735    224.488  111.640  80.196      116.638     222.592  3.735    105.701 
+[OK]   deltablue.DeltaBlueBenchmark        10000 0.242    1.034    0.266    0.054       0.246       0.418    0.244    0.258   
+[OK]   benchmarks.DummyBenchmark           30000 0.000    0.160    0.000    0.000       0.000       0.000    0.000    0.000   
+[OK]   gcbench.GCBenchBenchmark            20    337.004  384.834  369.171  8.300       370.237     372.966  337.004  368.347 
+[OK]   havlak.HavlakBenchmark              20    592.509  628.648  604.467  7.726       604.174     614.268  592.509  603.194 
+[OK]   json.JsonBenchmark                  1000  1.991    6.038    2.366    0.627       2.214       4.511    2.045    2.253   
+[OK]   list.ListBenchmark                  30000 0.014    2.083    0.015    0.011       0.015       0.016    0.015    0.015   
+[OK]   listperm.ListPermutationsBenchmark  20    21.389   24.399   22.752   1.116       21.915      23.999   21.389   22.666  
+[OK]   mandelbrot.MandelbrotBenchmark      20    0.000    118.567  57.237   49.603      52.689      118.382  0.000    54.009  
+[OK]   bounce.BounceBenchmark              30000 0.050    0.574    0.055    0.018       0.052       0.057    0.051    0.052   
+[OK]   tracer.TracerBenchmark              1000  1.691    2.427    1.888    0.171       1.765       2.104    1.708    1.882   
+[OK]   nbody.NbodyBenchmark                20    46.761   49.924   47.870   1.083       47.023      49.393   46.761   47.762  
+[OK]   permute.PermuteBenchmark            30000 0.041    0.309    0.042    0.002       0.042       0.043    0.041    0.042   
+[OK]   queens.QueensBenchmark              10000 0.654    3.317    0.678    0.126       0.669       0.679    0.662    0.669   
+[OK]   richards.RichardsBenchmark          30000 0.071    2.242    0.076    0.046       0.075       0.079    0.073    0.075   
+[OK]   towers.TowersBenchmark              30000 0.045    0.437    0.046    0.005       0.045       0.048    0.045    0.045   
+[OK]   sieve.SieveBenchmark                30000 0.044    1.510    0.046    0.018       0.045       0.047    0.044    0.045   
+[OK]   storage.StorageBenchmark            10000 0.325    2.501    0.460    0.171       0.346       0.718    0.328    0.451   
+[OK]   sudoku.SudokuBenchmark              1000  2.471    3.729    2.735    0.183       2.837       2.918    2.486    2.731   
+[???]  sha512.SHA512Benchmark is disabled.
+[0m[[32msuccess[0m] [0mTotal time: 180 s, completed Dec 18, 2017 9:00:54 PM[0m
