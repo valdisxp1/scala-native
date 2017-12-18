@@ -145,6 +145,7 @@ object pthread {
   def pthread_mutex_getprioceiling(mutex: Ptr[pthread_mutex_t],
                                    prioceiling: Ptr[CInt]): CInt = extern
 
+  @name("scalanative_pthread_mutex_init")
   def pthread_mutex_init(mutex: Ptr[pthread_mutex_t],
                          attr: Ptr[pthread_mutexattr_t]): CInt = extern
 
