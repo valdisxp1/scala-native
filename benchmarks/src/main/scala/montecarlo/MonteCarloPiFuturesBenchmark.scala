@@ -6,7 +6,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.forkjoin.ThreadLocalRandom
 
-class MonteCarloPiFutures extends benchmarks.Benchmark[Double] {
+class MonteCarloPiFuturesBenchmark extends benchmarks.Benchmark[Double] {
 
   override val runningTime: BenchmarkRunningTime = ShortRunningTime
 
