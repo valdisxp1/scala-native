@@ -101,9 +101,6 @@ package object runtime {
    *  generated C-style after the application's main method terminates.
    */
   def loop(): Unit = {
-    new Thread("EventLoop") {
-      override def run() = ExecutionContext.loop()
-    }.start()
     ThreadBase.mainThreadEnds()
     ThreadBase.shutdownCheckLoop()
   }
