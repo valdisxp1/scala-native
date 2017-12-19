@@ -138,8 +138,10 @@ object pthread {
 
   def pthread_key_delete(key: pthread_key_t): CInt = extern
 
+  @name("scalanative_pthread_kill")
   def pthread_kill(key: pthread_t, sig: CInt): CInt = extern
 
+  @name("scalanative_pthread_mutex_destroy")
   def pthread_mutex_destroy(mutex: Ptr[pthread_mutex_t]): CInt = extern
 
   def pthread_mutex_getprioceiling(mutex: Ptr[pthread_mutex_t],
@@ -149,14 +151,17 @@ object pthread {
   def pthread_mutex_init(mutex: Ptr[pthread_mutex_t],
                          attr: Ptr[pthread_mutexattr_t]): CInt = extern
 
+  @name("scalanative_pthread_mutex_lock")
   def pthread_mutex_lock(mutex: Ptr[pthread_mutex_t]): CInt = extern
 
   def pthread_mutex_setprioceiling(mutex: Ptr[pthread_mutex_t],
                                    prioceiling: CInt,
                                    old_prioceiling: Ptr[CInt]): CInt = extern
 
+  @name("scalanative_pthread_mutex_trylock")
   def pthread_mutex_trylock(mutex: Ptr[pthread_mutex_t]): CInt = extern
 
+  @name("scalanative_pthread_mutex_unlock")
   def pthread_mutex_unlock(mutex: Ptr[pthread_mutex_t]): CInt = extern
 
   def pthread_mutexattr_destroy(attr: Ptr[pthread_mutexattr_t]): CInt = extern

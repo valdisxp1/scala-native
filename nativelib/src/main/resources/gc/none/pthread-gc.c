@@ -21,8 +21,28 @@ int scalanative_pthread_cancel(pthread_t thread) {
     return pthread_cancel(thread);
 }
 
+int scalanative_pthread_kill(pthread_t thread, int sig) {
+    return  pthread_kill(thread, sig);
+}
+
+int scalanative_pthread_cancel(pthread_t thread) {
+    return pthread_cancel(thread);
+}
+
 int scalanative_pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr) {
     return pthread_mutex_init(mutex, attr);
+}
+
+int scalanative_pthread_mutex_trylock(pthread_mutex_t *mutex) {
+    return pthread_mutex_trylock(mutex);
+}
+
+int scalanative_pthread_mutex_lock(pthread_mutex_t *mutex) {
+    return pthread_mutex_lock(mutex);
+}
+
+int scalanative_pthread_mutex_unlock(pthread_mutex_t *mutex) {
+    return pthread_mutex_unlock(mutex);
 }
 
 int scalanative_pthread_mutex_destroy(pthread_mutex_t *mutex) {
