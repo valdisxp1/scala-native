@@ -71,12 +71,13 @@ object ExecutionContext {
 
   private class ExecutorThread(id: scala.Int)
       extends Thread(threadGroup, "Executor-" + id) {
-    var idle = false
+    var waiting = false
+    def idle: Boolean = !started.get() || waiting
     override def run(): Unit = {
       while (true) {
         val runnable = queue.dequeue()
         if (runnable != null) {
-          idle = false
+          waiting = false
           try {
             runnable.run()
           } catch {
@@ -85,7 +86,7 @@ object ExecutionContext {
           }
         } else {
           doneLock.synchronized {
-            idle = true
+            waiting = true
             doneLock.notifyAll()
           }
           parking.synchronized {
