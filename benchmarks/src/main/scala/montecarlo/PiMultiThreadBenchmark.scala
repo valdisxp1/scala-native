@@ -2,11 +2,11 @@ package montecarlo
 
 import java.util.Random
 
-import benchmarks.{BenchmarkRunningTime, LongRunningTime}
+import benchmarks.{BenchmarkRunningTime, ShortRunningTime}
 
 class PiMultiThreadBenchmark extends benchmarks.Benchmark[Double] {
 
-  override val runningTime: BenchmarkRunningTime = LongRunningTime
+  override val runningTime: BenchmarkRunningTime = ShortRunningTime
 
   class MonteCarloThread(id: Int, iterations: Int) extends Thread(s"Monte Carlo Pi-$id"){
     var count = 0

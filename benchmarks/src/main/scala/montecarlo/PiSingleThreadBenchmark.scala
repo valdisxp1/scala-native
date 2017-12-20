@@ -2,11 +2,11 @@ package montecarlo
 
 import java.util.Random
 
-import benchmarks.{BenchmarkRunningTime, LongRunningTime}
+import benchmarks.{BenchmarkRunningTime, ShortRunningTime}
 
 class PiSingleThreadBenchmark extends benchmarks.Benchmark[Double] {
 
-  override val runningTime: BenchmarkRunningTime = LongRunningTime
+  override val runningTime: BenchmarkRunningTime = ShortRunningTime
 
   override def run(): Double = {
     val random = new Random(System.currentTimeMillis())
