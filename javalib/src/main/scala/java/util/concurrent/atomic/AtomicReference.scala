@@ -8,38 +8,31 @@ class AtomicReference[T <: AnyRef](private[this] var value: T)
 
   def this() = this(null.asInstanceOf[T])
 
-  private[this] val inner = CAtomicLong(value.asInstanceOf[AnyRef].cast[CLong])
+  private[this] val inner = CAtomicLong(value)
 
-  final def get(): T = inner.load().cast[AnyRef].asInstanceOf[T]
+  final def get(): T = inner.load()
 
-  final def set(newValue: T): Unit =
-    inner.store(newValue.asInstanceOf[AnyRef].cast[CLong])
+  final def set(newValue: T): Unit = inner.store(newValue)
 
-  final def lazySet(newValue: T): Unit =
-    inner.store(newValue.asInstanceOf[AnyRef].cast[CLong])
+  final def lazySet(newValue: T): Unit = inner.store(newValue)
 
-  final def compareAndSet(expect: T, update: T): Boolean = {
-    inner
-      .compareAndSwapStrong(expect.asInstanceOf[AnyRef].cast[CLong],
-                            update.asInstanceOf[AnyRef].cast[CLong])
-      ._1
-  }
+  final def compareAndSet(expect: T, update: T): Boolean =
+    inner.compareAndSwapStrong(expect, update)._1
 
   final def weakCompareAndSet(expect: T, update: T): Boolean =
-    inner
-      .compareAndSwapWeak(expect.asInstanceOf[AnyRef].cast[CLong],
-                          update.asInstanceOf[AnyRef].cast[CLong])
-      ._1
+    inner.compareAndSwapWeak(expect, update)._1
 
   final def getAndSet(newValue: T): T = {
     val old = inner.load()
-    inner.store(newValue.asInstanceOf[AnyRef].cast[CLong])
-    old.cast[AnyRef].asInstanceOf[T]
+    inner.store(newValue)
+    old
   }
 
   override def toString(): String =
     String.valueOf(value)
 
+  private implicit def toLong(e: T): Long = e.asInstanceOf[AnyRef].cast[CLong]
+  private implicit def toRef(l: Long): T  = l.cast[AnyRef].asInstanceOf[T]
 }
 
 object AtomicReference {
