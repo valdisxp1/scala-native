@@ -222,6 +222,23 @@ trait MultiThreadSuite extends Suite {
     }
   }
 
+  def testWithMinDelay(delays: Seq[scala.Long] =
+                         Seq(50, 100, 200, 500, 1000, 2000, 5000))(
+      counterexample: scala.Long => scala.Boolean)(
+      test: scala.Long => scala.Boolean) = {
+    delays.find(counterexample) match {
+      case Some(minDelay) =>
+        Console.out.println(s"Found min delay: $minDelay")
+        val delay = minDelay * 2
+        Console.out.println(s"Using min delay*2 = $delay for the test")
+        assert(test(delay))
+      case None =>
+        Console.out.println(
+          s"Could not find delay, it may be larger than: ${delays.max}")
+        assert(false)
+    }
+  }
+
   def withExceptionHandler[U](handler: Thread.UncaughtExceptionHandler)(
       f: => U): U = {
     val oldHandler = Thread.getDefaultUncaughtExceptionHandler
