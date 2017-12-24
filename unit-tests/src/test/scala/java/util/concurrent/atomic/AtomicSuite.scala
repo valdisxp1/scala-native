@@ -70,6 +70,10 @@ object AtomicSuite extends tests.Suite {
     val thing2 = new Object
     val thing3 = new Object
 
+    assertEquals(a.get(0), null)
+    assertEquals(a.get(1), null)
+    assertEquals(a.get(2), null)
+
     a.set(1, thing1)
     a.set(2, thing2)
 
@@ -129,6 +133,10 @@ object AtomicSuite extends tests.Suite {
   test("Atomic Long Array") {
 
     val a = new AtomicLongArray(3)
+
+    assertEquals(a.get(0), 0L)
+    assertEquals(a.get(1), 0L)
+    assertEquals(a.get(2), 0L)
 
     a.set(0, 0L)
     a.set(1, 1L)
