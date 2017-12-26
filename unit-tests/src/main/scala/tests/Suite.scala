@@ -239,6 +239,25 @@ trait MultiThreadSuite extends Suite {
     }
   }
 
+  def testWithMinRepetitions(
+      repetitions: Seq[scala.Int] =
+        Seq(1000, 2000, 5000, 10000, 20000, 50000, 100000))(
+      counterexample: scala.Int => scala.Boolean)(
+      test: scala.Int => scala.Boolean) = {
+    repetitions.find(counterexample) match {
+      case Some(minDelay) =>
+        Console.out.println(s"Found min repetitions: $minDelay")
+        val repetitions = minDelay * 2
+        Console.out.println(
+          s"Using min repetitions*2 = $repetitions for the test")
+        assert(test(repetitions))
+      case None =>
+        Console.out.println(
+          s"Could not find necessary repetitions, it may be larger than: ${repetitions.max}")
+        assert(false)
+    }
+  }
+
   def withExceptionHandler[U](handler: Thread.UncaughtExceptionHandler)(
       f: => U): U = {
     val oldHandler = Thread.getDefaultUncaughtExceptionHandler
