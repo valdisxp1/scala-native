@@ -50,8 +50,8 @@ trait MultiThreadSuite extends Suite {
     val runnable = new Runnable {
       def run() = f
     }
-    val threads = Seq.tabulate(numThreads) {
-      id => new Thread(runnable, "Hammer "+label+"-"+id)
+    val threads = Seq.tabulate(numThreads) { id =>
+      new Thread(runnable, "Hammer " + label + "-" + id)
     }
     threads.foreach(_.start())
     threads.foreach(_.join())
@@ -85,9 +85,9 @@ trait MultiThreadSuite extends Suite {
   }
 
   def eventuallyEquals[T](
-                           maxDelay: scala.Long = eternity,
-                           recheckEvery: scala.Long = 200,
-                           label: String = "Equal values")(left: => T, right: => T): Unit =
+      maxDelay: scala.Long = eternity,
+      recheckEvery: scala.Long = 200,
+      label: String = "Equal values")(left: => T, right: => T): Unit =
     eventually(maxDelay, recheckEvery, label)(left == right)
 
   def eventuallyConstant[T](maxDelay: scala.Long = eternity,
@@ -130,9 +130,9 @@ trait MultiThreadSuite extends Suite {
   }
 
   def testWithMinDelay(delays: Seq[scala.Long] =
-                       Seq(50, 100, 200, 500, 1000, 2000, 5000))(
-                        counterexample: scala.Long => scala.Boolean)(
-                        test: scala.Long => scala.Boolean) = {
+                         Seq(50, 100, 200, 500, 1000, 2000, 5000))(
+      counterexample: scala.Long => scala.Boolean)(
+      test: scala.Long => scala.Boolean) = {
     delays.find(counterexample) match {
       case Some(minDelay) =>
         Console.out.println(s"Found min delay: $minDelay")
@@ -147,10 +147,10 @@ trait MultiThreadSuite extends Suite {
   }
 
   def testWithMinRepetitions(
-                              repetitions: Seq[scala.Int] =
-                              Seq(1000, 2000, 5000, 10000, 100000, 1000000, 10000000))(
-                              counterexample: scala.Int => scala.Boolean)(
-                              test: scala.Int => scala.Boolean) = {
+      repetitions: Seq[scala.Int] =
+        Seq(1000, 2000, 5000, 10000, 100000, 1000000, 10000000))(
+      counterexample: scala.Int => scala.Boolean)(
+      test: scala.Int => scala.Boolean) = {
     repetitions.find(counterexample) match {
       case Some(minDelay) =>
         Console.out.println(s"Found min repetitions: $minDelay")
@@ -166,7 +166,7 @@ trait MultiThreadSuite extends Suite {
   }
 
   def withExceptionHandler[U](handler: Thread.UncaughtExceptionHandler)(
-    f: => U): U = {
+      f: => U): U = {
     val oldHandler = Thread.getDefaultUncaughtExceptionHandler
     Thread.setDefaultUncaughtExceptionHandler(handler)
     try {
@@ -177,7 +177,7 @@ trait MultiThreadSuite extends Suite {
   }
 
   class ExceptionDetector(thread: Thread, exception: Throwable)
-    extends Thread.UncaughtExceptionHandler {
+      extends Thread.UncaughtExceptionHandler {
     private var _wasException       = false
     def wasException: scala.Boolean = _wasException
     def uncaughtException(t: Thread, e: Throwable): Unit = {
@@ -189,9 +189,9 @@ trait MultiThreadSuite extends Suite {
 
   class WaitingThread(mutex: AnyRef,
                       threadGroup: ThreadGroup =
-                      Thread.currentThread().getThreadGroup,
+                        Thread.currentThread().getThreadGroup,
                       name: String = "WaitingThread")
-    extends Thread(threadGroup, name) {
+      extends Thread(threadGroup, name) {
     private var notified = false
 
     def timesNotified = if (notified) 1 else 0
@@ -205,7 +205,7 @@ trait MultiThreadSuite extends Suite {
   }
 
   class Counter(threadGroup: ThreadGroup, name: String)
-    extends Thread(threadGroup, name) {
+      extends Thread(threadGroup, name) {
     def this() = this(Thread.currentThread().getThreadGroup, "Counter")
     var count = 0L
     var goOn  = true

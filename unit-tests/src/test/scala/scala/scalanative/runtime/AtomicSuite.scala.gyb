@@ -16,11 +16,15 @@ object AtomicSuite extends tests.MultiThreadSuite {
             'Byte', 'CUnsignedShort', 'CUnsignedInt', 'CUnsignedLong',
             'CSize']
 
+   companionObjects = ['Byte', 'CShort', 'CInt', 'CLong',
+                       'Byte', 'UShort', 'UInt', 'ULong',
+                       'CSize']
+
    names = ['byte', 'short', 'int', 'long',
             'ubyte', 'ushort', 'uint', 'ulong', 'csize']
 }%
 
-% for (C, T, N) in zip(classes, types, names):
+% for (C, O, T, N) in zip(classes, companionObjects, types, names):
 %{
    default = '0' if N in ['int'] else '0.asInstanceOf['+T+']'
    cast = '' if N == 'int' else '.asInstanceOf['+T+']'
@@ -66,51 +70,6 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
-%{
-    if N in ['int','byte','short','ubyte']:
-        defaultCounter = '0'
-    elif N in ['ushort']:
-        defaultCounter = '0.asInstanceOf[CUnsignedInt]'
-    else:
-        defaultCounter = '0.asInstanceOf['+T+']'
-}%
-
-  test("fetch_add is atomic for ${N}") {
-      val numThreads = 2
-      testWithMinRepetitions() {
-        n: Int =>
-          var number = ${defaultCounter}
-          hammer(numThreads, label = "CounterExample") {
-            var i = n
-            val b = 1${cast}
-            // making this as fast as possible
-            while (i > 0) {
-              number  = number + b
-              i -= 1
-            }
-          }
-          number != (n * numThreads)${cast}
-      } {
-        n: Int =>
-          val number = CAtomic${C}()
-          hammer(numThreads, label = "Test") {
-            var i = n
-            val b = 1${cast}
-            // making this as fast as possible
-            while (i > 0) {
-              number.fetchAdd(b)
-              i -= 1
-            }
-          }
-
-          val value = number.load()
-          val expected = (n * numThreads)${cast}
-          Console.out.println("value: " + value + ", expected: " + expected)
-          number.free()
-          value == expected
-      }
-    }
-
   test("add_fetch ${N}") {
     val a = CAtomic${C}()
 
@@ -122,6 +81,74 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
+
+%{
+      if N in ['int','byte','short','ubyte']:
+          defaultCounter = '0'
+      elif N in ['ushort']:
+          defaultCounter = '0.asInstanceOf[CUnsignedInt]'
+      else:
+          defaultCounter = '0.asInstanceOf['+T+']'
+}%
+    test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for ${N}") {
+        val numThreads = 2
+        testWithMinRepetitions() {
+          n: Int =>
+            var number = ${defaultCounter}
+            hammer(numThreads, label = "CounterExample") {
+              var i = n
+              val b = 1${cast}
+              // making this as fast as possible
+              while (i > 0) {
+                number  = number + b
+                i -= 1
+              }
+            }
+            number != (n * numThreads)${cast}
+        } {
+          n: Int =>
+% for op in ['fetchAdd', 'addFetch']:
+            {
+            val number = CAtomic${C}()
+            hammer(numThreads, label = "Test") {
+              var i = n
+              val b = 1${cast}
+              // making this as fast as possible
+              while (i > 0) {
+                number.${op}(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads)${cast}
+            number.free()
+            assertEquals(value, expected)
+            }
+% end
+% for op in ['fetchSub', 'subFetch']:
+% minusOne = '-1'+cast if N in ['byte', 'ubyte', 'short', 'int', 'long', 'csize'] else O+'.MaxValue'
+            {
+            val number = CAtomic${C}()
+            hammer(numThreads, label = "Test") {
+              var i = n
+              val b = ${minusOne}
+              // making this as fast as possible
+              while (i > 0) {
+                number.${op}(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads)${cast}
+            number.free()
+            assertEquals(value, expected)
+            }
+% end
+            true
+        }
+      }
 
   test("fetch_sub ${N}") {
     val a = CAtomic${C}(1${cast})
