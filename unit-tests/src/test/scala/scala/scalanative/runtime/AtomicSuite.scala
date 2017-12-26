@@ -68,14 +68,15 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-          var number = 0.asInstanceOf[Byte]
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
+          var number = 0
           val runnable = new Runnable {
             def run() = {
               var i = n
               val b = 1.asInstanceOf[Byte]
               // making this as fast as possible
               while (i > 0) {
-                number  = (number + b).asInstanceOf[Byte]
+                number  = number + b
                 i -= 1
               }
             }
@@ -279,14 +280,15 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-          var number = 0.asInstanceOf[CShort]
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
+          var number = 0
           val runnable = new Runnable {
             def run() = {
               var i = n
               val b = 1.asInstanceOf[CShort]
               // making this as fast as possible
               while (i > 0) {
-                number  = (number + b).asInstanceOf[CShort]
+                number  = number + b
                 i -= 1
               }
             }
@@ -490,6 +492,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0
           val runnable = new Runnable {
             def run() = {
@@ -497,7 +500,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
               val b = 1
               // making this as fast as possible
               while (i > 0) {
-                number  = (number + b)
+                number  = number + b
                 i -= 1
               }
             }
@@ -701,6 +704,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0.asInstanceOf[CLong]
           val runnable = new Runnable {
             def run() = {
@@ -708,7 +712,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
               val b = 1.asInstanceOf[CLong]
               // making this as fast as possible
               while (i > 0) {
-                number  = (number + b).asInstanceOf[CLong]
+                number  = number + b
                 i -= 1
               }
             }
@@ -912,14 +916,15 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-          var number = 0.asInstanceOf[Byte]
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
+          var number = 0
           val runnable = new Runnable {
             def run() = {
               var i = n
               val b = 1.asInstanceOf[Byte]
               // making this as fast as possible
               while (i > 0) {
-                number  = (number + b).asInstanceOf[Byte]
+                number  = number + b
                 i -= 1
               }
             }
@@ -1123,14 +1128,15 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-          var number = 0.asInstanceOf[CUnsignedShort]
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
+          var number = 0.asInstanceOf[CUnsignedInt]
           val runnable = new Runnable {
             def run() = {
               var i = n
               val b = 1.asInstanceOf[CUnsignedShort]
               // making this as fast as possible
               while (i > 0) {
-                number  = (number + b).asInstanceOf[CUnsignedShort]
+                number  = number + b
                 i -= 1
               }
             }
@@ -1334,6 +1340,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0.asInstanceOf[CUnsignedInt]
           val runnable = new Runnable {
             def run() = {
@@ -1341,7 +1348,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
               val b = 1.asInstanceOf[CUnsignedInt]
               // making this as fast as possible
               while (i > 0) {
-                number  = (number + b).asInstanceOf[CUnsignedInt]
+                number  = number + b
                 i -= 1
               }
             }
@@ -1545,6 +1552,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0.asInstanceOf[CUnsignedLong]
           val runnable = new Runnable {
             def run() = {
@@ -1552,7 +1560,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
               val b = 1.asInstanceOf[CUnsignedLong]
               // making this as fast as possible
               while (i > 0) {
-                number  = (number + b).asInstanceOf[CUnsignedLong]
+                number  = number + b
                 i -= 1
               }
             }
@@ -1756,6 +1764,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0.asInstanceOf[CSize]
           val runnable = new Runnable {
             def run() = {
@@ -1763,7 +1772,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
               val b = 1.asInstanceOf[CSize]
               // making this as fast as possible
               while (i > 0) {
-                number  = (number + b).asInstanceOf[CSize]
+                number  = number + b
                 i -= 1
               }
             }
@@ -1909,9 +1918,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 227)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 235)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 231)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 239)
 
   test("compare and swap Strong Char") {
     val a = CAtomicChar()
@@ -1924,7 +1933,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 231)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 239)
 
   test("compare and swap Weak Char") {
     val a = CAtomicChar()
@@ -1937,7 +1946,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 231)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 239)
 
   test("compare and swap Strong UnsignedChar") {
     val a = CAtomicUnsignedChar()
@@ -1950,7 +1959,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 231)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 239)
 
   test("compare and swap Weak UnsignedChar") {
     val a = CAtomicUnsignedChar()
@@ -1963,7 +1972,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 245)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 253)
 
   test("multiple compare and swap should yield correct results") {
     val a = CAtomicInt()
