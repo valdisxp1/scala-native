@@ -1,6 +1,6 @@
 package java.util.concurrent.atomic
 
-object AtomicSuite extends tests.Suite {
+object AtomicSuite extends tests.MultiThreadSuite {
 
   test("Atomic Boolean") {
     val a = new AtomicBoolean(true)
@@ -43,6 +43,37 @@ object AtomicSuite extends tests.Suite {
     assertEquals(a.get(), 2)
   }
 
+  test("Atomic Integer is atomic") {
+    val numThreads = 2
+    testWithMinRepetitions() { n: Int =>
+      var number = 0
+      hammer(numThreads, label = "Atomic Integer CounterExample") {
+        var i = n
+        // making this as fast as possible
+        while (i > 0) {
+          number = number + 1
+          i -= 1
+        }
+      }
+      number != (n * numThreads)
+    } { n: Int =>
+      val number = new AtomicInteger()
+      hammer(numThreads, label = "Atomic Integer Test") {
+        var i = n
+        // making this as fast as possible
+        while (i > 0) {
+          number.addAndGet(1)
+          i -= 1
+        }
+      }
+
+      val value    = number.get()
+      val expected = n * numThreads
+      Console.out.println(s"value: $value, expected: $expected")
+      value == expected
+    }
+  }
+
   test("Atomic Long") {
     val a = new AtomicLong()
 
@@ -61,6 +92,37 @@ object AtomicSuite extends tests.Suite {
     assertEquals(a.decrementAndGet(), 3L)
     assertEquals(a.getAndDecrement(), 3L)
     assertEquals(a.get(), 2L)
+  }
+
+  test("Atomic Long is atomic") {
+    val numThreads = 2
+    testWithMinRepetitions() { n: Int =>
+      var number = 0L
+      hammer(numThreads, label = "Atomic Long CounterExample") {
+        var i = n
+        // making this as fast as possible
+        while (i > 0) {
+          number = number + 1L
+          i -= 1
+        }
+      }
+      number != (n * numThreads)
+    } { n: Int =>
+      val number = new AtomicLong()
+      hammer(numThreads, label = "Atomic Long Test") {
+        var i = n
+        // making this as fast as possible
+        while (i > 0) {
+          number.addAndGet(1L)
+          i -= 1
+        }
+      }
+
+      val value    = number.get()
+      val expected = n.toLong * numThreads
+      Console.out.println(s"value: $value, expected: $expected")
+      value == expected
+    }
   }
 
   test("Atomic Reference Array") {
