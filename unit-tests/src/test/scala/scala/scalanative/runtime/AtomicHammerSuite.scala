@@ -79,14 +79,13 @@ object AtomicHammerSuite extends tests.MultiThreadSuite {
           do {
             expected = number.load()
             newValue = (expected + b).asInstanceOf[Byte]
-          } while (!number.compareAndSwapStrong(expected,newValue)._1)
+          } while (!number.compareAndSwapStrong(expected, newValue)._1)
           i -= 1
         }
       }
 
       val value    = number.load()
       val expected = (n * numThreads).asInstanceOf[Byte]
-      Console.out.println(s"value: $value, expected: $expected")
       number.free()
       value == expected
     }
