@@ -5,7 +5,7 @@ import runtime._
 import native._
 import stdlib._
 
-object AtomicSuite extends tests.Suite {
+object AtomicSuite extends tests.MultiThreadSuite {
 
 %{
    classes = ['Byte', 'Short', 'Int', 'Long',
@@ -65,6 +65,56 @@ object AtomicSuite extends tests.Suite {
 
     a.free()
   }
+
+  test("fetch_add is atomic for ${N}") {
+      val numThreads = 2
+      testWithMinRepetitions() {
+        n: Int =>
+          var number = 0${cast}
+          val runnable = new Runnable {
+            def run() = {
+              var i = n
+              val b = 1${cast}
+              // making this as fast as possible
+              while (i > 0) {
+                number  = (number + b)${cast}
+                i -= 1
+              }
+            }
+          }
+          val threads = Seq.tabulate(numThreads) {
+            id => new Thread(runnable, "Hammer CounterExample-" + id)
+          }
+          threads.foreach(_.start())
+          threads.foreach(_.join())
+          number != (n * numThreads)${cast}
+      } {
+        n: Int =>
+          val number = CAtomic${C}()
+          val runnable = new Runnable {
+            def run() = {
+              var i = n
+              val b = 1${cast}
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchAdd(b)
+                i -= 1
+              }
+            }
+          }
+          val threads = Seq.tabulate(numThreads) {
+            id => new Thread(runnable, "Hammer Test-" + id)
+          }
+          threads.foreach(_.start())
+          threads.foreach(_.join())
+
+          val value = number.load()
+          val expected = (n * numThreads)${cast}
+          Console.out.println(s"value: " + value + ", expected: " + expected)
+          number.free()
+          value == expected
+      }
+    }
 
   test("add_fetch ${N}") {
     val a = CAtomic${C}()

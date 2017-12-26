@@ -1,7 +1,5 @@
 package scala.scalanative.runtime
 
-import scala.scalanative.runtime.AtomicSuite.assert
-
 /**
   * Makes sure atomic operations are atomic.
   */
