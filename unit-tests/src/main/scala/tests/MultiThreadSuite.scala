@@ -46,6 +46,17 @@ trait MultiThreadSuite extends Suite {
     result
   }
 
+  def hammer(numThreads: Int = 2, label: String = "")(f: => Unit) = {
+    val runnable = new Runnable {
+      def run() = f
+    }
+    val threads = Seq.tabulate(numThreads) {
+      id => new Thread(runnable, "Hammer "+label+"-"+id)
+    }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
+  }
+
   val eternity = 300000 //ms
   def eventually(maxDelay: scala.Long = eternity,
                  recheckEvery: scala.Long = 200,

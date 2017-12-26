@@ -10,42 +10,28 @@ object AtomicHammerSuite extends tests.MultiThreadSuite {
     testWithMinRepetitions() {
       n: Int =>
         var number = 0.asInstanceOf[Byte]
-        val runnable = new Runnable {
-          def run() = {
-            var i = n
-            val b = 1.asInstanceOf[Byte]
-            // making this as fast as possible
-            while (i > 0) {
-              number  = (number + b).asInstanceOf[Byte]
-              i -= 1
-            }
+        hammer(label = "CounterExample") {
+          var i = n
+          val b = 1.asInstanceOf[Byte]
+          // making this as fast as possible
+          while (i > 0) {
+            number = (number + b).asInstanceOf[Byte]
+            i -= 1
           }
         }
-        val threads = Seq.tabulate(numThreads) {
-          id => new Thread(runnable, s"Hammer CounterExample-$id")
-        }
-        threads.foreach(_.start())
-        threads.foreach(_.join())
         number != (n * numThreads).asInstanceOf[Byte]
     } {
       n: Int =>
         val number = CAtomicByte()
-        val runnable = new Runnable {
-          def run() = {
-            var i = n
-            val b = 1.asInstanceOf[Byte]
-            // making this as fast as possible
-            while (i > 0) {
-              number.fetchAdd(b)
-              i -= 1
-            }
+        hammer(label = "Test") {
+          var i = n
+          val b = 1.asInstanceOf[Byte]
+          // making this as fast as possible
+          while (i > 0) {
+            number.fetchAdd(b)
+            i -= 1
           }
         }
-        val threads = Seq.tabulate(numThreads) {
-          id => new Thread(runnable, s"Hammer Test-$id")
-        }
-        threads.foreach(_.start())
-        threads.foreach(_.join())
 
         val value = number.load()
         val expected = (n * numThreads).asInstanceOf[Byte]
