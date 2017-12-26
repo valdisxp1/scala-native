@@ -66,10 +66,6 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
-  test("fetch_add is atomic for ${N}") {
-      val numThreads = 2
-      testWithMinRepetitions() {
-        n: Int =>
 %{
     if N in ['int','byte','short','ubyte']:
         defaultCounter = '0'
@@ -78,47 +74,38 @@ object AtomicSuite extends tests.MultiThreadSuite {
     else:
         defaultCounter = '0.asInstanceOf['+T+']'
 }%
+
+  test("fetch_add is atomic for ${N}") {
+      val numThreads = 2
+      testWithMinRepetitions() {
+        n: Int =>
           var number = ${defaultCounter}
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1${cast}
-              // making this as fast as possible
-              while (i > 0) {
-                number  = number + b
-                i -= 1
-              }
+          hammer(numThreads, label = "CounterExample") {
+            var i = n
+            val b = 1${cast}
+            // making this as fast as possible
+            while (i > 0) {
+              number  = number + b
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer CounterExample-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
           number != (n * numThreads)${cast}
       } {
         n: Int =>
           val number = CAtomic${C}()
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1${cast}
-              // making this as fast as possible
-              while (i > 0) {
-                number.fetchAdd(b)
-                i -= 1
-              }
+          hammer(numThreads, label = "Test") {
+            var i = n
+            val b = 1${cast}
+            // making this as fast as possible
+            while (i > 0) {
+              number.fetchAdd(b)
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer Test-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
 
           val value = number.load()
           val expected = (n * numThreads)${cast}
-          Console.out.println(s"value: " + value + ", expected: " + expected)
+          Console.out.println("value: " + value + ", expected: " + expected)
           number.free()
           value == expected
       }

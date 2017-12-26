@@ -64,52 +64,39 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 77)
+
   test("fetch_add is atomic for byte") {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[Byte]
-              // making this as fast as possible
-              while (i > 0) {
-                number  = number + b
-                i -= 1
-              }
+          hammer(numThreads, label = "CounterExample") {
+            var i = n
+            val b = 1.asInstanceOf[Byte]
+            // making this as fast as possible
+            while (i > 0) {
+              number  = number + b
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer CounterExample-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
           number != (n * numThreads).asInstanceOf[Byte]
       } {
         n: Int =>
           val number = CAtomicByte()
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[Byte]
-              // making this as fast as possible
-              while (i > 0) {
-                number.fetchAdd(b)
-                i -= 1
-              }
+          hammer(numThreads, label = "Test") {
+            var i = n
+            val b = 1.asInstanceOf[Byte]
+            // making this as fast as possible
+            while (i > 0) {
+              number.fetchAdd(b)
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer Test-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
 
           val value = number.load()
           val expected = (n * numThreads).asInstanceOf[Byte]
-          Console.out.println(s"value: " + value + ", expected: " + expected)
+          Console.out.println("value: " + value + ", expected: " + expected)
           number.free()
           value == expected
       }
@@ -276,52 +263,39 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 77)
+
   test("fetch_add is atomic for short") {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[CShort]
-              // making this as fast as possible
-              while (i > 0) {
-                number  = number + b
-                i -= 1
-              }
+          hammer(numThreads, label = "CounterExample") {
+            var i = n
+            val b = 1.asInstanceOf[CShort]
+            // making this as fast as possible
+            while (i > 0) {
+              number  = number + b
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer CounterExample-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
           number != (n * numThreads).asInstanceOf[CShort]
       } {
         n: Int =>
           val number = CAtomicShort()
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[CShort]
-              // making this as fast as possible
-              while (i > 0) {
-                number.fetchAdd(b)
-                i -= 1
-              }
+          hammer(numThreads, label = "Test") {
+            var i = n
+            val b = 1.asInstanceOf[CShort]
+            // making this as fast as possible
+            while (i > 0) {
+              number.fetchAdd(b)
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer Test-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
 
           val value = number.load()
           val expected = (n * numThreads).asInstanceOf[CShort]
-          Console.out.println(s"value: " + value + ", expected: " + expected)
+          Console.out.println("value: " + value + ", expected: " + expected)
           number.free()
           value == expected
       }
@@ -488,52 +462,39 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 77)
+
   test("fetch_add is atomic for int") {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1
-              // making this as fast as possible
-              while (i > 0) {
-                number  = number + b
-                i -= 1
-              }
+          hammer(numThreads, label = "CounterExample") {
+            var i = n
+            val b = 1
+            // making this as fast as possible
+            while (i > 0) {
+              number  = number + b
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer CounterExample-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
           number != (n * numThreads)
       } {
         n: Int =>
           val number = CAtomicInt()
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1
-              // making this as fast as possible
-              while (i > 0) {
-                number.fetchAdd(b)
-                i -= 1
-              }
+          hammer(numThreads, label = "Test") {
+            var i = n
+            val b = 1
+            // making this as fast as possible
+            while (i > 0) {
+              number.fetchAdd(b)
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer Test-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
 
           val value = number.load()
           val expected = (n * numThreads)
-          Console.out.println(s"value: " + value + ", expected: " + expected)
+          Console.out.println("value: " + value + ", expected: " + expected)
           number.free()
           value == expected
       }
@@ -700,52 +661,39 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 77)
+
   test("fetch_add is atomic for long") {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0.asInstanceOf[CLong]
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[CLong]
-              // making this as fast as possible
-              while (i > 0) {
-                number  = number + b
-                i -= 1
-              }
+          hammer(numThreads, label = "CounterExample") {
+            var i = n
+            val b = 1.asInstanceOf[CLong]
+            // making this as fast as possible
+            while (i > 0) {
+              number  = number + b
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer CounterExample-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
           number != (n * numThreads).asInstanceOf[CLong]
       } {
         n: Int =>
           val number = CAtomicLong()
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[CLong]
-              // making this as fast as possible
-              while (i > 0) {
-                number.fetchAdd(b)
-                i -= 1
-              }
+          hammer(numThreads, label = "Test") {
+            var i = n
+            val b = 1.asInstanceOf[CLong]
+            // making this as fast as possible
+            while (i > 0) {
+              number.fetchAdd(b)
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer Test-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
 
           val value = number.load()
           val expected = (n * numThreads).asInstanceOf[CLong]
-          Console.out.println(s"value: " + value + ", expected: " + expected)
+          Console.out.println("value: " + value + ", expected: " + expected)
           number.free()
           value == expected
       }
@@ -912,52 +860,39 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 77)
+
   test("fetch_add is atomic for ubyte") {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[Byte]
-              // making this as fast as possible
-              while (i > 0) {
-                number  = number + b
-                i -= 1
-              }
+          hammer(numThreads, label = "CounterExample") {
+            var i = n
+            val b = 1.asInstanceOf[Byte]
+            // making this as fast as possible
+            while (i > 0) {
+              number  = number + b
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer CounterExample-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
           number != (n * numThreads).asInstanceOf[Byte]
       } {
         n: Int =>
           val number = CAtomicUnsignedByte()
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[Byte]
-              // making this as fast as possible
-              while (i > 0) {
-                number.fetchAdd(b)
-                i -= 1
-              }
+          hammer(numThreads, label = "Test") {
+            var i = n
+            val b = 1.asInstanceOf[Byte]
+            // making this as fast as possible
+            while (i > 0) {
+              number.fetchAdd(b)
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer Test-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
 
           val value = number.load()
           val expected = (n * numThreads).asInstanceOf[Byte]
-          Console.out.println(s"value: " + value + ", expected: " + expected)
+          Console.out.println("value: " + value + ", expected: " + expected)
           number.free()
           value == expected
       }
@@ -1124,52 +1059,39 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 77)
+
   test("fetch_add is atomic for ushort") {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0.asInstanceOf[CUnsignedInt]
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[CUnsignedShort]
-              // making this as fast as possible
-              while (i > 0) {
-                number  = number + b
-                i -= 1
-              }
+          hammer(numThreads, label = "CounterExample") {
+            var i = n
+            val b = 1.asInstanceOf[CUnsignedShort]
+            // making this as fast as possible
+            while (i > 0) {
+              number  = number + b
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer CounterExample-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
           number != (n * numThreads).asInstanceOf[CUnsignedShort]
       } {
         n: Int =>
           val number = CAtomicUnsignedShort()
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[CUnsignedShort]
-              // making this as fast as possible
-              while (i > 0) {
-                number.fetchAdd(b)
-                i -= 1
-              }
+          hammer(numThreads, label = "Test") {
+            var i = n
+            val b = 1.asInstanceOf[CUnsignedShort]
+            // making this as fast as possible
+            while (i > 0) {
+              number.fetchAdd(b)
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer Test-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
 
           val value = number.load()
           val expected = (n * numThreads).asInstanceOf[CUnsignedShort]
-          Console.out.println(s"value: " + value + ", expected: " + expected)
+          Console.out.println("value: " + value + ", expected: " + expected)
           number.free()
           value == expected
       }
@@ -1336,52 +1258,39 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 77)
+
   test("fetch_add is atomic for uint") {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0.asInstanceOf[CUnsignedInt]
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[CUnsignedInt]
-              // making this as fast as possible
-              while (i > 0) {
-                number  = number + b
-                i -= 1
-              }
+          hammer(numThreads, label = "CounterExample") {
+            var i = n
+            val b = 1.asInstanceOf[CUnsignedInt]
+            // making this as fast as possible
+            while (i > 0) {
+              number  = number + b
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer CounterExample-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
           number != (n * numThreads).asInstanceOf[CUnsignedInt]
       } {
         n: Int =>
           val number = CAtomicUnsignedInt()
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[CUnsignedInt]
-              // making this as fast as possible
-              while (i > 0) {
-                number.fetchAdd(b)
-                i -= 1
-              }
+          hammer(numThreads, label = "Test") {
+            var i = n
+            val b = 1.asInstanceOf[CUnsignedInt]
+            // making this as fast as possible
+            while (i > 0) {
+              number.fetchAdd(b)
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer Test-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
 
           val value = number.load()
           val expected = (n * numThreads).asInstanceOf[CUnsignedInt]
-          Console.out.println(s"value: " + value + ", expected: " + expected)
+          Console.out.println("value: " + value + ", expected: " + expected)
           number.free()
           value == expected
       }
@@ -1548,52 +1457,39 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 77)
+
   test("fetch_add is atomic for ulong") {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0.asInstanceOf[CUnsignedLong]
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[CUnsignedLong]
-              // making this as fast as possible
-              while (i > 0) {
-                number  = number + b
-                i -= 1
-              }
+          hammer(numThreads, label = "CounterExample") {
+            var i = n
+            val b = 1.asInstanceOf[CUnsignedLong]
+            // making this as fast as possible
+            while (i > 0) {
+              number  = number + b
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer CounterExample-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
           number != (n * numThreads).asInstanceOf[CUnsignedLong]
       } {
         n: Int =>
           val number = CAtomicUnsignedLong()
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[CUnsignedLong]
-              // making this as fast as possible
-              while (i > 0) {
-                number.fetchAdd(b)
-                i -= 1
-              }
+          hammer(numThreads, label = "Test") {
+            var i = n
+            val b = 1.asInstanceOf[CUnsignedLong]
+            // making this as fast as possible
+            while (i > 0) {
+              number.fetchAdd(b)
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer Test-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
 
           val value = number.load()
           val expected = (n * numThreads).asInstanceOf[CUnsignedLong]
-          Console.out.println(s"value: " + value + ", expected: " + expected)
+          Console.out.println("value: " + value + ", expected: " + expected)
           number.free()
           value == expected
       }
@@ -1760,52 +1656,39 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 77)
+
   test("fetch_add is atomic for csize") {
       val numThreads = 2
       testWithMinRepetitions() {
         n: Int =>
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 81)
           var number = 0.asInstanceOf[CSize]
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[CSize]
-              // making this as fast as possible
-              while (i > 0) {
-                number  = number + b
-                i -= 1
-              }
+          hammer(numThreads, label = "CounterExample") {
+            var i = n
+            val b = 1.asInstanceOf[CSize]
+            // making this as fast as possible
+            while (i > 0) {
+              number  = number + b
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer CounterExample-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
           number != (n * numThreads).asInstanceOf[CSize]
       } {
         n: Int =>
           val number = CAtomicCSize()
-          val runnable = new Runnable {
-            def run() = {
-              var i = n
-              val b = 1.asInstanceOf[CSize]
-              // making this as fast as possible
-              while (i > 0) {
-                number.fetchAdd(b)
-                i -= 1
-              }
+          hammer(numThreads, label = "Test") {
+            var i = n
+            val b = 1.asInstanceOf[CSize]
+            // making this as fast as possible
+            while (i > 0) {
+              number.fetchAdd(b)
+              i -= 1
             }
           }
-          val threads = Seq.tabulate(numThreads) {
-            id => new Thread(runnable, "Hammer Test-" + id)
-          }
-          threads.foreach(_.start())
-          threads.foreach(_.join())
 
           val value = number.load()
           val expected = (n * numThreads).asInstanceOf[CSize]
-          Console.out.println(s"value: " + value + ", expected: " + expected)
+          Console.out.println("value: " + value + ", expected: " + expected)
           number.free()
           value == expected
       }
@@ -1918,9 +1801,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 235)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 222)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 239)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 226)
 
   test("compare and swap Strong Char") {
     val a = CAtomicChar()
@@ -1933,7 +1816,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 239)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 226)
 
   test("compare and swap Weak Char") {
     val a = CAtomicChar()
@@ -1946,7 +1829,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 239)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 226)
 
   test("compare and swap Strong UnsignedChar") {
     val a = CAtomicUnsignedChar()
@@ -1959,7 +1842,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 239)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 226)
 
   test("compare and swap Weak UnsignedChar") {
     val a = CAtomicUnsignedChar()
@@ -1972,7 +1855,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 253)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 240)
 
   test("multiple compare and swap should yield correct results") {
     val a = CAtomicInt()
