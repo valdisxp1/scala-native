@@ -320,6 +320,9 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
 
   test(
     "*DEPRECATED*  ThreadGroup.suspend and resume should respect allowThreadSuspension") {
+    //XXX workaround making sure GC does not happen when suspend tests are running
+    System.gc()
+
     val structure = new Structure[Counter] {
       def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
     }
