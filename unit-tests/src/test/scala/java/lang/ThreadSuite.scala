@@ -402,20 +402,12 @@ object ThreadSuite extends tests.MultiThreadSuite {
     testWithMinDelay() { delay =>
       // counter example
       var tmp = 0
-      val runnable = new Runnable {
-        def run(): Unit = {
-          tmp *= 2
-          tmp += 1
-          Thread.sleep(delay)
-          tmp -= 1
-        }
+      hammer() {
+        tmp *= 2
+        tmp += 1
+        Thread.sleep(delay)
+        tmp -= 1
       }
-      val t1 = new Thread(runnable)
-      t1.start()
-      val t2 = new Thread(runnable)
-      t2.start()
-      t1.join()
-      t2.join()
 
       // counterexample succeeds if we get a bad value
       tmp != 0
@@ -423,20 +415,14 @@ object ThreadSuite extends tests.MultiThreadSuite {
       // test
       val mutex = new Object
       var tmp   = 0
-      val runnable = new Runnable {
-        def run(): Unit = mutex.synchronized {
+      hammer() {
+        mutex.synchronized {
           tmp *= 2
           tmp += 1
           Thread.sleep(delay)
           tmp -= 1
         }
       }
-      val t1 = new Thread(runnable)
-      t1.start()
-      val t2 = new Thread(runnable)
-      t2.start()
-      t1.join()
-      t2.join()
       // sychronized should preserve the invariant
       tmp == 0
     }
