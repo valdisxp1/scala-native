@@ -148,7 +148,7 @@ trait MultiThreadSuite extends Suite {
 
   def testWithMinRepetitions(
                               repetitions: Seq[scala.Int] =
-                              Seq(1000, 2000, 5000, 10000, 20000, 50000, 100000))(
+                              Seq(1000, 2000, 5000, 10000, 100000, 1000000, 10000000))(
                               counterexample: scala.Int => scala.Boolean)(
                               test: scala.Int => scala.Boolean) = {
     repetitions.find(counterexample) match {
