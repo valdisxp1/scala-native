@@ -1,6 +1,6 @@
 package java.util.concurrent.atomic
 
-object AtomicSuite extends tests.Suite {
+object AtomicSuite extends tests.MultiThreadSuite {
 
   test("Atomic Boolean") {
     val a = new AtomicBoolean(true)
@@ -43,6 +43,37 @@ object AtomicSuite extends tests.Suite {
     assertEquals(a.get(), 2)
   }
 
+  test("Atomic Integer is atomic") {
+    val numThreads = 2
+    testWithMinRepetitions() { n: Int =>
+      var number = 0
+      withThreads(numThreads, label = "Atomic Integer CounterExample") { _ =>
+        var i = n
+        // making this as fast as possible
+        while (i > 0) {
+          number = number + 1
+          i -= 1
+        }
+      }
+      number != (n * numThreads)
+    } { n: Int =>
+      val number = new AtomicInteger()
+      withThreads(numThreads, label = "Atomic Integer Test") { _ =>
+        var i = n
+        // making this as fast as possible
+        while (i > 0) {
+          number.addAndGet(1)
+          i -= 1
+        }
+      }
+
+      val value    = number.get()
+      val expected = n * numThreads
+      Console.out.println(s"value: $value, expected: $expected")
+      value == expected
+    }
+  }
+
   test("Atomic Long") {
     val a = new AtomicLong()
 
@@ -61,6 +92,37 @@ object AtomicSuite extends tests.Suite {
     assertEquals(a.decrementAndGet(), 3L)
     assertEquals(a.getAndDecrement(), 3L)
     assertEquals(a.get(), 2L)
+  }
+
+  test("Atomic Long is atomic") {
+    val numThreads = 2
+    testWithMinRepetitions() { n: Int =>
+      var number = 0L
+      withThreads(numThreads, label = "Atomic Long CounterExample") { _ =>
+        var i = n
+        // making this as fast as possible
+        while (i > 0) {
+          number = number + 1L
+          i -= 1
+        }
+      }
+      number != (n * numThreads)
+    } { n: Int =>
+      val number = new AtomicLong()
+      withThreads(numThreads, label = "Atomic Long Test") { _ =>
+        var i = n
+        // making this as fast as possible
+        while (i > 0) {
+          number.addAndGet(1L)
+          i -= 1
+        }
+      }
+
+      val value    = number.get()
+      val expected = n.toLong * numThreads
+      Console.out.println(s"value: $value, expected: $expected")
+      value == expected
+    }
   }
 
   test("Atomic Reference Array") {
@@ -130,6 +192,40 @@ object AtomicSuite extends tests.Suite {
     assertThrows[IndexOutOfBoundsException](a.get(-1))
   }
 
+  test("Atomic Integer Array is atomic") {
+    val numThreads = 4
+    testWithMinRepetitions() { n: Int =>
+      val array = new Array[Int](2)
+      withThreads(numThreads, label = "Atomic Integer Array CounterExample") {
+        id: Int =>
+          val index = id / 2
+          var i     = n
+          // making this as fast as possible
+          while (i > 0) {
+            array(index) = array(index) + 1
+            i -= 1
+          }
+      }
+      array.sum != (n * numThreads)
+    } { n: Int =>
+      val array = new AtomicIntegerArray(2)
+      withThreads(numThreads, label = "Atomic Integer Array Test") { id: Int =>
+        val index = id / 2
+        var i     = n
+        // making this as fast as possible
+        while (i > 0) {
+          array.addAndGet(index, 1)
+          i -= 1
+        }
+      }
+
+      val value    = array.get(0) + array.get(1)
+      val expected = n * numThreads
+      Console.out.println(s"value: $value, expected: $expected")
+      value == expected
+    }
+  }
+
   test("Atomic Long Array") {
 
     val a = new AtomicLongArray(3)
@@ -161,5 +257,39 @@ object AtomicSuite extends tests.Suite {
 
     assertThrows[IndexOutOfBoundsException](a.get(3))
     assertThrows[IndexOutOfBoundsException](a.get(-1))
+  }
+
+  test("Atomic Long Array is atomic") {
+    val numThreads = 4
+    testWithMinRepetitions() { n: Int =>
+      val array = new Array[Long](2)
+      withThreads(numThreads, label = "Atomic Long Array CounterExample") {
+        id: Int =>
+          val index = id / 2
+          var i     = n
+          // making this as fast as possible
+          while (i > 0) {
+            array(index) = array(index) + 1L
+            i -= 1
+          }
+      }
+      array.sum != (n * numThreads)
+    } { n: Int =>
+      val array = new AtomicLongArray(2)
+      withThreads(numThreads, label = "Atomic Long Array Test") { id: Int =>
+        val index = id / 2
+        var i     = n
+        // making this as fast as possible
+        while (i > 0) {
+          array.addAndGet(index, 1L)
+          i -= 1
+        }
+      }
+
+      val value    = array.get(0) + array.get(1)
+      val expected = n * numThreads
+      Console.out.println(s"value: $value, expected: $expected")
+      value == expected
+    }
   }
 }
