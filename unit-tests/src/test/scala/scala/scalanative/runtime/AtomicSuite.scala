@@ -87,7 +87,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0
-      hammer(numThreads, label = "CounterExample") {
+      withThreads(numThreads, label = "CounterExample") { _ =>
         var i = n
         val b = 1.asInstanceOf[Byte]
         // making this as fast as possible
@@ -100,7 +100,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicByte()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[Byte]
         // making this as fast as possible
@@ -118,7 +118,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicByte()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[Byte]
         // making this as fast as possible
@@ -136,7 +136,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicByte()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = -1.asInstanceOf[Byte]
         // making this as fast as possible
@@ -154,7 +154,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicByte()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = -1.asInstanceOf[Byte]
         // making this as fast as possible
@@ -346,7 +346,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0
-      hammer(numThreads, label = "CounterExample") {
+      withThreads(numThreads, label = "CounterExample") { _ =>
         var i = n
         val b = 1.asInstanceOf[CShort]
         // making this as fast as possible
@@ -359,7 +359,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicShort()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[CShort]
         // making this as fast as possible
@@ -377,7 +377,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicShort()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[CShort]
         // making this as fast as possible
@@ -395,7 +395,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicShort()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = -1.asInstanceOf[CShort]
         // making this as fast as possible
@@ -413,7 +413,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicShort()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = -1.asInstanceOf[CShort]
         // making this as fast as possible
@@ -599,7 +599,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0
-      hammer(numThreads, label = "CounterExample") {
+      withThreads(numThreads, label = "CounterExample") { _ =>
         var i = n
         val b = 1
         // making this as fast as possible
@@ -612,7 +612,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicInt()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1
         // making this as fast as possible
@@ -630,7 +630,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicInt()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1
         // making this as fast as possible
@@ -648,7 +648,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicInt()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = -1
         // making this as fast as possible
@@ -666,7 +666,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicInt()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = -1
         // making this as fast as possible
@@ -858,7 +858,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0.asInstanceOf[CLong]
-      hammer(numThreads, label = "CounterExample") {
+      withThreads(numThreads, label = "CounterExample") { _ =>
         var i = n
         val b = 1.asInstanceOf[CLong]
         // making this as fast as possible
@@ -871,7 +871,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicLong()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[CLong]
         // making this as fast as possible
@@ -889,7 +889,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicLong()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[CLong]
         // making this as fast as possible
@@ -907,7 +907,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicLong()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = -1.asInstanceOf[CLong]
         // making this as fast as possible
@@ -925,7 +925,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicLong()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = -1.asInstanceOf[CLong]
         // making this as fast as possible
@@ -1117,7 +1117,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0
-      hammer(numThreads, label = "CounterExample") {
+      withThreads(numThreads, label = "CounterExample") { _ =>
         var i = n
         val b = 1.asInstanceOf[Byte]
         // making this as fast as possible
@@ -1130,7 +1130,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicUnsignedByte()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[Byte]
         // making this as fast as possible
@@ -1148,7 +1148,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicUnsignedByte()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[Byte]
         // making this as fast as possible
@@ -1166,7 +1166,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicUnsignedByte()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = -1.asInstanceOf[Byte]
         // making this as fast as possible
@@ -1184,7 +1184,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicUnsignedByte()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = -1.asInstanceOf[Byte]
         // making this as fast as possible
@@ -1382,7 +1382,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0.asInstanceOf[CUnsignedInt]
-      hammer(numThreads, label = "CounterExample") {
+      withThreads(numThreads, label = "CounterExample") { _ =>
         var i = n
         val b = 1.asInstanceOf[CUnsignedShort]
         // making this as fast as possible
@@ -1395,7 +1395,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicUnsignedShort()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[CUnsignedShort]
         // making this as fast as possible
@@ -1413,7 +1413,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicUnsignedShort()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[CUnsignedShort]
         // making this as fast as possible
@@ -1431,7 +1431,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicUnsignedShort()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = UShort.MaxValue
         // making this as fast as possible
@@ -1449,7 +1449,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicUnsignedShort()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = UShort.MaxValue
         // making this as fast as possible
@@ -1647,7 +1647,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0.asInstanceOf[CUnsignedInt]
-      hammer(numThreads, label = "CounterExample") {
+      withThreads(numThreads, label = "CounterExample") { _ =>
         var i = n
         val b = 1.asInstanceOf[CUnsignedInt]
         // making this as fast as possible
@@ -1660,7 +1660,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicUnsignedInt()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[CUnsignedInt]
         // making this as fast as possible
@@ -1678,7 +1678,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicUnsignedInt()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[CUnsignedInt]
         // making this as fast as possible
@@ -1696,7 +1696,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicUnsignedInt()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = UInt.MaxValue
         // making this as fast as possible
@@ -1714,7 +1714,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicUnsignedInt()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = UInt.MaxValue
         // making this as fast as possible
@@ -1912,7 +1912,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0.asInstanceOf[CUnsignedLong]
-      hammer(numThreads, label = "CounterExample") {
+      withThreads(numThreads, label = "CounterExample") { _ =>
         var i = n
         val b = 1.asInstanceOf[CUnsignedLong]
         // making this as fast as possible
@@ -1925,7 +1925,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicUnsignedLong()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[CUnsignedLong]
         // making this as fast as possible
@@ -1943,7 +1943,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicUnsignedLong()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[CUnsignedLong]
         // making this as fast as possible
@@ -1961,7 +1961,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicUnsignedLong()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = ULong.MaxValue
         // making this as fast as possible
@@ -1979,7 +1979,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicUnsignedLong()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = ULong.MaxValue
         // making this as fast as possible
@@ -2171,7 +2171,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0.asInstanceOf[CSize]
-      hammer(numThreads, label = "CounterExample") {
+      withThreads(numThreads, label = "CounterExample") { _ =>
         var i = n
         val b = 1.asInstanceOf[CSize]
         // making this as fast as possible
@@ -2184,7 +2184,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicCSize()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[CSize]
         // making this as fast as possible
@@ -2202,7 +2202,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 111)
     {
       val number = CAtomicCSize()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[CSize]
         // making this as fast as possible
@@ -2220,7 +2220,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicCSize()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = -1.asInstanceOf[CSize]
         // making this as fast as possible
@@ -2238,7 +2238,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 131)
     {
       val number = CAtomicCSize()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = -1.asInstanceOf[CSize]
         // making this as fast as possible

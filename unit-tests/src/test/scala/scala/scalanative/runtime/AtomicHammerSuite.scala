@@ -9,7 +9,7 @@ object AtomicHammerSuite extends tests.MultiThreadSuite {
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0.asInstanceOf[Byte]
-      hammer(numThreads, label = "CounterExample") {
+      withThreads(numThreads, label = "CounterExample") { _ =>
         var i = n
         val b = 1.asInstanceOf[Byte]
         // making this as fast as possible
@@ -21,7 +21,7 @@ object AtomicHammerSuite extends tests.MultiThreadSuite {
       number != (n * numThreads).asInstanceOf[Byte]
     } { n: Int =>
       val number = CAtomicByte()
-      hammer(numThreads, label = "Test") {
+      withThreads(numThreads, label = "Test") { _ =>
         var i = n
         val b = 1.asInstanceOf[Byte]
         // making this as fast as possible

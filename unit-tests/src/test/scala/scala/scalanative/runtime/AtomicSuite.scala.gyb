@@ -95,7 +95,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
         testWithMinRepetitions() {
           n: Int =>
             var number = ${defaultCounter}
-            hammer(numThreads, label = "CounterExample") {
+            withThreads(numThreads, label = "CounterExample") {_ =>
               var i = n
               val b = 1${cast}
               // making this as fast as possible
@@ -110,7 +110,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 % for op in ['fetchAdd', 'addFetch']:
             {
             val number = CAtomic${C}()
-            hammer(numThreads, label = "Test") {
+            withThreads(numThreads, label = "Test") {_ =>
               var i = n
               val b = 1${cast}
               // making this as fast as possible
@@ -130,7 +130,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 % minusOne = '-1'+cast if N in ['byte', 'ubyte', 'short', 'int', 'long', 'csize'] else O+'.MaxValue'
             {
             val number = CAtomic${C}()
-            hammer(numThreads, label = "Test") {
+            withThreads(numThreads, label = "Test") {_ =>
               var i = n
               val b = ${minusOne}
               // making this as fast as possible

@@ -47,7 +47,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0
-      hammer(numThreads, label = "Atomic Integer CounterExample") {
+      withThreads(numThreads, label = "Atomic Integer CounterExample") { _ =>
         var i = n
         // making this as fast as possible
         while (i > 0) {
@@ -58,7 +58,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
       number != (n * numThreads)
     } { n: Int =>
       val number = new AtomicInteger()
-      hammer(numThreads, label = "Atomic Integer Test") {
+      withThreads(numThreads, label = "Atomic Integer Test") { _ =>
         var i = n
         // making this as fast as possible
         while (i > 0) {
@@ -98,7 +98,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0L
-      hammer(numThreads, label = "Atomic Long CounterExample") {
+      withThreads(numThreads, label = "Atomic Long CounterExample") { _ =>
         var i = n
         // making this as fast as possible
         while (i > 0) {
@@ -109,7 +109,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
       number != (n * numThreads)
     } { n: Int =>
       val number = new AtomicLong()
-      hammer(numThreads, label = "Atomic Long Test") {
+      withThreads(numThreads, label = "Atomic Long Test") { _ =>
         var i = n
         // making this as fast as possible
         while (i > 0) {

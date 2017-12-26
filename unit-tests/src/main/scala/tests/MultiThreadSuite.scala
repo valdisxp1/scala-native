@@ -46,12 +46,11 @@ trait MultiThreadSuite extends Suite {
     result
   }
 
-  def hammer(numThreads: Int = 2, label: String = "")(f: => Unit) = {
-    val runnable = new Runnable {
-      def run() = f
-    }
+  def withThreads(numThreads: Int = 2, label: String = "")(f: Int => Unit) = {
     val threads = Seq.tabulate(numThreads) { id =>
-      new Thread(runnable, "Hammer " + label + "-" + id)
+      new Thread(label + "Thread-" + id) {
+        override def run() = f(id)
+      }
     }
     threads.foreach(_.start())
     threads.foreach(_.join())

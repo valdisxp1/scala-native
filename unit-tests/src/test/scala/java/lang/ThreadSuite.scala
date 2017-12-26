@@ -402,7 +402,7 @@ object ThreadSuite extends tests.MultiThreadSuite {
     testWithMinDelay() { delay =>
       // counter example
       var tmp = 0
-      hammer() {
+      withThreads() { _ =>
         tmp *= 2
         tmp += 1
         Thread.sleep(delay)
@@ -415,7 +415,7 @@ object ThreadSuite extends tests.MultiThreadSuite {
       // test
       val mutex = new Object
       var tmp   = 0
-      hammer() {
+      withThreads() { _ =>
         mutex.synchronized {
           tmp *= 2
           tmp += 1
