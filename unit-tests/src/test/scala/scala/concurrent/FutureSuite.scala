@@ -38,9 +38,10 @@ object FutureSuite extends tests.MultiThreadSuite {
     assertEquals(getResult()(future), Some(3))
   }
 
+  private val futureDelay = 1000
   test("Future.apply delayed") {
     val future = Future {
-      Thread.sleep(1000)
+      Thread.sleep(futureDelay)
       3
     }
     assertEquals(getResult()(future), Some(3))
@@ -53,10 +54,10 @@ object FutureSuite extends tests.MultiThreadSuite {
 
   test("Future.map delayed") {
     val future = Future {
-      Thread.sleep(1000)
+      Thread.sleep(futureDelay)
       7
     }.map { x =>
-      Thread.sleep(1000)
+      Thread.sleep(futureDelay)
       x * 191
     }
     assertEquals(getResult()(future), Some(1337))
@@ -88,11 +89,11 @@ object FutureSuite extends tests.MultiThreadSuite {
 
   test("Future.flatMap delayed") {
     val future1 = Future {
-      Thread.sleep(1000)
+      Thread.sleep(futureDelay)
       7
     }
     val future = Future {
-      Thread.sleep(1000)
+      Thread.sleep(futureDelay)
       6
     }.flatMap {
       b =>
@@ -104,21 +105,57 @@ object FutureSuite extends tests.MultiThreadSuite {
     assertEquals(getResult()(future), Some(42))
   }
 
-  test("Future.flatMap delayed2") {
-    val future1 = Future {
-      Thread.sleep(600)
-      7
-    }
-    val future = Future {
-      Thread.sleep(1000)
-      6
-    }.flatMap {
-      b =>
-        future1.map {
-          a =>
-            a * b
-        }
-    }
-    assertEquals(getResult()(future), Some(42))
+  test("Future.reduce instant") {
+    val futures = Seq(Future.successful(1), Future.successful(2), Future.successful(3))
+    val sumFuture = Future.reduce(futures)(_ + _)
+    assertEquals(getResult()(sumFuture), Some(6))
+  }
+
+  test("Future.reduce") {
+    val futures = Seq(Future(1), Future(2), Future(3))
+    val sumFuture = Future.reduce(futures)(_ + _)
+    assertEquals(getResult()(sumFuture), Some(6))
+  }
+
+  test("Future.reduce delayed") {
+    val futures = Seq(Future{
+      Thread.sleep(futureDelay)
+      1
+    }, Future{
+      Thread.sleep(futureDelay)
+      2
+    }, Future{
+      Thread.sleep(futureDelay)
+      3
+    })
+    val sumFuture = Future.reduce(futures)(_ + _)
+    assertEquals(getResult()(sumFuture), Some(6))
+  }
+
+  test("Future.fold instant") {
+    val futures = Seq(Future.successful(1), Future.successful(2), Future.successful(3))
+    val sumFuture = Future.fold(futures)(1)(_ + _)
+    assertEquals(getResult()(sumFuture), Some(7))
+  }
+
+  test("Future.fold") {
+    val futures = Seq(Future(1), Future(2), Future(3))
+    val sumFuture = Future.fold(futures)(1)(_ + _)
+    assertEquals(getResult()(sumFuture), Some(7))
+  }
+
+  test("Future.fold delayed") {
+    val futures = Seq(Future{
+      Thread.sleep(futureDelay)
+      1
+    }, Future{
+      Thread.sleep(futureDelay)
+      2
+    }, Future{
+      Thread.sleep(futureDelay)
+      3
+    })
+    val sumFuture = Future.fold(futures)(1)(_ + _)
+    assertEquals(getResult()(sumFuture), Some(7))
   }
 }
