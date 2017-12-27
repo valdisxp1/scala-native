@@ -2,6 +2,7 @@ package scala.scalanative
 
 import native._
 import runtime.Intrinsics._
+import scala.scalanative.runtime.ExecutionContext.QueueExecutionContext
 
 package object runtime {
 
@@ -102,7 +103,7 @@ package object runtime {
    */
   def loop(): Unit = {
     new Thread("EventLoop") {
-      override def run() = ExecutionContext.waitUntilDone()
+      override def run() = ExecutionContext.global.asInstanceOf[QueueExecutionContext].waitUntilDone()
     }.start()
     ThreadBase.mainThreadEnds()
     ThreadBase.shutdownCheckLoop()

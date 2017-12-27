@@ -1,16 +1,20 @@
 package scala.scalanative
 package runtime
 
-import java.util.concurrent.atomic.{AtomicBoolean, AtomicReference}
+import java.util.concurrent.atomic.{AtomicBoolean, AtomicLong, AtomicReference}
 
 import scala.concurrent.ExecutionContextExecutor
 
 object ExecutionContext {
-  def global: ExecutionContextExecutor = QueueExecutionContext
+  def global: ExecutionContextExecutor = new QueueExecutionContext()
 
-  private class Queue {
+  class Queue {
     private val ref: AtomicReference[List[Runnable]] = new AtomicReference(Nil)
+
+    private val enqueued = new AtomicLong(0)
+    private val dequeued = new AtomicLong(0)
     def enqueue(runnable: Runnable): Unit = {
+      println(enqueued.incrementAndGet() + "->" + dequeued.get() + "?=" + ref.get().size)
       var oldValue: List[Runnable] = Nil
       var newValue: List[Runnable] = Nil
       do {
@@ -23,6 +27,7 @@ object ExecutionContext {
      * @return null if empty
      */
     def dequeue(): Runnable = {
+      println(enqueued.get() + "->" + dequeued.incrementAndGet() + "?=" + ref.get().size)
       var item: Runnable           = null
       var oldValue: List[Runnable] = Nil
       var newValue: List[Runnable] = Nil
@@ -35,13 +40,27 @@ object ExecutionContext {
           item = null
         }
       } while (!oldValue.isEmpty && !ref.compareAndSet(oldValue, newValue))
+      if(item != null) {
+        println(enqueued.get() + "->" + dequeued.incrementAndGet() + "?=" + ref.get().size)
+      }
       item
     }
 
     def isEmpty: scala.Boolean = ref.get.isEmpty
   }
 
-  private object QueueExecutionContext extends ExecutionContextExecutor {
+  class QueueExecutionContext(val numExecutors: Int = Runtime.getRuntime.availableProcessors()) extends ExecutionContextExecutor {
+    private val queue: Queue      = new Queue
+    private val started           = new AtomicBoolean(false)
+    private val parking: Object   = new Object
+    private val doneLock: Object  = new Object
+    private val threadGroup       = new ThreadGroup("Executor Thread Group")
+    threadGroup.setDaemon(true)
+    private lazy val threads =
+      scala.collection.immutable.Vector.tabulate(numExecutors) { i =>
+        new ExecutorThread(i)
+      }
+
     def execute(runnable: Runnable): Unit = {
       queue enqueue runnable
       // checking with get first for better performance
@@ -55,65 +74,53 @@ object ExecutionContext {
       }
     }
     def reportFailure(t: Throwable): Unit = t.printStackTrace()
-  }
 
-  private val queue: Queue      = new Queue
-  private val started           = new AtomicBoolean(false)
-  private val parking: Object   = new Object
-  private val doneLock: Object  = new Object
-  private val numExecutors: Int = Runtime.getRuntime.availableProcessors()
-  private val threadGroup       = new ThreadGroup("Executor Thread Group")
-  threadGroup.setDaemon(true)
-  private lazy val threads =
-    scala.collection.immutable.Vector.tabulate(numExecutors) { i =>
-      new ExecutorThread(i)
-    }
-
-  private class ExecutorThread(id: scala.Int)
+    private class ExecutorThread(id: scala.Int)
       extends Thread(threadGroup, "Executor-" + id) {
-    var waiting = false
-    def idle: Boolean = !started.get() || waiting
-    override def run(): Unit = {
-      while (true) {
-        val runnable = queue.dequeue()
-        if (runnable != null) {
-          waiting = false
-          try {
-            runnable.run()
-          } catch {
-            case t: Throwable =>
-              QueueExecutionContext.reportFailure(t)
-          }
-        } else {
-          doneLock.synchronized {
-            waiting = true
-            doneLock.notifyAll()
-          }
-          parking.synchronized {
-            if (queue.isEmpty) {
-              parking.wait()
+      var waiting = false
+      def idle: Boolean = !started.get() || waiting
+      override def run(): Unit = {
+        while (true) {
+          val runnable = queue.dequeue()
+          if (runnable != null) {
+            waiting = false
+            try {
+              runnable.run()
+            } catch {
+              case t: Throwable =>
+                QueueExecutionContext.this.reportFailure(t)
+            }
+          } else {
+            doneLock.synchronized {
+              waiting = true
+              doneLock.notifyAll()
+            }
+            parking.synchronized {
+              if (queue.isEmpty) {
+                parking.wait()
+              }
             }
           }
-        }
 
+        }
       }
     }
-  }
 
-  private def start(): Unit = {
-    threads.foreach { thread: ExecutorThread =>
-      thread.setDaemon(true)
-      thread.start()
+    private def start(): Unit = {
+      threads.foreach { thread: ExecutorThread =>
+        thread.setDaemon(true)
+        thread.start()
+      }
     }
-  }
 
-  def isDone: Boolean = queue.isEmpty && threads.forall(_.idle)
+    def isDone: Boolean = queue.isEmpty && threads.forall(_.idle)
 
-  def waitUntilDone(): Unit = {
-    while (!isDone) {
-      doneLock.synchronized {
-        if (!isDone) {
-          doneLock.wait()
+    def waitUntilDone(): Unit = {
+      while (!isDone) {
+        doneLock.synchronized {
+          if (!isDone) {
+            doneLock.wait()
+          }
         }
       }
     }
