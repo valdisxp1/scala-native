@@ -61,4 +61,64 @@ object FutureSuite extends tests.MultiThreadSuite {
     }
     assertEquals(getResult()(future), Some(1337))
   }
+
+  test("Future.flatMap instant") {
+    val future1 = Future.successful(7)
+    val future = Future.successful(6).flatMap {
+      b =>
+        future1.map {
+          a =>
+            a * b
+        }
+    }
+    assertEquals(getResult()(future), Some(42))
+  }
+
+  test("Future.flatMap") {
+    val future1 = Future(7)
+    val future = Future(6).flatMap {
+      b =>
+        future1.map {
+          a =>
+            a * b
+        }
+    }
+    assertEquals(getResult()(future), Some(42))
+  }
+
+  test("Future.flatMap delayed") {
+    val future1 = Future {
+      Thread.sleep(1000)
+      7
+    }
+    val future = Future {
+      Thread.sleep(1000)
+      6
+    }.flatMap {
+      b =>
+        future1.map {
+          a =>
+            a * b
+        }
+    }
+    assertEquals(getResult()(future), Some(42))
+  }
+
+  test("Future.flatMap delayed2") {
+    val future1 = Future {
+      Thread.sleep(600)
+      7
+    }
+    val future = Future {
+      Thread.sleep(1000)
+      6
+    }.flatMap {
+      b =>
+        future1.map {
+          a =>
+            a * b
+        }
+    }
+    assertEquals(getResult()(future), Some(42))
+  }
 }
