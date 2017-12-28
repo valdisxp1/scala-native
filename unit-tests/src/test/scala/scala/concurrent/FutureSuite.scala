@@ -5,13 +5,12 @@ import scala.concurrent.ExecutionContext.Implicits.global
 object FutureSuite extends tests.MultiThreadSuite {
   def getResult[T](delay: Long = eternity)(future: Future[T]): Option[T] = {
     var value: Option[T] = None
-    val mutex = new Object
-    future.foreach {
-      v: T =>
-        mutex.synchronized {
-          value = Some(v)
-          mutex.notifyAll()
-        }
+    val mutex            = new Object
+    future.foreach { v: T =>
+      mutex.synchronized {
+        value = Some(v)
+        mutex.notifyAll()
+      }
     }
     if (value.isEmpty) {
       mutex.synchronized {
@@ -65,24 +64,20 @@ object FutureSuite extends tests.MultiThreadSuite {
 
   test("Future.flatMap instant") {
     val future1 = Future.successful(7)
-    val future = Future.successful(6).flatMap {
-      b =>
-        future1.map {
-          a =>
-            a * b
-        }
+    val future = Future.successful(6).flatMap { b =>
+      future1.map { a =>
+        a * b
+      }
     }
     assertEquals(getResult()(future), Some(42))
   }
 
   test("Future.flatMap") {
     val future1 = Future(7)
-    val future = Future(6).flatMap {
-      b =>
-        future1.map {
-          a =>
-            a * b
-        }
+    val future = Future(6).flatMap { b =>
+      future1.map { a =>
+        a * b
+      }
     }
     assertEquals(getResult()(future), Some(42))
   }
@@ -95,36 +90,35 @@ object FutureSuite extends tests.MultiThreadSuite {
     val future = Future {
       Thread.sleep(futureDelay)
       6
-    }.flatMap {
-      b =>
-        future1.map {
-          a =>
-            a * b
-        }
+    }.flatMap { b =>
+      future1.map { a =>
+        a * b
+      }
     }
     assertEquals(getResult()(future), Some(42))
   }
 
   test("Future.reduce instant") {
-    val futures = Seq(Future.successful(1), Future.successful(2), Future.successful(3))
+    val futures =
+      Seq(Future.successful(1), Future.successful(2), Future.successful(3))
     val sumFuture = Future.reduce(futures)(_ + _)
     assertEquals(getResult()(sumFuture), Some(6))
   }
 
   test("Future.reduce") {
-    val futures = Seq(Future(1), Future(2), Future(3))
+    val futures   = Seq(Future(1), Future(2), Future(3))
     val sumFuture = Future.reduce(futures)(_ + _)
     assertEquals(getResult()(sumFuture), Some(6))
   }
 
   test("Future.reduce delayed") {
-    val futures = Seq(Future{
+    val futures = Seq(Future {
       Thread.sleep(futureDelay)
       1
-    }, Future{
+    }, Future {
       Thread.sleep(futureDelay)
       2
-    }, Future{
+    }, Future {
       Thread.sleep(futureDelay)
       3
     })
@@ -133,25 +127,26 @@ object FutureSuite extends tests.MultiThreadSuite {
   }
 
   test("Future.fold instant") {
-    val futures = Seq(Future.successful(1), Future.successful(2), Future.successful(3))
+    val futures =
+      Seq(Future.successful(1), Future.successful(2), Future.successful(3))
     val sumFuture = Future.fold(futures)(1)(_ + _)
     assertEquals(getResult()(sumFuture), Some(7))
   }
 
   test("Future.fold") {
-    val futures = Seq(Future(1), Future(2), Future(3))
+    val futures   = Seq(Future(1), Future(2), Future(3))
     val sumFuture = Future.fold(futures)(1)(_ + _)
     assertEquals(getResult()(sumFuture), Some(7))
   }
 
   test("Future.fold delayed") {
-    val futures = Seq(Future{
+    val futures = Seq(Future {
       Thread.sleep(futureDelay)
       1
-    }, Future{
+    }, Future {
       Thread.sleep(futureDelay)
       2
-    }, Future{
+    }, Future {
       Thread.sleep(futureDelay)
       3
     })

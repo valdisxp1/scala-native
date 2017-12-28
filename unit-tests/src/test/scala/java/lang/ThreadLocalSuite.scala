@@ -60,4 +60,19 @@ object ThreadLocalSuite extends tests.MultiThreadSuite {
     localString.remove()
     assertEquals(localString.get(), "<empty>")
   }
+
+  test("Initialized not called more than once") {
+    var timesInitialized = 0
+    val local = new ThreadLocal[Int] {
+      override protected def initialValue() = {
+        timesInitialized += 1
+        42
+      }
+    }
+    assertEquals(local.get(), 42)
+    assertEquals(local.get(), 42)
+    assertEquals(local.get(), 42)
+    assertEquals(local.get(), 42)
+    assertEquals(timesInitialized, 1)
+  }
 }
