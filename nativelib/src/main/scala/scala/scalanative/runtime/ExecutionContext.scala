@@ -1,7 +1,7 @@
 package scala.scalanative
 package runtime
 
-import java.util.concurrent.atomic.{AtomicBoolean, AtomicLong, AtomicReference}
+import java.util.concurrent.atomic.{AtomicBoolean, AtomicReference}
 
 import scala.concurrent.ExecutionContextExecutor
 
@@ -11,8 +11,6 @@ object ExecutionContext {
   class Queue {
     private val ref: AtomicReference[List[Runnable]] = new AtomicReference(Nil)
 
-    private val enqueued = new AtomicLong(0)
-    private val dequeued = new AtomicLong(0)
     def enqueue(runnable: Runnable): Unit = {
       var oldValue: List[Runnable] = Nil
       var newValue: List[Runnable] = Nil
