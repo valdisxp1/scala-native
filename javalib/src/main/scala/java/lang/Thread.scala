@@ -104,7 +104,6 @@ class Thread private (
       new ThreadLocal.Values(parentThread.inheritableValues)
     } else null
 
-  checkGCWatermark()
   checkAccess()
 
   def this(group: ThreadGroup,
@@ -428,12 +427,6 @@ class Thread private (
     "Thread[" + name + "," + priority + "," + s + "]"
   }
 
-  private def checkGCWatermark(): Unit = {
-    currentGCWatermarkCount += 1
-    if (currentGCWatermarkCount % GC_WATERMARK_MAX_COUNT == 0)
-      System.gc()
-  }
-
   def getUncaughtExceptionHandler: Thread.UncaughtExceptionHandler = {
     if (exceptionHandler != null)
       return exceptionHandler
@@ -497,6 +490,8 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     pthread_setspecific(myThreadKey, null.asInstanceOf[Ptr[scala.Byte]])
   }
 
+  private val callRunRoutine = CFunctionPtr.fromFunction1(callRun)
+
   // internal liveness state values
   // waiting and blocked handled separately
   private final val internalNew                   = 0
@@ -506,6 +501,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   private final val internalTerminated            = 4
   private final val internalInterruptedTerminated = 5
 
+  // for compatibility match Java Enums as close as possible
   final class State private (override val toString: String)
 
   object State {
@@ -516,8 +512,6 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     final val TIMED_WAITING = new State("TIMED_WAITING")
     final val TERMINATED    = new State("TERMINATED")
   }
-
-  private val callRunRoutine = CFunctionPtr.fromFunction1(callRun)
 
   final val MAX_PRIORITY: Int  = 10
   final val MIN_PRIORITY: Int  = 1
@@ -532,7 +526,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     }
   }
 
-  final val STACK_TRACE_INDENT: String = "    "
+  private final val STACK_TRACE_INDENT: String = "    "
 
   // Default uncaught exception handler
   private var defaultExceptionHandler: UncaughtExceptionHandler = _
@@ -543,18 +537,9 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   // used to generate a default thread name
   private final val THREAD: String = "Thread-"
 
-  // System thread group for keeping helper threads
-  var systemThreadGroup: ThreadGroup = _
-
-  // Number of threads that was created w/o garbage collection //TODO
-  private var currentGCWatermarkCount: Int = 0
-
-  // Max number of threads to be created w/o GC, required collect dead Thread references
-  private final val GC_WATERMARK_MAX_COUNT: Int = 700
-
   def activeCount: Int = currentThread().group.activeCount()
 
-  def currentThreadOptionInternal(): Thread with ThreadBase = {
+  def currentThreadInternal(): Thread with ThreadBase = {
     val ptr = pthread_getspecific(myThreadKey).asInstanceOf[Ptr[Thread]]
     if (ptr != null) {
       !ptr
@@ -564,7 +549,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   }
 
   def currentThread(): Thread = {
-    val value = currentThreadOptionInternal()
+    val value = currentThreadInternal()
     if (value != null) {
       value
     } else {
@@ -683,25 +668,21 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
                                       0,
                                       mainThread = true)
 
-  private def currentThreadStackTrace(signal: CInt): Unit = {
+  private def currentThreadStackTrace(signal: CInt): Unit =
     currentThread().getStackTrace
-  }
   private val currentThreadStackTracePtr =
     CFunctionPtr.fromFunction1(currentThreadStackTrace _)
   private val currentThreadStackTraceSignal = signal.SIGUSR2
   signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
 
-  private def currentThreadSuspend(signal: CInt): Unit = {
+  private def currentThreadSuspend(signal: CInt): Unit =
     currentThread().suspend()
-  }
   private val currentThreadSuspendPtr =
     CFunctionPtr.fromFunction1(currentThreadSuspend _)
   private val suspendSignal = signal.SIGUSR1
   signal.signal(suspendSignal, currentThreadSuspendPtr)
 
-  def mainThreadEnds(): Unit = {
-    post(mainThread)
-  }
+  def mainThreadEnds(): Unit = post(mainThread)
 
   private val shutdownMutex = new ShadowLock
 

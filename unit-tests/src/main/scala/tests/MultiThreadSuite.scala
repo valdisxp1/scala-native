@@ -1,28 +1,11 @@
 package tests
 
 trait MultiThreadSuite extends Suite {
-  class FatObject(val id: Int = 0) {
-    var x1, x2, x3, x4, x5, x6, x7, x8 = 0L
-
-    def nextOne = new FatObject(id + 1)
-  }
-
-  class MemoryMuncher(times: Int) extends Thread {
-    var visibleState = new FatObject()
-
-    override def run(): Unit = {
-      var remainingCount = times
-      while (remainingCount > 0) {
-        visibleState = visibleState.nextOne
-        remainingCount -= 1
-      }
-    }
-  }
-
   def takesAtLeast[R](expectedDelayMs: scala.Long)(f: => R): R = {
     val start  = System.currentTimeMillis()
     val result = f
     val end    = System.currentTimeMillis()
+
     val actual = end - start
     Console.out.println(
       "It took " + actual + " ms, expected at least " + expectedDelayMs + " ms")
@@ -63,7 +46,9 @@ trait MultiThreadSuite extends Suite {
     val start    = System.currentTimeMillis()
     val deadline = start + maxDelay
     var current  = 0L
+
     var continue = true
+
     while (continue && current <= deadline) {
       current = System.currentTimeMillis()
       if (p) {
@@ -75,7 +60,6 @@ trait MultiThreadSuite extends Suite {
       // all is good
       Console.out.println(
         label + " reached after " + (current - start) + " ms; max delay: " + maxDelay + " ms")
-      assert(true)
     } else {
       Console.out.println(
         "Timeout: " + label + " not reached after " + maxDelay + " ms")
@@ -93,17 +77,20 @@ trait MultiThreadSuite extends Suite {
                             recheckEvery: scala.Long = 200,
                             minDuration: scala.Long = 1000,
                             label: String = "Value")(value: => T): Option[T] = {
-    val start        = System.currentTimeMillis()
-    val deadline     = start + maxDelay + minDuration
-    var current      = 0L
-    var continue     = true
-    var reached      = false
+    val start    = System.currentTimeMillis()
+    val deadline = start + maxDelay + minDuration
+    var current  = 0L
+
+    var continue = true
+    var reached  = false
+
     var lastValue: T = value
     var lastValueTs  = start
+
     while (continue && current <= deadline) {
       current = System.currentTimeMillis()
       val currentValue = value
-      if (currentValue == value) {
+      if (lastValue == currentValue) {
         if (current >= lastValueTs + minDuration) {
           continue = false
           reached = true
@@ -118,7 +105,6 @@ trait MultiThreadSuite extends Suite {
       // all is good
       Console.out.println(
         label + " remained constant after " + (lastValueTs - start) + " ms for at least " + minDuration + "ms ; max delay: " + maxDelay + " ms")
-      assert(true)
       Some(lastValue)
     } else {
       Console.out.println(
@@ -128,6 +114,10 @@ trait MultiThreadSuite extends Suite {
     }
   }
 
+  /**
+   * Runs the `test` with the smallest possible delay parameter which still is enough to detect the issue.
+   * The delay is found by running the counterexample - a function that should reproduce the issue given enough time.
+   */
   def testWithMinDelay(delays: Seq[scala.Long] =
                          Seq(50, 100, 200, 500, 1000, 2000, 5000))(
       counterexample: scala.Long => scala.Boolean)(
@@ -145,6 +135,10 @@ trait MultiThreadSuite extends Suite {
     }
   }
 
+  /**
+   * Runs the `test` with the smallest possible repetitions which still is enough to detect the issue.
+   * The number of repetitions is found by running the counterexample - a function that should reproduce the issue given enough repetitions.
+   */
   def testWithMinRepetitions(
       repetitions: Seq[scala.Int] =
         Seq(1000, 2000, 5000, 10000, 100000, 1000000, 10000000))(
@@ -213,6 +207,24 @@ trait MultiThreadSuite extends Suite {
         count += 1
         Thread.`yield`()
         Thread.sleep(100)
+      }
+    }
+  }
+
+  class FatObject(val id: Int = 0) {
+    var x1, x2, x3, x4, x5, x6, x7, x8 = 0L
+
+    def nextOne = new FatObject(id + 1)
+  }
+
+  class MemoryMuncher(times: Int) extends Thread {
+    var visibleState = new FatObject()
+
+    override def run(): Unit = {
+      var remainingCount = times
+      while (remainingCount > 0) {
+        visibleState = visibleState.nextOne
+        remainingCount -= 1
       }
     }
   }

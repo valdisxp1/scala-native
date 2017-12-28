@@ -57,7 +57,7 @@ object ExecutionContext {
 
     def execute(runnable: Runnable): Unit = {
       queue enqueue runnable
-      // checking with get first for better performance
+      // for better performance checking with .get() first
       if (!started.get()) {
         if (started.compareAndSet(false, true)) {
           start()

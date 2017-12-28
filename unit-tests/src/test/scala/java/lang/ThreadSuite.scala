@@ -311,7 +311,7 @@ object ThreadSuite extends tests.MultiThreadSuite {
     eventually()(detector.wasException)
   }
 
-  test("Exceptions in Threads should be handled") {
+  test("Exceptions in Threads should be handled 2") {
     val exception = new NullPointerException("There must be a null somewhere")
     val thread = new Thread(new Runnable {
       def run(): Unit = {
@@ -622,10 +622,6 @@ object ThreadSuite extends tests.MultiThreadSuite {
     }
     val rawStackTraces = Something.aMethodWithoutAnInterestingName
     val currentThread  = Thread.currentThread()
-    Console.out.println(
-      "rawStackTraces.containsKey(currentThread): " + rawStackTraces
-        .containsKey(currentThread))
-    Console.out.println("rawStackTraces.size: " + rawStackTraces.size())
     assert(rawStackTraces.containsKey(currentThread))
     val currentThreadStackTrace = rawStackTraces.get(currentThread)
     assert(
@@ -745,7 +741,7 @@ object ThreadSuite extends tests.MultiThreadSuite {
     counter.join()
   }
 
-  test("*DEPRECATED* second Thread.suspend call should affect anything") {
+  test("*DEPRECATED* second Thread.suspend call should not affect anything") {
     val counter = new Counter
     counter.start()
     eventually()(counter.count > 1)

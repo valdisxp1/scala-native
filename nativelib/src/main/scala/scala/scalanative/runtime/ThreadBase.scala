@@ -52,13 +52,13 @@ object ThreadBase {
    *         2. Scala thinks it is dead<br>
    *         3. it has not properly initialized because it is handling a signal
    */
-  protected[runtime] def currentThreadOptionInternal(): Thread with ThreadBase =
-    threadModule.currentThreadOptionInternal()
+  protected[runtime] def currentThreadInternal(): Thread with ThreadBase =
+    threadModule.currentThreadInternal()
 }
 
 abstract class ThreadModuleBase {
   protected[runtime] def shutdownCheckLoop(): Unit
   protected[runtime] def initMainThread(): Unit
   protected[runtime] def mainThreadEnds(): Unit
-  protected[runtime] def currentThreadOptionInternal(): Thread with ThreadBase
+  protected[runtime] def currentThreadInternal(): Thread with ThreadBase
 }

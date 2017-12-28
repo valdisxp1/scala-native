@@ -32,7 +32,7 @@ final class Monitor private[runtime] (shadow: Boolean) {
   def _notify(): Unit    = pthread_cond_signal(condPtr)
   def _notifyAll(): Unit = pthread_cond_broadcast(condPtr)
   def _wait(): Unit = {
-    val thread = ThreadBase.currentThreadOptionInternal
+    val thread = ThreadBase.currentThreadInternal
     if (thread != null) {
       thread.setLockState(Waiting)
     }
@@ -46,7 +46,7 @@ final class Monitor private[runtime] (shadow: Boolean) {
   }
   def _wait(millis: scala.Long): Unit = _wait(millis, 0)
   def _wait(millis: scala.Long, nanos: Int): Unit = {
-    val thread = ThreadBase.currentThreadOptionInternal
+    val thread = ThreadBase.currentThreadInternal
     if (thread != null) {
       thread.setLockState(TimedWaiting)
     }
@@ -72,7 +72,7 @@ final class Monitor private[runtime] (shadow: Boolean) {
   }
   def enter(): Unit = {
     if (pthread_mutex_trylock(mutexPtr) == EBUSY) {
-      val thread = ThreadBase.currentThreadOptionInternal()
+      val thread = ThreadBase.currentThreadInternal()
       if (thread != null) {
         thread.setLockState(Blocked)
         // try again and block until you get one
@@ -98,7 +98,7 @@ final class Monitor private[runtime] (shadow: Boolean) {
 
   @inline
   private def pushLock(): Unit = {
-    val thread = ThreadBase.currentThreadOptionInternal()
+    val thread = ThreadBase.currentThreadInternal()
     if (thread != null) {
       thread.locks(thread.size) = this
       thread.size += 1
@@ -113,7 +113,7 @@ final class Monitor private[runtime] (shadow: Boolean) {
 
   @inline
   private def popLock(): Unit = {
-    val thread = ThreadBase.currentThreadOptionInternal()
+    val thread = ThreadBase.currentThreadInternal()
     if (thread != null) {
       if (thread.locks(thread.size - 1) == this) {
         thread.size -= 1
