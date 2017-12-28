@@ -22,13 +22,8 @@ class PiFuturesBenchmark extends benchmarks.Benchmark[Double] {
       }
     }
 
-    val countFuture: Future[Int] = futures.foldLeft(Future.successful(0)) {
-      (sumFuture: Future[Int], booleanFuture: Future[Boolean]) =>
-        sumFuture.flatMap { a =>
-          booleanFuture.map { b =>
-            a + (if (b) 1 else 0)
-          }
-        }
+    val countFuture: Future[Int] = Future.fold(futures)(0) { (a, b) =>
+      a + (if (b) 1 else 0)
     }
 
     var count = -1
