@@ -22,25 +22,32 @@ class PiFuturesBenchmark extends benchmarks.Benchmark[Double] {
         x * x + y * y < 1
       }
     }
-    val countFuture: Future[Int] = Future.fold(futures)(0) { (sum, b) =>
-      sum + (if (b) 1 else 0)
+
+    var n = 0
+    val countFuture: Future[Int] = futures.foldLeft(Future.successful(0)) {
+      (sumFuture: Future[Int], booleanFuture: Future[Boolean]) =>
+        n += 1
+        sumFuture.flatMap { a =>
+          booleanFuture.map { b =>
+            a + (if (b) 1 else 0)
+          }
+        }
     }
 
     var count = -1
     val mutex = new Object
 
-    countFuture.foreach {
-      number: Int =>
-        mutex.synchronized {
-          count = number
-          mutex.notifyAll()
-        }
+    countFuture.foreach { number: Int =>
+      mutex.synchronized {
+        count = number
+        mutex.notifyAll()
+      }
     }
 
     if (count == -1) {
       mutex.synchronized {
         while (count == -1) {
-          mutex.wait(100)
+          mutex.wait()
         }
       }
     }

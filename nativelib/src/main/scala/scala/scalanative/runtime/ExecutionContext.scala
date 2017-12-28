@@ -14,7 +14,6 @@ object ExecutionContext {
     private val enqueued = new AtomicLong(0)
     private val dequeued = new AtomicLong(0)
     def enqueue(runnable: Runnable): Unit = {
-      println(enqueued.incrementAndGet() + "->" + dequeued.get() + "?=" + ref.get().size)
       var oldValue: List[Runnable] = Nil
       var newValue: List[Runnable] = Nil
       do {
@@ -27,7 +26,6 @@ object ExecutionContext {
      * @return null if empty
      */
     def dequeue(): Runnable = {
-      println(enqueued.get() + "->" + dequeued.incrementAndGet() + "?=" + ref.get().size)
       var item: Runnable           = null
       var oldValue: List[Runnable] = Nil
       var newValue: List[Runnable] = Nil
@@ -40,21 +38,20 @@ object ExecutionContext {
           item = null
         }
       } while (!oldValue.isEmpty && !ref.compareAndSet(oldValue, newValue))
-      if(item != null) {
-        println(enqueued.get() + "->" + dequeued.incrementAndGet() + "?=" + ref.get().size)
-      }
       item
     }
 
     def isEmpty: scala.Boolean = ref.get.isEmpty
   }
 
-  class QueueExecutionContext(val numExecutors: Int = Runtime.getRuntime.availableProcessors()) extends ExecutionContextExecutor {
-    private val queue: Queue      = new Queue
-    private val started           = new AtomicBoolean(false)
-    private val parking: Object   = new Object
-    private val doneLock: Object  = new Object
-    private val threadGroup       = new ThreadGroup("Executor Thread Group")
+  class QueueExecutionContext(
+      val numExecutors: Int = Runtime.getRuntime.availableProcessors())
+      extends ExecutionContextExecutor {
+    private val queue: Queue     = new Queue
+    private val started          = new AtomicBoolean(false)
+    private val parking: Object  = new Object
+    private val doneLock: Object = new Object
+    private val threadGroup      = new ThreadGroup("Executor Thread Group")
     threadGroup.setDaemon(true)
     private lazy val threads =
       scala.collection.immutable.Vector.tabulate(numExecutors) { i =>
@@ -76,8 +73,8 @@ object ExecutionContext {
     def reportFailure(t: Throwable): Unit = t.printStackTrace()
 
     private class ExecutorThread(id: scala.Int)
-      extends Thread(threadGroup, "Executor-" + id) {
-      var waiting = false
+        extends Thread(threadGroup, "Executor-" + id) {
+      var waiting       = false
       def idle: Boolean = !started.get() || waiting
       override def run(): Unit = {
         while (true) {

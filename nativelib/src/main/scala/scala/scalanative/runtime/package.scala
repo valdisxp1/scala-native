@@ -103,7 +103,10 @@ package object runtime {
    */
   def loop(): Unit = {
     new Thread("EventLoop") {
-      override def run() = ExecutionContext.global.asInstanceOf[QueueExecutionContext].waitUntilDone()
+      override def run() =
+        ExecutionContext.global
+          .asInstanceOf[QueueExecutionContext]
+          .waitUntilDone()
     }.start()
     ThreadBase.mainThreadEnds()
     ThreadBase.shutdownCheckLoop()

@@ -8,7 +8,8 @@ class PiMultiThreadBenchmark extends benchmarks.Benchmark[Double] {
 
   override val runningTime: BenchmarkRunningTime = ShortRunningTime
 
-  class MonteCarloThread(id: Int, iterations: Int) extends Thread(s"Monte Carlo Pi-$id"){
+  class MonteCarloThread(id: Int, iterations: Int)
+      extends Thread(s"Monte Carlo Pi-$id") {
     var count = 0
     override def run() = {
       val random = new Random(System.currentTimeMillis())
@@ -21,16 +22,15 @@ class PiMultiThreadBenchmark extends benchmarks.Benchmark[Double] {
   }
 
   override def run(): Double = {
-    val points = 200000
+    val points      = 200000
     val threadCount = Runtime.getRuntime.availableProcessors()
-    val spare = points % threadCount
-    val threads = (1 to threadCount).map {
-      id =>
-        val toRun = points / threadCount + {
-          // divide spare points to the first threads
-          if (id < spare) 1 else 0
-        }
-        new MonteCarloThread(id, toRun)
+    val spare       = points % threadCount
+    val threads = (1 to threadCount).map { id =>
+      val toRun = points / threadCount + {
+        // divide spare points to the first threads
+        if (id < spare) 1 else 0
+      }
+      new MonteCarloThread(id, toRun)
     }
     threads.foreach(_.start())
     threads.foreach(_.join())
