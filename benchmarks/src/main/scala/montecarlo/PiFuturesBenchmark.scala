@@ -11,7 +11,6 @@ class PiFuturesBenchmark extends benchmarks.Benchmark[Double] {
   override val runningTime: BenchmarkRunningTime = LongRunningTime
 
   override def run(): Double = {
-    System.gc()
     val points = 200000
     val futures: Seq[Future[Boolean]] = (1 to points).map { _ =>
       Future {
