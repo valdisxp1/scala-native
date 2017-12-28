@@ -1,15 +1,14 @@
 package montecarlo
 
-import benchmarks.{BenchmarkRunningTime, ShortRunningTime}
+import benchmarks.{BenchmarkRunningTime, LongRunningTime}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 import scala.concurrent.forkjoin.ThreadLocalRandom
 
 class PiFuturesBenchmark extends benchmarks.Benchmark[Double] {
 
-  override val runningTime: BenchmarkRunningTime = ShortRunningTime
+  override val runningTime: BenchmarkRunningTime = LongRunningTime
 
   override def run(): Double = {
     System.gc()
@@ -23,10 +22,8 @@ class PiFuturesBenchmark extends benchmarks.Benchmark[Double] {
       }
     }
 
-    var n = 0
     val countFuture: Future[Int] = futures.foldLeft(Future.successful(0)) {
       (sumFuture: Future[Int], booleanFuture: Future[Boolean]) =>
-        n += 1
         sumFuture.flatMap { a =>
           booleanFuture.map { b =>
             a + (if (b) 1 else 0)
