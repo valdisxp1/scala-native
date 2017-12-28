@@ -13,7 +13,7 @@ class ThreadLocal[T] {
     val values: Values = currentThread.localValues
     if (values != null) {
       values.map
-        .getOrElse(this, initialValue().asInstanceOf[Object])
+        .getOrElseUpdate(this, initialValue().asInstanceOf[Object])
         .asInstanceOf[T]
     } else {
       currentThread.localValues = new ThreadLocal.Values()
