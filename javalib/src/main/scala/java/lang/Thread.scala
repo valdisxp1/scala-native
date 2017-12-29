@@ -397,6 +397,9 @@ class Thread private (
     Console.out.print(name)
     Console.out.println("-> Triggered")
     if (this == Thread.currentThread()) {
+      Console.out.print(name)
+      Console.out.print("-> State:")
+      Console.out.println(suspendState)
       if (suspendState == internalSuspending) {
         suspendMutex.synchronized {
           if (suspendState == internalSuspending) {
