@@ -4,6 +4,9 @@ import scala.collection.mutable
 
 object ThreadGroupSuite extends tests.MultiThreadSuite {
   test("Constructors") {
+    //XXX workaround making sure GC does not happen when suspend tests are running
+    System.gc()
+
     val groupName   = "groupNameGoesHere"
     val threadGroup = new ThreadGroup(groupName)
     assertEquals(threadGroup.getName, groupName)
