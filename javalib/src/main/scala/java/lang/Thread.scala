@@ -94,7 +94,7 @@ class Thread private (
   private val sleepMutex   = new Object
   private val joinMutex    = new Object
   private val suspendMutex = new Object
-  private var suspended    = false
+  private var suspendState    = internalNotSuspended
 
   // ThreadLocal values : local and inheritable
   var localValues: ThreadLocal.Values = _
@@ -141,7 +141,7 @@ class Thread private (
 
   @deprecated
   def countStackFrames: Int =
-    if (suspended) {
+    if (suspendState == internalSuspended) {
       getStackTrace.length
     } else {
       throw new IllegalThreadStateException()
@@ -395,16 +395,23 @@ class Thread private (
   final def suspend(): Unit = {
     checkAccess()
     if (this == Thread.currentThread()) {
-      suspendMutex.synchronized {
-        suspended = true
-        while (suspended) {
-          suspendMutex.wait()
+      if (suspendState == internalSuspending) {
+        suspendMutex.synchronized {
+          if (suspendState == internalSuspending) {
+            suspendState = internalSuspended
+            suspendMutex.wait()
+          }
         }
       }
     } else {
-      if (!suspended) {
+      @inline
+      def goodToSuspend =
+        suspendState == internalNotSuspended ||
+        suspendState == internalResuming
+      if (goodToSuspend) {
         suspendMutex.synchronized {
-          if (!suspended) {
+          if (goodToSuspend) {
+            suspendState = internalSuspending
             pthread_kill(underlying, suspendSignal)
           }
         }
@@ -416,7 +423,7 @@ class Thread private (
   final def resume(): Unit = {
     checkAccess()
     suspendMutex.synchronized {
-      suspended = false
+      suspendState = internalResuming
       suspendMutex.notifyAll()
     }
   }
@@ -500,6 +507,12 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   private final val internalInterrupted           = 3
   private final val internalTerminated            = 4
   private final val internalInterruptedTerminated = 5
+
+  // seperate states for suspending
+  private final val internalNotSuspended = 0
+  private final val internalSuspending = 1
+  private final val internalSuspended = 2
+  private final val internalResuming = 3
 
   // for compatibility match Java Enums as close as possible
   final class State private (override val toString: String)
@@ -675,11 +688,12 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   private val currentThreadStackTraceSignal = signal.SIGRTMIN + 7
   signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
 
-  private def currentThreadSuspend(signal: CInt): Unit =
+  private def currentThreadSuspend(signal: CInt): Unit = {
     currentThread().suspend()
+  }
   private val currentThreadSuspendPtr =
     CFunctionPtr.fromFunction1(currentThreadSuspend _)
-  private val suspendSignal = signal.SIGRTMIN + 7
+  private val suspendSignal = signal.SIGRTMIN + 8
   signal.signal(suspendSignal, currentThreadSuspendPtr)
 
   def mainThreadEnds(): Unit = post(mainThread)
