@@ -94,7 +94,7 @@ class Thread private (
   private val sleepMutex   = new Object
   private val joinMutex    = new Object
   private val suspendMutex = new Object
-  private var suspendState    = internalNotSuspended
+  private var suspendState = internalNotSuspended
 
   // ThreadLocal values : local and inheritable
   var localValues: ThreadLocal.Values = _
@@ -410,7 +410,7 @@ class Thread private (
       @inline
       def goodToSuspend =
         suspendState == internalNotSuspended ||
-        suspendState == internalResuming
+          suspendState == internalResuming
       if (goodToSuspend) {
         suspendMutex.synchronized {
           if (goodToSuspend) {
@@ -513,9 +513,9 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
 
   // seperate states for suspending
   private final val internalNotSuspended = 0
-  private final val internalSuspending = 1
-  private final val internalSuspended = 2
-  private final val internalResuming = 3
+  private final val internalSuspending   = 1
+  private final val internalSuspended    = 2
+  private final val internalResuming     = 3
 
   // for compatibility match Java Enums as close as possible
   final class State private (override val toString: String)
