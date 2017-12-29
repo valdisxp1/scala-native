@@ -5,16 +5,6 @@ import java.io.{OutputStream, PrintStream}
 import scala.collection.mutable
 
 object ThreadSuite extends tests.MultiThreadSuite {
-
-  test("Environment") {
-    val processors = Runtime.getRuntime.availableProcessors()
-    Console.out.println("Number of cores present:" + processors)
-    if (processors < 2) {
-      Console.out.println(
-        "Warn: only a single core is available for multithreaded tests")
-    }
-  }
-
   test("Constructors") {
     {
       val thread = new Thread
