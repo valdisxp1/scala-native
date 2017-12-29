@@ -672,14 +672,14 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     currentThread().getStackTrace
   private val currentThreadStackTracePtr =
     CFunctionPtr.fromFunction1(currentThreadStackTrace _)
-  private val currentThreadStackTraceSignal = signal.SIGUSR2
+  private val currentThreadStackTraceSignal = signal.SIGRTMIN + 7
   signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
 
   private def currentThreadSuspend(signal: CInt): Unit =
     currentThread().suspend()
   private val currentThreadSuspendPtr =
     CFunctionPtr.fromFunction1(currentThreadSuspend _)
-  private val suspendSignal = signal.SIGUSR1
+  private val suspendSignal = signal.SIGRTMIN + 7
   signal.signal(suspendSignal, currentThreadSuspendPtr)
 
   def mainThreadEnds(): Unit = post(mainThread)
