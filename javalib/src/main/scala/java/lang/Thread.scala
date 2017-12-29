@@ -399,7 +399,10 @@ class Thread private (
         suspendMutex.synchronized {
           if (suspendState == internalSuspending) {
             suspendState = internalSuspended
-            suspendMutex.wait()
+            while (suspendState == internalSuspended) {
+              suspendMutex.wait()
+            }
+            suspendState = internalNotSuspended
           }
         }
       }
