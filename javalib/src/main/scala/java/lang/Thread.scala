@@ -395,8 +395,10 @@ class Thread private (
   final def suspend(): Unit = {
     checkAccess()
     Console.out.print(name)
-    Console.out.println("-> Triggered")
-    if (this == Thread.currentThread()) {
+    Console.out.print("-> Triggered@")
+    val current = Thread.currentThread()
+    Console.out.println(current.getName)
+    if (this == current) {
       Console.out.print(name)
       Console.out.print("-> State:")
       Console.out.println(suspendState)
