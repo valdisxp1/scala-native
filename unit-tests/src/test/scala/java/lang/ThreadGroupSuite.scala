@@ -4,8 +4,6 @@ import scala.collection.mutable
 
 object ThreadGroupSuite extends tests.MultiThreadSuite {
   test("Constructors") {
-    //XXX workaround making sure GC does not happen when suspend tests are running
-    System.gc()
 
     val groupName   = "groupNameGoesHere"
     val threadGroup = new ThreadGroup(groupName)
@@ -290,8 +288,6 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
   }
 
   test("*DEPRECATED*  ThreadGroup.suspend and resume should affect all threads") {
-    //XXX workaround making sure GC does not happen when suspend tests are running
-    System.gc()
 
     val structure = new Structure[Counter] {
       def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
@@ -326,8 +322,6 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
 
   test(
     "*DEPRECATED*  ThreadGroup.suspend and resume should respect allowThreadSuspension") {
-    //XXX workaround making sure GC does not happen when suspend tests are running
-    System.gc()
 
     val structure = new Structure[Counter] {
       def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
