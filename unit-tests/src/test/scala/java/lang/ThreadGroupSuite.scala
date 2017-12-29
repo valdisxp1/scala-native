@@ -357,18 +357,20 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
 
     group.suspend()
 
+    // only subgroup1Threads should go on
     val countMap4a: scala.collection.immutable.Map[Counter, scala.Long] =
-      (groupThreads ++ subgroup2Threads).map { thread: Counter =>
+      subgroup1Threads.map { thread: Counter =>
         eventually(label = s"$thread.count > countMap3")(
           thread.count > countMap3(thread))
         thread -> thread.count
       }.toMap
-
-    val countMap4
-      : scala.collection.immutable.Map[Counter, scala.Long] = countMap4a ++ subgroup1Threads
+    // every other thread should be suspended
+    val countMap4b = (groupThreads ++ subgroup2Threads)
       .map { thread: Counter =>
         thread -> eventuallyConstant()(thread.count).get
       }
+    val countMap4
+      : scala.collection.immutable.Map[Counter, scala.Long] = countMap4a ++ countMap4b
 
     group.resume()
 
