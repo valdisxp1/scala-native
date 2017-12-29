@@ -394,13 +394,19 @@ class Thread private (
   @deprecated
   final def suspend(): Unit = {
     checkAccess()
+    Console.out.print(name)
+    Console.out.println("-> Triggered")
     if (this == Thread.currentThread()) {
       if (suspendState == internalSuspending) {
         suspendMutex.synchronized {
           if (suspendState == internalSuspending) {
             suspendState = internalSuspended
             while (suspendState == internalSuspended) {
+              Console.out.print(name)
+              Console.out.println("-> In")
               suspendMutex.wait()
+              Console.out.print(name)
+              Console.out.println("-> Out")
             }
             suspendState = internalNotSuspended
           }
@@ -415,6 +421,8 @@ class Thread private (
         suspendMutex.synchronized {
           if (goodToSuspend) {
             suspendState = internalSuspending
+            Console.out.print(name)
+            Console.out.println("-> Sent")
             pthread_kill(underlying, suspendSignal)
           }
         }
