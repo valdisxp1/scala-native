@@ -54,6 +54,7 @@ trait MultiThreadSuite extends Suite {
       if (p) {
         continue = false
       }
+      Thread.`yield`()
       Thread.sleep(recheckEvery)
     }
     if (current <= deadline) {
@@ -99,6 +100,7 @@ trait MultiThreadSuite extends Suite {
         lastValueTs = current
         lastValue = currentValue
       }
+      Thread.`yield`()
       Thread.sleep(recheckEvery)
     }
     if (reached) {
