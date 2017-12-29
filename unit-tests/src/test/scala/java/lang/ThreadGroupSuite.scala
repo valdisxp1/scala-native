@@ -1,8 +1,19 @@
 package java.lang
 
+import java.lang.ThreadSuite.test
+
 import scala.collection.mutable
 
 object ThreadGroupSuite extends tests.MultiThreadSuite {
+  test("Environment") {
+    val processors = Runtime.getRuntime.availableProcessors()
+    Console.out.println("Number of cores present:" + processors)
+    if (processors < 2) {
+      Console.out.println(
+        "Warn: only a single core is available for multithreaded tests")
+    }
+  }
+
   test("Constructors") {
     val groupName   = "groupNameGoesHere"
     val threadGroup = new ThreadGroup(groupName)
