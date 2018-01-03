@@ -28,7 +28,9 @@ object Main {
 
     println(opts.format.show(results))
 
-    dumpMemInfo()
+    if (opts.meminfo) {
+      dumpMemInfo()
+    }
 
     if (success) exit(0) else exit(1)
   }
