@@ -1,13 +1,16 @@
 package scala.scalanative
 package posix
 
+import scala.scalanative.posix.sys.types.pid_t
 import scalanative.native._
-import scalanative.posix.sys.stat.{uid_t, gid_t}
+import scalanative.posix.sys.stat.{gid_t, uid_t}
 
 @extern
 object unistd {
 
   type off_t = CLongLong
+
+  def getpid(): pid_t = extern
 
   def sleep(seconds: CUnsignedInt): CInt                          = extern
   def usleep(usecs: CUnsignedInt): CInt                           = extern
