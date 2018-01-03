@@ -1,3 +1,0 @@
--> nativeLink
-> set nativeLinkStubs := true
-> nativeLink

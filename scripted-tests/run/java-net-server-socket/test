@@ -1,3 +1,0 @@
-> launchClient
-$ copy-file tests/ServerTest.scala Main.scala
-> run
