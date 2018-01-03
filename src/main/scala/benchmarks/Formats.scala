@@ -184,10 +184,11 @@ case class FailedRow(name: String, cause: Throwable) extends Formattable {
 /** Collection of functions useful to display the benchmark results. */
 private object StatUtils {
 
+  val threeDecimalFormat = "%.3f"
+
   /** Truncates `n` at `decimals` decimals. */
-  def format(n: Double, decimals: Int = 3): String = {
-    val s = n.toString
-    s.substring(0, s.indexOf('.') + decimals + 1)
+  def format(n: Double): String = {
+    threeDecimalFormat.format(n)
   }
 
   /** Computes the `n`th percentile of `sortedData`. */
