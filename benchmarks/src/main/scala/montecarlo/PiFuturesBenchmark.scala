@@ -6,7 +6,8 @@ import scala.concurrent.Future
 import scala.concurrent.forkjoin.ThreadLocalRandom
 import scala.scalanative.runtime.ExecutionContext.QueueExecutionContext
 
-class PiFuturesBenchmark(val threadCount: Int) extends benchmarks.Benchmark[Double] {
+class PiFuturesBenchmark(val threadCount: Int)
+    extends benchmarks.Benchmark[Double] {
   implicit val executionContext = new QueueExecutionContext(threadCount)
 
   override val runningTime: BenchmarkRunningTime = LongRunningTime

@@ -456,26 +456,7 @@ lazy val benchmarks =
     .settings(projectSettings)
     .settings(noPublishSettings)
     .settings(
-      nativeMode := "release",
-      sourceGenerators in Compile += Def.task {
-        val dir = (scalaSource in Compile).value
-        val benchmarks = (dir ** "*Benchmark.scala").get
-          .flatMap(IO.relativizeFile(dir, _))
-          .map(file => packageNameFromPath(file.toPath))
-          .filter(_ != "benchmarks.Benchmark")
-          .mkString("Seq(new ", ", new ", ")")
-        val file = (sourceManaged in Compile).value / "benchmarks" / "Discover.scala"
-        IO.write(
-          file,
-          s"""
-          package benchmarks
-          object Discover {
-            val discovered: Seq[benchmarks.Benchmark[_]] = $benchmarks
-          }
-        """
-        )
-        Seq(file)
-      }
+      nativeMode := "release"
     )
     .enablePlugins(ScalaNativePlugin)
 

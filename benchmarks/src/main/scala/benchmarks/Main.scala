@@ -6,14 +6,13 @@ import montecarlo.{PiFuturesBenchmark, PiMultiThreadBenchmark}
 
 object Main {
   def main(args: Array[String]): Unit = {
-    val threads = System.getProperty("THREADS","4").toInt
-    val benchmarks = Seq(new PiMultiThreadBenchmark, new PiFuturesBenchmark)
-
     val opts = Opts(args)
-    val iterations = System.getProperty("ITERATIONS","5").toInt
+    val benchmarks = Seq(new PiMultiThreadBenchmark(opts.threadCount),
+                         new PiFuturesBenchmark(opts.threadCount))
+
     val results = benchmarks.map { bench =>
-      bench.loop(iterations)
-      bench.loop(iterations)
+      bench.loop(opts.iterations)
+      bench.loop(opts.iterations)
     }
     val success = results.forall(_.success)
 
