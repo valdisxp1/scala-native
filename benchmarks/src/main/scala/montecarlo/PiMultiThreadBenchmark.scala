@@ -4,7 +4,7 @@ import java.util.Random
 
 import benchmarks.{BenchmarkRunningTime, ShortRunningTime}
 
-class PiMultiThreadBenchmark extends benchmarks.Benchmark[Double] {
+class PiMultiThreadBenchmark(val threadCount: Int) extends benchmarks.Benchmark[Double] {
 
   override val runningTime: BenchmarkRunningTime = ShortRunningTime
 
@@ -23,7 +23,6 @@ class PiMultiThreadBenchmark extends benchmarks.Benchmark[Double] {
 
   override def run(): Double = {
     val points      = 200000
-    val threadCount = Runtime.getRuntime.availableProcessors()
     val spare       = points % threadCount
     val threads = (1 to threadCount).map { id =>
       val toRun = points / threadCount + {
