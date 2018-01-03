@@ -2,7 +2,7 @@
 
 mkdir -p valdis_data
 i=5
-sbt "run --threads 1 --iterations 1 --format csv"
+sbt "run --threads 1 --iterations 1 --format csv" | tee valdis_data/jvm_build.log
 for t in {1..40}
 do
   echo "running $i iterations on $t threads"
