@@ -1,0 +1,2 @@
+[OK],montecarlo.PiMultiThreadBenchmark,5,3.946,7.919,6.164,1.545,6.630,7.919,3.946,6.164
+[OK],montecarlo.PiFuturesBenchmark,5,642.398,755.496,709.888,40.824,732.257,755.496,642.398,709.888
