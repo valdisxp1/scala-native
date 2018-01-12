@@ -2,19 +2,10 @@ package benchmarks
 
 import java.lang.System.exit
 
-import montecarlo.{PiFuturesBenchmark, PiMultiThreadBenchmark}
-
-import scala.scalanative.native.{Zone, stdlib}
-import scala.scalanative.posix.unistd
+import montecarlo.PiMultiThreadBenchmark
 
 object Main {
-  def dumpMemInfo(): Unit = Zone {
-    implicit zone =>
-      import scala.scalanative.native.toCString
-      val pid = unistd.getpid()
-      val command = toCString("ps u " + pid)
-      stdlib.system(command)
-  }
+  def dumpMemInfo(): Unit = {}
   def main(args: Array[String]): Unit = {
     val opts = Opts(args)
     val benchmarks = Seq(new PiMultiThreadBenchmark(opts.threadCount))
