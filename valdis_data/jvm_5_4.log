@@ -1,7 +1,0 @@
-[0m[[0minfo[0m] [0mLoading global plugins from /home/valdis/.sbt/0.13/plugins[0m
-[0m[[0minfo[0m] [0mLoading project definition from /home/valdis/scala-native/project[0m
-[0m[[0minfo[0m] [0mSet current project to scala-native (in build file:/home/valdis/scala-native/)[0m
-[0m[[0minfo[0m] [0mRunning benchmarks.Main --threads 4 --iterations 5 --format csv[0m
-[0m[[0minfo[0m] [0m[OK],montecarlo.PiMultiThreadBenchmark,5,5.885,9.197,7.600,1.129,7.799,9.197,5.885,7.600[0m
-[0m[[0minfo[0m] [0m[OK],montecarlo.PiFuturesBenchmark,5,333.914,417.646,370.504,33.897,352.408,417.646,333.914,370.504[0m
-[0m[[32msuccess[0m] [0mTotal time: 4 s, completed Jan 8, 2018 3:03:40 PM[0m

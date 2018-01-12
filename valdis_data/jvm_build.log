@@ -2,6 +2,6 @@
 [0m[[0minfo[0m] [0mLoading project definition from /home/valdis/scala-native/project[0m
 [0m[[0minfo[0m] [0mSet current project to scala-native (in build file:/home/valdis/scala-native/)[0m
 [0m[[0minfo[0m] [0mRunning benchmarks.Main --threads 1 --iterations 1 --format csv[0m
-[0m[[0minfo[0m] [0m[OK],montecarlo.PiMultiThreadBenchmark,1,12.089,12.089,12.089,0.000,12.089,12.089,12.089,12.089[0m
-[0m[[0minfo[0m] [0m[OK],montecarlo.PiFuturesBenchmark,1,141.354,141.354,141.354,0.000,141.354,141.354,141.354,141.354[0m
-[0m[[32msuccess[0m] [0mTotal time: 1 s, completed Jan 8, 2018 3:03:14 PM[0m
+[0m[[0minfo[0m] [0m[OK],montecarlo.PiMultiThreadBenchmark,1,12.039,12.039,12.039,0.000,12.039,12.039,12.039,12.039[0m
+[0m[[0minfo[0m] [0m[OK],montecarlo.PiFuturesBenchmark,1,130.348,130.348,130.348,0.000,130.348,130.348,130.348,130.348[0m
+[0m[[32msuccess[0m] [0mTotal time: 1 s, completed Jan 12, 2018 6:21:25 PM[0m
