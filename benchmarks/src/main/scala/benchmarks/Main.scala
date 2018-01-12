@@ -17,8 +17,7 @@ object Main {
   }
   def main(args: Array[String]): Unit = {
     val opts = Opts(args)
-    val benchmarks = Seq(new PiMultiThreadBenchmark(opts.threadCount),
-                         new PiFuturesBenchmark(opts.threadCount))
+    val benchmarks = Seq(new PiMultiThreadBenchmark(opts.threadCount))
 
     val results = benchmarks.map { bench =>
       bench.loop(opts.iterations)
