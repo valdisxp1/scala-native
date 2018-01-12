@@ -2,7 +2,7 @@ package benchmarks
 
 import java.lang.System.exit
 
-import montecarlo.{PiFuturesBenchmark, PiMultiThreadBenchmark}
+import montecarlo.PiMultiThreadBenchmark
 
 
 object Main {
