@@ -23,7 +23,7 @@ class PiMultiThreadBenchmark(val threadCount: Int)
   }
 
   override def run(): Double = {
-    val points = 200000
+    val points = 3000000
     val spare  = points % threadCount
     val threads = (1 to threadCount).map { id =>
       val toRun = points / threadCount + {
