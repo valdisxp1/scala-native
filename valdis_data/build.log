@@ -1,5 +1,170 @@
 [0m[[0minfo[0m] [0mLoading global plugins from /home/valdis/.sbt/0.13/plugins[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/.sbt/0.13/plugins/}global-plugins...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#sbt;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#actions;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classpath;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#interface;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#io;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#control;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#launcher-interface;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#completion;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#collections;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#api;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classfile;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logging;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#process;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-integration;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#incremental-compiler;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#relation;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compile;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#persist;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-tools.sbinary#sbinary_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-ivy-integration;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#ivy;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cross;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt.ivy#ivy;2.3.0-sbt-48dd0744422128446aee9ac31aa356ee203cc9f4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jcraft#jsch;0.1.50 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#serialization_2.10;0.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-pickling_2.10;0.10.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#quasiquotes_2.10;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-core_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-ast_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.thoughtworks.paranamer#paranamer;2.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#jawn-parser_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#json4s-support_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#run;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#task-system;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tasks;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tracking;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cache;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#testing;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-agent;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main-settings;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#apply-macro;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#command;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#template-resolver;0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logic;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-interface;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
 [0m[[0minfo[0m] [0mLoading project definition from /home/valdis/scala-native/project[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/project/}scala-native-build...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-sbt#global-plugins;0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#scripted-plugin;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#sbt;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#actions;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classpath;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#interface;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#io;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#control;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#launcher-interface;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#completion;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#collections;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#api;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classfile;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logging;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#process;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-integration;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#incremental-compiler;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#relation;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compile;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#persist;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-tools.sbinary#sbinary_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-ivy-integration;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#ivy;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cross;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt.ivy#ivy;2.3.0-sbt-48dd0744422128446aee9ac31aa356ee203cc9f4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jcraft#jsch;0.1.50 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#serialization_2.10;0.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-pickling_2.10;0.10.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#quasiquotes_2.10;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-core_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-ast_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.thoughtworks.paranamer#paranamer;2.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#jawn-parser_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#json4s-support_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#run;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#task-system;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tasks;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tracking;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cache;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#testing;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-agent;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main-settings;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#apply-macro;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#command;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#template-resolver;0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logic;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-interface;0.13.16 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jgit#org.eclipse.jgit.pgm;3.2.0.201312181205-r ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving args4j#args4j;2.0.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-compress;1.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.tukaani#xz;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jgit#org.eclipse.jgit.archive;3.2.0.201312181205-r ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jgit#org.eclipse.jgit;3.2.0.201312181205-r ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.googlecode.javaewah#JavaEWAH;0.5.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.osgi#org.osgi.core;4.3.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jgit#org.eclipse.jgit.ui;3.2.0.201312181205-r ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.lihaoyi#fastparse_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.lihaoyi#fastparse-utils_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#quasiquotes_2.10;2.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.lihaoyi#sourcecode_2.10;0.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.lihaoyi#scalaparse_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#sbt-crossproject;0.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.eed3si9n#sbt-dirty-money;0.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving me.lessis#bintray-sbt;0.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving me.lessis#bintry_2.10;0.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder.dispatch#dispatch-json4s-native_2.10;0.11.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder.dispatch#dispatch-core_2.10;0.11.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.ning#async-http-client;1.8.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving io.netty#netty;3.9.2.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-native_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-nop;1.7.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jsuereth#sbt-pgp;1.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jsuereth#pgp-library_2.10;1.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.bouncycastle#bcpg-jdk15on;1.51 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.bouncycastle#bcprov-jdk15on;1.51 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder#dispatch-http_2.10;0.8.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder#dispatch-core_2.10;0.8.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpcore;4.1.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-logging#commons-logging;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-codec#commons-codec;1.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.databinder#dispatch-futures_2.10;0.8.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-actors;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#paradise_2.10.6;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[33mwarn[0m] [0mFound version conflict(s) in library dependencies; some are suspected to be binary incompatible:[0m
+[0m[[33mwarn[0m] [0m[0m
+[0m[[33mwarn[0m] [0m	* org.scalamacros:quasiquotes_2.10:2.1.0 is selected over 2.0.1[0m
+[0m[[33mwarn[0m] [0m	    +- com.lihaoyi:sourcecode_2.10:0.1.3                  (depends on 2.1.0)[0m
+[0m[[33mwarn[0m] [0m	    +- com.lihaoyi:fastparse_2.10:0.4.2                   (depends on 2.1.0)[0m
+[0m[[33mwarn[0m] [0m	    +- com.lihaoyi:fastparse-utils_2.10:0.4.2             (depends on 2.1.0)[0m
+[0m[[33mwarn[0m] [0m	    +- com.lihaoyi:scalaparse_2.10:0.4.2                  (depends on 2.1.0)[0m
+[0m[[33mwarn[0m] [0m	    +- org.scala-lang.modules:scala-pickling_2.10:0.10.1  (depends on 2.0.1)[0m
+[0m[[33mwarn[0m] [0m[0m
+[0m[[33mwarn[0m] [0m	* com.jcraft:jsch:0.1.50 is selected over 0.1.46[0m
+[0m[[33mwarn[0m] [0m	    +- org.eclipse.jgit:org.eclipse.jgit:3.2.0.201312181205-r (depends on 0.1.46)[0m
+[0m[[33mwarn[0m] [0m	    +- org.scala-sbt:ivy:0.13.16                          (depends on 0.1.46)[0m
+[0m[[33mwarn[0m] [0m[0m
+[0m[[33mwarn[0m] [0mRun 'evicted' to see detailed eviction warnings[0m
 Using gc based on SCALANATIVE_GC=none
 [0m[[0minfo[0m] [0mResolving key references (12271 settings) ...[0m
 Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray features depend on this.
@@ -43,28 +208,28 @@ Missing bintray credentials /home/valdis/.bintray/.credentials. Some bintray fea
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
-[0m[[32msuccess[0m] [0mTotal time: 0 s, completed Jan 8, 2018 1:11:24 PM[0m
-[0m[[32msuccess[0m] [0mTotal time: 0 s, completed Jan 8, 2018 1:11:24 PM[0m
-[0m[[32msuccess[0m] [0mTotal time: 0 s, completed Jan 8, 2018 1:11:24 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 9 s, completed Jan 12, 2018 6:32:32 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 2 s, completed Jan 12, 2018 6:32:35 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 0 s, completed Jan 12, 2018 6:32:35 PM[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}nscplugin...[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.11-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.11-0.4.0-SNAPSHOT.pom[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.11 ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:11:25 EET 2018[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:32:35 EET 2018[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/nscplugin/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
 [0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/nscplugin/target/scala-2.11/api...[0m
 [0m[[0minfo[0m] [0mCompiling 44 Scala sources to /home/valdis/scala-native/nscplugin/target/scala-2.11/classes...[0m
 model contains 263 documentable templates
 [0m[[33mwarn[0m] [0m/home/valdis/scala-native/nscplugin/src/main/scala/scala/scalanative/nscplugin/NirGenExpr.scala:1376: match may not be exhaustive.[0m
-[0m[[33mwarn[0m] [0mIt would fail on the following input: (Vararg, Int)[0m
+[0m[[33mwarn[0m] [0mIt would fail on the following input: (Class(_), Bool)[0m
 [0m[[33mwarn[0m] [0m        val conv = (fromty, toty) match {[0m
 [0m[[33mwarn[0m] [0m                   ^[0m
 [0m[[33mwarn[0m] [0m/home/valdis/scala-native/nscplugin/src/main/scala/scala/scalanative/nscplugin/NirGenName.scala:92: match may not be exhaustive.[0m
@@ -83,10 +248,10 @@ model contains 263 documentable templates
 [0m[[0minfo[0m] [0m	published nscplugin_2.11.11 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/srcs/nscplugin_2.11.11-sources.jar[0m
 [0m[[0minfo[0m] [0m	published nscplugin_2.11.11 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/docs/nscplugin_2.11.11-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[32msuccess[0m] [0mTotal time: 18 s, completed Jan 8, 2018 1:11:42 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 20 s, completed Jan 12, 2018 6:32:55 PM[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
-[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}nativelib...[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.11 ...[0m
@@ -98,10 +263,10 @@ model contains 263 documentable templates
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:11:43 EET 2018[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:32:56 EET 2018[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/nativelib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
-[0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/nativelib/target/scala-2.11/api...[0m
 [0m[[0minfo[0m] [0mCompiling 85 Scala sources to /home/valdis/scala-native/nativelib/target/scala-2.11/classes...[0m
+[0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/nativelib/target/scala-2.11/api...[0m
 [0m[[33mwarn[0m] [0mdropping dependency on node with no phase object: mixin[0m
 [0m[[33mwarn[0m] [0mthere were 44 feature warnings; re-run with -feature for details[0m
 model contains 318 documentable templates
@@ -171,24 +336,24 @@ model contains 318 documentable templates
 [0m[[0minfo[0m] [0m	published nativelib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/srcs/nativelib_native0.4.0-SNAPSHOT_2.11-sources.jar[0m
 [0m[[0minfo[0m] [0m	published nativelib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/docs/nativelib_native0.4.0-SNAPSHOT_2.11-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[32msuccess[0m] [0mTotal time: 14 s, completed Jan 8, 2018 1:11:56 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 14 s, completed Jan 12, 2018 6:33:09 PM[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
-[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}javalib...[0m
 [0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.11 ...[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
-[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#javalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:11:57 EET 2018[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#javalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:33:10 EET 2018[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/javalib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-javadoc.jar ...[0m
 [0m[[0minfo[0m] [0mDone packaging.[0m
@@ -203,7 +368,7 @@ model contains 318 documentable templates
 [0m[[0minfo[0m] [0m	published javalib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/srcs/javalib_native0.4.0-SNAPSHOT_2.11-sources.jar[0m
 [0m[[0minfo[0m] [0m	published javalib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/docs/javalib_native0.4.0-SNAPSHOT_2.11-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[32msuccess[0m] [0mTotal time: 21 s, completed Jan 8, 2018 1:12:18 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 24 s, completed Jan 12, 2018 6:33:33 PM[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[0minfo[0m] [0mDone packaging.[0m
@@ -220,7 +385,7 @@ model contains 318 documentable templates
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#auxlib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:12:18 EET 2018[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#auxlib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:33:34 EET 2018[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/auxlib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
 [0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/auxlib/target/scala-2.11/api...[0m
 [0m[[0minfo[0m] [0mCompiling 5 Scala sources to /home/valdis/scala-native/auxlib/target/scala-2.11/classes...[0m
@@ -236,15 +401,15 @@ model contains 46 documentable templates
 [0m[[0minfo[0m] [0m	published auxlib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/srcs/auxlib_native0.4.0-SNAPSHOT_2.11-sources.jar[0m
 [0m[[0minfo[0m] [0m	published auxlib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/docs/auxlib_native0.4.0-SNAPSHOT_2.11-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[32msuccess[0m] [0mTotal time: 1 s, completed Jan 8, 2018 1:12:19 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 1 s, completed Jan 12, 2018 6:33:34 PM[0m
 [0m[[0minfo[0m] [0mFetching Scala source version 2.11.11 from /home/valdis/scala-2.11.11-only[0m
 [0m[[0minfo[0m] [0mChecking out Scala source version 2.11.11[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
-[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}scalalib...[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#auxlib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
@@ -259,7 +424,7 @@ model contains 46 documentable templates
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:12:24 EET 2018[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:33:41 EET 2018[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/scalalib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
 [0m[[0minfo[0m] [0mCompiling 582 Scala sources to /home/valdis/scala-native/scalalib/target/scala-2.11/classes...[0m
 [0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/scalalib/target/scala-2.11/api...[0m
@@ -615,34 +780,26 @@ model contains 1293 documentable templates
 [0m[[0minfo[0m] [0m	published scalalib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/srcs/scalalib_native0.4.0-SNAPSHOT_2.11-sources.jar[0m
 [0m[[0minfo[0m] [0m	published scalalib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/docs/scalalib_native0.4.0-SNAPSHOT_2.11-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[32msuccess[0m] [0mTotal time: 70 s, completed Jan 8, 2018 1:13:29 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 71 s, completed Jan 12, 2018 6:34:46 PM[0m
 [0m[[0minfo[0m] [0mChecking out Scala source version 2.11.11[0m
-[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.4.0-SNAPSHOT-sources.jar ...[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/target/scala-2.10/scala-native_2.10-0.1-SNAPSHOT-sources.jar ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[0minfo[0m] [0mDone packaging.[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
-[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
-[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
-[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}util...[0m
 [0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}testInterfaceSbtDefs...[0m
-[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.6 ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.10.6 ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.10.6 ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.6 ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
-[0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}scala-native...[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}util...[0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
@@ -651,69 +808,69 @@ model contains 1293 documentable templates
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#javalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#auxlib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#auxlib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[0minfo[0m] [0mResolving org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
-[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}scala-native...[0m
-[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
 [0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.4.0-SNAPSHOT.pom[0m
-[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.11-0.4.0-SNAPSHOT.pom[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:13:30 EET 2018[0m
-[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/nativelib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#util_2.10;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:13:30 EET 2018[0m
-[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/util/target/scala-2.10/ivy-0.4.0-SNAPSHOT.xml[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:13:30 EET 2018[0m
-[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/nscplugin/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
-[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/target/scala-2.10/scala-native_2.10-0.1-SNAPSHOT.pom[0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.6 ...[0m
-[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
-[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}nir...[0m
-[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.10.6 ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.10.6 ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.6 ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
-[0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/api...[0m
-[0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.4.0-SNAPSHOT.pom[0m
-[0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/util/target/scala-2.10/api...[0m
-[0m[[0minfo[0m] [0mCompiling 11 Scala sources to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/classes...[0m
-[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.6 ...[0m
-[0m[[0minfo[0m] [0mCompiling 10 Scala sources to /home/valdis/scala-native/util/target/scala-2.10/classes...[0m
-[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
-[0m[[0minfo[0m] [0mResolving org.scala-native#util_2.10;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.10.6 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.10.6 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.6 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:13:30 EET 2018[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/target/scala-2.10/scala-native_2.10-0.1-SNAPSHOT.pom[0m
+[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:34:47 EET 2018[0m
+[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/nativelib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:34:47 EET 2018[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
-[0m[[0minfo[0m] [0m:: delivering :: default#scala-native_2.10;0.1-SNAPSHOT :: 0.1-SNAPSHOT :: integration :: Mon Jan 08 13:13:30 EET 2018[0m
-[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/target/scala-2.10/ivy-0.1-SNAPSHOT.xml[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.11-0.4.0-SNAPSHOT.pom[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}nir...[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}testInterfaceSerialization...[0m
+[0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/api...[0m
+[0m[[0minfo[0m] [0m:: delivering :: default#scala-native_2.10;0.1-SNAPSHOT :: 0.1-SNAPSHOT :: integration :: Fri Jan 12 18:34:47 EET 2018[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-sources.jar ...[0m
+[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/target/scala-2.10/ivy-0.1-SNAPSHOT.xml[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#util_2.10;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:34:47 EET 2018[0m
+[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/util/target/scala-2.10/ivy-0.4.0-SNAPSHOT.xml[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:34:47 EET 2018[0m
+[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/nscplugin/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
+[0m[[0minfo[0m] [0mCompiling 11 Scala sources to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/classes...[0m
+[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
-[0m[[33mwarn[0m] [0mdropping dependency on node with no phase object: mixin[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#javalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#javalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[33mwarn[0m] [0mdropping dependency on node with no phase object: mixin[0m
+[0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/util/target/scala-2.10/api...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-native#auxlib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#auxlib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#auxlib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 model contains 22 documentable templates
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [0m[[33mwarn[0m] [0m/home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/Runner.scala:17: Could not find any member to link for "java.lang.IllegalStateException".[0m
 [0m[[33mwarn[0m] [0m  /** Returns an array of tasks that when executed will run tests and suites[0m
 [0m[[33mwarn[0m] [0m  ^[0m
@@ -727,35 +884,50 @@ model contains 22 documentable templates
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
 [0m[[33mwarn[0m] [0mthree warnings found[0m
 [0m[[0minfo[0m] [0mMain Scala API documentation successful.[0m
+[0m[[0minfo[0m] [0mCompiling 10 Scala sources to /home/valdis/scala-native/util/target/scala-2.10/classes...[0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#util_2.10;0.4.0-SNAPSHOT ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.4.0-SNAPSHOT.pom[0m
 [0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
 [0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
-[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#auxlib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:13:31 EET 2018[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#auxlib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:34:48 EET 2018[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/auxlib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nir_2.10;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:13:31 EET 2018[0m
-[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/nir/target/scala-2.10/ivy-0.4.0-SNAPSHOT.xml[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#javalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:13:31 EET 2018[0m
-[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/javalib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#test-interface-serialization_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:13:31 EET 2018[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#test-interface-serialization_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:34:48 EET 2018[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
-[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-javadoc.jar ...[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#nir_2.10;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:34:48 EET 2018[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/target/scala-2.10/scala-native_2.10-0.1-SNAPSHOT-javadoc.jar ...[0m
 [0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/nir/target/scala-2.10/ivy-0.4.0-SNAPSHOT.xml[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#javalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:34:48 EET 2018[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-javadoc.jar ...[0m
+[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/javalib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/target/scala-2.10/scala-native_2.10-0.1-SNAPSHOT.jar ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0m	published scala-native_2.10 to /home/valdis/.ivy2/local/default/scala-native_2.10/0.1-SNAPSHOT/poms/scala-native_2.10.pom[0m
+[0m[[0minfo[0m] [0m	published scala-native_2.10 to /home/valdis/.ivy2/local/default/scala-native_2.10/0.1-SNAPSHOT/jars/scala-native_2.10.jar[0m
+[0m[[0minfo[0m] [0m	published scala-native_2.10 to /home/valdis/.ivy2/local/default/scala-native_2.10/0.1-SNAPSHOT/srcs/scala-native_2.10-sources.jar[0m
+[0m[[0minfo[0m] [0m	published scala-native_2.10 to /home/valdis/.ivy2/local/default/scala-native_2.10/0.1-SNAPSHOT/docs/scala-native_2.10-javadoc.jar[0m
+[0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/default/scala-native_2.10/0.1-SNAPSHOT/ivys/ivy.xml[0m
 [0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}testInterface...[0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
-[A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#test-interface-serialization_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0mResolving org.scala-native#test-interface-serialization_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nativelib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
-[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.11 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#javalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#javalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#auxlib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
@@ -763,6 +935,7 @@ model contains 22 documentable templates
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+model contains 18 documentable templates
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.11 ...[0m
@@ -771,64 +944,65 @@ model contains 22 documentable templates
 [A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
 [0m[[0minfo[0m] [0m	published nscplugin_2.11.11 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/poms/nscplugin_2.11.11.pom[0m
-[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/target/scala-2.10/scala-native_2.10-0.1-SNAPSHOT.jar ...[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
 [0m[[0minfo[0m] [0m	published nscplugin_2.11.11 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/jars/nscplugin_2.11.11.jar[0m
 [0m[[0minfo[0m] [0m	published nscplugin_2.11.11 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/srcs/nscplugin_2.11.11-sources.jar[0m
-[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.jar ...[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
 [0m[[0minfo[0m] [0m	published nscplugin_2.11.11 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/docs/nscplugin_2.11.11-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:13:32 EET 2018[0m
-[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/scalalib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
-[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
-[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
 [0m[[0minfo[0m] [0m	published nativelib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/poms/nativelib_native0.4.0-SNAPSHOT_2.11.pom[0m
-[0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/api...[0m
-[0m[[0minfo[0m] [0mCompiling 8 Scala sources to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/classes...[0m
 [0m[[0minfo[0m] [0m	published nativelib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/jars/nativelib_native0.4.0-SNAPSHOT_2.11.jar[0m
 [0m[[0minfo[0m] [0m	published nativelib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/srcs/nativelib_native0.4.0-SNAPSHOT_2.11-sources.jar[0m
 [0m[[0minfo[0m] [0m	published nativelib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/docs/nativelib_native0.4.0-SNAPSHOT_2.11-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[0minfo[0m] [0m	published test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/poms/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11.pom[0m
-[0m[[0minfo[0m] [0m	published test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/jars/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11.jar[0m
-[0m[[0minfo[0m] [0m	published test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/srcs/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11-sources.jar[0m
-[0m[[0minfo[0m] [0m	published test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/docs/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11-javadoc.jar[0m
-[0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[0minfo[0m] [0m	published scala-native_2.10 to /home/valdis/.ivy2/local/default/scala-native_2.10/0.1-SNAPSHOT/poms/scala-native_2.10.pom[0m
-[0m[[0minfo[0m] [0m	published scala-native_2.10 to /home/valdis/.ivy2/local/default/scala-native_2.10/0.1-SNAPSHOT/jars/scala-native_2.10.jar[0m
-[0m[[0minfo[0m] [0m	published scala-native_2.10 to /home/valdis/.ivy2/local/default/scala-native_2.10/0.1-SNAPSHOT/srcs/scala-native_2.10-sources.jar[0m
-[0m[[0minfo[0m] [0m	published scala-native_2.10 to /home/valdis/.ivy2/local/default/scala-native_2.10/0.1-SNAPSHOT/docs/scala-native_2.10-javadoc.jar[0m
-[0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/default/scala-native_2.10/0.1-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#test-interface_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:13:32 EET 2018[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#scalalib_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:34:49 EET 2018[0m
+[0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/scalalib/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
+[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
+[0m[[0minfo[0m] [0mWrote /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.pom[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#test-interface_native0.4.0-SNAPSHOT_2.11;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:34:49 EET 2018[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/test-interface/target/scala-2.11/ivy-0.4.0-SNAPSHOT.xml[0m
+[0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/api...[0m
 [0m[[0minfo[0m] [0m	published auxlib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/poms/auxlib_native0.4.0-SNAPSHOT_2.11.pom[0m
+[0m[[0minfo[0m] [0mCompiling 8 Scala sources to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/classes...[0m
 [0m[[0minfo[0m] [0m	published auxlib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/jars/auxlib_native0.4.0-SNAPSHOT_2.11.jar[0m
 [0m[[0minfo[0m] [0m	published auxlib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/srcs/auxlib_native0.4.0-SNAPSHOT_2.11-sources.jar[0m
 [0m[[0minfo[0m] [0m	published auxlib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/docs/auxlib_native0.4.0-SNAPSHOT_2.11-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
 [0m[[0minfo[0m] [0m	published javalib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/poms/javalib_native0.4.0-SNAPSHOT_2.11.pom[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.jar ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
 [0m[[0minfo[0m] [0m	published javalib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/jars/javalib_native0.4.0-SNAPSHOT_2.11.jar[0m
 [0m[[0minfo[0m] [0m	published javalib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/srcs/javalib_native0.4.0-SNAPSHOT_2.11-sources.jar[0m
 [0m[[0minfo[0m] [0m	published javalib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/docs/javalib_native0.4.0-SNAPSHOT_2.11-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
+[0m[[0minfo[0m] [0m	published test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/poms/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11.pom[0m
+[0m[[0minfo[0m] [0m	published test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/jars/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11.jar[0m
+[0m[[0minfo[0m] [0m	published test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/srcs/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11-sources.jar[0m
+[0m[[0minfo[0m] [0m	published test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/docs/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11-javadoc.jar[0m
+[0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
 [0m[[33mwarn[0m] [0mdropping dependency on node with no phase object: mixin[0m
 [0m[[0minfo[0m] [0m	published scalalib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/poms/scalalib_native0.4.0-SNAPSHOT_2.11.pom[0m
-model contains 18 documentable templates
 [0m[[0minfo[0m] [0m	published scalalib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/jars/scalalib_native0.4.0-SNAPSHOT_2.11.jar[0m
 [0m[[0minfo[0m] [0m	published scalalib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/srcs/scalalib_native0.4.0-SNAPSHOT_2.11-sources.jar[0m
 model contains 35 documentable templates
+[0m[[0minfo[0m] [0mMain Scala API documentation successful.[0m
 [0m[[0minfo[0m] [0m	published scalalib_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/docs/scalalib_native0.4.0-SNAPSHOT_2.11-javadoc.jar[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.4.0-SNAPSHOT-javadoc.jar ...[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.4.0-SNAPSHOT.jar ...[0m
+[0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/nir/target/scala-2.10/api...[0m
+[0m[[0minfo[0m] [0mCompiling 22 Scala sources to /home/valdis/scala-native/nir/target/scala-2.10/classes...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0m	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.4.0-SNAPSHOT/poms/util_2.10.pom[0m
+[0m[[0minfo[0m] [0m	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.4.0-SNAPSHOT/jars/util_2.10.jar[0m
+[0m[[0minfo[0m] [0m	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.4.0-SNAPSHOT/srcs/util_2.10-sources.jar[0m
+[0m[[0minfo[0m] [0m	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.4.0-SNAPSHOT/docs/util_2.10-javadoc.jar[0m
+[0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
 [0m[[0minfo[0m] [0mMain Scala API documentation successful.[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT-javadoc.jar ...[0m
 [0m[[0minfo[0m] [0mDone packaging.[0m
-[0m[[0minfo[0m] [0mMain Scala API documentation successful.[0m
-[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.4.0-SNAPSHOT-javadoc.jar ...[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.jar ...[0m
 [0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/test-interface/target/scala-2.11/api...[0m
 [0m[[0minfo[0m] [0mCompiling 6 Scala sources to /home/valdis/scala-native/test-interface/target/scala-2.11/classes...[0m
-[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.4.0-SNAPSHOT_2.11-0.4.0-SNAPSHOT.jar ...[0m
 [0m[[0minfo[0m] [0mDone packaging.[0m
 [0m[[0minfo[0m] [0m	published test-interface-serialization_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/poms/test-interface-serialization_native0.4.0-SNAPSHOT_2.11.pom[0m
 [0m[[0minfo[0m] [0m	published test-interface-serialization_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/jars/test-interface-serialization_native0.4.0-SNAPSHOT_2.11.jar[0m
@@ -851,15 +1025,6 @@ model contains 18 documentable templates
 [0m[[0minfo[0m] [0m	published test-interface_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/srcs/test-interface_native0.4.0-SNAPSHOT_2.11-sources.jar[0m
 [0m[[0minfo[0m] [0m	published test-interface_native0.4.0-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/docs/test-interface_native0.4.0-SNAPSHOT_2.11-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.4.0-SNAPSHOT_2.11/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.4.0-SNAPSHOT.jar ...[0m
-[0m[[0minfo[0m] [0mCompiling 22 Scala sources to /home/valdis/scala-native/nir/target/scala-2.10/classes...[0m
-[0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/nir/target/scala-2.10/api...[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
-[0m[[0minfo[0m] [0m	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.4.0-SNAPSHOT/poms/util_2.10.pom[0m
-[0m[[0minfo[0m] [0m	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.4.0-SNAPSHOT/jars/util_2.10.jar[0m
-[0m[[0minfo[0m] [0m	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.4.0-SNAPSHOT/srcs/util_2.10-sources.jar[0m
-[0m[[0minfo[0m] [0m	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.4.0-SNAPSHOT/docs/util_2.10-javadoc.jar[0m
-[0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
 model contains 211 documentable templates
 [0m[[0minfo[0m] [0mMain Scala API documentation successful.[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.4.0-SNAPSHOT-javadoc.jar ...[0m
@@ -872,8 +1037,8 @@ model contains 211 documentable templates
 [0m[[0minfo[0m] [0m	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.4.0-SNAPSHOT/docs/nir_2.10-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
-[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}testingCompilerInterface...[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.4.0-SNAPSHOT-sources.jar ...[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-native#nscplugin_2.11.11;0.4.0-SNAPSHOT ...[0m
@@ -907,11 +1072,10 @@ model contains 211 documentable templates
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.6 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#tools_2.10;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:13:46 EET 2018[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#tools_2.10;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:35:00 EET 2018[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/tools/target/scala-2.10/ivy-0.4.0-SNAPSHOT.xml[0m
-[0m[[0minfo[0m] [0mCompiling 82 Scala sources to /home/valdis/scala-native/tools/target/scala-2.10/classes...[0m
 [0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/tools/target/scala-2.10/api...[0m
-model contains 191 documentable templates
+[0m[[0minfo[0m] [0mCompiling 82 Scala sources to /home/valdis/scala-native/tools/target/scala-2.10/classes...[0m
 [0m[[33mwarn[0m] [0m/home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:97: match may not be exhaustive.[0m
 [0m[[33mwarn[0m] [0mIt would fail on the following inputs: Class(_, _, _, _), Module(_, _, _, _), Trait(_, _, _)[0m
 [0m[[33mwarn[0m] [0m          env(n) match {[0m
@@ -920,21 +1084,22 @@ model contains 191 documentable templates
 [0m[[33mwarn[0m] [0mIt would fail on the following inputs: Class(_, _, _, _), Module(_, _, _, _), Struct(_, _, _), Trait(_, _, _)[0m
 [0m[[33mwarn[0m] [0m        env(n) match {[0m
 [0m[[33mwarn[0m] [0m           ^[0m
-[0m[[33mwarn[0m] [0m/home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/ModuleLowering.scala:41: Variable name undefined in comment for class ModuleLowering in class ModuleLowering[0m
-[0m[[33mwarn[0m] [0mclass ModuleLowering(implicit top: Top) extends Pass {[0m
-[0m[[33mwarn[0m] [0m      ^[0m
 [0m[[33mwarn[0m] [0m/home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:243: match may not be exhaustive.[0m
 [0m[[33mwarn[0m] [0mIt would fail on the following inputs: If(_, _, _), Jump(_), Let(_, _), None, Ret(_), Switch(_, _, _), Throw(_, _), Unreachable[0m
 [0m[[33mwarn[0m] [0m        insts.head match {[0m
 [0m[[33mwarn[0m] [0m              ^[0m
-[0m[[33mwarn[0m] [0mone warning found[0m
-[0m[[0minfo[0m] [0mMain Scala API documentation successful.[0m
-[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.4.0-SNAPSHOT-javadoc.jar ...[0m
-[0m[[0minfo[0m] [0mDone packaging.[0m
+model contains 191 documentable templates
+[0m[[33mwarn[0m] [0m/home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/ModuleLowering.scala:41: Variable name undefined in comment for class ModuleLowering in class ModuleLowering[0m
+[0m[[33mwarn[0m] [0mclass ModuleLowering(implicit top: Top) extends Pass {[0m
+[0m[[33mwarn[0m] [0m      ^[0m
 [0m[[33mwarn[0m] [0m/home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/GlobalValueNumbering.scala:106: Cannot check match for unreachability.[0m
 [0m[[33mwarn[0m] [0m(The analysis required more space than allowed. Please try with scalac -Dscalac.patmat.analysisBudget=512 or -Dscalac.patmat.analysisBudget=off.)[0m
 [0m[[33mwarn[0m] [0m    op match {[0m
 [0m[[33mwarn[0m] [0m    ^[0m
+[0m[[33mwarn[0m] [0mone warning found[0m
+[0m[[0minfo[0m] [0mMain Scala API documentation successful.[0m
+[0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.4.0-SNAPSHOT-javadoc.jar ...[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
 [0m[[33mwarn[0m] [0m/home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/PartialEvaluation.scala:272: match may not be exhaustive.[0m
 [0m[[33mwarn[0m] [0mIt would fail on the following inputs: Array(_, _), Bool, Char, Class(_), Double, Float, Function(_, _), Module(_), None, Nothing, Ptr, Struct(_, _), Trait(_), UByte, UInt, ULong, UShort, Unit, Vararg, Void[0m
 [0m[[33mwarn[0m] [0m  private def minValue(ty: Type): Long = ty match {[0m
@@ -951,8 +1116,8 @@ model contains 191 documentable templates
 [0m[[0minfo[0m] [0m	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.4.0-SNAPSHOT/srcs/tools_2.10-sources.jar[0m
 [0m[[0minfo[0m] [0m	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.4.0-SNAPSHOT/docs/tools_2.10-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mPackaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.4.0-SNAPSHOT-sources.jar ...[0m
+[0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mDone packaging.[0m
 [0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}sbtScalaNative...[0m
 [0m[[0minfo[0m] [0mResolving org.scala-native#tools_2.10;0.4.0-SNAPSHOT ...[0m
@@ -1021,7 +1186,7 @@ model contains 191 documentable templates
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#scripted-framework;0.13.16 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#sbt-launch;0.13.16 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
-[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#sbt-scala-native;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Mon Jan 08 13:14:11 EET 2018[0m
+[0m[[0minfo[0m] [0m:: delivering :: org.scala-native#sbt-scala-native;0.4.0-SNAPSHOT :: 0.4.0-SNAPSHOT :: integration :: Fri Jan 12 18:35:22 EET 2018[0m
 [0m[[0minfo[0m] [0m	delivering ivy file to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/ivy-0.4.0-SNAPSHOT.xml[0m
 [0m[[0minfo[0m] [0mMain Scala API documentation to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/api...[0m
 [0m[[0minfo[0m] [0mCompiling 20 Scala sources to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/classes...[0m
@@ -1035,7 +1200,7 @@ model contains 60 documentable templates
 [0m[[0minfo[0m] [0m	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.4.0-SNAPSHOT/srcs/sbt-scala-native-sources.jar[0m
 [0m[[0minfo[0m] [0m	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.4.0-SNAPSHOT/docs/sbt-scala-native-javadoc.jar[0m
 [0m[[0minfo[0m] [0m	published ivy to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.4.0-SNAPSHOT/ivys/ivy.xml[0m
-[0m[[32msuccess[0m] [0mTotal time: 47 s, completed Jan 8, 2018 1:14:16 PM[0m
+[0m[[32msuccess[0m] [0mTotal time: 41 s, completed Jan 12, 2018 6:35:27 PM[0m
 [0m[[33mwarn[0m] [0mCredentials file /home/valdis/.bintray/.credentials does not exist[0m
 [0m[[0minfo[0m] [0mUpdating {file:/home/valdis/scala-native/}benchmarks...[0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.11 ...[0m
@@ -1063,13 +1228,13 @@ model contains 60 documentable templates
 [A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.14.3 ...[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
 [0m[[0minfo[0m] [0mCompiling 7 Scala sources to /home/valdis/scala-native/benchmarks/target/scala-2.11/classes...[0m
-[0m[[0minfo[0m] [0mLinking (1922 ms)[0m
+[0m[[0minfo[0m] [0mLinking (1717 ms)[0m
 [0m[[0minfo[0m] [0mDiscovered 1532 classes and 10788 methods[0m
-[0m[[0minfo[0m] [0mOptimizing (4485 ms)[0m
-[0m[[0minfo[0m] [0mGenerating intermediate code (1670 ms)[0m
+[0m[[0minfo[0m] [0mOptimizing (4775 ms)[0m
+[0m[[0minfo[0m] [0mGenerating intermediate code (1071 ms)[0m
 [0m[[0minfo[0m] [0mProduced 1 files[0m
-[0m[[0minfo[0m] [0mCompiling to native code (22107 ms)[0m
-[0m[[0minfo[0m] [0mLinking native code (337 ms)[0m
-[OK],montecarlo.PiMultiThreadBenchmark,1,9.196,9.196,9.196,0.000,9.196,9.196,9.196,9.196
-[OK],montecarlo.PiFuturesBenchmark,1,440.354,440.354,440.354,0.000,440.354,440.354,440.354,440.354
-[0m[[32msuccess[0m] [0mTotal time: 35 s, completed Jan 8, 2018 1:14:51 PM[0m
+[0m[[0minfo[0m] [0mCompiling to native code (22078 ms)[0m
+[0m[[0minfo[0m] [0mLinking native code (447 ms)[0m
+[OK],montecarlo.PiMultiThreadBenchmark,1,9.414,9.414,9.414,0.000,9.414,9.414,9.414,9.414
+[OK],montecarlo.PiFuturesBenchmark,1,418.448,418.448,418.448,0.000,418.448,418.448,418.448,418.448
+[0m[[32msuccess[0m] [0mTotal time: 36 s, completed Jan 12, 2018 6:36:02 PM[0m
