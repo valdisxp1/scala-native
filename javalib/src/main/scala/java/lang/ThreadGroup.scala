@@ -19,13 +19,10 @@ class ThreadGroup private[lang] (
 
   import ThreadGroup._
 
-  // This group's max priority
   var maxPriority: Int = Thread.MAX_PRIORITY
 
-  // Indicated if this thread group was marked as daemon
   private var daemon: scala.Boolean = false
 
-  // Indicates if this thread group was already destroyed
   private var destroyed: scala.Boolean = false
 
   private var _allowThreadSuspension: scala.Boolean = true
@@ -412,7 +409,6 @@ object ThreadGroup {
   // Indent used to print information about thread group
   private final val LISTING_INDENT = "    "
 
-  // ThreadGroup lock object
   private final class ThreadGroupLock extends ShadowLock
   private final val lock: ThreadGroupLock = new ThreadGroupLock
 }

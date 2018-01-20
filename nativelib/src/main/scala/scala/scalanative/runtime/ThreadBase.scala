@@ -5,9 +5,9 @@ import scala.scalanative.runtime.ThreadBase._
 abstract class ThreadBase {
   def threadModuleBase: ThreadModuleBase
   def initMainThread(): Unit
-  private var state                               = Normal
-  final def getLockState: Int                     = state
-  private[runtime] def setLockState(s: Int): Unit = state = s
+  private var lockState                           = Normal
+  final def getLockState: Int                     = lockState
+  private[runtime] def setLockState(s: Int): Unit = lockState = s
   // only here to implement holdsLock
   private[runtime] var locks = new scala.Array[Monitor](8)
   private[runtime] var size  = 0

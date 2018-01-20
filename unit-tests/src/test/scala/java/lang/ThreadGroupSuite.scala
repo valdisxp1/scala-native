@@ -35,20 +35,20 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
   }
 
   abstract class Structure[T <: Thread] {
-    def makeTread(group: ThreadGroup, name: String): T
+    def makeThread(group: ThreadGroup, name: String): T
 
     val group = new ThreadGroup("group")
-    val groupThreads: Seq[T] = scala.Seq(makeTread(group, "G-1"),
-                                         makeTread(group, "G-2"),
-                                         makeTread(group, "G-3"))
+    val groupThreads: Seq[T] = scala.Seq(makeThread(group, "G-1"),
+                                         makeThread(group, "G-2"),
+                                         makeThread(group, "G-3"))
 
     val subgroup1 = new ThreadGroup(group, "subgroup1")
     val subgroup1Threads: Seq[T] =
-      scala.Seq(makeTread(subgroup1, "SG-1"), makeTread(subgroup1, "SG-2"))
+      scala.Seq(makeThread(subgroup1, "SG-1"), makeThread(subgroup1, "SG-2"))
 
     val subgroup2 = new ThreadGroup(group, "subgroup2")
     val subgroup2Threads: Seq[T] =
-      scala.Seq(makeTread(subgroup2, "SG-A"), makeTread(subgroup2, "SG-B"))
+      scala.Seq(makeThread(subgroup2, "SG-A"), makeThread(subgroup2, "SG-B"))
 
     val threads: Seq[T] = groupThreads ++ subgroup1Threads ++ subgroup2Threads
 
@@ -75,7 +75,7 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
       }
     }
     val structure = new Structure[SleepyThread] {
-      def makeTread(group: ThreadGroup, name: String) =
+      def makeThread(group: ThreadGroup, name: String) =
         new SleepyThread(group, name)
     }
     import structure._
@@ -146,7 +146,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
   test(
     "A daemon thread group is automatically destroyed when its last thread is stopped or its last thread group is destroyed.") {
     val structure = new Structure[Counter] {
-      def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
+      def makeThread(group: ThreadGroup, name: String) =
+        new Counter(group, name)
     }
     import structure._
     threads.foreach(_.start())
@@ -175,7 +176,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
 
   test("activeCount, activeGroupCount, Thread.enumerate and list") {
     val structure = new Structure[Counter] {
-      def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
+      def makeThread(group: ThreadGroup, name: String) =
+        new Counter(group, name)
     }
     import structure._
     threads.foreach(_.start())
@@ -290,7 +292,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
   test("*DEPRECATED*  ThreadGroup.suspend and resume should affect all threads") {
 
     val structure = new Structure[Counter] {
-      def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
+      def makeThread(group: ThreadGroup, name: String) =
+        new Counter(group, name)
     }
     import structure._
     try {
@@ -327,7 +330,8 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
     "*DEPRECATED*  ThreadGroup.suspend and resume should respect allowThreadSuspension") {
 
     val structure = new Structure[Counter] {
-      def makeTread(group: ThreadGroup, name: String) = new Counter(group, name)
+      def makeThread(group: ThreadGroup, name: String) =
+        new Counter(group, name)
     }
     import structure._
     try {
@@ -398,7 +402,7 @@ object ThreadGroupSuite extends tests.MultiThreadSuite {
   test("*DEPRECATED* ThreadGroup.stop should stop all threads") {
     val mutex = new Object
     val structure = new Structure[WaitingThread] {
-      def makeTread(group: ThreadGroup, name: String) =
+      def makeThread(group: ThreadGroup, name: String) =
         new WaitingThread(mutex, group, name)
     }
     import structure._

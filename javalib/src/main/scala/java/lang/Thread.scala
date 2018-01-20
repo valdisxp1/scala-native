@@ -45,30 +45,24 @@ class Thread private (
 
   private var livenessState = CAtomicInt(internalNew)
 
-  // Thread's ID
   private val threadId: scala.Long = getNextThreadId
 
-  // Thread's name
-  // throws NullPointerException if the given name is null
   private[this] var name: String =
     if (rawName != THREAD) rawName.toString else THREAD + threadId
 
-  // This thread's thread group
   private[lang] var group: ThreadGroup =
     if (rawGroup != null) rawGroup else parentThread.group
   group.checkGroup()
 
-  // Indicates whether this thread was marked as daemon
   private var daemon: scala.Boolean =
     if (!mainThread) parentThread.daemon else false
 
-  // Thread's priority
   private var priority: Int = if (!mainThread) parentThread.priority else 5
 
   // main thread is not started via Thread.start, set it up manually
   def initMainThread(): Unit = {
     group.add(this)
-    livenessState.store(internalRunnable)
+    livenessState.store(internalStarted)
     underlying = pthread_self()
     val threadPtr = malloc(sizeof[Thread]).asInstanceOf[Ptr[Thread]]
     !threadPtr = this
@@ -81,14 +75,8 @@ class Thread private (
     value > internalNew
   }
 
-  // Uncaught exception handler for this thread
   private var exceptionHandler: Thread.UncaughtExceptionHandler = _
 
-  // The underlying pthread ID
-  /*
-   * NOTE: This is used to keep track of the pthread linked to this Thread,
-   * it might be easier/better to handle this at lower level
-   */
   private var underlying: pthread_t = 0.asInstanceOf[ULong]
 
   private val sleepMutex   = new Object
@@ -96,7 +84,6 @@ class Thread private (
   private val suspendMutex = new Object
   private var suspendState = internalNotSuspended
 
-  // ThreadLocal values : local and inheritable
   var localValues: ThreadLocal.Values = _
 
   var inheritableValues: ThreadLocal.Values =
@@ -158,7 +145,7 @@ class Thread private (
   def interrupt(): Unit = {
     checkAccess()
     livenessState.compareAndSwapStrong(internalStarting, internalInterrupted)
-    livenessState.compareAndSwapStrong(internalRunnable, internalInterrupted)
+    livenessState.compareAndSwapStrong(internalStarted, internalInterrupted)
     sleepMutex.synchronized {
       sleepMutex.notify()
     }
@@ -166,7 +153,7 @@ class Thread private (
 
   final def isAlive: scala.Boolean = {
     val value = livenessState.load()
-    value == internalRunnable || value == internalStarting
+    value == internalStarted || value == internalStarting
   }
 
   final def isDaemon: scala.Boolean = daemon
@@ -282,7 +269,6 @@ class Thread private (
 
   final def setName(name: String): Unit = {
     checkAccess()
-    // throws NullPointerException if the given name is null
     this.name = name.toString
   }
 
@@ -342,7 +328,7 @@ class Thread private (
       State.NEW
     } else if (value == internalStarting) {
       State.RUNNABLE
-    } else if (value == internalRunnable) {
+    } else if (value == internalStarted) {
       val lockState = getLockState
       if (lockState == ThreadBase.Blocked) {
         State.BLOCKED
@@ -370,7 +356,7 @@ class Thread private (
 
     val shouldTerminate = joinMutex.synchronized {
       val terminated = livenessState
-        .compareAndSwapStrong(internalRunnable, internalTerminated)
+        .compareAndSwapStrong(internalStarted, internalTerminated)
         ._1
       val interruptedTerminated = livenessState
         .compareAndSwapStrong(internalInterrupted,
@@ -382,7 +368,6 @@ class Thread private (
     }
 
     if (shouldTerminate) {
-      // it is we that would terminate the thread
       val status: Int = pthread_cancel(underlying)
       if (status != 0) {
         throw new InternalError("Pthread error " + status)
@@ -464,12 +449,12 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     pthread_setspecific(myThreadKey, p)
     free(p)
     if (thread.underlying == 0L.asInstanceOf[ULong]) {
-      // the called hasn't set the underlying thread id yet
+      // the parent hasn't set the underlying thread id yet
       // make sure it is initialized
       thread.underlying = pthread_self()
     }
     thread.livenessState
-      .compareAndSwapStrong(internalStarting, internalRunnable)
+      .compareAndSwapStrong(internalStarting, internalStarted)
     try {
       thread.run()
     } catch {
@@ -491,7 +476,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     thread.asInstanceOf[ThreadBase].freeAllLocks()
     thread.joinMutex.synchronized {
       thread.livenessState
-        .compareAndSwapStrong(internalRunnable, internalTerminated)
+        .compareAndSwapStrong(internalStarted, internalTerminated)
       thread.livenessState
         .compareAndSwapStrong(internalInterrupted,
                               internalInterruptedTerminated)
@@ -506,7 +491,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   // waiting and blocked handled separately
   private final val internalNew                   = 0
   private final val internalStarting              = 1
-  private final val internalRunnable              = 2
+  private final val internalStarted               = 2
   private final val internalInterrupted           = 3
   private final val internalTerminated            = 4
   private final val internalInterruptedTerminated = 5
@@ -544,7 +529,6 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
 
   private final val STACK_TRACE_INDENT: String = "    "
 
-  // Default uncaught exception handler
   private var defaultExceptionHandler: UncaughtExceptionHandler = _
 
   // Counter used to generate thread's ID
@@ -608,9 +592,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   def holdsLock(obj: Object): scala.Boolean =
     currentThread().asInstanceOf[ThreadBase].holdsLock(obj)
 
-  def `yield`(): Unit = {
-    sched_yield()
-  }
+  def `yield`(): Unit = sched_yield()
 
   def getAllStackTraces: java.util.Map[Thread, Array[StackTraceElement]] = {
     var threadsCount: Int          = mainThreadGroup.activeCount() + 1
@@ -651,7 +633,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     val current = currentThread()
     if (current.livenessState.load() == internalInterrupted) {
       current.livenessState
-        .compareAndSwapStrong(internalInterrupted, internalRunnable)
+        .compareAndSwapStrong(internalInterrupted, internalStarted)
         ._1
     } else {
       false
