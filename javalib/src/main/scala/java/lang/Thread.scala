@@ -2,8 +2,8 @@ package java.lang
 
 import java.util
 
-import scala.scalanative.native.stdlib.{free, malloc}
 import scala.scalanative.native.{
+  CCast,
   CFunctionPtr,
   CInt,
   Ptr,
@@ -64,9 +64,7 @@ class Thread private (
     group.add(this)
     livenessState.store(internalStarted)
     underlying = pthread_self()
-    val threadPtr = malloc(sizeof[Thread]).asInstanceOf[Ptr[Thread]]
-    !threadPtr = this
-    pthread_setspecific(myThreadKey, threadPtr.asInstanceOf[Ptr[scala.Byte]])
+    pthread_setspecific(myThreadKey, this.cast[Ptr[scala.Byte]])
   }
 
   // Indicates if the thread was already started
@@ -296,9 +294,6 @@ class Thread private (
     // adding the thread to the thread group
     group.add(this)
 
-    val threadPtr = malloc(sizeof[Thread]).asInstanceOf[Ptr[Thread]]
-    !threadPtr = this
-
     val id = stackalloc[pthread_t]
     // pthread_attr_t is a struct, not a ULong
     val attrs = stackalloc[scala.Byte](pthread_attr_t_size)
@@ -310,10 +305,7 @@ class Thread private (
     }
 
     val status =
-      pthread_create(id,
-                     attrs,
-                     callRunRoutine,
-                     threadPtr.asInstanceOf[Ptr[scala.Byte]])
+      pthread_create(id, attrs, callRunRoutine, this.cast[Ptr[scala.Byte]])
     if (status != 0)
       throw new Exception(
         "Failed to create new thread, pthread error " + status)
@@ -445,9 +437,8 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   // defined as Ptr[Void] => Ptr[Void]
   // called as Ptr[Thread] => Ptr[Void]
   private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
-    val thread = !p.asInstanceOf[Ptr[Thread]]
+    val thread = p.cast[Thread]
     pthread_setspecific(myThreadKey, p)
-    free(p)
     if (thread.underlying == 0L.asInstanceOf[ULong]) {
       // the parent hasn't set the underlying thread id yet
       // make sure it is initialized
@@ -539,14 +530,10 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
 
   def activeCount: Int = currentThread().group.activeCount()
 
-  def currentThreadInternal(): Thread with ThreadBase = {
-    val ptr = pthread_getspecific(myThreadKey).asInstanceOf[Ptr[Thread]]
-    if (ptr != null) {
-      !ptr
-    } else {
-      null
-    }
-  }
+  def currentThreadInternal(): Thread with ThreadBase =
+    pthread_getspecific(myThreadKey)
+      .cast[Thread]
+      .asInstanceOf[Thread with ThreadBase]
 
   def currentThread(): Thread = {
     val value = currentThreadInternal()
