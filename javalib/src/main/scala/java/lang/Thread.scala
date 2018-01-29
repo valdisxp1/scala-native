@@ -164,7 +164,7 @@ class Thread private (
   final def join(): Unit = {
     if (isAlive) {
       joinMutex.synchronized {
-        while (isAlive) joinMutex.wait()
+        while (isAlive) joinMutex.wait(1000)
       }
     }
   }
@@ -606,6 +606,21 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     }
 
     map
+  }
+
+  def dumpAllStackTraces(): Unit = {
+    Console.err.println("DUMPING-THREADS")
+    import scala.collection.JavaConverters._
+    def dumpStackTrace(thread: Thread): Unit = {
+      Console.err.println(s"DUMPING-$thread")
+      thread.getStackTrace.foreach(Console.err.println(_))
+    }
+    def dumpStackTraceGroup(group: ThreadGroup): Unit = {
+      Console.err.println(s"DUMPING-$group")
+      group._threads.foreach(dumpStackTrace)
+      group._groups.foreach(dumpStackTraceGroup)
+    }
+    dumpStackTraceGroup(mainThreadGroup)
   }
 
   def getDefaultUncaughtExceptionHandler: UncaughtExceptionHandler =

@@ -28,10 +28,10 @@ class ThreadGroup private[lang] (
   private var _allowThreadSuspension: scala.Boolean = true
 
   // List of subgroups of this thread group
-  private var _groups: immutable.List[ThreadGroup] = immutable.Nil
+  private[lang] var _groups: immutable.List[ThreadGroup] = immutable.Nil
 
   // All threads in the group
-  private var _threads: immutable.List[Thread] = immutable.Nil
+  private[lang] var _threads: immutable.List[Thread] = immutable.Nil
 
   def this(parent: ThreadGroup, name: String) = {
     this(parent, name, mainGroup = false)

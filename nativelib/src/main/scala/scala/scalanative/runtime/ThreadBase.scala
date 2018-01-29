@@ -44,6 +44,7 @@ object ThreadBase {
   protected[runtime] def shutdownCheckLoop(): Unit =
     threadModule.shutdownCheckLoop()
   protected[runtime] def mainThreadEnds(): Unit = threadModule.mainThreadEnds()
+  def dumpAllStackTraces(): Unit = threadModule.dumpAllStackTraces
 
   /**
    *
@@ -61,4 +62,5 @@ abstract class ThreadModuleBase {
   protected[runtime] def initMainThread(): Unit
   protected[runtime] def mainThreadEnds(): Unit
   protected[runtime] def currentThreadInternal(): Thread with ThreadBase
+  def dumpAllStackTraces(): Unit
 }
