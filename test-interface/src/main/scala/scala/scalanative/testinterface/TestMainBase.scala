@@ -219,7 +219,11 @@ object TestMainBase {
 
   private val threadDumper = CFunctionPtr.fromFunction1(dumpThreads _)
   private def dumpThreads(signal: Int) = {
-    Console.err.println("DUMPING-THREADS1")
-    ThreadBase.dumpAllStackTraces()
+    System.err.println("DUMPING-THREADS1")
+    try {
+      ThreadBase.dumpAllStackTraces()
+    } catch {
+      case t: Throwable => t.printStackTrace()
+    }
   }
 }

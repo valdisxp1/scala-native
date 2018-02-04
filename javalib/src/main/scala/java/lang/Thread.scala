@@ -411,7 +411,7 @@ class Thread private (
   override def toString: String = {
     val threadGroup: ThreadGroup = group
     val s: String                = if (threadGroup == null) "" else threadGroup.name
-    "Thread[" + name + "," + priority + "," + s + "]"
+    "Thread[" + name + "," + priority + "," + s + "]" + " LIVENESS:" + livenessState +" LOCK:" + getLockState
   }
 
   def getUncaughtExceptionHandler: Thread.UncaughtExceptionHandler = {
@@ -609,14 +609,14 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   }
 
   def dumpAllStackTraces(): Unit = {
-    Console.err.println("DUMPING-THREADS")
+    System.err.println("DUMPING-THREADS")
     import scala.collection.JavaConverters._
     def dumpStackTrace(thread: Thread): Unit = {
-      Console.err.println(s"DUMPING-$thread")
+      System.err.println(s"DUMPING-$thread")
       thread.getStackTrace.foreach(Console.err.println(_))
     }
     def dumpStackTraceGroup(group: ThreadGroup): Unit = {
-      Console.err.println(s"DUMPING-$group")
+      System.err.println(s"DUMPING-$group")
       group._threads.foreach(dumpStackTrace)
       group._groups.foreach(dumpStackTraceGroup)
     }
