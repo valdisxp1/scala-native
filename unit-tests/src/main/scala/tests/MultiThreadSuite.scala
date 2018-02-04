@@ -39,7 +39,7 @@ trait MultiThreadSuite extends Suite {
     threads.foreach(_.join())
   }
 
-  val eternity = 300000 //ms
+  val eternity = 30000 //ms
   def eventually(maxDelay: scala.Long = eternity,
                  recheckEvery: scala.Long = 200,
                  label: String = "Condition")(p: => scala.Boolean): Unit = {
