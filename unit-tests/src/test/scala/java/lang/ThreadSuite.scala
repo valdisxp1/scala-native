@@ -686,6 +686,10 @@ object ThreadSuite extends tests.MultiThreadSuite {
 
     mutex.notifyAll()
 
+    eventuallyEquals()(thread1.getState, Thread.State.TERMINATED)
+    eventuallyEquals()(thread2.getState, Thread.State.TERMINATED)
+
+
     eventually(label = "both threads not present") {
       val stackTraces = Thread.getAllStackTraces
       !stackTraces.containsKey(thread1) && !stackTraces.containsKey(thread2)
