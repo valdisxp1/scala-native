@@ -164,7 +164,7 @@ class Thread private (
   final def join(): Unit = {
     if (isAlive) {
       joinMutex.synchronized {
-        while (isAlive) joinMutex.wait(1000)
+        while (isAlive) joinMutex.wait()
       }
     }
   }
