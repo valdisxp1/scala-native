@@ -185,6 +185,7 @@ trait MultiThreadSuite extends Suite {
                         Thread.currentThread().getThreadGroup,
                       name: String = "WaitingThread")
       extends Thread(threadGroup, name) {
+    setDaemon(true)
     private var notified = false
 
     def timesNotified = if (notified) 1 else 0
@@ -199,6 +200,7 @@ trait MultiThreadSuite extends Suite {
 
   class Counter(threadGroup: ThreadGroup, name: String)
       extends Thread(threadGroup, name) {
+    setDaemon(true)
     def this() = this(Thread.currentThread().getThreadGroup, "Counter")
     var count = 0L
     var goOn  = true
@@ -218,6 +220,7 @@ trait MultiThreadSuite extends Suite {
   }
 
   class MemoryMuncher(times: Int) extends Thread {
+    setDaemon(true)
     var visibleState = new FatObject()
 
     override def run(): Unit = {
