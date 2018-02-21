@@ -99,14 +99,6 @@ void init_csize(size_t *atm, size_t init_value) {
 // line: 29)
 
 /**
-* Memory
-* */
-
-void *alloc(size_t sz) { return malloc(sz); }
-
-void free(void *ptr) { free(ptr); }
-
-/**
 * Load
 * */
 
