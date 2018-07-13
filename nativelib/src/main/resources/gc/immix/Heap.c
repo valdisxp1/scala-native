@@ -136,6 +136,16 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
             assert(Heap_IsWordInLargeHeap(heap, (word_t *)object));
             return (word_t *)object;
         } else {
+            Heap_CollectOld(heap, stack);
+
+            object = LargeAllocator_GetBlock(heap->largeAllocator, size);
+
+            if (object != NULL) {
+                Object_SetObjectType(&object->header, object_large);
+                Object_SetSize(&object->header, size);
+                return Object_ToMutatorAddress(object);
+            }
+
             Heap_GrowLarge(heap, size);
 
             object = LargeAllocator_GetBlock(&largeAllocator, size);
@@ -153,6 +163,12 @@ NOINLINE word_t *Heap_allocSmallSlow(Heap *heap, uint32_t size) {
         goto done;
 
     Heap_Collect(heap, &stack);
+    object = (Object *)Allocator_Alloc(&allocator, size);
+
+    if (object != NULL)
+        goto done;
+
+    Heap_CollectOld(heap, &stack);
     object = (Object *)Allocator_Alloc(&allocator, size);
 
     if (object != NULL)
@@ -212,15 +228,28 @@ void Heap_Collect(Heap *heap, Stack *stack) {
     printf("\nCollect\n");
     fflush(stdout);
 #endif
-    Marker_MarkRoots(heap, stack);
-    Heap_Recycle(heap);
+    Marker_MarkRoots(heap, stack, false);
+    Heap_Recycle(heap, false);
 #ifdef DEBUG_PRINT
     printf("End collect\n");
     fflush(stdout);
 #endif
 }
 
-void Heap_Recycle(Heap *heap) {
+void Heap_CollectOld(Heap *heap, Stack *stack) {
+#ifdef DEBUG_PRINT
+    printf("\nCollect old\n");
+    fflush(stdout);
+#endif
+    Marker_MarkRoots(heap, stack, true);
+    Heap_Recycle(heap, true);
+#ifdef DEBUG_PRINT
+    printf("End collect old\n");
+    fflush(stdout);
+#endif
+}
+
+void Heap_Recycle(Heap *heap, bool collectingOld) {
     BlockList_Clear(&allocator.recycledBlocks);
     BlockList_Clear(&allocator.freeBlocks);
 
@@ -233,15 +262,15 @@ void Heap_Recycle(Heap *heap) {
     LineMeta *lineMetas = (LineMeta *)heap->lineMetaStart;
     while (current < heap->blockMetaEnd) {
         BlockMeta *blockMeta = (BlockMeta *)current;
-        Block_Recycle(&allocator, blockMeta, currentBlockStart, lineMetas);
+        Block_Recycle(&allocator, blockMeta, currentBlockStart, lineMetas, collectingOld);
         // block_print(blockMeta);
         current += WORDS_IN_BLOCK_METADATA;
         currentBlockStart += WORDS_IN_BLOCK;
         lineMetas += LINE_COUNT;
     }
-    LargeAllocator_Sweep(&largeAllocator);
+    LargeAllocator_Sweep(&largeAllocator, collectingOld);
 
-    if (Allocator_ShouldGrow(&allocator)) {
+    if (collectingOld && Allocator_ShouldGrow(&allocator)) {
         double growth;
         if (heap->smallHeapSize < EARLY_GROWTH_THRESHOLD) {
             growth = EARLY_GROWTH_RATE;
@@ -252,11 +281,14 @@ void Heap_Recycle(Heap *heap) {
         size_t increment = blocks * WORDS_IN_BLOCK;
         Heap_Grow(heap, increment);
     }
-    Allocator_InitCursors(&allocator);
+    if (!Allocator_CanInitCursors(&allocator)) {
+        Heap_CollectOld(heap, stack);
+    } else {
+        Allocator_InitCursors(&allocator);
+    }
 }
 
 void Heap_exitWithOutOfMemory() {
-    printf("Out of heap space\n");
     StackTrace_PrintStackTrace();
     exit(1);
 }

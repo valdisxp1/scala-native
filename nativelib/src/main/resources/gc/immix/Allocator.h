@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include "datastructures/BlockList.h"
 #include "datastructures/Bytemap.h"
+#include "datastructures/Stack.h"
 
 typedef struct {
     word_t *blockMetaStart;
@@ -24,6 +25,7 @@ typedef struct {
     word_t *largeCursor;
     word_t *largeLimit;
     size_t freeMemoryAfterCollection;
+    Stack *rememberedObjects;
 } Allocator;
 
 void Allocator_Init(Allocator *allocator, Bytemap *bytemap,

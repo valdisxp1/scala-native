@@ -3,6 +3,8 @@
 #include "Block.h"
 #include <stdio.h>
 #include <memory.h>
+#include "State.h"
+#include "Marker.h"
 
 BlockMeta *Allocator_getNextBlock(Allocator *allocator);
 bool Allocator_getNextLine(Allocator *allocator);
@@ -38,6 +40,10 @@ void Allocator_Init(Allocator *allocator, Bytemap *bytemap,
     allocator->blockCount = (uint64_t)blockCount;
     allocator->freeBlockCount = (uint64_t)blockCount;
     allocator->recycledBlockCount = 0;
+
+    // For remembering old object that might contains inter-generational
+    // pointers
+    allocator->rememberedObjects = Stack_Alloc(INITIAL_STACK_SIZE);
 
     Allocator_InitCursors(allocator);
 }
@@ -243,6 +249,9 @@ BlockMeta *Allocator_getNextBlock(Allocator *allocator) {
     if (!BlockList_IsEmpty(&allocator->recycledBlocks)) {
         block = BlockList_RemoveFirstBlock(&allocator->recycledBlocks);
     } else if (!BlockList_IsEmpty(&allocator->freeBlocks)) {
+        block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
+    } else if (BlockList_IsEmpty(&allocator->freeBlocks)) {
+        Heap_Grow(heap, BLOCK_TOTAL_SIZE);
         block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
     }
     assert(block == NULL ||

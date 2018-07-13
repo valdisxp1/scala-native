@@ -4,6 +4,11 @@
 #include "Block.h"
 #include "Log.h"
 #include "utils/MathUtils.h"
+#include "metadata/BlockMeta.h"
+
+#define LAST_FIELD_OFFSET -1
+
+#define DEBUG_PRINT
 
 Object *Object_NextLargeObject(Object *object) {
     size_t size = Object_ChunkSize(object);
@@ -23,7 +28,7 @@ static inline bool Object_isAligned(word_t *word) {
 }
 
 Object *Object_getInnerPointer(word_t *blockStart, word_t *word,
-                               ObjectMeta *wordMeta) {
+                               ObjectMeta *wordMeta, bool youngObject) {
     word_t *current = word;
     ObjectMeta *currentMeta = wordMeta;
     while (current >= blockStart && ObjectMeta_IsFree(currentMeta)) {
@@ -31,7 +36,7 @@ Object *Object_getInnerPointer(word_t *blockStart, word_t *word,
         currentMeta = Bytemap_PreviousWord(currentMeta);
     }
     Object *object = (Object *)current;
-    if (ObjectMeta_IsAllocated(currentMeta) &&
+    if (((youngObject && ObjectMeta_IsAllocated(currentMeta)) || (!youngObject && ObjectMeta_IsMarked(currentMeta))) &&
         word < current + Object_Size(object) / WORD_SIZE) {
 #ifdef DEBUG_PRINT
         if ((word_t *)current != word) {
@@ -45,9 +50,8 @@ Object *Object_getInnerPointer(word_t *blockStart, word_t *word,
     }
 }
 
-Object *Object_GetUnmarkedObject(Heap *heap, word_t *word) {
-    BlockMeta *blockMeta =
-        Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, word);
+Object *Object_findObject(Heap *heap, word_t *word, bool youngObject) {
+    BlockMeta *blockMeta = Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, word);
     word_t *blockStart = Block_GetBlockStartForWord(word);
 
     if (!Object_isAligned(word)) {
@@ -60,16 +64,27 @@ Object *Object_GetUnmarkedObject(Heap *heap, word_t *word) {
     }
 
     ObjectMeta *wordMeta = Bytemap_Get(heap->smallBytemap, word);
-    if (ObjectMeta_IsPlaceholder(wordMeta) || ObjectMeta_IsMarked(wordMeta)) {
+    if (ObjectMeta_IsPlaceholder(wordMeta) || (youngObject && ObjectMeta_IsMarked(wordMeta)) || (!youngObject && ObjectMeta_IsAllocated(wordMeta))) {
         return NULL;
-    } else if (ObjectMeta_IsAllocated(wordMeta)) {
+    }
+    else if (youngObject && ObjectMeta_IsAllocated(wordMeta)) {
+        return (Object *)word;
+    } else if (!youngObject && ObjectMeta_IsMarked(wordMeta)) {
         return (Object *)word;
     } else {
-        return Object_getInnerPointer(blockStart, word, wordMeta);
+        return Object_getInnerPointer(blockStart, word, wordMeta, youngObject);
     }
 }
 
-Object *Object_getLargeInnerPointer(word_t *word, ObjectMeta *wordMeta) {
+Object *Object_GetYoungObject(Heap *heap, word_t *word) {
+    return Object_findObject(heap, word, true);
+}
+
+Object *Object_GetOldObject(Heap *heap, word_t *word) {
+    return Object_findObject(heap, word, false);
+}
+
+Object *Object_getLargeInnerPointer(word_t *word, ObjectMeta *wordMeta, bool youngObject) {
     word_t *current = (word_t *)((word_t)word & LARGE_BLOCK_MASK);
     ObjectMeta *currentMeta = wordMeta;
 
@@ -79,7 +94,7 @@ Object *Object_getLargeInnerPointer(word_t *word, ObjectMeta *wordMeta) {
     }
 
     Object *object = (Object *)current;
-    if (ObjectMeta_IsAllocated(currentMeta) &&
+    if (((youngObject && ObjectMeta_IsAllocated(currentMeta))||(!youngObject && ObjectMeta_IsMarked(currentMeta))) &&
         word < (word_t *)object + Object_ChunkSize(object) / WORD_SIZE) {
 #ifdef DEBUG_PRINT
         printf("large inner pointer: %p, object: %p\n", word, object);
@@ -91,17 +106,19 @@ Object *Object_getLargeInnerPointer(word_t *word, ObjectMeta *wordMeta) {
     }
 }
 
-Object *Object_GetLargeUnmarkedObject(Bytemap *bytemap, word_t *word) {
+Object *Object_findLargeObject(Bytemap *bytemap, word_t *word, bool youngObject) {
     if (((word_t)word & LARGE_BLOCK_MASK) != (word_t)word) {
         word = (word_t *)((word_t)word & LARGE_BLOCK_MASK);
     }
     ObjectMeta *wordMeta = Bytemap_Get(bytemap, word);
-    if (ObjectMeta_IsPlaceholder(wordMeta) || ObjectMeta_IsMarked(wordMeta)) {
+    if (ObjectMeta_IsPlaceholder(wordMeta)) {
         return NULL;
-    } else if (ObjectMeta_IsAllocated(wordMeta)) {
+    } else if (youngObject && ObjectMeta_IsAllocated(wordMeta)) {
+        return (Object *)word;
+    } else if (!youngObject && ObjectMeta_IsMarked(wordMeta)) {
         return (Object *)word;
     } else {
-        Object *object = Object_getLargeInnerPointer(word, wordMeta);
+        Object *object = Object_getLargeInnerPointer(word, wordMeta, youngObject);
         assert(object == NULL ||
                (word >= (word_t *)object &&
                 word < (word_t *)Object_NextLargeObject(object)));
@@ -109,9 +126,21 @@ Object *Object_GetLargeUnmarkedObject(Bytemap *bytemap, word_t *word) {
     }
 }
 
-void Object_Mark(Heap *heap, Object *object, ObjectMeta *objectMeta) {
+Object *Object_GetLargeYoungObject(Bytemap *bytemap, word_t *word) {
+    return Object_findLargeObject(bytemap, word, true);
+}
+
+Object *Object_GetLargeOldObject(Bytemap *bytemap, word_t *word) {
+    return Object_findLargeObject(bytemap, word, false);
+}
+
+void Object_Mark(Heap *heap, Object *object, ObjectMeta *objectMeta, bool collectingOld) {
     // Mark the object itself
-    ObjectMeta_SetMarked(objectMeta);
+    if(!collectingOld) {
+        ObjectMeta_SetMarked(objectMeta);
+    } else {
+        ObjectMeta_SetAllocated(objectMeta);
+    }
 
     if (Heap_IsWordInSmallHeap(heap, (word_t *)object)) {
         // Mark the block
@@ -143,4 +172,118 @@ size_t Object_ChunkSize(Object *object) {
         return MathUtils_RoundToNextMultiple(Object_Size(object),
                                              MIN_BLOCK_SIZE);
     }
+}
+
+bool Object_HasPointerToYoungObject(Heap *heap, Object *object, bool largeObject) {
+    word_t *blockStart = Block_GetBlockStartForWord((word_t *)object);
+    if (Object_IsArray(object)) {
+        if (object->rtti->rt.id == __object_array_id) {
+            ArrayHeader *arrayHeader = (ArrayHeader *)object;
+            size_t length = arrayHeader->length;
+            word_t **fields = (word_t **)(arrayHeader + 1);
+            for (int i  = 0; i < length; i++) {
+                word_t *field = fields[i];
+                Bytemap *bytemap = Heap_BytemapForWord(heap, field);
+                if (bytemap != NULL) {
+                    ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
+                    word_t *currentBlockStart = Block_GetBlockStartForWord(field);
+                    BlockMeta *currentBlockMeta = Block_GetBlockMeta(currentBlockStart, heap->heapStart, field);
+                    if (largeObject) {
+                        if (!BlockMeta_IsOld(currentBlockMeta) && ObjectMeta_IsAllocated(fieldMeta)) {
+                            return true;
+                        }
+                    } else if (!ObjectMeta_IsFree(fieldMeta)){
+                        if (blockStart > currentBlockStart && !BlockMeta_IsOld(currentBlockMeta)) {
+                            return true;
+                        }
+                        if (blockStart < currentBlockStart && (BlockMeta_GetAge(currentBlockMeta) < MAX_AGE_YOUNG_BLOCK - 1)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        int64_t *ptr_map = object->rtti->refMapStruct;
+        int i = 0;
+        while (ptr_map[i] != LAST_FIELD_OFFSET) {
+            word_t *field = object->fields[ptr_map[i]];
+            Bytemap *bytemap = Heap_BytemapForWord(heap, field);
+            if (bytemap != NULL) {
+                ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
+                word_t *currentBlockStart = Block_GetBlockStartForWord(field);
+                BlockMeta *currentBlockMeta = Block_GetBlockMeta(currentBlockStart, heap->heapStart, field);
+                if (largeObject) {
+                    if (!BlockMeta_IsOld(currentBlockMeta) && ObjectMeta_IsAllocated(fieldMeta)) {
+                        return true;
+                    }
+                } else if (!ObjectMeta_IsFree(fieldMeta)){
+                    if (blockStart > currentBlockStart && !BlockMeta_IsOld(currentBlockMeta)) {
+                        return true;
+                    }
+                    if (blockStart < currentBlockStart && (BlockMeta_GetAge(currentBlockMeta) < MAX_AGE_YOUNG_BLOCK - 1)) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool Object_HasPointerToOldObject(Heap *heap, Object *object, bool largeObject) {
+    word_t *blockStart = Block_GetBlockStartForWord((word_t *)object);
+    if (Object_IsArray(object)) {
+        if (object->rtti->rt.id == __object_array_id) {
+            ArrayHeader *arrayHeader = (ArrayHeader *)object;
+            size_t length = arrayHeader->length;
+            word_t **fields = (word_t **)(arrayHeader + 1);
+            for (int i  = 0; i < length; i++) {
+                word_t *field = fields[i];
+                Bytemap *bytemap = Heap_BytemapForWord(heap, field);
+                if (bytemap != NULL) {
+                    ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
+                    word_t *currentBlockStart = Block_GetBlockStartForWord(field);
+                    BlockMeta *currentBlockMeta = Block_GetBlockMeta(currentBlockStart, heap->heapStart, field);
+                    if (largeObject) {
+                        if (BlockMeta_IsOld(currentBlockMeta) && ObjectMeta_IsMarked(fieldMeta)) {
+                            return true;
+                        }
+                    } else if (!ObjectMeta_IsFree(fieldMeta)){
+                        if (blockStart > currentBlockStart && BlockMeta_IsOld(currentBlockMeta)) {
+                            return true;
+                        }
+                        if (blockStart < currentBlockStart && (BlockMeta_GetAge(currentBlockMeta) == MAX_AGE_YOUNG_BLOCK - 1)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        int64_t *ptr_map = object->rtti->refMapStruct;
+        int i = 0;
+        while (ptr_map[i] != LAST_FIELD_OFFSET) {
+            word_t *field = object->fields[ptr_map[i]];
+            Bytemap *bytemap = Heap_BytemapForWord(heap, field);
+            if (bytemap != NULL) {
+                ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
+                word_t *currentBlockStart = Block_GetBlockStartForWord(field);
+                BlockMeta *currentBlockMeta = Block_GetBlockMeta(currentBlockStart, heap->heapStart, field);
+                if (largeObject) {
+                    if (BlockMeta_IsOld(currentBlockMeta) && ObjectMeta_IsMarked(fieldMeta)) {
+                        return true;
+                    }
+                } else if (!ObjectMeta_IsFree(fieldMeta)){
+                    if (blockStart > currentBlockStart && BlockMeta_IsOld(currentBlockMeta)) {
+                        return true;
+                    }
+                    if (blockStart < currentBlockStart && (BlockMeta_GetAge(currentBlockMeta) == MAX_AGE_YOUNG_BLOCK - 1)) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
 }

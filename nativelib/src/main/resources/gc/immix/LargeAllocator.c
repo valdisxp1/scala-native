@@ -6,6 +6,7 @@
 #include "Object.h"
 #include "Log.h"
 #include "headers/ObjectHeader.h"
+#include "Marker.h"
 
 inline static int LargeAllocator_sizeToLinkedListIndex(size_t size) {
     assert(size >= MIN_BLOCK_SIZE);
@@ -130,32 +131,41 @@ void LargeAllocator_clearFreeLists(LargeAllocator *allocator) {
     }
 }
 
-void LargeAllocator_Sweep(LargeAllocator *allocator) {
-    LargeAllocator_clearFreeLists(allocator);
+void LargeAllocator_Sweep(LargeAllocator *largeAllocator, bool collectingOld) {
+    LargeAllocator_clearFreeLists(largeAllocator);
 
-    Object *current = (Object *)allocator->offset;
-    void *heapEnd = (ubyte_t *)allocator->offset + allocator->size;
+    Object *current = (Object *)largeAllocator->offset;
+    void *heapEnd = (ubyte_t *)largeAllocator->offset + largeAllocator->size;
 
     while (current != heapEnd) {
         ObjectMeta *currentMeta =
-            Bytemap_Get(allocator->bytemap, (word_t *)current);
+            Bytemap_Get(largeAllocator->bytemap, (word_t *)current);
         assert(!ObjectMeta_IsFree(currentMeta));
-        if (ObjectMeta_IsMarked(currentMeta)) {
-            ObjectMeta_SetAllocated(currentMeta);
-
+        if (!collectingOld && ObjectMeta_IsMarked(currentMeta)) {
+            if (Object_HasPointerToYoungObject(&heap, current, true)) {
+                printf("Should never be printed\n");fflush(stdout);
+                Stack_Push(allocator.rememberedObjects, current);
+            }
+            current = Object_NextLargeObject(current);
+        } else if (collectingOld && ObjectMeta_IsAllocated(currentMeta)) {
+            ObjectMeta_SetMarked(currentMeta);
+            if (Object_HasPointerToYoungObject(&heap, current, true)) {
+                printf("Should never be printed\n");fflush(stdout);
+                Stack_Push(allocator.rememberedObjects, current);
+            }
             current = Object_NextLargeObject(current);
         } else {
             size_t currentSize = Object_ChunkSize(current);
             Object *next = Object_NextLargeObject(current);
             ObjectMeta *nextMeta =
-                Bytemap_Get(allocator->bytemap, (word_t *)next);
+                Bytemap_Get(largeAllocator->bytemap, (word_t *)next);
             while (next != heapEnd && !ObjectMeta_IsMarked(nextMeta)) {
                 currentSize += Object_ChunkSize(next);
                 ObjectMeta_SetFree(nextMeta);
                 next = Object_NextLargeObject(next);
-                nextMeta = Bytemap_Get(allocator->bytemap, (word_t *)next);
+                nextMeta = Bytemap_Get(largeAllocator->bytemap, (word_t *)next);
             }
-            LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
+            LargeAllocator_AddChunk(largeAllocator, (Chunk *)current, currentSize);
             current = next;
         }
     }

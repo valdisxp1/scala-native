@@ -7,5 +7,5 @@
 #define LAST_HOLE -1
 
 void Block_Recycle(Allocator *allocator, BlockMeta *block, word_t *blockStart,
-                   LineMeta *lineMetas);
+                   LineMeta *lineMetas, bool collectingOld);
 #endif // IMMIX_BLOCK_H
