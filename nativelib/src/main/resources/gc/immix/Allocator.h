@@ -18,6 +18,7 @@ typedef struct {
     uint64_t freeBlockCount;
     BlockMeta *block;
     word_t *blockStart;
+    uint16_t youngBlockCount;
     word_t *cursor;
     word_t *limit;
     BlockMeta *largeBlock;

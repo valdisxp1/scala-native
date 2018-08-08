@@ -256,6 +256,7 @@ void Heap_Recycle(Heap *heap, bool collectingOld) {
     allocator.freeBlockCount = 0;
     allocator.recycledBlockCount = 0;
     allocator.freeMemoryAfterCollection = 0;
+    allocator.youngBlockCount = 0;
 
     word_t *current = heap->blockMetaStart;
     word_t *currentBlockStart = heap->heapStart;

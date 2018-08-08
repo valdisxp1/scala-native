@@ -40,6 +40,7 @@ void Allocator_Init(Allocator *allocator, Bytemap *bytemap,
     allocator->blockCount = (uint64_t)blockCount;
     allocator->freeBlockCount = (uint64_t)blockCount;
     allocator->recycledBlockCount = 0;
+    allocator->youngBlockCount = 0;
 
     // For remembering old object that might contains inter-generational
     // pointers
@@ -120,6 +121,7 @@ word_t *Allocator_overflowAllocation(Allocator *allocator, size_t size) {
             return NULL;
         }
         BlockMeta *block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
+        allocator->youngBlockCount++;
         allocator->largeBlock = block;
         word_t *blockStart = BlockMeta_GetBlockStart(
             allocator->blockMetaStart, allocator->heapStart, block);
@@ -150,6 +152,10 @@ INLINE word_t *Allocator_Alloc(Allocator *allocator, size_t size) {
         if (size > LINE_SIZE) {
             return Allocator_overflowAllocation(allocator, size);
         } else {
+            // If maximal number of free block reached, need to collect the young generation
+            if (!(allocator->youngBlockCount < MAX_YOUNG_BLOCKS)) {
+                return NULL;
+            }
             // Otherwise try to get a new line.
             if (Allocator_getNextLine(allocator)) {
                 return Allocator_Alloc(allocator, size);
@@ -233,11 +239,10 @@ bool Allocator_newBlock(Allocator *allocator) {
 bool Allocator_getNextLine(Allocator *allocator) {
     // If cursor is null or the block was free, we need a new block
     if (allocator->cursor == NULL || BlockMeta_IsFree(allocator->block)) {
+        allocator->youngBlockCount ++;
         return Allocator_newBlock(allocator);
-    } else {
-        // If we have a recycled block
-        return Allocator_nextLineRecycled(allocator);
     }
+    return false;
 }
 
 /**
@@ -249,9 +254,6 @@ BlockMeta *Allocator_getNextBlock(Allocator *allocator) {
     if (!BlockList_IsEmpty(&allocator->recycledBlocks)) {
         block = BlockList_RemoveFirstBlock(&allocator->recycledBlocks);
     } else if (!BlockList_IsEmpty(&allocator->freeBlocks)) {
-        block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
-    } else if (BlockList_IsEmpty(&allocator->freeBlocks)) {
-        Heap_Grow(heap, BLOCK_TOTAL_SIZE);
         block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
     }
     assert(block == NULL ||
