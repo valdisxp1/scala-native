@@ -184,12 +184,27 @@ void Marker_markRemembered(Heap *heap, Stack *stack) {
     }
 }
 
+void Marker_markYoungRemembered(Heap *heap,Stack *stack) {
+    Stack *roots = allocator.rememberedYoungObjects;
+    while(!Stack_IsEmpty(roots)) {
+        Object *object = (Object *)Stack_Pop(roots);
+        Bytemap *bytemap = Heap_BytemapForWord(heap, (word_t *)object);
+        if (bytemap != NULL) {
+            ObjectMeta *objectMeta = Bytemap_Get(bytemap, (word_t *)object);
+            if (ObjectMeta_IsAllocated(objectMeta)) {
+                ObjectMeta_SetUnremembered(objectMeta);
+                Stack_Push(stack, object);
+            }
+        }
+    }
+}
+
 void Marker_MarkRoots(Heap *heap, Stack *stack, bool collectingOld) {
 
-    // We need to trace inter-generational pointer only when we
-    // collect the young generation.
     if (!collectingOld) {
         Marker_markRemembered(heap, stack);
+    } else {
+        Marker_markYoungRemembered(heap, stack);
     }
 
     Marker_markProgramStack(heap, stack, collectingOld);

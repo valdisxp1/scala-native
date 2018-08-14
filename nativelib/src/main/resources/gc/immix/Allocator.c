@@ -45,6 +45,7 @@ void Allocator_Init(Allocator *allocator, Bytemap *bytemap,
     // For remembering old object that might contains inter-generational
     // pointers
     allocator->rememberedObjects = Stack_Alloc(INITIAL_STACK_SIZE);
+    allocator->rememberedYoungObjects = Stack_Alloc(INITIAL_STACK_SIZE);
 
     Allocator_InitCursors(allocator);
 }
@@ -117,6 +118,12 @@ word_t *Allocator_overflowAllocation(Allocator *allocator, size_t size) {
     word_t *end = (word_t *)((uint8_t *)start + size);
 
     if (end > allocator->largeLimit) {
+        if (!(allocator->youngBlockCount < MAX_YOUNG_BLOCKS)) {
+#ifdef DEBUG_PRINT
+            printf("Young generation full\n");fflush(stdout);
+#endif
+            return NULL;
+        }
         if (BlockList_IsEmpty(&allocator->freeBlocks)) {
             return NULL;
         }
@@ -169,6 +176,27 @@ INLINE word_t *Allocator_Alloc(Allocator *allocator, size_t size) {
 
     allocator->cursor = end;
 
+    return start;
+}
+
+INLINE word_t *Allocator_AllocPretenured(Allocator *allocator, size_t size) {
+    word_t *start = allocator->pretenuredCursor;
+    word_t *end = (word_t *)((uint8_t *)start + size);
+
+    if (end > allocator->pretenuredLimit) {
+        if (Allocator_getNextPretenuredLine(allocator)) {
+            return Allocator_AllocPretenured(allocator, size);
+        }
+        return NULL;
+    }
+
+    if (end == allocator->pretenuredLimit) {
+        memset(start, 0, size);
+    } else {
+        memset(start, 0, size + WORD_SIZE);
+    }
+    allocator->pretenuredCursor = end;
+    Line_Update(allocator->pretenuredBlock, start);
     return start;
 }
 
@@ -243,6 +271,25 @@ bool Allocator_getNextLine(Allocator *allocator) {
         return Allocator_newBlock(allocator);
     }
     return false;
+}
+
+void Allocator_firstLineNewPretenuredBlock(Allocator *allocator, BlockHeader *block) {
+    allocator->pretenuredBlock = block;
+    allocator->pretenuredCursor = Block_GetFirstWord(block);
+    allocator->pretenuredLimit = Block_GetBlockEnd(block);
+}
+
+bool Allocator_getNextPretenuredLine(Allocator *allocator) {
+    if (allocator->pretenuredCursor != NULL && !Block_IsFree(Block_GetBlockHeader(allocator->pretenuredCursor - WORD_SIZE))) {
+        allocator->pretenuredCursor = NULL;
+    }
+    BlockHeader *block = Allocator_getNextBlock(allocator);
+    if (block == NULL) {
+        return false;
+    }
+    Block_SetFlag(block, block_old);
+    Allocator_firstLineNewPretenuredBlock(allocator, block);
+    return true;
 }
 
 /**

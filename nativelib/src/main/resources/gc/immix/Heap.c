@@ -12,6 +12,7 @@
 #include "Memory.h"
 #include <memory.h>
 #include <time.h>
+#include "datastructures/Stack.h"
 
 // Allow read and write
 #define HEAP_MEM_PROT (PROT_READ | PROT_WRITE)
@@ -133,7 +134,9 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
         // at least the size of the object we want to alloc
         object = LargeAllocator_GetBlock(&largeAllocator, size);
         if (object != NULL) {
-            assert(Heap_IsWordInLargeHeap(heap, (word_t *)object));
+            Stack_Clear(heap->allocator->rememberedYoungObjects);
+            Object_SetObjectType(&object->header, object_large);
+            Object_SetSize(&object->header, size);
             return (word_t *)object;
         } else {
             Heap_CollectOld(heap, stack);
@@ -143,7 +146,7 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
             if (object != NULL) {
                 Object_SetObjectType(&object->header, object_large);
                 Object_SetSize(&object->header, size);
-                return Object_ToMutatorAddress(object);
+                return (word_t *)object;
             }
 
             Heap_GrowLarge(heap, size);
@@ -165,14 +168,18 @@ NOINLINE word_t *Heap_allocSmallSlow(Heap *heap, uint32_t size) {
     Heap_Collect(heap, &stack);
     object = (Object *)Allocator_Alloc(&allocator, size);
 
-    if (object != NULL)
+    if (object != NULL) {
+        Stack_Clear(allocator.rememberedYoungObjects);
         goto done;
+    }
 
     Heap_CollectOld(heap, &stack);
     object = (Object *)Allocator_Alloc(&allocator, size);
 
-    if (object != NULL)
+    if (object != NULL) {
+        Stack_Clear(allocator.rememberedYoungObjects);
         goto done;
+    }
 
     // A small object can always fit in a single free block
     // because it is no larger than 8K while the block is 32K.
@@ -241,6 +248,10 @@ void Heap_CollectOld(Heap *heap, Stack *stack) {
     printf("\nCollect old\n");
     fflush(stdout);
 #endif
+    while (!Stack_IsEmpty(heap->allocator->rememberedObjects)) {
+        Object *object = Stack_Pop(heap->allocator->rememberedObjects);
+        Object_SetUnremembered(&object->header);
+    }
     Marker_MarkRoots(heap, stack, true);
     Heap_Recycle(heap, true);
 #ifdef DEBUG_PRINT

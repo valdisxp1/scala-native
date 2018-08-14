@@ -7,6 +7,7 @@
 #include "Log.h"
 #include "headers/ObjectHeader.h"
 #include "Marker.h"
+#include "State.h"
 
 inline static int LargeAllocator_sizeToLinkedListIndex(size_t size) {
     assert(size >= MIN_BLOCK_SIZE);
