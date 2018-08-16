@@ -29,11 +29,11 @@ abstract class TestMainBase {
     val (options, values) = args.toList.partition(_.startsWith("--"))
     // catching Segmentation Faults and Erroneous Arithmetic Operation by default
     // it can be disabled for debug tool compatibility
-    val catchSegfaults = !options.contains("--no-catch-fault")
-    if (catchSegfaults) {
-      signal.signal(signal.SIGSEGV, TestMainBase.faultHandler)
-      signal.signal(signal.SIGFPE, TestMainBase.faultHandler)
-    }
+//    val catchSegfaults = !options.contains("--no-catch-fault")
+//    if (catchSegfaults) {
+//      signal.signal(signal.SIGSEGV, TestMainBase.faultHandler)
+//      signal.signal(signal.SIGFPE, TestMainBase.faultHandler)
+//    }
     values match {
       case "run-test" :: classNames =>
         classNames.foreach(runSingleTest)
