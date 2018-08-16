@@ -43,6 +43,8 @@ object ScalaNativePlugin extends AutoPlugin {
     val nativeLTO =
       taskKey[String](
         "LTO variant used for release mode (either \"none\", \"thin\" or \"full\").")
+
+    val directTestCommand = InputKey[String]("direct-test-command")
   }
 
   @deprecated("use autoImport instead", "0.3.7")
