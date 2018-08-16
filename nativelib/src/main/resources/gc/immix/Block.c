@@ -13,12 +13,16 @@ extern int __object_array_id;
 INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
                                        BlockHeader *blockHeader) {
     bool wasFree = Block_IsFree(blockHeader);
-    if (!wasFree) {
+    bool wasFree2 = BlockList_Contains(&allocator->freeBlocks, blockHeader);
+    if (wasFree != wasFree2) {
+        printf("\n\n%d != %d\n\n", wasFree, wasFree2);
+    }
+    if (!wasFree && !wasFree2) {
         // do not re-clean free blocks
         memset(blockHeader, 0, LINE_SIZE);
-    }
         BlockList_AddLast(&allocator->freeBlocks, blockHeader);
         Block_SetFlag(blockHeader, block_free);
+    }
 }
 
 INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader,

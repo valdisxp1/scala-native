@@ -199,7 +199,7 @@ void Heap_Collect(Heap *heap, Stack *stack) {
 
 void Heap_Recycle(Heap *heap) {
     BlockList_Clear(&allocator.recycledBlocks);
-    BlockList_Clear(&allocator.freeBlocks);
+//    BlockList_Clear(&allocator.freeBlocks);
 
     allocator.freeBlockCount = 0;
     allocator.recycledBlockCount = 0;

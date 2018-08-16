@@ -32,6 +32,17 @@ inline bool BlockList_IsEmpty(BlockList *blockList) {
     return blockList->first == NULL;
 }
 
+bool BlockList_Contains(BlockList *blockList, BlockHeader *blockHeader) {
+    BlockHeader *current;
+    while (current != NULL) {
+        if (current == blockHeader) {
+            return true;
+        }
+        current = _getNextBlock(blockList->heapStart, current);
+    }
+    return false;
+}
+
 BlockHeader *BlockList_RemoveFirstBlock(BlockList *blockList) {
     assert(blockList->first != NULL);
     BlockHeader *block = blockList->first;
