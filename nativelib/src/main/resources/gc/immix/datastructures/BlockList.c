@@ -33,7 +33,7 @@ inline bool BlockList_IsEmpty(BlockList *blockList) {
 }
 
 bool BlockList_Contains(BlockList *blockList, BlockHeader *blockHeader) {
-    BlockHeader *current;
+    BlockHeader *current = blockHeader;
     while (current != NULL) {
         if (current == blockHeader) {
             return true;
