@@ -199,7 +199,7 @@ void Heap_Collect(Heap *heap, Stack *stack) {
 
 void Heap_Recycle(Heap *heap) {
     BlockList_Clear(&allocator.recycledBlocks);
-//    BlockList_Clear(&allocator.freeBlocks);
+    BlockList_Clear(&allocator.freeBlocks);
 
     allocator.freeBlockCount = 0;
     allocator.recycledBlockCount = 0;
@@ -225,7 +225,7 @@ void Heap_Recycle(Heap *heap) {
         size_t increment = blocks * WORDS_IN_BLOCK;
         Heap_Grow(heap, increment);
     }
-//    Allocator_InitCursors(&allocator);
+    Allocator_InitCursors(&allocator);
 }
 
 void Heap_exitWithOutOfMemory() {
