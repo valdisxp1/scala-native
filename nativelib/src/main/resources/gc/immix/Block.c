@@ -22,7 +22,7 @@ INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
         Block_Print(blockHeader);
       }
         // do not re-clean free blocks
-        memset(blockHeader, 0, LINE_SIZE);
+        memset(blockHeader, 0, LINE_SIZE); //clears headers // 2^8=256
         BlockList_AddLast(&allocator->freeBlocks, blockHeader);
         Block_SetFlag(blockHeader, block_free);
 
@@ -151,6 +151,16 @@ void Block_Print(BlockHeader *block) {
             lineIndex = freeLineHeader->next;
         }
         printf("\n");
+        printf("mark: %d, flags: %d, first: %d, nextBlock: %d \n",
+                block->header.mark,
+                block->header.flags,
+                block->header.first,
+                block->header.nextBlock);
+
+                for(int i = 0; i < LINE_COUNT; i++){
+                    printf("%d ", block->lineHeaders[i]);
+                }
+                printf("\n");
     }
     fflush(stdout);
 }
