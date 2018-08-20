@@ -25,6 +25,11 @@ INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
         memset(blockHeader, 0, LINE_SIZE);
         BlockList_AddLast(&allocator->freeBlocks, blockHeader);
         Block_SetFlag(blockHeader, block_free);
+
+      if (wasFree) {
+        printf("AFTER\n");
+        Block_Print(blockHeader);
+      }
 //    }
 }
 
@@ -123,6 +128,17 @@ void Block_Print(BlockHeader *block) {
     printf("%p ", block);
     if (Block_IsFree(block)) {
         printf("FREE\n");
+        printf("mark: %d, flags: %d, first: %d, nextBlock: %d \n",
+        block->header.mark,
+        block->header.flags,
+        block->header.first,
+        block->header.nextBlock);
+
+        for(int i = 0; i < LINE_COUNT; i++){
+            printf("%d ", block->lineHeaders[i]);
+        }
+        printf("\n");
+
     } else if (Block_IsUnavailable(block)) {
         printf("UNAVAILABLE\n");
     } else {
