@@ -250,5 +250,9 @@ BlockHeader *Allocator_getNextBlock(Allocator *allocator) {
     } else if (!BlockList_IsEmpty(&allocator->freeBlocks)) {
         block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
     }
+    if (block != NULL) {
+        printf("TAKE\n");
+        Block_Print(block);
+    }
     return block;
 }

@@ -14,23 +14,14 @@ INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
                                        BlockHeader *blockHeader) {
     bool wasFree = Block_IsFree(blockHeader);
     bool wasFree2 = BlockList_Contains(&allocator->freeBlocks, blockHeader);
-//    if (wasFree != wasFree2) {
-//        printf("\n\n%d != %d\n\n", wasFree, wasFree2);
-//    }
-//    if (!wasFree && !wasFree2) {
-      if (wasFree) {
-        Block_Print(blockHeader);
-      }
-        // do not re-clean free blocks
-        memset(blockHeader, 0, LINE_SIZE); //clears headers // 2^8=256
-        BlockList_AddLast(&allocator->freeBlocks, blockHeader);
-        Block_SetFlag(blockHeader, block_free);
+    Block_Print(blockHeader);
+    // do not re-clean free blocks
+    memset(blockHeader, 0, LINE_SIZE); //clears headers // 2^8=256
+    BlockList_AddLast(&allocator->freeBlocks, blockHeader);
+    Block_SetFlag(blockHeader, block_free);
 
-      if (wasFree) {
-        printf("AFTER\n");
-        Block_Print(blockHeader);
-      }
-//    }
+    printf("AFTER\n");
+    Block_Print(blockHeader);
 }
 
 INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader,
@@ -65,6 +56,7 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader) {
         allocator->freeBlockCount++;
         allocator->freeMemoryAfterCollection += BLOCK_TOTAL_SIZE;
     } else {
+        Block_Print(blockHeader);
         // If the block is marked, we need to recycle line by line
         assert(Block_IsMarked(blockHeader));
         Block_Unmark(blockHeader);
@@ -121,6 +113,9 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader) {
             assert(blockHeader->header.first != NO_RECYCLABLE_LINE);
             allocator->recycledBlockCount++;
         }
+
+        printf("PARTIAL\n");
+        Block_Print(blockHeader);
     }
 }
 
