@@ -202,6 +202,7 @@ void Allocator_firstLineNewBlock(Allocator *allocator, BlockHeader *block) {
     if (Block_IsFree(block)) {
         allocator->cursor = Block_GetFirstWord(block);
         allocator->limit = Block_GetBlockEnd(block);
+//        Block_SetFlag(block, block_recyclable);
     } else {
         assert(Block_IsRecyclable(block));
         int16_t lineIndex = block->header.first;
