@@ -22,7 +22,7 @@
 #define HEAP_MEM_FD -1
 #define HEAP_MEM_FD_OFFSET 0
 
-void * _SweepThread(void *heap);
+void *_SweepThread(void *heap);
 
 size_t Heap_getMemoryLimit() { return getMemorySize(); }
 
@@ -64,7 +64,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->heapStart = smallHeapStart;
     word_t *heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
     heap->heapEnd = heapEnd;
-    heap->sweep.cursor = (long) heapEnd;
+    heap->sweep.cursor = (long)heapEnd;
     heap->sweep.processCount = 0;
 
     pthread_mutex_init(&heap->sweep.postMutex, NULL);
@@ -73,7 +73,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     pthread_cond_init(&heap->sweep.start, NULL);
     pthread_cond_init(&heap->sweep.processStopped, NULL);
 
-    pthread_create(&heap->sweep.thread, NULL, _SweepThread, (void *) heap);
+    pthread_create(&heap->sweep.thread, NULL, _SweepThread, (void *)heap);
 
     Allocator_Init(&allocator, smallHeapStart,
                    initialSmallHeapSize / BLOCK_TOTAL_SIZE);
@@ -134,13 +134,13 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize) {
 
 NOINLINE word_t *Heap_allocSmallSlow(Heap *heap, uint32_t size) {
     Object *object;
-    object = (Object *) Heap_LazySweep(heap, size);
+    object = (Object *)Heap_LazySweep(heap, size);
 
     if (object != NULL)
         goto done;
 
     Heap_Collect(heap, &stack);
-    object = (Object *) Heap_LazySweep(heap, size);
+    object = (Object *)Heap_LazySweep(heap, size);
 
     if (object != NULL)
         goto done;
@@ -223,17 +223,16 @@ void Heap_Recycle(Heap *heap) {
 
     LargeAllocator_Sweep(&largeAllocator);
     // prepare for lazy sweeping
-    heap->sweep.cursor = (long) heap->heapStart;
+    heap->sweep.cursor = (long)heap->heapStart;
     heap->sweep.processCount = 0;
 
     pthread_mutex_lock(&heap->sweep.startMutex);
     pthread_cond_broadcast(&heap->sweep.start);
     pthread_mutex_unlock(&heap->sweep.startMutex);
-
 }
 
-void * _SweepThread(void *arg) {
-    Heap* heap = (Heap *) arg;
+void *_SweepThread(void *arg) {
+    Heap *heap = (Heap *)arg;
     while (true) {
         pthread_mutex_lock(&heap->sweep.startMutex);
         pthread_cond_wait(&heap->sweep.start, &heap->sweep.startMutex);
@@ -241,10 +240,10 @@ void * _SweepThread(void *arg) {
 
         atomic_fetch_add(&heap->sweep.processCount, 1);
         word_t *block;
-        while ((block = (word_t *) atomic_fetch_add(&heap -> sweep.cursor, BLOCK_TOTAL_SIZE)) < heap->heapEnd) {
-            BlockHeader* blockHeader = (BlockHeader *) block;
+        while ((block = (word_t *)atomic_fetch_add(
+                    &heap->sweep.cursor, BLOCK_TOTAL_SIZE)) < heap->heapEnd) {
+            BlockHeader *blockHeader = (BlockHeader *)block;
             Block_Recycle(&allocator, blockHeader);
-
         }
         atomic_fetch_add(&heap->sweep.processCount, -1);
 
@@ -266,8 +265,9 @@ word_t *Heap_LazySweep(Heap *heap, uint32_t size) {
 
     atomic_fetch_add(&heap->sweep.processCount, 1);
     word_t *block;
-    while ( (block = (word_t *) atomic_fetch_add(&heap -> sweep.cursor, BLOCK_TOTAL_SIZE)) < heap->heapEnd) {
-        BlockHeader* blockHeader = (BlockHeader *) block;
+    while ((block = (word_t *)atomic_fetch_add(
+                &heap->sweep.cursor, BLOCK_TOTAL_SIZE)) < heap->heapEnd) {
+        BlockHeader *blockHeader = (BlockHeader *)block;
         Block_Recycle(&allocator, blockHeader);
 
         object = Allocator_Alloc(&allocator, size);
@@ -279,7 +279,8 @@ word_t *Heap_LazySweep(Heap *heap, uint32_t size) {
     if (Heap_IsSweepDone(heap)) {
         while (heap->sweep.processCount > 0) {
             pthread_mutex_lock(&heap->sweep.postMutex);
-            pthread_cond_wait(&heap->sweep.processStopped, &heap->sweep.postMutex);
+            pthread_cond_wait(&heap->sweep.processStopped,
+                              &heap->sweep.postMutex);
             pthread_mutex_unlock(&heap->sweep.postMutex);
         }
 
@@ -353,7 +354,7 @@ void Heap_Grow(Heap *heap, size_t increment) {
     word_t *heapEnd = heap->heapEnd;
     word_t *newHeapEnd = heapEnd + increment;
     heap->heapEnd = newHeapEnd;
-    heap->sweep.cursor = (long) newHeapEnd;
+    heap->sweep.cursor = (long)newHeapEnd;
     heap->smallHeapSize += increment * WORD_SIZE;
 
     BlockHeader *lastBlock = (BlockHeader *)(heap->heapEnd - WORDS_IN_BLOCK);

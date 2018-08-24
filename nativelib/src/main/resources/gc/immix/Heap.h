@@ -21,7 +21,7 @@ typedef struct {
         pthread_mutex_t startMutex;
         pthread_mutex_t postMutex;
         pthread_cond_t start;
-        pthread_cond_t processStopped; //uses postMutex
+        pthread_cond_t processStopped; // uses postMutex
         pthread_t thread;
     } sweep;
     size_t smallHeapSize;
@@ -45,9 +45,8 @@ static inline bool Heap_IsWordInHeap(Heap *heap, word_t *word) {
 }
 
 static inline bool Heap_IsSweepDone(Heap *heap) {
-    return ((word_t *) heap->sweep.cursor) >= heap->heapEnd;
+    return ((word_t *)heap->sweep.cursor) >= heap->heapEnd;
 }
-
 
 static inline bool heap_isObjectInHeap(Heap *heap, Object *object) {
     return Heap_IsWordInHeap(heap, (word_t *)object);

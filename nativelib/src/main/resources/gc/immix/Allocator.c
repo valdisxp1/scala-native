@@ -68,8 +68,7 @@ void Allocator_InitCursors(Allocator *allocator) {
 
     // Init large cursor
 
-    BlockHeader *largeHeader =
-        BlockList_PopFirstBlock(&allocator->freeBlocks);
+    BlockHeader *largeHeader = BlockList_PopFirstBlock(&allocator->freeBlocks);
     assert(largeHeader != NULL);
 
     allocator->largeBlock = largeHeader;
