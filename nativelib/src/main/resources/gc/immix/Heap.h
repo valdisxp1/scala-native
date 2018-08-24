@@ -18,10 +18,11 @@ typedef struct {
     struct {
         atomic_long cursor;
         atomic_int processCount;
-        pthread_mutex_t sweepStartedMutex;
+        pthread_mutex_t startMutex;
         pthread_mutex_t postMutex;
-        pthread_cond_t sweepStarted;
+        pthread_cond_t start;
         pthread_cond_t processStopped; //uses postMutex
+        pthread_t thread;
     } sweep;
     size_t smallHeapSize;
     word_t *largeHeapStart;
