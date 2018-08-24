@@ -62,9 +62,10 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->heapStart = smallHeapStart;
     word_t *heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
     heap->heapEnd = heapEnd;
-    heap->sweepCursor = (long) heapEnd;
-    heap->sweepProcesses = 0;
-    pthread_mutex_init(&heap->postSweepMutex, NULL);
+    heap->sweep.cursor = (long) heapEnd;
+    heap->sweep.processCount = 0;
+    pthread_mutex_init(&heap->sweep.postMutex, NULL);
+    pthread_mutex_init(&heap->sweep.sweepStartedMutex, NULL);
     Allocator_Init(&allocator, smallHeapStart,
                    initialSmallHeapSize / BLOCK_TOTAL_SIZE);
 
@@ -213,30 +214,41 @@ void Heap_Recycle(Heap *heap) {
 
     LargeAllocator_Sweep(&largeAllocator);
     // prepare for lazy sweeping
-    heap->sweepCursor = (long) heap->heapStart;
-    heap->sweepProcesses = 0;
+    heap->sweep.cursor = (long) heap->heapStart;
+    heap->sweep.processCount = 0;
 }
 
 word_t *Heap_LazySweep(Heap *heap, uint32_t size) {
     word_t *object;
-    atomic_fetch_add(&heap->sweepProcesses, 1);
+
+    atomic_fetch_add(&heap->sweep.processCount, 1);
     while (!Heap_IsSweepDone(heap)) {
-        BlockHeader *blockHeader = (BlockHeader *) atomic_fetch_add(&heap -> sweepCursor, BLOCK_TOTAL_SIZE);
+        word_t *block = (word_t *) atomic_fetch_add(&heap -> sweep.cursor, BLOCK_TOTAL_SIZE);
+        if (block >= heap->heapEnd)
+            break;
+        BlockHeader* blockHeader = (BlockHeader *) block;
         Block_Recycle(&allocator, blockHeader);
 
         object = Allocator_Alloc(&allocator, size);
         if (object != NULL)
             break;
     }
-    atomic_fetch_add(&heap->sweepProcesses, -1);
+    atomic_fetch_add(&heap->sweep.processCount, -1);
+
     if (Heap_IsSweepDone(heap)) {
-        pthread_mutex_lock(&heap->postSweepMutex);
-        if (heap->sweepProcesses == 0) {
-            heap->sweepProcesses = SWEEP_PROCESSES_POST_ACTIONS_STARTED;
+        // TODO wait on a cond until sweep.processCount <= 0
+        // to handle case when some other thread is not done with sweeping.
+        // That thread COULD be SLOW and fail to complete until the next sweeping.
+        // Then a single block could be swept concurently by two threads, possibly causing problems.
+        // However, this is not likely in practice as thread scheduling should be somewhat fair
+        // and marking should take much more time than sweeping a single item.
+        pthread_mutex_lock(&heap->sweep.postMutex);
+        if (heap->sweep.processCount == 0) {
+            heap->sweep.processCount = SWEEP_PROCESSES_POST_ACTIONS_STARTED;
             Heap_SweepDone(heap);
-            heap->sweepProcesses = SWEEP_PROCESSES_POST_ACTIONS_DONE;
+            heap->sweep.processCount = SWEEP_PROCESSES_POST_ACTIONS_DONE;
         }
-        pthread_mutex_unlock(&heap->postSweepMutex);
+        pthread_mutex_unlock(&heap->sweep.postMutex);
     }
     if (object != NULL) {
         return object;
@@ -300,7 +312,7 @@ void Heap_Grow(Heap *heap, size_t increment) {
     word_t *heapEnd = heap->heapEnd;
     word_t *newHeapEnd = heapEnd + increment;
     heap->heapEnd = newHeapEnd;
-    heap->sweepCursor = (long) newHeapEnd;
+    heap->sweep.cursor = (long) newHeapEnd;
     heap->smallHeapSize += increment * WORD_SIZE;
 
     BlockHeader *lastBlock = (BlockHeader *)(heap->heapEnd - WORDS_IN_BLOCK);

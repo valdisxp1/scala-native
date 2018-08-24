@@ -15,9 +15,14 @@ typedef struct {
     size_t memoryLimit;
     word_t *heapStart;
     word_t *heapEnd;
-    atomic_long sweepCursor;
-    atomic_int sweepProcesses;
-    pthread_mutex_t postSweepMutex;
+    struct {
+        atomic_long cursor;
+        atomic_int processCount;
+        pthread_mutex_t sweepStartedMutex;
+        pthread_mutex_t postMutex;
+        pthread_cond_t sweepStarted;
+        pthread_cond_t processStopped; //uses postMutex
+    } sweep;
     size_t smallHeapSize;
     word_t *largeHeapStart;
     word_t *largeHeapEnd;
@@ -39,7 +44,7 @@ static inline bool Heap_IsWordInHeap(Heap *heap, word_t *word) {
 }
 
 static inline bool Heap_IsSweepDone(Heap *heap) {
-    return ((word_t *) heap->sweepCursor) >= heap->heapEnd;
+    return ((word_t *) heap->sweep.cursor) >= heap->heapEnd;
 }
 
 
