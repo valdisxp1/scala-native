@@ -1,7 +1,8 @@
 package scala.scalanative
 package build
 
-import java.nio.file.Path
+import java.nio.file.{Path, Paths}
+import scalanative.build.IO.RichPath
 
 /** Utility methods for building code using Scala Native. */
 object Build {
@@ -79,6 +80,21 @@ object Build {
       LLVM.compileNativelib(nativelibConfig, linkerResult, unpackedLib)
       LLVM.compile(config, generated)
     }
+
+    LLVM.link(config, linkerResult, objectFiles, unpackedLib, outpath)
+  }
+
+  def lolBuild(config: Config, outpath: Path): Path = {
+    val generated = IO.getAll(config.workdir, "glob:**.ll")
+    val linkerResult = ???
+    val objectFiles = generated.map{
+      ll =>
+        Paths.get(ll.abs + ".o")
+    }
+    val unpackedLib = ???
+    val nativelibConfig =
+      config.withCompileOptions("-O2" +: config.compileOptions)
+    LLVM.compileNativelib(nativelibConfig, linkerResult, unpackedLib)
 
     LLVM.link(config, linkerResult, objectFiles, unpackedLib, outpath)
   }
