@@ -67,10 +67,11 @@ void Allocator_InitCursors(Allocator *allocator) {
     Allocator_getNextLine(allocator);
 
     // Init large cursor
-    assert(!BlockList_IsEmpty(&allocator->freeBlocks));
 
     BlockHeader *largeHeader =
-        BlockList_RemoveFirstBlock(&allocator->freeBlocks);
+        BlockList_PopFirstBlock(&allocator->freeBlocks);
+    assert(largeHeader != NULL);
+
     allocator->largeBlock = largeHeader;
     allocator->largeCursor = Block_GetFirstWord(largeHeader);
     allocator->largeLimit = Block_GetBlockEnd(largeHeader);
@@ -106,10 +107,10 @@ word_t *Allocator_overflowAllocation(Allocator *allocator, size_t size) {
     word_t *end = (word_t *)((uint8_t *)start + size);
 
     if (end > allocator->largeLimit) {
-        if (BlockList_IsEmpty(&allocator->freeBlocks)) {
+        BlockHeader *block = BlockList_PopFirstBlock(&allocator->freeBlocks);
+        if (block == NULL) {
             return NULL;
         }
-        BlockHeader *block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
         allocator->largeBlock = block;
         allocator->largeCursor = Block_GetFirstWord(block);
         allocator->largeLimit = Block_GetBlockEnd(block);
@@ -244,11 +245,9 @@ bool Allocator_getNextLine(Allocator *allocator) {
  * chunk_allocator
  */
 BlockHeader *Allocator_getNextBlock(Allocator *allocator) {
-    BlockHeader *block = NULL;
-    if (!BlockList_IsEmpty(&allocator->recycledBlocks)) {
-        block = BlockList_RemoveFirstBlock(&allocator->recycledBlocks);
-    } else if (!BlockList_IsEmpty(&allocator->freeBlocks)) {
-        block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
+    BlockHeader *block = BlockList_PopFirstBlock(&allocator->recycledBlocks);
+    if (block == NULL) {
+        block = BlockList_PopFirstBlock(&allocator->freeBlocks);
     }
     return block;
 }
