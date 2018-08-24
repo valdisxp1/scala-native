@@ -5,12 +5,19 @@
 #include "Allocator.h"
 #include "LargeAllocator.h"
 #include "datastructures/Stack.h"
+#include <stdatomic.h>
+#include <pthread.h>
+
+#define SWEEP_PROCESSES_POST_ACTIONS_STARTED -100
+#define SWEEP_PROCESSES_POST_ACTIONS_DONE -200
 
 typedef struct {
     size_t memoryLimit;
     word_t *heapStart;
     word_t *heapEnd;
-    word_t *sweepCursor;
+    atomic_long sweepCursor;
+    atomic_int sweepProcesses;
+    pthread_mutex_t postSweepMutex;
     size_t smallHeapSize;
     word_t *largeHeapStart;
     word_t *largeHeapEnd;
@@ -32,7 +39,7 @@ static inline bool Heap_IsWordInHeap(Heap *heap, word_t *word) {
 }
 
 static inline bool Heap_IsSweepDone(Heap *heap) {
-    return heap->sweepCursor >= heap->heapEnd;
+    return ((word_t *) heap->sweepCursor) >= heap->heapEnd;
 }
 
 

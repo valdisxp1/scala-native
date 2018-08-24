@@ -11,6 +11,8 @@
 #include "StackTrace.h"
 #include "Memory.h"
 #include <memory.h>
+#include <stdatomic.h>
+#include <pthread.h>
 
 // Allow read and write
 #define HEAP_MEM_PROT (PROT_READ | PROT_WRITE)
@@ -60,7 +62,9 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->heapStart = smallHeapStart;
     word_t *heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
     heap->heapEnd = heapEnd;
-    heap->sweepCursor = heapEnd;
+    heap->sweepCursor = (long) heapEnd;
+    heap->sweepProcesses = 0;
+    pthread_mutex_init(&heap->postSweepMutex, NULL);
     Allocator_Init(&allocator, smallHeapStart,
                    initialSmallHeapSize / BLOCK_TOTAL_SIZE);
 
@@ -209,22 +213,30 @@ void Heap_Recycle(Heap *heap) {
 
     LargeAllocator_Sweep(&largeAllocator);
     // prepare for lazy sweeping
-    heap->sweepCursor = heap->heapStart;
+    heap->sweepCursor = (long) heap->heapStart;
+    heap->sweepProcesses = 0;
 }
 
-INLINE word_t *Heap_LazySweep(Heap *heap, uint32_t size) {
+word_t *Heap_LazySweep(Heap *heap, uint32_t size) {
     word_t *object;
+    atomic_fetch_add(&heap->sweepProcesses, 1);
     while (!Heap_IsSweepDone(heap)) {
-        BlockHeader *blockHeader = (BlockHeader *) heap -> sweepCursor;
+        BlockHeader *blockHeader = (BlockHeader *) atomic_fetch_add(&heap -> sweepCursor, BLOCK_TOTAL_SIZE);
         Block_Recycle(&allocator, blockHeader);
-        heap -> sweepCursor += WORDS_IN_BLOCK;
 
         object = Allocator_Alloc(&allocator, size);
         if (object != NULL)
             break;
     }
+    atomic_fetch_add(&heap->sweepProcesses, -1);
     if (Heap_IsSweepDone(heap)) {
-        Heap_SweepDone(heap);
+        pthread_mutex_lock(&heap->postSweepMutex);
+        if (heap->sweepProcesses == 0) {
+            heap->sweepProcesses = SWEEP_PROCESSES_POST_ACTIONS_STARTED;
+            Heap_SweepDone(heap);
+            heap->sweepProcesses = SWEEP_PROCESSES_POST_ACTIONS_DONE;
+        }
+        pthread_mutex_unlock(&heap->postSweepMutex);
     }
     if (object != NULL) {
         return object;
@@ -288,7 +300,7 @@ void Heap_Grow(Heap *heap, size_t increment) {
     word_t *heapEnd = heap->heapEnd;
     word_t *newHeapEnd = heapEnd + increment;
     heap->heapEnd = newHeapEnd;
-    heap->sweepCursor = newHeapEnd;
+    heap->sweepCursor = (long) newHeapEnd;
     heap->smallHeapSize += increment * WORD_SIZE;
 
     BlockHeader *lastBlock = (BlockHeader *)(heap->heapEnd - WORDS_IN_BLOCK);
