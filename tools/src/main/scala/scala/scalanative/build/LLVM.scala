@@ -88,6 +88,22 @@ private[scalanative] object LLVM {
       }
     }
 
+      paths.filter(_.contains("immix")).par.foreach { path =>
+      val opath = path + ".o"
+      if (include(path) && !Files.exists(Paths.get(opath))) {
+        val isCpp    = path.endsWith(".cpp")
+        val compiler = if (isCpp) config.clangPP.abs else config.clang.abs
+        val stdflag  = if (isCpp) "-std=c++11" else "-std=gnu11"
+        val flags    = stdflag +: "-fvisibility=hidden" +: config.compileOptions
+        val compilec = Seq(compiler) ++ flto(config) ++ flags ++ Seq("-c",
+          path,
+          "-o",
+          opath)
+
+        config.logger.info("LOX\n" + compilec.map("'"+_+"'").mkString(" "))
+      }
+    }
+
     // generate .o files for all included source files in parallel
     paths.par.foreach { path =>
       val opath = path + ".o"
@@ -178,6 +194,7 @@ private[scalanative] object LLVM {
     config.logger.time(
       s"Linking native code (${config.gc.name} gc, $ltoName lto)") {
       config.logger.running(compile)
+      config.logger.info("LOX\n" + compile.map("'"+_+"'").mkString(" "))
       Process(compile, config.workdir.toFile) ! Logger.toProcessLogger(
         config.logger)
     }
