@@ -225,7 +225,12 @@ void Heap_Recycle(Heap *heap) {
         size_t increment = blocks * WORDS_IN_BLOCK;
         Heap_Grow(heap, increment);
     }
-    Allocator_InitCursors(&allocator);
+//    Allocator_InitCursors(&allocator);
+       // forces getting new blocks
+        allocator.block = NULL;
+        allocator.largeBlock = NULL;
+        allocator.limit = NULL;
+        allocator.largeLimit = NULL;
 }
 
 void Heap_exitWithOutOfMemory() {

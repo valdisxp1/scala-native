@@ -138,6 +138,11 @@ INLINE word_t *Allocator_Alloc(Allocator *allocator, size_t size) {
     word_t *start = allocator->cursor;
     word_t *end = (word_t *)((uint8_t *)start + size);
 
+    if (allocator->block == NULL) {
+        printf("block:%p cursor:%p end=%p limit:%p\n", allocator->block, allocator->cursor, end, allocator->limit);
+        fflush(stdout);
+    }
+
     // Checks if the end of the block overlaps with the limit
     if (end > allocator->limit) {
         // If it overlaps but the block to allocate is a `medium` sized block,
