@@ -206,8 +206,8 @@ void Heap_Recycle(Heap *heap) {
     allocator.freeMemoryAfterCollection = 0;
 
     // do not sweep the two blocks that are in use
-    heap->unsweepable[0] = allocator.block;
-    heap->unsweepable[1] = allocator.largeBlock;
+    heap->unsweepable[0] = (word_t *) allocator.block;
+    heap->unsweepable[1] = (word_t *) allocator.largeBlock;
 
     word_t *current = heap->heapStart;
     while (current != heap->heapEnd) {
