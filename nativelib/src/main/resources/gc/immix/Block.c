@@ -106,9 +106,9 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader) {
             allocator->recycledBlockCount++;
         }
     }
-    #ifdef DEBUG_PRINT
-        Block_Print(blockHeader);
-    #endif
+#ifdef DEBUG_PRINT
+    Block_Print(blockHeader);
+#endif
 }
 
 void Block_Print(BlockHeader *block) {
@@ -129,12 +129,10 @@ void Block_Print(BlockHeader *block) {
         printf("\n");
     }
     printf("mark: %d, flags: %d, first: %d, nextBlock: %d \n",
-            block->header.mark,
-            block->header.flags,
-            block->header.first,
-            block->header.nextBlock);
+           block->header.mark, block->header.flags, block->header.first,
+           block->header.nextBlock);
 
-    for(int i = 0; i < LINE_COUNT; i++){
+    for (int i = 0; i < LINE_COUNT; i++) {
         printf("%d ", block->lineHeaders[i]);
     }
     printf("\n");

@@ -205,10 +205,17 @@ void Heap_Recycle(Heap *heap) {
     allocator.recycledBlockCount = 0;
     allocator.freeMemoryAfterCollection = 0;
 
+    // do not sweep the two blocks that are in use
+    heap->unsweepable[0] = allocator.block;
+    heap->unsweepable[1] = allocator.largeBlock;
+
     word_t *current = heap->heapStart;
     while (current != heap->heapEnd) {
-        BlockHeader *blockHeader = (BlockHeader *)current;
-        Block_Recycle(&allocator, blockHeader);
+        if (current != heap->unsweepable[0] &&
+            current != heap->unsweepable[1]) {
+            BlockHeader *blockHeader = (BlockHeader *)current;
+            Block_Recycle(&allocator, blockHeader);
+        }
         // block_print(blockHeader);
         current += WORDS_IN_BLOCK;
     }
@@ -225,12 +232,6 @@ void Heap_Recycle(Heap *heap) {
         size_t increment = blocks * WORDS_IN_BLOCK;
         Heap_Grow(heap, increment);
     }
-//    Allocator_InitCursors(&allocator);
-       // forces getting new blocks
-        allocator.block = NULL;
-        allocator.largeBlock = NULL;
-        allocator.limit = NULL;
-        allocator.largeLimit = NULL;
 }
 
 void Heap_exitWithOutOfMemory() {
