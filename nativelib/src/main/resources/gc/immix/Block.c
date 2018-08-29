@@ -111,6 +111,16 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader) {
 #endif
 }
 
+void Block_ClearMarkBits(BlockHeader *block) {
+    Block_Unmark(block);
+    for (int16_t lineIndex = 0; lineIndex < LINE_COUNT; lineIndex++) {
+        LineHeader *lineHeader = Block_GetLineHeader(block, lineIndex);
+        if (Line_IsMarked(lineHeader)) {
+            Block_recycleMarkedLine(block, lineHeader, lineIndex);
+        }
+    }
+}
+
 void Block_Print(BlockHeader *block) {
     printf("%p", block);
     if (Block_IsFree(block)) {

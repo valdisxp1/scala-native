@@ -208,6 +208,10 @@ void Heap_Recycle(Heap *heap) {
     // do not sweep the two blocks that are in use
     heap->unsweepable[0] = (word_t *) allocator.block;
     heap->unsweepable[1] = (word_t *) allocator.largeBlock;
+    // Still need to unmark all objects.
+    // This is so the next mark will not use any child objects.
+    Block_ClearMarkBits((BlockHeader *) heap->unsweepable[0]);
+    Block_ClearMarkBits((BlockHeader *) heap->unsweepable[1]);
 
     #ifdef DEBUG_PRINT
             printf("unsweepable[0] %p (%lu)\n", heap->unsweepable[0],
