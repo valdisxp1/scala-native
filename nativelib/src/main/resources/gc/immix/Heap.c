@@ -209,6 +209,22 @@ void Heap_Recycle(Heap *heap) {
     heap->unsweepable[0] = (word_t *) allocator.block;
     heap->unsweepable[1] = (word_t *) allocator.largeBlock;
 
+    #ifdef DEBUG_PRINT
+            printf("unsweepable[0] %p (%lu)\n", heap->unsweepable[0],
+                   (uint64_t)((word_t *)heap->unsweepable[0] - heap->heapStart) /
+                       WORDS_IN_BLOCK);
+            if (heap->unsweepable[0] != NULL) {
+                Block_Print(heap->unsweepable[0]);
+            }
+            printf("unsweepable[1] %p (%lu)\n", heap->unsweepable[1],
+                               (uint64_t)((word_t *)heap->unsweepable[1] - heap->heapStart) /
+                                   WORDS_IN_BLOCK);
+            if (heap->unsweepable[1] != NULL) {
+                Block_Print(heap->unsweepable[1]);
+            }
+            fflush(stdout);
+    #endif
+
     word_t *current = heap->heapStart;
     while (current != heap->heapEnd) {
         if (current != heap->unsweepable[0] &&
