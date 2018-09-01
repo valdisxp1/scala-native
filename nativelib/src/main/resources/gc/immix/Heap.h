@@ -32,11 +32,6 @@ static inline bool Heap_IsWordInHeap(Heap *heap, word_t *word) {
            Heap_IsWordInLargeHeap(heap, word);
 }
 
-static inline bool Heap_IsSweepDone(Heap *heap) {
-    return heap->sweepCursor >= heap->heapEnd;
-}
-
-
 static inline bool heap_isObjectInHeap(Heap *heap, Object *object) {
     return Heap_IsWordInHeap(heap, (word_t *)object);
 }

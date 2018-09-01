@@ -276,7 +276,7 @@ word_t *Heap_LazySweep(Heap *heap, uint32_t size) {
     }
     word_t *object = NULL;
 
-    while (!Heap_IsSweepDone(heap)) {
+    while (heap->sweepCursor < heap->heapEnd) {
         BlockHeader *blockHeader = (BlockHeader *) heap -> sweepCursor;
         bool sweepable  = (word_t *) blockHeader != heap->unsweepable[0] &&
                           (word_t *) blockHeader != heap->unsweepable[1];
@@ -292,7 +292,7 @@ word_t *Heap_LazySweep(Heap *heap, uint32_t size) {
 //                break;
         }
     }
-    if (Heap_IsSweepDone(heap)) {
+    if (heap->sweepCursor >= heap->heapEnd) {
         Heap_SweepDone(heap);
     }
     if (object != NULL) {
