@@ -274,32 +274,34 @@ word_t *Heap_LazySweep(Heap *heap, uint32_t size) {
     if (heap->sweepCursor == NULL) {
         return Allocator_Alloc(&allocator, size);
     }
-    word_t *object = NULL;
+//    word_t *object = NULL;
+    word_t *current;
+    current = heap->sweepCursor;
 
-    while (heap->sweepCursor < heap->heapEnd) {
-        BlockHeader *blockHeader = (BlockHeader *) heap -> sweepCursor;
-        bool sweepable  = (word_t *) blockHeader != heap->unsweepable[0] &&
-                          (word_t *) blockHeader != heap->unsweepable[1];
+    while (current < heap->heapEnd) {
+        BlockHeader *blockHeader = (BlockHeader *) current;
+        bool sweepable  = current != heap->unsweepable[0] &&
+                          current != heap->unsweepable[1];
         if (sweepable) {
             Block_Recycle(&allocator, blockHeader);
         }
-        heap -> sweepCursor += WORDS_IN_BLOCK;
+        current += WORDS_IN_BLOCK;
 
-        if (sweepable) {
-            if (object == NULL)
-                object = Allocator_Alloc(&allocator, size);
+//        if (sweepable) {
+//            if (object == NULL)
+//                object = Allocator_Alloc(&allocator, size);
 //            if (object != NULL)
 //                break;
-        }
+//        }
     }
-    if (heap->sweepCursor >= heap->heapEnd) {
+//    if (heap->sweepCursor >= heap->heapEnd) {
         Heap_SweepDone(heap);
-    }
-    if (object != NULL) {
-        return object;
-    } else {
+//    }
+//    if (object != NULL) {
+//        return object;
+//    } else {
         return Allocator_Alloc(&allocator, size);
-    }
+//    }
 }
 INLINE void Heap_SweepDone(Heap *heap) {
     // mark sweep as done

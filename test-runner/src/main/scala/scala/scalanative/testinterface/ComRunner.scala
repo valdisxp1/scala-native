@@ -27,7 +27,8 @@ class ComRunner(bin: File,
     override def run(): Unit = {
       val port = serverSocket.getLocalPort
       logger.info(s"Starting process '$bin' on port '$port'.")
-      Process(bin.toString +: port.toString +: args, None, envVars.toSeq: _*) ! Logger
+      val lldbPrefix = Seq("lldb-5.0", "-b", "-o", "r","-k", "bt", "-k", "q")
+      Process(lldbPrefix ++: bin.toString +: port.toString +: args, None, envVars.toSeq: _*) ! Logger
         .toProcessLogger(logger)
     }
   }
@@ -57,16 +58,11 @@ class ComRunner(bin: File,
 
   /** Send message `msg` to the distant program. */
   def send(msg: Message): Unit = synchronized {
-    if (runner.isAlive) {
-      try SerializedOutputStream(out)(_.writeMessage(msg))
-      catch {
-        case ex: Throwable =>
-          close()
-          throw ex
-      }
-    } else {
-      new BuildException("Test runner not running.").printStackTrace()
-      System.exit(-1);
+    try SerializedOutputStream(out)(_.writeMessage(msg))
+    catch {
+      case ex: Throwable =>
+        close()
+        throw ex
     }
   }
 
