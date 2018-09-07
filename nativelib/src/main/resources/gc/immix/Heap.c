@@ -13,6 +13,7 @@
 #include "StackTrace.h"
 #include "Memory.h"
 #include <memory.h>
+#include <pthread.h>
 
 // Allow read and write
 #define HEAP_MEM_PROT (PROT_READ | PROT_WRITE)
@@ -47,7 +48,7 @@ word_t *Heap_mapAndAlign(size_t memoryLimit, size_t alignmentSize) {
 atomic_long atomic1, atomic2;
 long long1;
 #define TIMES 100000
-#define NTHREADS 5
+#define NTHREADS 3
 pthread_t threads[NTHREADS];
 
 void* _Increment(void* ignored) {
