@@ -44,6 +44,25 @@ word_t *Heap_mapAndAlign(size_t memoryLimit, size_t alignmentSize) {
     return heapStart;
 }
 
+atomic_long atomic1, atomic2;
+long long1;
+#define TIMES 100000
+#define NTHREADS 5
+pthread_t threads[NTHREADS];
+
+void* _Increment(void* ignored) {
+    for(int i = 0; i < TIMES; i++){
+        long1 += 1;
+    }
+    for(int i = 0; i < TIMES; i++){
+        atomic1 += 1;
+    }
+    for(int i = 0; i < TIMES; i++){
+        atomic_fetch_add(&atomic2, 1);
+    }
+    return NULL;
+}
+
 /**
  * Allocates the heap struct and initializes it
  */
@@ -91,6 +110,19 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->largeHeapStart = largeHeapStart;
     heap->largeHeapEnd =
         (word_t *)((ubyte_t *)largeHeapStart + initialLargeHeapSize);
+
+
+    long1 = 0;
+    atomic1 = 0;
+    atomic2 = 0;
+    for (int i = 0; i < NTHREADS; i++) {
+        pthread_create(&threads[i], NULL, _Increment, NULL);
+    }
+    for (int i = 0; i < NTHREADS; i++) {
+        pthread_join(threads[i], NULL);
+    }
+    printf("\n !!! \n long1=%d atomic1=%d atomic2=%d\n",long1, atomic1, atomic2);
+    fflush(stdout);
 }
 /**
  * Allocates large objects using the `LargeAllocator`.
