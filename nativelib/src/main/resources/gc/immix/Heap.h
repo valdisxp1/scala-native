@@ -5,13 +5,24 @@
 #include "Allocator.h"
 #include "LargeAllocator.h"
 #include "datastructures/Stack.h"
+#include <stdatomic.h>
+#include <pthread.h>
 
 typedef struct {
     size_t memoryLimit;
     word_t *heapStart;
     word_t *heapEnd;
-    word_t *unsweepable[2];
-    word_t *sweepCursor; //NULL = sweep not started
+    struct {
+        atomic_uintptr_t cursor;
+        word_t *unsweepable[2];
+        atomic_int processes;
+        pthread_mutex_t startMutex;
+        pthread_mutex_t postActionMutex;
+        pthread_cond_t start;
+        pthread_cond_t processStopped; // uses postActionMutex
+        atomic_bool isDone;
+        pthread_t threads[NUM_SWEEP_THREADS];
+    } sweep;
     size_t smallHeapSize;
     word_t *largeHeapStart;
     word_t *largeHeapEnd;
@@ -46,7 +57,8 @@ void Heap_Collect(Heap *heap, Stack *stack);
 
 void Heap_Recycle(Heap *heap);
 word_t *Heap_LazySweep(Heap *heap, uint32_t size);
-void Heap_SweepDone(Heap *heap);
+void Heap_SweepFully(Heap *heap);
+void Heap_EnsureSweepDone(Heap *heap);
 void Heap_Grow(Heap *heap, size_t increment);
 void Heap_GrowLarge(Heap *heap, size_t increment);
 
