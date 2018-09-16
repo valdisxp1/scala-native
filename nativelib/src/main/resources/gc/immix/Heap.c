@@ -183,11 +183,22 @@ INLINE word_t *Heap_AllocSmall(Heap *heap, uint32_t objectSize) {
 word_t *Heap_Alloc(Heap *heap, uint32_t objectSize) {
     assert(objectSize % WORD_SIZE == 0);
 
+    word_t *result = NULL;
     if (objectSize + OBJECT_HEADER_SIZE >= LARGE_BLOCK_SIZE) {
-        return Heap_AllocLarge(heap, objectSize);
+        result = Heap_AllocLarge(heap, objectSize);
     } else {
-        return Heap_AllocSmall(heap, objectSize);
+        result = Heap_AllocSmall(heap, objectSize);
     }
+
+    uint64_t relative = result - (heap -> heapStart);
+    printf("relative %p , %lu \n", result, relative);
+    if (relative == 446455 || relative == 446536) {
+        printf("FOUND!!! %lu \n", relative);
+        fflush(stdout);
+        int i = ((BlockHeader *)0) -> header.mark;
+    }
+
+    return result;
 }
 
 INLINE void Heap_Assert_Nothing_IsMarked(Heap *heap) {
@@ -262,13 +273,13 @@ void Heap_Recycle(Heap *heap) {
            (uint64_t)((word_t *)heap->unsweepable[0] - heap->heapStart) /
                WORDS_IN_BLOCK);
     if (heap->unsweepable[0] != NULL) {
-        Block_Print(heap->unsweepable[0]);
+        Block_Print((BlockHeader *) heap->unsweepable[0]);
     }
     printf("unsweepable[1] %p (%lu)\n", heap->unsweepable[1],
            (uint64_t)((word_t *)heap->unsweepable[1] - heap->heapStart) /
                WORDS_IN_BLOCK);
     if (heap->unsweepable[1] != NULL) {
-        Block_Print(heap->unsweepable[1]);
+        Block_Print((BlockHeader *) heap->unsweepable[1]);
     }
     fflush(stdout);
 #endif
