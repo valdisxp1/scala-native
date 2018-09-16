@@ -47,7 +47,7 @@ Object *Object_getInLine(BlockHeader *blockHeader, int lineIndex,
         next = Object_NextObject(next);
     }
 
-    if (Object_IsAllocated(&current->header) && word >= (word_t *)current &&
+    if (!Object_IsFree(&current->header) && word >= (word_t *)current &&
         word < (word_t *)next) {
 #ifdef DEBUG_PRINT
         if ((word_t *)current != word) {
