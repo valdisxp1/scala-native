@@ -77,10 +77,10 @@ void Marker_Mark(Heap *heap, Stack *stack) {
 
                 word_t *field = object->fields[i];
                 Object *fieldObject = Object_FromMutatorAddress(field);
-                // Heap_IsWordInSmallHeap(heap, field) implies Object_IsValidObject(object)
-                assert(!Heap_IsWordInSmallHeap(heap, field) || Object_IsValidObject(object));
-                // Heap_IsWordInLargeHeap(heap, field) implies Object_GetLargeObject(&largeAllocator, field) != NULL
-                assert(!Heap_IsWordInLargeHeap(heap, field) || Object_GetLargeObject(&largeAllocator, field) != NULL);
+                // Heap_IsWordInSmallHeap(heap, field) implies Object_IsObjectValid(fieldObject)
+                assert(!Heap_IsWordInSmallHeap(heap, field) || Object_IsObjectValid(fieldObject));
+                // Heap_IsWordInLargeHeap(heap, field) implies Object_IsLargeObjectValid(&largeAllocator, fieldObject)
+                assert(!Heap_IsWordInLargeHeap(heap, field) || Object_IsLargeObjectValid(&largeAllocator, fieldObject));
 #ifndef NDEBUG
                 _Marker_EnsureGoodSmallHeapMarking(heap, fieldObject);
 #endif
@@ -96,7 +96,7 @@ void Marker_Mark(Heap *heap, Stack *stack) {
                 word_t *field = object->fields[ptr_map[i]];
                 Object *fieldObject = Object_FromMutatorAddress(field);
 #ifdef DEBUG_PRINT
-                if (Heap_IsWordInSmallHeap(heap, field) && !Object_IsValidObject(object)) {
+                if (Heap_IsWordInSmallHeap(heap, field) && !Object_IsObjectValid(object)) {
                     BlockHeader *fromBlock = Block_GetBlockHeader((word_t *)object);
                     BlockHeader *toBlock = Block_GetBlockHeader(field);
                     printf("BAD POINTER\n");
@@ -107,10 +107,10 @@ void Marker_Mark(Heap *heap, Stack *stack) {
                     fflush(stdout);
                 }
 #endif
-                // Heap_IsWordInSmallHeap(heap, field) implies Object_IsValidObject(object)
-                assert(!Heap_IsWordInSmallHeap(heap, field) || Object_IsValidObject(object));
-                // Heap_IsWordInLargeHeap(heap, field) implies Object_GetLargeObject(&largeAllocator, field) != NULL
-                assert(!Heap_IsWordInLargeHeap(heap, field) || Object_GetLargeObject(&largeAllocator, field) != NULL);
+                // Heap_IsWordInSmallHeap(heap, field) implies Object_IsObjectValid(fieldObject)
+                assert(!Heap_IsWordInSmallHeap(heap, field) || Object_IsObjectValid(fieldObject));
+                // Heap_IsWordInLargeHeap(heap, field) implies Object_IsLargeObjectValid(&largeAllocator, fieldObject)
+                assert(!Heap_IsWordInLargeHeap(heap, field) || Object_IsLargeObjectValid(&largeAllocator, fieldObject));
 #ifndef NDEBUG
                 _Marker_EnsureGoodSmallHeapMarking(heap, fieldObject);
 #endif
