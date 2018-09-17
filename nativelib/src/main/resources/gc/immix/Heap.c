@@ -191,7 +191,7 @@ word_t *Heap_Alloc(Heap *heap, uint32_t objectSize) {
     }
 
     uint64_t relative = result - (heap -> heapStart);
-    printf("relative %p , %lu \n", result, relative);
+//    printf("relative %p , %lu \n", result, relative);
     if (relative == 446455 || relative == 446536) {
         printf("FOUND!!! %lu \n", relative);
         fflush(stdout);
