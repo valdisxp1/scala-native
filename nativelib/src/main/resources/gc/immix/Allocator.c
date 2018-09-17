@@ -254,14 +254,14 @@ BlockHeader *Allocator_getNextBlock(Allocator *allocator) {
     BlockHeader *block = NULL;
     if (!BlockList_IsEmpty(&allocator->recycledBlocks)) {
         block = BlockList_RemoveFirstBlock(&allocator->recycledBlocks);
-#ifdef DEBUG_PRINT
+#ifdef DEBUG_PRINT_Allocator_getNextBlock
         printf("NextRecycledBlock\n");
         Block_Print(block);
         fflush(stdout);
 #endif
     } else if (!BlockList_IsEmpty(&allocator->freeBlocks)) {
         block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
-#ifdef DEBUG_PRINT
+#ifdef DEBUG_PRINT_Allocator_getNextBlock
         printf("NextFreeBlock\n");
         Block_Print(block);
         fflush(stdout);
