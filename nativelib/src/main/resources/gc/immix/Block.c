@@ -116,9 +116,7 @@ void Block_ClearMarkBits(BlockHeader *block) {
     Block_Unmark(block);
     for (int16_t lineIndex = 0; lineIndex < LINE_COUNT; lineIndex++) {
         LineHeader *lineHeader = Block_GetLineHeader(block, lineIndex);
-        if (Line_IsMarked(lineHeader)) {
-            Block_recycleMarkedLine(block, lineHeader, lineIndex);
-        }
+        Block_recycleMarkedLine(block, lineHeader, lineIndex);
     }
 }
 
