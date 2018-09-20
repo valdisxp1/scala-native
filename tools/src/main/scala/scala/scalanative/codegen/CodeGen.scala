@@ -27,13 +27,14 @@ object CodeGen {
     emit(config, lowered)
   }
 
-  private def lower(defns: Seq[Defn])(implicit meta: Metadata): Seq[Defn] = {
+  private def lower(config: build.Config, defns: Seq[Defn])(
+      implicit meta: Metadata): Seq[Defn] = {
     val buf = mutable.UnrolledBuffer.empty[Defn]
 
     partitionBy(defns)(_.name).par
       .map {
         case (_, defns) =>
-          Lower(defns)
+          Lower(config, defns)
       }
       .seq
       .foreach { defns =>
