@@ -23,9 +23,9 @@ void Allocator_Init(Allocator *allocator, word_t *heapStart, int blockCount) {
     BlockList_Init(&allocator->freeBlocks, heapStart);
 
     // Init the free block list
-    allocator->freeBlocks.first = (BlockHeader *)heapStart;
+    allocator->freeBlocks.first = (BlockHeader *)heapStart; //TODO here, maybe
     BlockHeader *lastBlockHeader =
-        (BlockHeader *)(heapStart + ((blockCount - 1) * WORDS_IN_BLOCK));
+        (BlockHeader *)(heapStart + ((blockCount - 1) * WORDS_IN_BLOCK)); //TODO here
     allocator->freeBlocks.last = lastBlockHeader;
     lastBlockHeader->header.nextBlock = LAST_BLOCK;
 

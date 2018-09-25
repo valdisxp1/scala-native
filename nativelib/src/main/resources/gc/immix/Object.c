@@ -69,7 +69,7 @@ Object *Object_GetObject(word_t *word) {
     BlockHeader *blockHeader = Block_GetBlockHeader(word);
 
     // Check if the word points on the block header
-    if (word < Block_GetFirstWord(blockHeader)) {
+    if (word < Block_GetFirstWord(blockHeader)) {// TODO here
 #ifdef DEBUG_PRINT
         printf("Points on block header %p\n", word);
         fflush(stdout);

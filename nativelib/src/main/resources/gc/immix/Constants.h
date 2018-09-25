@@ -22,6 +22,7 @@
 #define OBJECT_HEADER_SIZE 8
 #define WORDS_IN_OBJECT_HEADER (OBJECT_HEADER_SIZE / WORD_SIZE)
 
+//TODO here
 #define LINE_COUNT                                                             \
     ((BLOCK_TOTAL_SIZE - BLOCK_METADATA_SIZE) /                                \
      (LINE_SIZE + LINE_METADATA_SIZE))
