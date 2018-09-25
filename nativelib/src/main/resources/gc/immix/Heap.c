@@ -265,12 +265,12 @@ void Heap_Recycle(Heap *heap) {
     allocator.recycledBlockCount = 0;
     allocator.freeMemoryAfterCollection = 0;
 
-    word_t *current = heap->heapStart;
-    while (current != heap->heapEnd) {
+    word_t *current = heap->heapStart; //TODO here
+    while (current != heap->heapEnd) { //TODO here
         BlockHeader *blockHeader = (BlockHeader *)current;
         Block_Recycle(&allocator, blockHeader);
         // block_print(blockHeader);
-        current += WORDS_IN_BLOCK;
+        current += WORDS_IN_BLOCK; //TODO here
     }
     LargeAllocator_Sweep(&largeAllocator);
 
@@ -329,6 +329,7 @@ void Heap_Grow(Heap *heap, size_t increment) {
     heap->heapEnd = heapEnd + increment;
     heap->smallHeapSize += increment * WORD_SIZE;
 
+    // TODO here
     BlockHeader *lastBlock = (BlockHeader *)(heap->heapEnd - WORDS_IN_BLOCK);
     BlockList_AddBlocksLast(&allocator.freeBlocks, (BlockHeader *)heapEnd,
                             lastBlock);

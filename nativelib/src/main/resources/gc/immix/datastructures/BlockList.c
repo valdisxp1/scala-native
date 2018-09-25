@@ -4,11 +4,11 @@
 #include "../Log.h"
 #include "../headers/BlockHeader.h"
 
-int32_t _getBlockIndex(word_t *heapStart, BlockHeader *blockHeader) {
+int32_t _getBlockIndex(word_t *heapStart, BlockHeader *blockHeader) { //TODO this x2
     return (uint32_t)((word_t *)blockHeader - heapStart) / WORDS_IN_BLOCK;
 }
 
-BlockHeader *_getBlockFromIndex(word_t *heapStart, int32_t index) {
+BlockHeader *_getBlockFromIndex(word_t *heapStart, int32_t index) { //TODO this x2
     return (BlockHeader *)(heapStart + (index * WORDS_IN_BLOCK));
 }
 

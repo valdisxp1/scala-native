@@ -56,12 +56,12 @@ bool StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
     BlockHeader *currentBlock = Block_GetBlockHeader(currentOverflowAddress);
     word_t *heapEnd = heap->heapEnd;
 
-    while ((word_t *)currentBlock != heapEnd) {
+    while ((word_t *)currentBlock != heapEnd) {//TODO here
         if (StackOverflowHandler_overflowBlockScan(currentBlock, heap, stack,
                                                    &currentOverflowAddress)) {
             return true;
         }
-        currentBlock = (BlockHeader *)((word_t *)currentBlock + WORDS_IN_BLOCK);
+        currentBlock = (BlockHeader *)((word_t *)currentBlock + WORDS_IN_BLOCK); //TODO here
         currentOverflowAddress = (word_t *)currentBlock;
     }
     return false;
