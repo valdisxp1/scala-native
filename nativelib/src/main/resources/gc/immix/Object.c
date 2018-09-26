@@ -68,15 +68,6 @@ Object *Object_getInLine(BlockHeader *blockHeader, int lineIndex,
 Object *Object_GetObject(word_t *word) {
     BlockHeader *blockHeader = Block_GetBlockHeader(word);
 
-    // Check if the word points on the block header
-    if (word < Block_GetFirstWord(blockHeader)) {// TODO here
-#ifdef DEBUG_PRINT
-        printf("Points on block header %p\n", word);
-        fflush(stdout);
-#endif
-        return NULL;
-    }
-
     if (!isWordAligned(word)) {
 #ifdef DEBUG_PRINT
         printf("Word not aligned: %p aligning to %p\n", word,

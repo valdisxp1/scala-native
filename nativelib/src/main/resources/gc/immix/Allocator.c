@@ -12,20 +12,20 @@ bool Allocator_getNextLine(Allocator *allocator);
  *
  * Allocates the Allocator and initialises it's fields
  *
- * @param heapStart
+ * @param blockHeaderStart
  * @param blockCount Initial number of blocks in the heap
  * @return
  */
-void Allocator_Init(Allocator *allocator, word_t *heapStart, int blockCount) {
-    allocator->heapStart = heapStart;
+void Allocator_Init(Allocator *allocator, word_t *blockHeaderStart, uint32_t blockCount) {
+    allocator->blockHeaderStart = blockHeaderStart;
 
-    BlockList_Init(&allocator->recycledBlocks, heapStart);
-    BlockList_Init(&allocator->freeBlocks, heapStart);
+    BlockList_Init(&allocator->recycledBlocks, heap.blockHeaderStart);
+    BlockList_Init(&allocator->freeBlocks, heap.blockHeaderStart);
 
     // Init the free block list
-    allocator->freeBlocks.first = (BlockHeader *)heapStart; //TODO here, maybe
+    allocator->freeBlocks.first = (BlockHeader *)blockHeaderStart;
     BlockHeader *lastBlockHeader =
-        (BlockHeader *)(heapStart + ((blockCount - 1) * WORDS_IN_BLOCK)); //TODO here
+        (BlockHeader *)(blockHeaderStart + ((blockCount - 1) * WORDS_IN_BLOCK_METADATA));
     allocator->freeBlocks.last = lastBlockHeader;
     lastBlockHeader->header.nextBlock = LAST_BLOCK;
 
