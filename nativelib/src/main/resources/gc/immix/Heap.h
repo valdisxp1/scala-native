@@ -9,6 +9,7 @@
 typedef struct {
     size_t memoryLimit;
     word_t *heapStart;
+    word_t *blockHeaderStart;
     word_t *heapEnd;
     size_t smallHeapSize;
     word_t *largeHeapStart;
