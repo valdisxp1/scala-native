@@ -6,7 +6,7 @@
 #include "datastructures/BlockList.h"
 
 typedef struct {
-    word_t *heapStart;
+    word_t *blockHeaderStart;
     uint64_t blockCount;
     BlockList recycledBlocks;
     uint64_t recycledBlockCount;
@@ -21,7 +21,7 @@ typedef struct {
     size_t freeMemoryAfterCollection;
 } Allocator;
 
-void Allocator_Init(Allocator *allocator, word_t *, int);
+void Allocator_Init(Allocator *allocator, word_t *, uint32_t);
 bool Allocator_CanInitCursors(Allocator *allocator);
 void Allocator_InitCursors(Allocator *allocator);
 word_t *Allocator_Alloc(Allocator *allocator, size_t size);

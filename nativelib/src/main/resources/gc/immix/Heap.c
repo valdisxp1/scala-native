@@ -59,8 +59,10 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     // reserve space for block headers
     word_t maxNumberOfBlocks = memoryLimit / BLOCK_TOTAL_SIZE;
     size_t blockHeaderSpaceSize = maxNumberOfBlocks * BLOCK_METADATA_ALIGNED_SIZE;
+    uint32_t initialBlockCount = initialSmallHeapSize / BLOCK_TOTAL_SIZE;
     word_t *blockHeaderStart = Heap_mapAndAlign(blockHeaderSpaceSize, BLOCK_METADATA_ALIGNED_SIZE);
     heap->blockHeaderStart = blockHeaderStart;
+    heap->blockHeaderEnd = blockHeaderStart + initialBlockCount * WORDS_IN_BLOCK_METADATA;
 
     word_t *smallHeapStart = Heap_mapAndAlign(memoryLimit, BLOCK_TOTAL_SIZE);
 
@@ -68,8 +70,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->smallHeapSize = initialSmallHeapSize;
     heap->heapStart = smallHeapStart;
     heap->heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
-    Allocator_Init(&allocator, smallHeapStart,
-                   initialSmallHeapSize / BLOCK_TOTAL_SIZE);
+    Allocator_Init(&allocator, smallHeapStart, initialBlockCount);
 
     // Init heap for large objects
     word_t *largeHeapStart = Heap_mapAndAlign(memoryLimit, MIN_BLOCK_SIZE);
@@ -271,12 +272,12 @@ void Heap_Recycle(Heap *heap) {
     allocator.recycledBlockCount = 0;
     allocator.freeMemoryAfterCollection = 0;
 
-    word_t *current = heap->heapStart; //TODO here
-    while (current != heap->heapEnd) { //TODO here
+    word_t *current = heap->blockHeaderStart;
+    while (current < heap->blockHeaderEnd) {
         BlockHeader *blockHeader = (BlockHeader *)current;
         Block_Recycle(&allocator, blockHeader);
         // block_print(blockHeader);
-        current += WORDS_IN_BLOCK; //TODO here
+        current += WORDS_IN_BLOCK_METADATA;
     }
     LargeAllocator_Sweep(&largeAllocator);
 
@@ -308,6 +309,7 @@ bool Heap_isGrowingPossible(Heap *heap, size_t increment) {
 /** Grows the small heap by at least `increment` words */
 void Heap_Grow(Heap *heap, size_t increment) {
     assert(increment % WORDS_IN_BLOCK == 0);
+    uint32_t incrementInBlocks = increment / WORDS_IN_BLOCK;
 
     // If we cannot grow because we reached the memory limit
     if (!Heap_isGrowingPossible(heap, increment)) {
@@ -334,14 +336,15 @@ void Heap_Grow(Heap *heap, size_t increment) {
     word_t *heapEnd = heap->heapEnd;
     heap->heapEnd = heapEnd + increment;
     heap->smallHeapSize += increment * WORD_SIZE;
+    word_t *blockHeaderEnd = heap->blockHeaderEnd;
+    heap->blockHeaderEnd += incrementInBlocks * WORDS_IN_BLOCK_METADATA;
 
-    // TODO here
-    BlockHeader *lastBlock = (BlockHeader *)(heap->heapEnd - WORDS_IN_BLOCK);
-    BlockList_AddBlocksLast(&allocator.freeBlocks, (BlockHeader *)heapEnd,
+    BlockHeader *lastBlock = (BlockHeader *)(heap->blockHeaderEnd - WORDS_IN_BLOCK_METADATA);
+    BlockList_AddBlocksLast(&allocator.freeBlocks, (BlockHeader *)blockHeaderEnd,
                             lastBlock);
 
-    allocator.blockCount += increment / WORDS_IN_BLOCK;
-    allocator.freeBlockCount += increment / WORDS_IN_BLOCK;
+    allocator.blockCount += incrementInBlocks;
+    allocator.freeBlockCount += incrementInBlocks;
 }
 
 /** Grows the large heap by at least `increment` words */

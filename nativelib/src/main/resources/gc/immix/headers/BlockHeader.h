@@ -52,7 +52,7 @@ static inline void Block_Mark(BlockHeader *blockHeader) {
 static inline BlockHeader *Block_GetBlockHeader(word_t *word) {
     word_t *firstWord = (word_t *)((word_t)word & BLOCK_SIZE_IN_BYTES_INVERSE_MASK)
     uint32_t index = (uint32_t) ((firstWord - heap.heapStart) / WORDS_IN_BLOCK);
-    return (BlockHeader *)((ubyte_t *) heap.blockHeaderStart + (index * BLOCK_METADATA_ALIGNED_SIZE));
+    return (BlockHeader *)(heap.blockHeaderStart + (index * WORDS_IN_BLOCK_METADATA));
 }
 
 static inline word_t *Block_GetLineAddress(BlockHeader *blockHeader,
@@ -73,7 +73,7 @@ static inline FreeLineHeader *Block_GetFreeLineHeader(BlockHeader *blockHeader,
 }
 
 static inline word_t *Block_GetFirstWord(BlockHeader *blockHeader) {
-    uint32_t index = (uint32_t) (((word_t *)blockHeader - heap.blockHeaderStart) / BLOCK_METADATA_ALIGNED_SIZE);
+    uint32_t index = (uint32_t) (((word_t *)blockHeader - heap.blockHeaderStart) / WORDS_IN_BLOCK_METADATA);
     return heap.heapStart + (WORDS_IN_BLOCK * index);
 }
 

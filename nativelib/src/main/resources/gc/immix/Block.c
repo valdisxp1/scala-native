@@ -12,7 +12,7 @@ extern int __object_array_id;
 
 INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
                                        BlockHeader *blockHeader) {
-    memset(blockHeader, 0, LINE_SIZE); //TODO here
+    memset(blockHeader, 0, TOTAL_BLOCK_METADATA_SIZE);
     BlockList_AddLast(&allocator->freeBlocks, blockHeader);
     Block_SetFlag(blockHeader, block_free);
 }
