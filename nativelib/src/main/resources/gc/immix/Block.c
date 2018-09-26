@@ -23,7 +23,7 @@ INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader,
     // If the line contains an object
     if (Line_ContainsObject(lineHeader)) {
         // Unmark all objects in line
-        Object *object = Line_GetFirstObject(lineHeader);
+        Object *object = Line_GetFirstObject(blockHeader, lineHeader);
         word_t *lineEnd =
             Block_GetLineAddress(blockHeader, lineIndex) + WORDS_IN_LINE;
         while (object != NULL && (word_t *)object < lineEnd) {

@@ -36,7 +36,7 @@ Object *Object_getInLine(BlockHeader *blockHeader, int lineIndex,
     assert(Line_ContainsObject(Block_GetLineHeader(blockHeader, lineIndex)));
 
     Object *current =
-        Line_GetFirstObject(Block_GetLineHeader(blockHeader, lineIndex));
+        Line_GetFirstObject(blockHeader, Block_GetLineHeader(blockHeader, lineIndex));
     Object *next = Object_NextObject(current);
 
     word_t *lineEnd =

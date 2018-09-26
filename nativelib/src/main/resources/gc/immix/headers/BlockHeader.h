@@ -50,14 +50,15 @@ static inline void Block_Mark(BlockHeader *blockHeader) {
 }
 
 static inline BlockHeader *Block_GetBlockHeader(word_t *word) {
-    return (BlockHeader *)((word_t)word & BLOCK_SIZE_IN_BYTES_INVERSE_MASK); //TODO here
+    word_t *firstWord = (word_t *)((word_t)word & BLOCK_SIZE_IN_BYTES_INVERSE_MASK)
+    uint32_t index = (uint32_t) ((firstWord - heap.heapStart) / WORDS_IN_BLOCK);
+    return (BlockHeader *)((ubyte_t *) heap.blockHeaderStart + (index * BLOCK_METADATA_ALIGNED_SIZE));
 }
 
 static inline word_t *Block_GetLineAddress(BlockHeader *blockHeader,
                                            int lineIndex) {
     assert(lineIndex < LINE_COUNT);
-    return (word_t *)((ubyte_t *)blockHeader + BLOCK_METADATA_ALIGNED_SIZE +
-                      (lineIndex * LINE_SIZE)); //TODO here
+    return (word_t *)((ubyte_t *) Block_GetFirstWord(blockHeader) + (lineIndex * LINE_SIZE));
 }
 
 static inline word_t *Block_GetLineWord(BlockHeader *blockHeader, int lineIndex,
@@ -71,13 +72,9 @@ static inline FreeLineHeader *Block_GetFreeLineHeader(BlockHeader *blockHeader,
     return (FreeLineHeader *)Block_GetLineAddress(blockHeader, lineIndex); //TODO what?
 }
 
-static inline BlockHeader *
-Block_BlockHeaderFromLineHeader(LineHeader *lineHeader) {
-    return Block_GetBlockHeader((word_t *)lineHeader); //TODO here
-}
-
 static inline word_t *Block_GetFirstWord(BlockHeader *blockHeader) {
-    return (word_t *)((ubyte_t *)blockHeader + BLOCK_METADATA_ALIGNED_SIZE); //TODO here
+    uint32_t index = (uint32_t) (((word_t *)blockHeader - heap.blockHeaderStart) / BLOCK_METADATA_ALIGNED_SIZE);
+    return heap.heapStart + (WORDS_IN_BLOCK * index);
 }
 
 static inline word_t *Block_GetBlockEnd(BlockHeader *blockHeader) {
