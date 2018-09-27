@@ -44,7 +44,7 @@ static inline word_t *Block_GetLineWord(BlockHeader *blockHeader, int lineIndex,
 
 static inline FreeLineHeader *Block_GetFreeLineHeader(BlockHeader *blockHeader,
                                                       int lineIndex) {
-    return (FreeLineHeader *)Block_GetLineAddress(blockHeader, lineIndex); //TODO what?
+    return (FreeLineHeader *)Block_GetLineAddress(blockHeader, lineIndex);
 }
 
 void Block_Recycle(Allocator *, BlockHeader *);
