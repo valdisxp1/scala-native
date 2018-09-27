@@ -12,14 +12,14 @@ BlockHeader *BlockList_getBlockFromIndex(word_t *blockHeaderStart, int32_t index
     return (BlockHeader *)(blockHeaderStart + (index * WORDS_IN_BLOCK_METADATA));
 }
 
-BlockHeader *_getNextBlock(word_t *blockHeaderStart, BlockHeader *header) {
+BlockHeader *BlockList_getNextBlock(word_t *blockHeaderStart, BlockHeader *header) {
     int32_t nextBlockId = header->header.nextBlock;
     if (nextBlockId == LAST_BLOCK) {
         return NULL;
     } else if (nextBlockId == 0) {
-        nextBlockId = _getBlockIndex(blockHeaderStart, header) + 1;
+        nextBlockId = BlockList_getBlockIndex(blockHeaderStart, header) + 1;
     }
-    return _getBlockFromIndex(blockHeaderStart, nextBlockId);
+    return BlockList_getBlockFromIndex(blockHeaderStart, nextBlockId);
 }
 
 void BlockList_Init(BlockList *blockList, word_t *blockHeaderStart) {
@@ -38,7 +38,7 @@ BlockHeader *BlockList_RemoveFirstBlock(BlockList *blockList) {
     if (block == blockList->last) {
         blockList->first = NULL;
     }
-    blockList->first = _getNextBlock(blockList->blockHeaderStart, block);
+    blockList->first = BlockList_getNextBlock(blockList->blockHeaderStart, block);
     return block;
 }
 
@@ -47,7 +47,7 @@ void BlockList_AddLast(BlockList *blockList, BlockHeader *blockHeader) {
         blockList->first = blockHeader;
     } else {
         blockList->last->header.nextBlock =
-            _getBlockIndex(blockList->blockHeaderStart, blockHeader);
+            BlockList_getBlockIndex(blockList->blockHeaderStart, blockHeader);
     }
     blockList->last = blockHeader;
     blockHeader->header.nextBlock = LAST_BLOCK;
@@ -59,7 +59,7 @@ void BlockList_AddBlocksLast(BlockList *blockList, BlockHeader *first,
         blockList->first = first;
     } else {
         blockList->last->header.nextBlock =
-            _getBlockIndex(blockList->blockHeaderStart, first);
+           BlockList_getBlockIndex(blockList->blockHeaderStart, first);
     }
     blockList->last = last;
     last->header.nextBlock = LAST_BLOCK;
@@ -75,7 +75,7 @@ void BlockList_Print(BlockList *blockList) {
     BlockHeader *current = blockList->first;
     while (current != NULL) {
         printf("[%p %d] -> ", current, current->header.first);
-        current = _getNextBlock(blockList->blockHeaderStart, current);
+        current = BlockList_getNextBlock(blockList->blockHeaderStart, current);
     }
     printf("\n");
 }
