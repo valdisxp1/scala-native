@@ -6,6 +6,7 @@
 #include "../GCTypes.h"
 #include "../Constants.h"
 #include "../Log.h"
+#include "../State.h"
 
 typedef enum {
     block_free = 0x0,
