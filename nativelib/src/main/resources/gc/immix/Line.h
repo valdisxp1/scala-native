@@ -3,7 +3,7 @@
 
 #include "headers/ObjectHeader.h"
 #include "headers/LineHeader.h"
-#include "headers/BlockHeader.h"
+#include "Block.h"
 
 static INLINE Object *Line_GetFirstObject(BlockHeader *blockHeader, LineHeader *lineHeader) {
     assert(Line_ContainsObject(lineHeader));
