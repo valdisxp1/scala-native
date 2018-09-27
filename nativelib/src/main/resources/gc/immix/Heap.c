@@ -109,6 +109,7 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize) {
         if (object != NULL) {
             Object_SetObjectType(&object->header, object_large);
             Object_SetSize(&object->header, size);
+            assert(Heap_IsWordInLargeHeap(heap, (word_t *) object));
             return Object_ToMutatorAddress(object);
         } else {
             Heap_GrowLarge(heap, size);
@@ -118,6 +119,7 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize) {
 
             Object_SetObjectType(objectHeader, object_large);
             Object_SetSize(objectHeader, size);
+            assert(Heap_IsWordInLargeHeap(heap, (word_t *) object));
             return Object_ToMutatorAddress(object);
         }
     }
@@ -140,6 +142,7 @@ NOINLINE word_t *Heap_allocSmallSlow(Heap *heap, uint32_t size) {
     object = (Object *)Allocator_Alloc(&allocator, size);
 
 done:
+    assert(Heap_IsWordInSmallHeap(heap, (word_t *) object));
     assert(object != NULL);
     ObjectHeader *objectHeader = &object->header;
     Object_SetObjectType(objectHeader, object_standard);
@@ -177,6 +180,7 @@ INLINE word_t *Heap_AllocSmall(Heap *heap, uint32_t objectSize) {
 
     __builtin_prefetch(object + 36, 0, 3);
 
+    assert(Heap_IsWordInSmallHeap(heap, (word_t *) object));
     return Object_ToMutatorAddress(object);
 }
 
