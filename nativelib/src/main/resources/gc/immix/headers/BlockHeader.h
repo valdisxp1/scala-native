@@ -6,7 +6,6 @@
 #include "../GCTypes.h"
 #include "../Constants.h"
 #include "../Log.h"
-#include "../State.h"
 
 typedef enum {
     block_free = 0x0,
@@ -51,15 +50,20 @@ static inline void Block_Mark(BlockHeader *blockHeader) {
 }
 
 static inline BlockHeader *Block_GetBlockHeader(word_t *word) {
-    word_t *firstWord = (word_t *)((word_t)word & BLOCK_SIZE_IN_BYTES_INVERSE_MASK)
+    word_t *firstWord = (word_t *)((word_t)word & BLOCK_SIZE_IN_BYTES_INVERSE_MASK);
     uint32_t index = (uint32_t) ((firstWord - heap.heapStart) / WORDS_IN_BLOCK);
     return (BlockHeader *)(heap.blockHeaderStart + (index * WORDS_IN_BLOCK_METADATA));
+}
+
+static inline word_t *Block_GetFirstWord(BlockHeader *blockHeader) {
+    uint32_t index = (uint32_t) (((word_t *)blockHeader - heap.blockHeaderStart) / WORDS_IN_BLOCK_METADATA);
+    return heap.heapStart + (WORDS_IN_BLOCK * index);
 }
 
 static inline word_t *Block_GetLineAddress(BlockHeader *blockHeader,
                                            int lineIndex) {
     assert(lineIndex < LINE_COUNT);
-    return (word_t *)((ubyte_t *) Block_GetFirstWord(blockHeader) + (lineIndex * LINE_SIZE));
+    return Block_GetFirstWord(blockHeader) + (WORDS_IN_LINE * lineIndex);
 }
 
 static inline word_t *Block_GetLineWord(BlockHeader *blockHeader, int lineIndex,
@@ -71,11 +75,6 @@ static inline word_t *Block_GetLineWord(BlockHeader *blockHeader, int lineIndex,
 static inline FreeLineHeader *Block_GetFreeLineHeader(BlockHeader *blockHeader,
                                                       int lineIndex) {
     return (FreeLineHeader *)Block_GetLineAddress(blockHeader, lineIndex); //TODO what?
-}
-
-static inline word_t *Block_GetFirstWord(BlockHeader *blockHeader) {
-    uint32_t index = (uint32_t) (((word_t *)blockHeader - heap.blockHeaderStart) / WORDS_IN_BLOCK_METADATA);
-    return heap.heapStart + (WORDS_IN_BLOCK * index);
 }
 
 static inline word_t *Block_GetBlockEnd(BlockHeader *blockHeader) {
