@@ -70,7 +70,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->smallHeapSize = initialSmallHeapSize;
     heap->heapStart = smallHeapStart;
     heap->heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
-    Allocator_Init(&allocator, smallHeapStart, initialBlockCount);
+    Allocator_Init(&allocator, blockHeaderStart, initialBlockCount);
 
     // Init heap for large objects
     word_t *largeHeapStart = Heap_mapAndAlign(memoryLimit, MIN_BLOCK_SIZE);
