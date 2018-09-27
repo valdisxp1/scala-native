@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include "Object.h"
-#include "headers/BlockHeader.h"
+#include "Block.h"
 #include "Line.h"
 #include "Log.h"
 #include "utils/MathUtils.h"
