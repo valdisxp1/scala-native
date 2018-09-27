@@ -3,12 +3,12 @@
 #include "Block.h"
 #include <stdio.h>
 #include <memory.h>
-#include "State.h"
-#include "Marker.h"
 
 BlockMeta *Allocator_getNextBlock(Allocator *allocator);
 bool Allocator_getNextLine(Allocator *allocator);
 bool Allocator_newBlock(Allocator *allocator);
+bool Allocator_newPretenuredBlock(Allocator *allocator);
+bool Allocator_getNextPretenuredLine(Allocator *allocator);
 
 /**
  *
@@ -25,7 +25,6 @@ void Allocator_Init(Allocator *allocator, Bytemap *bytemap,
     allocator->bytemap = bytemap;
     allocator->heapStart = heapStart;
 
-    BlockList_Init(&allocator->recycledBlocks, blockMetaStart);
     BlockList_Init(&allocator->freeBlocks, blockMetaStart);
 
     // Init the free block list
@@ -44,8 +43,10 @@ void Allocator_Init(Allocator *allocator, Bytemap *bytemap,
 
     // For remembering old object that might contains inter-generational
     // pointers
-    allocator->rememberedObjects = Stack_Alloc(INITIAL_STACK_SIZE);
-    allocator->rememberedYoungObjects = Stack_Alloc(INITIAL_STACK_SIZE);
+    allocator->rememberedObjects = (Stack *)malloc(sizeof(Stack));
+    allocator->rememberedYoungObjects = (Stack *)malloc(sizeof(Stack));
+    Stack_Init(allocator->rememberedObjects, INITIAL_STACK_SIZE);
+    Stack_Init(allocator->rememberedYoungObjects, INITIAL_STACK_SIZE);
 
     Allocator_InitCursors(allocator);
 }
@@ -59,9 +60,7 @@ void Allocator_Init(Allocator *allocator, Bytemap *bytemap,
  * otherwise.
  */
 bool Allocator_CanInitCursors(Allocator *allocator) {
-    return allocator->freeBlockCount >= 2 ||
-           (allocator->freeBlockCount == 1 &&
-            allocator->recycledBlockCount > 0);
+    return allocator->freeBlockCount >= 3;
 }
 
 /**
@@ -75,6 +74,11 @@ void Allocator_InitCursors(Allocator *allocator) {
     // Init cursor
     bool didInit = Allocator_newBlock(allocator);
     assert(didInit);
+
+    if (PRETENURE_OBJECT) {
+        didInit = Allocator_newPretenuredBlock(allocator);
+        assert(didInit);
+    }
 
     // Init large cursor
     assert(!BlockList_IsEmpty(&allocator->freeBlocks));
@@ -94,13 +98,14 @@ void Allocator_InitCursors(Allocator *allocator) {
 bool Allocator_ShouldGrow(Allocator *allocator) {
     uint64_t unavailableBlockCount =
         allocator->blockCount -
-        (allocator->freeBlockCount + allocator->recycledBlockCount);
+        (allocator->freeBlockCount + allocator->youngBlockCount + allocator->oldBlockCount);
 
 #ifdef DEBUG_PRINT
-    printf("\n\nBlock count: %llu\n", allocator->blockCount);
-    printf("Unavailable: %llu\n", unavailableBlockCount);
-    printf("Free: %llu\n", allocator->freeBlockCount);
-    printf("Recycled: %llu\n", allocator->recycledBlockCount);
+    printf("\n\nBlock count: %lu\n", allocator->blockCount);
+    printf("Young: %lu\n", allocator->youngBlockCount);
+    printf("Old: %lu\n", allocator->oldBlockCount);
+    printf("Unavailable: %lu\n", unavailableBlockCount);
+    printf("Free: %lu\n", allocator->freeBlockCount);
     fflush(stdout);
 #endif
 
@@ -118,17 +123,10 @@ word_t *Allocator_overflowAllocation(Allocator *allocator, size_t size) {
     word_t *end = (word_t *)((uint8_t *)start + size);
 
     if (end > allocator->largeLimit) {
-        if (!(allocator->youngBlockCount < MAX_YOUNG_BLOCKS)) {
-#ifdef DEBUG_PRINT
-            printf("Young generation full\n");fflush(stdout);
-#endif
-            return NULL;
-        }
         if (BlockList_IsEmpty(&allocator->freeBlocks)) {
             return NULL;
         }
         BlockMeta *block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
-        allocator->youngBlockCount++;
         allocator->largeBlock = block;
         word_t *blockStart = BlockMeta_GetBlockStart(
             allocator->blockMetaStart, allocator->heapStart, block);
@@ -159,11 +157,8 @@ INLINE word_t *Allocator_Alloc(Allocator *allocator, size_t size) {
         if (size > LINE_SIZE) {
             return Allocator_overflowAllocation(allocator, size);
         } else {
-            // If maximal number of free block reached, need to collect the young generation
-            if (!(allocator->youngBlockCount < MAX_YOUNG_BLOCKS)) {
-                return NULL;
-            }
             // Otherwise try to get a new line.
+            // TODO: add check for full young generation
             if (Allocator_getNextLine(allocator)) {
                 return Allocator_Alloc(allocator, size);
             }
@@ -182,7 +177,6 @@ INLINE word_t *Allocator_Alloc(Allocator *allocator, size_t size) {
 INLINE word_t *Allocator_AllocPretenured(Allocator *allocator, size_t size) {
     word_t *start = allocator->pretenuredCursor;
     word_t *end = (word_t *)((uint8_t *)start + size);
-
     if (end > allocator->pretenuredLimit) {
         if (Allocator_getNextPretenuredLine(allocator)) {
             return Allocator_AllocPretenured(allocator, size);
@@ -190,13 +184,8 @@ INLINE word_t *Allocator_AllocPretenured(Allocator *allocator, size_t size) {
         return NULL;
     }
 
-    if (end == allocator->pretenuredLimit) {
-        memset(start, 0, size);
-    } else {
-        memset(start, 0, size + WORD_SIZE);
-    }
+    memset(start, 0, size);
     allocator->pretenuredCursor = end;
-    Line_Update(allocator->pretenuredBlock, start);
     return start;
 }
 
@@ -261,35 +250,41 @@ bool Allocator_newBlock(Allocator *allocator) {
         assert(allocator->limit <= Block_GetBlockEnd(blockStart));
     }
 
+    allocator->youngBlockCount ++;
+    return true;
+}
+
+bool Allocator_newPretenuredBlock(Allocator *allocator) {
+    BlockMeta *block = Allocator_getNextBlock(allocator);
+    if (block == NULL) {
+        return false;
+    }
+    allocator->pretenuredBlock = block;
+    word_t *blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart, allocator->heapStart, block);
+    allocator->pretenuredBlockStart = blockStart;
+
+    assert(BlockMeta_IsFree(block));
+    allocator->pretenuredCursor = blockStart;
+    allocator->pretenuredLimit = Block_GetBlockEnd(blockStart);
+    allocator->oldBlockCount++;
     return true;
 }
 
 bool Allocator_getNextLine(Allocator *allocator) {
     // If cursor is null or the block was free, we need a new block
     if (allocator->cursor == NULL || BlockMeta_IsFree(allocator->block)) {
-        allocator->youngBlockCount ++;
         return Allocator_newBlock(allocator);
+    } else {
+        // If we have a recycled block
+        return Allocator_nextLineRecycled(allocator);
     }
-    return false;
-}
-
-void Allocator_firstLineNewPretenuredBlock(Allocator *allocator, BlockHeader *block) {
-    allocator->pretenuredBlock = block;
-    allocator->pretenuredCursor = Block_GetFirstWord(block);
-    allocator->pretenuredLimit = Block_GetBlockEnd(block);
 }
 
 bool Allocator_getNextPretenuredLine(Allocator *allocator) {
-    if (allocator->pretenuredCursor != NULL && !Block_IsFree(Block_GetBlockHeader(allocator->pretenuredCursor - WORD_SIZE))) {
-        allocator->pretenuredCursor = NULL;
+    if (allocator->pretenuredCursor == NULL || BlockMeta_IsFree(allocator->pretenuredBlock)) {
+        return Allocator_newPretenuredBlock(allocator);
     }
-    BlockHeader *block = Allocator_getNextBlock(allocator);
-    if (block == NULL) {
-        return false;
-    }
-    Block_SetFlag(block, block_old);
-    Allocator_firstLineNewPretenuredBlock(allocator, block);
-    return true;
+    return false;
 }
 
 /**
@@ -298,9 +293,7 @@ bool Allocator_getNextPretenuredLine(Allocator *allocator) {
  */
 BlockMeta *Allocator_getNextBlock(Allocator *allocator) {
     BlockMeta *block = NULL;
-    if (!BlockList_IsEmpty(&allocator->recycledBlocks)) {
-        block = BlockList_RemoveFirstBlock(&allocator->recycledBlocks);
-    } else if (!BlockList_IsEmpty(&allocator->freeBlocks)) {
+    if (!BlockList_IsEmpty(&allocator->freeBlocks)) {
         block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
     }
     assert(block == NULL ||

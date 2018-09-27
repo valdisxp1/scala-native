@@ -12,7 +12,8 @@
 #include "Memory.h"
 #include <memory.h>
 #include <time.h>
-#include "datastructures/Stack.h"
+
+#define DEBUG_PRINT
 
 // Allow read and write
 #define HEAP_MEM_PROT (PROT_READ | PROT_WRITE)
@@ -124,38 +125,32 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
     // Request an object from the `LargeAllocator`
     Object *object = LargeAllocator_GetBlock(&largeAllocator, size);
     // If the object is not NULL, update it's metadata and return it
-    if (object != NULL) {
-        return (word_t *)object;
-    } else {
-        // Otherwise collect
-        Heap_Collect(heap, &stack);
+    if (object != NULL)
+        goto done;
 
-        // After collection, try to alloc again, if it fails, grow the heap by
-        // at least the size of the object we want to alloc
-        object = LargeAllocator_GetBlock(&largeAllocator, size);
-        if (object != NULL) {
-            Stack_Clear(heap->allocator->rememberedYoungObjects);
-            Object_SetObjectType(&object->header, object_large);
-            Object_SetSize(&object->header, size);
-            return (word_t *)object;
-        } else {
-            Heap_CollectOld(heap, stack);
+    Heap_Collect(heap, &stack);
+    object = LargeAllocator_GetBlock(&largeAllocator, size);
 
-            object = LargeAllocator_GetBlock(heap->largeAllocator, size);
+    if (object != NULL)
+        goto done;
 
-            if (object != NULL) {
-                Object_SetObjectType(&object->header, object_large);
-                Object_SetSize(&object->header, size);
-                return (word_t *)object;
-            }
+    Heap_CollectOld(heap, &stack);
+    object = LargeAllocator_GetBlock(&largeAllocator, size);
 
-            Heap_GrowLarge(heap, size);
+    if (object != NULL)
+        goto done;
 
-            object = LargeAllocator_GetBlock(&largeAllocator, size);
-            assert(Heap_IsWordInLargeHeap(heap, (word_t *)object));
-            return (word_t *)object;
-        }
+    Heap_GrowLarge(heap, size);
+    object = LargeAllocator_GetBlock(&largeAllocator, size);
+
+done:
+    assert(Heap_IsWordInLargeHeap(heap, (word_t *)object));
+    while(!Stack_IsEmpty(allocator.rememberedYoungObjects)) {
+        Object *current = Stack_Pop(allocator.rememberedYoungObjects);
+        ObjectMeta *currentMeta = Bytemap_Get(allocator.bytemap,(word_t *)object);
+        ObjectMeta_SetUnremembered(currentMeta);
     }
+    return (word_t *)object;
 }
 
 NOINLINE word_t *Heap_allocSmallSlow(Heap *heap, uint32_t size) {
@@ -168,18 +163,14 @@ NOINLINE word_t *Heap_allocSmallSlow(Heap *heap, uint32_t size) {
     Heap_Collect(heap, &stack);
     object = (Object *)Allocator_Alloc(&allocator, size);
 
-    if (object != NULL) {
-        Stack_Clear(allocator.rememberedYoungObjects);
+    if (object != NULL)
         goto done;
-    }
 
     Heap_CollectOld(heap, &stack);
     object = (Object *)Allocator_Alloc(&allocator, size);
 
-    if (object != NULL) {
-        Stack_Clear(allocator.rememberedYoungObjects);
+    if (object != NULL)
         goto done;
-    }
 
     // A small object can always fit in a single free block
     // because it is no larger than 8K while the block is 32K.
@@ -190,7 +181,48 @@ done:
     assert(Heap_IsWordInSmallHeap(heap, (word_t *)object));
     assert(object != NULL);
     ObjectMeta *objectMeta = Bytemap_Get(allocator.bytemap, (word_t *)object);
+    while(!Stack_IsEmpty(allocator.rememberedYoungObjects)) {
+        Object *current = Stack_Pop(allocator.rememberedYoungObjects);
+        ObjectMeta *currentMeta = Bytemap_Get(allocator.bytemap,(word_t *) object);
+        ObjectMeta_SetUnremembered(currentMeta);
+    }
+
     ObjectMeta_SetAllocated(objectMeta);
+    return (word_t *)object;
+}
+
+NOINLINE word_t *Heap_allocPretenuredSlow(Heap *heap, uint32_t size) {
+    Object *object;
+    object = (Object *)Allocator_AllocPretenured(&allocator, size);
+
+    if (object != NULL)
+        goto done;
+
+    Heap_Collect(heap, &stack);
+    object = (Object *)Allocator_AllocPretenured(&allocator, size);
+
+    if (object != NULL)
+        goto done;
+
+    Heap_CollectOld(heap, &stack);
+    object = (Object *)Allocator_AllocPretenured(&allocator, size);
+
+    if (object != NULL)
+        goto done;
+
+    Heap_Grow(heap, WORDS_IN_BLOCK);
+    object = (Object *)Allocator_AllocPretenured(&allocator, size);
+
+done:
+    assert(Heap_IsWordInSmallHeap(heap, (word_t *)object));
+    assert(object != NULL);
+    while(!Stack_IsEmpty(allocator.rememberedYoungObjects)) {
+        Object *current = Stack_Pop(allocator.rememberedYoungObjects);
+        ObjectMeta *currentMeta = Bytemap_Get(allocator.bytemap,(word_t *) object);
+        ObjectMeta_SetUnremembered(currentMeta);
+    }
+    ObjectMeta *objectMeta = Bytemap_Get(allocator.bytemap, (word_t *)object);
+    ObjectMeta_SetMarked(objectMeta);
     return (word_t *)object;
 }
 
@@ -220,11 +252,38 @@ INLINE word_t *Heap_AllocSmall(Heap *heap, uint32_t size) {
     return (word_t *)object;
 }
 
+INLINE word_t *Heap_AllocPretenured(Heap *heap, uint32_t size) {
+    assert(size % ALLOCATION_ALIGNMENT == 0);
+    assert(size < MIN_BLOCK_SIZE);
+
+    word_t *start = allocator.pretenuredCursor;
+    word_t *end = (word_t *)((uint8_t *)start + size);
+
+    if (end >= allocator.pretenuredLimit) {
+        return Heap_allocPretenuredSlow(heap, size);
+    }
+
+    allocator.pretenuredCursor = end;
+
+    memset(start, 0, size);
+
+    Object *object = (Object *)start;
+    ObjectMeta *objectMeta = Bytemap_Get(allocator.bytemap, (word_t *)object);
+    ObjectMeta_SetMarked(objectMeta);
+
+    __builtin_prefetch(object + 36, 0, 3);
+
+    assert(Heap_IsWordInSmallHeap(heap, (word_t *)object));
+    return (word_t *)object;
+}
+
 word_t *Heap_Alloc(Heap *heap, uint32_t objectSize) {
     assert(objectSize % ALLOCATION_ALIGNMENT == 0);
 
     if (objectSize >= LARGE_BLOCK_SIZE) {
         return Heap_AllocLarge(heap, objectSize);
+    } else if (PRETENURE_OBJECT && objectSize >= PRETENURE_THRESHOLD) {
+        return Heap_AllocPretenured(heap, objectSize);
     } else {
         return Heap_AllocSmall(heap, objectSize);
     }
@@ -248,10 +307,6 @@ void Heap_CollectOld(Heap *heap, Stack *stack) {
     printf("\nCollect old\n");
     fflush(stdout);
 #endif
-    while (!Stack_IsEmpty(heap->allocator->rememberedObjects)) {
-        Object *object = Stack_Pop(heap->allocator->rememberedObjects);
-        Object_SetUnremembered(&object->header);
-    }
     Marker_MarkRoots(heap, stack, true);
     Heap_Recycle(heap, true);
 #ifdef DEBUG_PRINT
@@ -261,13 +316,15 @@ void Heap_CollectOld(Heap *heap, Stack *stack) {
 }
 
 void Heap_Recycle(Heap *heap, bool collectingOld) {
-    BlockList_Clear(&allocator.recycledBlocks);
     BlockList_Clear(&allocator.freeBlocks);
 
     allocator.freeBlockCount = 0;
-    allocator.recycledBlockCount = 0;
     allocator.freeMemoryAfterCollection = 0;
-    allocator.youngBlockCount = 0;
+    if (!collectingOld) {
+        allocator.youngBlockCount = 0;
+    } else {
+        allocator.oldBlockCount = 0;
+    }
 
     word_t *current = heap->blockMetaStart;
     word_t *currentBlockStart = heap->heapStart;
@@ -280,6 +337,7 @@ void Heap_Recycle(Heap *heap, bool collectingOld) {
         currentBlockStart += WORDS_IN_BLOCK;
         lineMetas += LINE_COUNT;
     }
+    printf("Free memory after collection : %zu\n", allocator.freeMemoryAfterCollection);fflush(stdout);
     LargeAllocator_Sweep(&largeAllocator, collectingOld);
 
     if (collectingOld && Allocator_ShouldGrow(&allocator)) {
@@ -293,14 +351,17 @@ void Heap_Recycle(Heap *heap, bool collectingOld) {
         size_t increment = blocks * WORDS_IN_BLOCK;
         Heap_Grow(heap, increment);
     }
+
     if (!Allocator_CanInitCursors(&allocator)) {
-        Heap_CollectOld(heap, stack);
+        assert(!collectingOld);
+        Heap_CollectOld(heap, &stack);
     } else {
         Allocator_InitCursors(&allocator);
     }
 }
 
 void Heap_exitWithOutOfMemory() {
+    printf("Out of heap space\n");
     StackTrace_PrintStackTrace();
     exit(1);
 }
