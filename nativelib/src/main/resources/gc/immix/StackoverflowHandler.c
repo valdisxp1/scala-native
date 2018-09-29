@@ -23,7 +23,7 @@ void StackOverflowHandler_CheckForOverflow() {
 
 #ifdef PRINT_STACK_OVERFLOW
         printf("Stack grew to %zu bytes\n",
-               stack->nb_words * sizeof(Stack_Type));
+               stack.nb_words * sizeof(Stack_Type));
         fflush(stdout);
 #endif
 
