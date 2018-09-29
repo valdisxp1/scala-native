@@ -23,7 +23,7 @@ Object *Object_NextObject(Object *object) {
                Block_GetBlockHeader((word_t *)object) ||
            (ubyte_t *)Block_GetBlockHeader((word_t *)next) ==
                (ubyte_t *)Block_GetBlockHeader((word_t *)object) +
-                   BLOCK_TOTAL_SIZE);
+                   TOTAL_BLOCK_METADATA_SIZE);
     return next;
 }
 
