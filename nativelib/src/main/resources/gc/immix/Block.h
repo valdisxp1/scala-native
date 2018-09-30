@@ -9,14 +9,22 @@
 
 extern Heap heap;
 
+static inline uint32_t Block_GetBlockIndex(BlockHeader *blockHeader) {
+    return (uint32_t)((word_t *)blockHeader - heap.blockHeaderStart) / WORDS_IN_BLOCK_METADATA;
+}
+
 static inline word_t *Block_GetFirstWord(BlockHeader *blockHeader) {
-    uint32_t index = (uint32_t) (((word_t *)blockHeader - heap.blockHeaderStart) / WORDS_IN_BLOCK_METADATA);
+    uint32_t index = Block_GetBlockIndex(blockHeader);
     return heap.heapStart + (WORDS_IN_BLOCK * index);
 }
 
-static inline BlockHeader *Block_GetBlockHeader(word_t *word) {
+static inline uint32_t Block_GetBlockIndexForWord(word_t *word) {
     word_t *firstWord = (word_t *)((word_t)word & BLOCK_SIZE_IN_BYTES_INVERSE_MASK);
-    uint32_t index = (uint32_t) ((firstWord - heap.heapStart) / WORDS_IN_BLOCK);
+    return (uint32_t) ((firstWord - heap.heapStart) / WORDS_IN_BLOCK);
+}
+
+static inline BlockHeader *Block_GetBlockHeader(word_t *word) {
+    uint32_t index = Block_GetBlockIndexForWord(word);
     return (BlockHeader *)(heap.blockHeaderStart + (index * WORDS_IN_BLOCK_METADATA));
 }
 
