@@ -61,7 +61,9 @@ static inline LineHeader *Block_GetLineHeader(BlockHeader *blockHeader,
     return &blockHeader->lineHeaders[lineIndex];
 }
 
+static inline uint32_t Block_GetBlockIndex(BlockHeader *blockHeader);
 static inline word_t *Block_GetFirstWord(BlockHeader *blockHeader);
+static inline uint32_t Block_GetBlockIndexForWord(word_t *word);
 static inline BlockHeader *Block_GetBlockHeader(word_t *word);
 static inline word_t *Block_GetLineAddress(BlockHeader *blockHeader,
                                            int lineIndex);
