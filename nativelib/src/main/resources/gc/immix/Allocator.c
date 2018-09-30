@@ -187,6 +187,7 @@ bool Allocator_nextLineRecycled(Allocator *allocator) {
     block->header.first = lineHeader->next;
     uint16_t size = lineHeader->size;
     allocator->limit = line + (size * WORDS_IN_LINE);
+    assert(allocator->limit <= Block_GetBlockEnd(allocator->block));
 
     return true;
 }
@@ -213,6 +214,7 @@ void Allocator_firstLineNewBlock(Allocator *allocator, BlockHeader *block) {
         block->header.first = lineHeader->next;
         uint16_t size = lineHeader->size;
         assert(size > 0);
+        assert(allocator->limit <= Block_GetBlockEnd(allocator->block));
         allocator->limit = line + (size * WORDS_IN_LINE);
     }
 }
