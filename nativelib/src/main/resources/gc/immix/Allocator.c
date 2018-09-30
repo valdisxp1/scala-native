@@ -252,5 +252,6 @@ BlockHeader *Allocator_getNextBlock(Allocator *allocator) {
     } else if (!BlockList_IsEmpty(&allocator->freeBlocks)) {
         block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
     }
+    assert(block == NULL || Block_GetBlockIndex(block) < allocator -> blockCount);
     return block;
 }
