@@ -23,7 +23,7 @@ object CodeGen {
     implicit val meta = new Metadata(linked, proxies)
 
     val generated = Generate(Global.Top(config.mainClass), defns ++ proxies)
-    val lowered   = lower(generated)
+    val lowered   = lower(config, generated)
     emit(config, lowered)
   }
 
