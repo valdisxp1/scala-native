@@ -38,7 +38,7 @@ void Marker_markConservative(Heap *heap, Stack *stack, word_t *address) {
             object == NULL ||
             Line_ContainsObject(&Block_GetBlockHeader((word_t *)object)
                                      ->lineHeaders[Block_GetLineIndexFromWord(
-                                         Block_GetBlockHeader((word_t *)object),
+                                         Block_GetBlockStartForWord((word_t *)object),
                                          (word_t *)object)]));
 #ifdef DEBUG_PRINT
         if (object == NULL) {

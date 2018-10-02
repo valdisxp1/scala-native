@@ -65,14 +65,16 @@ static inline uint32_t BlockHeader_GetBlockIndex(BlockHeader *blockHeader);
 static inline word_t *BlockHeader_GetBlockStart(BlockHeader *blockHeader);
 static inline uint32_t Block_GetBlockIndexForWord(word_t *word);
 static inline BlockHeader *Block_GetBlockHeader(word_t *word);
-static inline word_t *BlockHeader_GetLineAddress(BlockHeader *blockHeader,
-                                                 int lineIndex);
-static inline word_t *BlockHeader_GetBlockEnd(BlockHeader *blockHeader);
-static inline uint32_t Block_GetLineIndexFromWord(BlockHeader *blockHeader,
+static inline uint32_t Block_GetLineIndexFromWord(word_t *blockStart,
                                                   word_t *word);
-static inline word_t *BlockHeader_GetLineWord(BlockHeader *blockHeader, int lineIndex,
-                                        int wordIndex);
-static inline FreeLineHeader *BlockHeader_GetFreeLineHeader(BlockHeader *blockHeader,
+
+
+static inline word_t * Block_GetBlockStartForWord(word_t *word);
+static inline word_t *Block_GetBlockEnd(word_t *blockStart);
+static inline word_t *Block_GetLineAddress(word_t *blockStart, int lineIndex);
+static inline FreeLineHeader *Block_GetFreeLineHeader(word_t *blockStart,
                                                       int lineIndex);
+static inline word_t *Block_GetLineWord(word_t *blockStart, int lineIndex,
+                                        int wordIndex);
 
 #endif // IMMIX_BLOCKHEADER_H

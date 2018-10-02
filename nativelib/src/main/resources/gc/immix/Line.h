@@ -12,13 +12,15 @@ static INLINE Object *Line_GetFirstObject(BlockHeader *blockHeader, LineHeader *
     uint32_t lineIndex =
         BlockHeader_GetLineIndexFromLineHeader(blockHeader, lineHeader);
 
-    return (Object *)BlockHeader_GetLineWord(blockHeader, lineIndex,
+    word_t* blockStart = BlockHeader_GetBlockStart(blockHeader);
+    return (Object *)Block_GetLineWord(blockStart, lineIndex,
                                              offset / WORD_SIZE);
 }
 
 static INLINE void Line_Update(BlockHeader *blockHeader, word_t *objectStart) {
 
-    int lineIndex = Block_GetLineIndexFromWord(blockHeader, objectStart);
+    word_t* blockStart = BlockHeader_GetBlockStart(blockHeader);
+    int lineIndex = Block_GetLineIndexFromWord(blockStart, objectStart);
     LineHeader *lineHeader = BlockHeader_GetLineHeader(blockHeader, lineIndex);
 
     if (!Line_ContainsObject(lineHeader)) {

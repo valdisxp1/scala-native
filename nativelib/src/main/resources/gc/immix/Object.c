@@ -39,8 +39,8 @@ Object *Object_getInLine(BlockHeader *blockHeader, int lineIndex,
         Line_GetFirstObject(blockHeader, BlockHeader_GetLineHeader(blockHeader, lineIndex));
     Object *next = Object_NextObject(current);
 
-    word_t *lineEnd =
-        BlockHeader_GetLineAddress(blockHeader, lineIndex) + WORDS_IN_LINE;
+    word_t *blockStart = BlockHeader_GetBlockStart(blockHeader);
+    word_t *lineEnd = Block_GetLineAddress(blockStart, lineIndex) + WORDS_IN_LINE;
 
     while (next != NULL && (word_t *)next < lineEnd && (word_t *)next <= word) {
         current = next;
@@ -67,6 +67,7 @@ Object *Object_getInLine(BlockHeader *blockHeader, int lineIndex,
 
 Object *Object_GetObject(word_t *word) {
     BlockHeader *blockHeader = Block_GetBlockHeader(word);
+    word_t *blockStart = Block_GetBlockStartForWord(word);
 
     if (!isWordAligned(word)) {
 #ifdef DEBUG_PRINT
@@ -77,7 +78,7 @@ Object *Object_GetObject(word_t *word) {
         word = (word_t *)((word_t)word & WORD_INVERSE_MASK);
     }
 
-    int lineIndex = Block_GetLineIndexFromWord(blockHeader, word);
+    int lineIndex = Block_GetLineIndexFromWord(blockStart, word);
     while (lineIndex > 0 &&
            !Line_ContainsObject(BlockHeader_GetLineHeader(blockHeader, lineIndex))) {
         lineIndex--;
@@ -138,13 +139,14 @@ void Object_Mark(Object *object) {
     if (!Object_IsLargeObject(&object->header)) {
         // Mark the block
         BlockHeader *blockHeader = Block_GetBlockHeader((word_t *)object);
+        word_t *blockStart = Block_GetBlockStartForWord((word_t *)object);
         BlockHeader_Mark(blockHeader);
 
         // Mark all Lines
         int startIndex =
-            Block_GetLineIndexFromWord(blockHeader, (word_t *)object);
+            Block_GetLineIndexFromWord(blockStart, (word_t *)object);
         word_t *lastWord = (word_t *)Object_NextObject(object) - 1;
-        int endIndex = Block_GetLineIndexFromWord(blockHeader, lastWord);
+        int endIndex = Block_GetLineIndexFromWord(blockStart, lastWord);
         assert(startIndex >= 0 && startIndex < LINE_COUNT);
         assert(endIndex >= 0 && endIndex < LINE_COUNT);
         assert(startIndex <= endIndex);
