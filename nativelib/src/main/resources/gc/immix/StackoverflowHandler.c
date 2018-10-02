@@ -60,7 +60,7 @@ bool StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
             return true;
         }
         currentBlock = (BlockHeader *)((word_t *)currentBlock + WORDS_IN_BLOCK_METADATA);
-        currentOverflowAddress = Block_GetFirstWord(currentBlock);
+        currentOverflowAddress = BlockHeader_GetBlockStart(currentBlock);
     }
     return false;
 }
@@ -119,12 +119,12 @@ void StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
 
 bool overflowScanLine(Heap *heap, Stack *stack, BlockHeader *block,
                       int lineIndex) {
-    LineHeader *lineHeader = Block_GetLineHeader(block, lineIndex);
+    LineHeader *lineHeader = BlockHeader_GetLineHeader(block, lineIndex);
 
     if (Line_IsMarked(lineHeader) && Line_ContainsObject(lineHeader)) {
         Object *object = Line_GetFirstObject(block, lineHeader);
         word_t *lineEnd =
-            Block_GetLineAddress(block, lineIndex) + WORDS_IN_LINE;
+            BlockHeader_GetLineAddress(block, lineIndex) + WORDS_IN_LINE;
         while (object != NULL && (word_t *)object < lineEnd) {
             if (StackOverflowHandler_overflowMark(heap, stack, object)) {
                 return true;
@@ -148,7 +148,7 @@ bool overflowScanLine(Heap *heap, Stack *stack, BlockHeader *block,
  */
 bool StackOverflowHandler_overflowBlockScan(BlockHeader *block, Heap *heap,
                                             Stack *stack) {
-    if (!Block_IsMarked(block)) {
+    if (!BlockHeader_IsMarked(block)) {
         return false;
     }
 

@@ -33,14 +33,14 @@ static inline bool isWordAligned(word_t *word) {
 
 Object *Object_getInLine(BlockHeader *blockHeader, int lineIndex,
                          word_t *word) {
-    assert(Line_ContainsObject(Block_GetLineHeader(blockHeader, lineIndex)));
+    assert(Line_ContainsObject(BlockHeader_GetLineHeader(blockHeader, lineIndex)));
 
     Object *current =
-        Line_GetFirstObject(blockHeader, Block_GetLineHeader(blockHeader, lineIndex));
+        Line_GetFirstObject(blockHeader, BlockHeader_GetLineHeader(blockHeader, lineIndex));
     Object *next = Object_NextObject(current);
 
     word_t *lineEnd =
-        Block_GetLineAddress(blockHeader, lineIndex) + WORDS_IN_LINE;
+        BlockHeader_GetLineAddress(blockHeader, lineIndex) + WORDS_IN_LINE;
 
     while (next != NULL && (word_t *)next < lineEnd && (word_t *)next <= word) {
         current = next;
@@ -79,11 +79,11 @@ Object *Object_GetObject(word_t *word) {
 
     int lineIndex = Block_GetLineIndexFromWord(blockHeader, word);
     while (lineIndex > 0 &&
-           !Line_ContainsObject(Block_GetLineHeader(blockHeader, lineIndex))) {
+           !Line_ContainsObject(BlockHeader_GetLineHeader(blockHeader, lineIndex))) {
         lineIndex--;
     }
 
-    if (Line_ContainsObject(Block_GetLineHeader(blockHeader, lineIndex))) {
+    if (Line_ContainsObject(BlockHeader_GetLineHeader(blockHeader, lineIndex))) {
         return Object_getInLine(blockHeader, lineIndex, word);
     } else {
 #ifdef DEBUG_PRINT
@@ -138,7 +138,7 @@ void Object_Mark(Object *object) {
     if (!Object_IsLargeObject(&object->header)) {
         // Mark the block
         BlockHeader *blockHeader = Block_GetBlockHeader((word_t *)object);
-        Block_Mark(blockHeader);
+        BlockHeader_Mark(blockHeader);
 
         // Mark all Lines
         int startIndex =
@@ -149,7 +149,7 @@ void Object_Mark(Object *object) {
         assert(endIndex >= 0 && endIndex < LINE_COUNT);
         assert(startIndex <= endIndex);
         for (int i = startIndex; i <= endIndex; i++) {
-            LineHeader *lineHeader = Block_GetLineHeader(blockHeader, i);
+            LineHeader *lineHeader = BlockHeader_GetLineHeader(blockHeader, i);
             Line_Mark(lineHeader);
         }
     }
