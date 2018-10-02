@@ -7,6 +7,7 @@
 
 BlockHeader *Allocator_getNextBlock(Allocator *allocator);
 bool Allocator_getNextLine(Allocator *allocator);
+bool Allocator_newBlock(Allocator *allocator);
 
 /**
  *
@@ -60,11 +61,8 @@ bool Allocator_CanInitCursors(Allocator *allocator) {
 void Allocator_InitCursors(Allocator *allocator) {
 
     // Init cursor
-    allocator->block = NULL;
-    allocator->cursor = NULL;
-    allocator->limit = NULL;
-
-    Allocator_getNextLine(allocator);
+    bool didInit = Allocator_newBlock(allocator);
+    assert(didInit);
 
     // Init large cursor
     assert(!BlockList_IsEmpty(&allocator->freeBlocks));
@@ -170,13 +168,12 @@ INLINE word_t *Allocator_Alloc(Allocator *allocator, size_t size) {
  * the recycled block
  */
 bool Allocator_nextLineRecycled(Allocator *allocator) {
-    BlockHeader *block = allocator ->block;
+    BlockHeader *block = allocator->block;
     assert(Block_IsRecyclable(block));
 
     int16_t lineIndex = block->header.first;
     if (lineIndex == LAST_HOLE) {
-        allocator->cursor = NULL;
-        return Allocator_getNextLine(allocator);
+        return Allocator_newBlock(allocator);
     }
 
     word_t *line = Block_GetLineAddress(block, lineIndex);
@@ -195,7 +192,15 @@ bool Allocator_nextLineRecycled(Allocator *allocator) {
  * Updates the the cursor and the limit of the Allocator to point to the first
  * free line of the new block.
  */
-void Allocator_firstLineNewBlock(Allocator *allocator, BlockHeader *block) {
+bool Allocator_newBlock(Allocator *allocator) {
+    // request the new block.
+    BlockHeader *block = Allocator_getNextBlock(allocator);
+    // return false if there is no block left.
+    if (block == NULL) {
+        return false;
+    }
+    allocator->block = block;
+
     // The block can be free or recycled.
     if (Block_IsFree(block)) {
         allocator->cursor = Block_GetFirstWord(block);
@@ -211,27 +216,17 @@ void Allocator_firstLineNewBlock(Allocator *allocator, BlockHeader *block) {
         block->header.first = lineHeader->next;
         uint16_t size = lineHeader->size;
         assert(size > 0);
-        assert(allocator->limit <= Block_GetBlockEnd(block));
         allocator->limit = line + (size * WORDS_IN_LINE);
+        assert(allocator->limit <= Block_GetBlockEnd(block));
     }
+
+    return true;
 }
 
 bool Allocator_getNextLine(Allocator *allocator) {
     // If cursor is null or the block was free, we need a new block
-    if (allocator->cursor == NULL ||
-        Block_IsFree(allocator->block)) {
-        // request the new block.
-        BlockHeader *block = Allocator_getNextBlock(allocator);
-        // return false if there is no block left.
-        if (block == NULL) {
-            return false;
-        }
-        allocator->block = block;
-
-        Allocator_firstLineNewBlock(allocator, block);
-
-        return true;
-
+    if (allocator->cursor == NULL || Block_IsFree(allocator->block)) {
+        return Allocator_newBlock(allocator);
     } else {
         // If we have a recycled block
         return Allocator_nextLineRecycled(allocator);
