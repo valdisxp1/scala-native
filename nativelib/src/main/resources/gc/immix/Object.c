@@ -19,11 +19,11 @@ Object *Object_NextObject(Object *object) {
         return NULL;
     }
     Object *next = (Object *)((ubyte_t *)object + size);
-    assert(Block_GetBlockHeader((word_t *)next) ==
-               Block_GetBlockHeader((word_t *)object) ||
-           (ubyte_t *)Block_GetBlockHeader((word_t *)next) ==
-               (ubyte_t *)Block_GetBlockHeader((word_t *)object) +
-                   TOTAL_BLOCK_METADATA_SIZE);
+    assert(Block_GetBlockStartForWord((word_t *)next) ==
+               Block_GetBlockStartForWord((word_t *)object) ||
+           Block_GetBlockStartForWord((word_t *)next) ==
+               Block_GetBlockStartForWord((word_t *)object) +
+                   WORDS_IN_BLOCK);
     return next;
 }
 
@@ -31,15 +31,14 @@ static inline bool isWordAligned(word_t *word) {
     return ((word_t)word & WORD_INVERSE_MASK) == (word_t)word;
 }
 
-Object *Object_getInLine(BlockHeader *blockHeader, int lineIndex,
+Object *Object_getInLine(BlockHeader *blockHeader, word_t *blockStart, int lineIndex,
                          word_t *word) {
     assert(Line_ContainsObject(BlockHeader_GetLineHeader(blockHeader, lineIndex)));
 
     Object *current =
-        Line_GetFirstObject(blockHeader, BlockHeader_GetLineHeader(blockHeader, lineIndex));
+        Line_GetFirstObject(blockHeader, BlockHeader_GetLineHeader(blockHeader, lineIndex), blockStart);
     Object *next = Object_NextObject(current);
 
-    word_t *blockStart = BlockHeader_GetBlockStart(blockHeader);
     word_t *lineEnd = Block_GetLineAddress(blockStart, lineIndex) + WORDS_IN_LINE;
 
     while (next != NULL && (word_t *)next < lineEnd && (word_t *)next <= word) {
@@ -65,8 +64,8 @@ Object *Object_getInLine(BlockHeader *blockHeader, int lineIndex,
     }
 }
 
-Object *Object_GetObject(word_t *word) {
-    BlockHeader *blockHeader = Block_GetBlockHeader(word);
+Object *Object_GetObject(Heap *heap, word_t *word) {
+    BlockHeader *blockHeader = Block_GetBlockHeader(heap->blockHeaderStart, heap->heapStart, word);
     word_t *blockStart = Block_GetBlockStartForWord(word);
 
     if (!isWordAligned(word)) {
@@ -85,7 +84,7 @@ Object *Object_GetObject(word_t *word) {
     }
 
     if (Line_ContainsObject(BlockHeader_GetLineHeader(blockHeader, lineIndex))) {
-        return Object_getInLine(blockHeader, lineIndex, word);
+        return Object_getInLine(blockHeader, blockStart, lineIndex, word);
     } else {
 #ifdef DEBUG_PRINT
         printf("Word points to empty line %p\n", word);
@@ -132,13 +131,13 @@ Object *Object_GetLargeObject(LargeAllocator *allocator, word_t *word) {
     }
 }
 
-void Object_Mark(Object *object) {
+void Object_Mark(Heap *heap, Object *object) {
     // Mark the object itself
     Object_MarkObjectHeader(&object->header);
 
     if (!Object_IsLargeObject(&object->header)) {
         // Mark the block
-        BlockHeader *blockHeader = Block_GetBlockHeader((word_t *)object);
+        BlockHeader *blockHeader = Block_GetBlockHeader(heap->blockHeaderStart, heap->heapStart, (word_t *)object);
         word_t *blockStart = Block_GetBlockStartForWord((word_t *)object);
         BlockHeader_Mark(blockHeader);
 

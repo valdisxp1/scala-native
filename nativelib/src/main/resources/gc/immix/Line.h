@@ -5,21 +5,19 @@
 #include "headers/LineHeader.h"
 #include "Block.h"
 
-static INLINE Object *Line_GetFirstObject(BlockHeader *blockHeader, LineHeader *lineHeader) {
+static INLINE Object *Line_GetFirstObject(BlockHeader *blockHeader, LineHeader *lineHeader, word_t* blockStart) {
     assert(Line_ContainsObject(lineHeader));
     uint8_t offset = Line_GetFirstObjectOffset(lineHeader);
 
     uint32_t lineIndex =
         BlockHeader_GetLineIndexFromLineHeader(blockHeader, lineHeader);
 
-    word_t* blockStart = BlockHeader_GetBlockStart(blockHeader);
     return (Object *)Block_GetLineWord(blockStart, lineIndex,
                                              offset / WORD_SIZE);
 }
 
-static INLINE void Line_Update(BlockHeader *blockHeader, word_t *objectStart) {
+static INLINE void Line_Update(BlockHeader *blockHeader, word_t* blockStart, word_t *objectStart) {
 
-    word_t* blockStart = BlockHeader_GetBlockStart(blockHeader);
     int lineIndex = Block_GetLineIndexFromWord(blockStart, objectStart);
     LineHeader *lineHeader = BlockHeader_GetLineHeader(blockHeader, lineIndex);
 

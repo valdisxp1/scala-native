@@ -17,14 +17,13 @@ INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
     BlockHeader_SetFlag(blockHeader, block_free);
 }
 
-INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader,
+INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader, word_t *blockStart,
                                     LineHeader *lineHeader, int lineIndex) {
     Line_Unmark(lineHeader);
     // If the line contains an object
     if (Line_ContainsObject(lineHeader)) {
         // Unmark all objects in line
-        Object *object = Line_GetFirstObject(blockHeader, lineHeader);
-        word_t *blockStart = BlockHeader_GetBlockStart(blockHeader);
+        Object *object = Line_GetFirstObject(blockHeader, lineHeader, blockStart);
         word_t *lineEnd =
             Block_GetLineAddress(blockStart, lineIndex) + WORDS_IN_LINE;
         while (object != NULL && (word_t *)object < lineEnd) {
@@ -42,7 +41,7 @@ INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader,
 /**
  * recycles a block and adds it to the allocator
  */
-void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader) {
+void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* blockStart) {
 
     // If the block is not marked, it means that it's completely free
     if (!BlockHeader_IsMarked(blockHeader)) {
@@ -55,14 +54,13 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader) {
         BlockHeader_Unmark(blockHeader);
         int16_t lineIndex = 0;
         int lastRecyclable = NO_RECYCLABLE_LINE;
-        word_t* blockStart = BlockHeader_GetBlockStart(blockHeader);
         while (lineIndex < LINE_COUNT) {
             LineHeader *lineHeader =
                 BlockHeader_GetLineHeader(blockHeader, lineIndex);
             // If the line is marked, we need to unmark all objects in the line
             if (Line_IsMarked(lineHeader)) {
                 // Unmark line
-                Block_recycleMarkedLine(blockHeader, lineHeader, lineIndex);
+                Block_recycleMarkedLine(blockHeader, blockStart, lineHeader, lineIndex);
                 lineIndex++;
             } else {
                 // If the line is not marked, we need to merge all continuous
@@ -117,16 +115,15 @@ void Block_Print(BlockHeader *block) {
     } else if (BlockHeader_IsUnavailable(block)) {
         printf("UNAVAILABLE\n");
     } else {
-        int lineIndex = block->header.first;
-        while (lineIndex != LAST_HOLE) {
-            word_t *blockStart = BlockHeader_GetBlockStart(block);
-            FreeLineHeader *freeLineHeader =
-                Block_GetFreeLineHeader(blockStart, lineIndex);
-            printf("[index: %d, size: %d] -> ", lineIndex,
-                   freeLineHeader->size);
-            lineIndex = freeLineHeader->next;
-        }
-        printf("\n");
+        printf("RECYCLED\n");
     }
+    printf("mark: %d, flags: %d, first: %d, nextBlock: %d \n",
+           block->header.mark, block->header.flags, block->header.first,
+           block->header.nextBlock);
+
+    for (int i = 0; i < LINE_COUNT; i++) {
+        printf("%d ", block->lineHeaders[i]);
+    }
+    printf("\n");
     fflush(stdout);
 }

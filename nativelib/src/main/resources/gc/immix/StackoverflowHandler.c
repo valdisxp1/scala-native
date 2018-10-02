@@ -52,7 +52,7 @@ void StackOverflowHandler_CheckForOverflow() {
 
 bool StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
     assert(Heap_IsWordInSmallHeap(heap, currentOverflowAddress));
-    BlockHeader *currentBlock = Block_GetBlockHeader(currentOverflowAddress);
+    BlockHeader *currentBlock = Block_GetBlockHeader(heap->blockHeaderStart, heap->heapStart, currentOverflowAddress);
     word_t *blockHeaderEnd = heap->blockHeaderEnd;
 
     while ((word_t *)currentBlock < blockHeaderEnd) {
@@ -60,7 +60,7 @@ bool StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
             return true;
         }
         currentBlock = (BlockHeader *)((word_t *)currentBlock + WORDS_IN_BLOCK_METADATA);
-        currentOverflowAddress = BlockHeader_GetBlockStart(currentBlock);
+        currentOverflowAddress = BlockHeader_GetBlockStart(heap->blockHeaderStart, heap->heapStart, currentBlock);
     }
     return false;
 }
@@ -120,10 +120,10 @@ void StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
 bool overflowScanLine(Heap *heap, Stack *stack, BlockHeader *block,
                       int lineIndex) {
     LineHeader *lineHeader = BlockHeader_GetLineHeader(block, lineIndex);
-    word_t* blockStart = BlockHeader_GetBlockStart(block);
+    word_t* blockStart = BlockHeader_GetBlockStart(heap->blockHeaderStart, heap->heapStart, block);
 
     if (Line_IsMarked(lineHeader) && Line_ContainsObject(lineHeader)) {
-        Object *object = Line_GetFirstObject(block, lineHeader);
+        Object *object = Line_GetFirstObject(block, lineHeader, blockStart);
         word_t *lineEnd =
             Block_GetLineAddress(blockStart, lineIndex) + WORDS_IN_LINE;
         while (object != NULL && (word_t *)object < lineEnd) {
@@ -153,7 +153,7 @@ bool StackOverflowHandler_overflowBlockScan(BlockHeader *block, Heap *heap,
         return false;
     }
 
-    word_t *blockStart = BlockHeader_GetBlockStart(block);
+    word_t *blockStart = BlockHeader_GetBlockStart(heap->blockHeaderStart, heap->heapStart, block);
     int lineIndex = Block_GetLineIndexFromWord(blockStart, currentOverflowAddress);
     while (lineIndex < LINE_COUNT) {
         if (overflowScanLine(heap, stack, block, lineIndex)) {
