@@ -4,10 +4,6 @@
 #include "../Log.h"
 #include "../headers/BlockHeader.h"
 
-BlockHeader *BlockList_getBlockFromIndex(word_t *blockHeaderStart, int32_t index) {
-    return (BlockHeader *)(blockHeaderStart + (index * WORDS_IN_BLOCK_METADATA));
-}
-
 BlockHeader *BlockList_getNextBlock(word_t *blockHeaderStart, BlockHeader *header) {
     int32_t nextBlockId = header->header.nextBlock;
     if (nextBlockId == LAST_BLOCK) {
@@ -15,7 +11,7 @@ BlockHeader *BlockList_getNextBlock(word_t *blockHeaderStart, BlockHeader *heade
     } else if (nextBlockId == 0) {
         nextBlockId = BlockHeader_GetBlockIndex(blockHeaderStart, header) + 1;
     }
-    return BlockList_getBlockFromIndex(blockHeaderStart, nextBlockId);
+    return BlockHeader_GetFromIndex(blockHeaderStart, nextBlockId);
 }
 
 void BlockList_Init(BlockList *blockList, word_t *blockHeaderStart) {
