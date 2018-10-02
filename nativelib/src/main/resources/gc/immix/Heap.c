@@ -70,7 +70,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->smallHeapSize = initialSmallHeapSize;
     heap->heapStart = smallHeapStart;
     heap->heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
-    Allocator_Init(&allocator, blockHeaderStart, initialBlockCount);
+    Allocator_Init(&allocator, blockHeaderStart, smallHeapStart, initialBlockCount);
 
     // Init heap for large objects
     word_t *largeHeapStart = Heap_mapAndAlign(memoryLimit, MIN_BLOCK_SIZE);
@@ -179,7 +179,7 @@ INLINE word_t *Heap_AllocSmall(Heap *heap, uint32_t objectSize) {
 
     allocator.cursor = end;
 
-    Line_Update(allocator.block, start);
+    Line_Update(allocator.block, allocator.blockStart, start);
 
     memset(start, 0, size + WORD_SIZE);
 
@@ -277,11 +277,13 @@ void Heap_Recycle(Heap *heap) {
     allocator.freeMemoryAfterCollection = 0;
 
     word_t *current = heap->blockHeaderStart;
+    word_t *currentBlockStart = heap->heapStart;
     while (current < heap->blockHeaderEnd) {
         BlockHeader *blockHeader = (BlockHeader *)current;
-        Block_Recycle(&allocator, blockHeader);
+        Block_Recycle(&allocator, blockHeader, currentBlockStart);
         // block_print(blockHeader);
         current += WORDS_IN_BLOCK_METADATA;
+        currentBlockStart += WORDS_IN_BLOCK;
     }
     LargeAllocator_Sweep(&largeAllocator);
 

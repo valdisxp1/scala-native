@@ -17,11 +17,12 @@ bool Allocator_newBlock(Allocator *allocator);
  * @param blockCount Initial number of blocks in the heap
  * @return
  */
-void Allocator_Init(Allocator *allocator, word_t *blockHeaderStart, uint32_t blockCount) {
+void Allocator_Init(Allocator *allocator, word_t *blockHeaderStart, word_t * heapStart, uint32_t blockCount) {
     allocator->blockHeaderStart = blockHeaderStart;
+    allocator->heapStart = heapStart;
 
-    BlockList_Init(&allocator->recycledBlocks, heap.blockHeaderStart);
-    BlockList_Init(&allocator->freeBlocks, heap.blockHeaderStart);
+    BlockList_Init(&allocator->recycledBlocks, blockHeaderStart);
+    BlockList_Init(&allocator->freeBlocks, blockHeaderStart);
 
     // Init the free block list
     allocator->freeBlocks.first = (BlockHeader *)blockHeaderStart;
@@ -70,9 +71,10 @@ void Allocator_InitCursors(Allocator *allocator) {
     BlockHeader *largeHeader =
         BlockList_RemoveFirstBlock(&allocator->freeBlocks);
     allocator->largeBlock = largeHeader;
-    word_t* blockStart = BlockHeader_GetBlockStart(largeHeader);
-    allocator->largeCursor = blockStart;
-    allocator->largeLimit = Block_GetBlockEnd(blockStart);
+    word_t* largeBlockStart = BlockHeader_GetBlockStart(allocator->blockHeaderStart, allocator->heapStart, largeHeader);
+    allocator->largeBlockStart = largeBlockStart;
+    allocator->largeCursor = largeBlockStart;
+    allocator->largeLimit = Block_GetBlockEnd(largeBlockStart);
 }
 
 /**
@@ -110,7 +112,8 @@ word_t *Allocator_overflowAllocation(Allocator *allocator, size_t size) {
         }
         BlockHeader *block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
         allocator->largeBlock = block;
-        word_t * blockStart = BlockHeader_GetBlockStart(block);
+        word_t * blockStart = BlockHeader_GetBlockStart(allocator->blockHeaderStart, allocator->heapStart, block);
+        allocator->largeBlockStart = blockStart;
         allocator->largeCursor = blockStart;
         allocator->largeLimit = Block_GetBlockEnd(blockStart);
         return Allocator_overflowAllocation(allocator, size);
@@ -124,7 +127,7 @@ word_t *Allocator_overflowAllocation(Allocator *allocator, size_t size) {
 
     allocator->largeCursor = end;
 
-    Line_Update(allocator->largeBlock, start);
+    Line_Update(allocator->largeBlock, allocator->largeBlockStart, start);
 
     return start;
 }
@@ -160,7 +163,7 @@ INLINE word_t *Allocator_Alloc(Allocator *allocator, size_t size) {
 
     allocator->cursor = end;
 
-    Line_Update(allocator->block, start);
+    Line_Update(allocator->block, allocator->blockStart , start);
 
     return start;
 }
@@ -171,6 +174,7 @@ INLINE word_t *Allocator_Alloc(Allocator *allocator, size_t size) {
  */
 bool Allocator_nextLineRecycled(Allocator *allocator) {
     BlockHeader *block = allocator->block;
+    word_t *blockStart = allocator->blockStart;
     assert(BlockHeader_IsRecyclable(block));
 
     int16_t lineIndex = block->header.first;
@@ -178,7 +182,6 @@ bool Allocator_nextLineRecycled(Allocator *allocator) {
         return Allocator_newBlock(allocator);
     }
 
-    word_t *blockStart = BlockHeader_GetBlockStart(block);
     word_t *line = Block_GetLineAddress(blockStart, lineIndex);
 
     allocator->cursor = line;
@@ -203,17 +206,17 @@ bool Allocator_newBlock(Allocator *allocator) {
         return false;
     }
     allocator->block = block;
+    word_t *blockStart = BlockHeader_GetBlockStart(allocator->blockHeaderStart, allocator->heapStart, block);
+    allocator->blockStart = blockStart;
 
     // The block can be free or recycled.
     if (BlockHeader_IsFree(block)) {
-        word_t *blockStart = BlockHeader_GetBlockStart(block);
         allocator->cursor = blockStart;
         allocator->limit = Block_GetBlockEnd(blockStart);
     } else {
         assert(BlockHeader_IsRecyclable(block));
         int16_t lineIndex = block->header.first;
         assert(lineIndex < LINE_COUNT);
-        word_t *blockStart = BlockHeader_GetBlockStart(block);
         word_t *line = Block_GetLineAddress(blockStart, lineIndex);
 
         allocator->cursor = line;
@@ -249,6 +252,6 @@ BlockHeader *Allocator_getNextBlock(Allocator *allocator) {
     } else if (!BlockList_IsEmpty(&allocator->freeBlocks)) {
         block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
     }
-    assert(block == NULL || BlockHeader_GetBlockIndex(block) < allocator -> blockCount);
+    assert(block == NULL || BlockHeader_GetBlockIndex(allocator->blockHeaderStart, block) < allocator -> blockCount);
     return block;
 }

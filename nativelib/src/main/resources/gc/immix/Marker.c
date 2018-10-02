@@ -23,7 +23,7 @@ bool StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack);
 void Marker_markObject(Heap *heap, Stack *stack, Object *object) {
     assert(!Object_IsMarked(&object->header));
     assert(Object_Size(&object->header) != 0);
-    Object_Mark(object);
+    Object_Mark(heap, object);
     if (!overflow) {
         overflow = Stack_Push(stack, object);
     }
@@ -33,10 +33,10 @@ void Marker_markConservative(Heap *heap, Stack *stack, word_t *address) {
     assert(Heap_IsWordInHeap(heap, address));
     Object *object = NULL;
     if (Heap_IsWordInSmallHeap(heap, address)) {
-        object = Object_GetObject(address);
+        object = Object_GetObject(heap, address);
         assert(
             object == NULL ||
-            Line_ContainsObject(&Block_GetBlockHeader((word_t *)object)
+            Line_ContainsObject(&Block_GetBlockHeader(heap->blockHeaderStart, heap->heapStart, (word_t *)object)
                                      ->lineHeaders[Block_GetLineIndexFromWord(
                                          Block_GetBlockStartForWord((word_t *)object),
                                          (word_t *)object)]));

@@ -4,10 +4,6 @@
 #include "../Log.h"
 #include "../headers/BlockHeader.h"
 
-int32_t BlockList_getBlockIndex(word_t *blockHeaderStart, BlockHeader *blockHeader) {
-    return (uint32_t)((word_t *)blockHeader - blockHeaderStart) / WORDS_IN_BLOCK_METADATA;
-}
-
 BlockHeader *BlockList_getBlockFromIndex(word_t *blockHeaderStart, int32_t index) {
     return (BlockHeader *)(blockHeaderStart + (index * WORDS_IN_BLOCK_METADATA));
 }
@@ -17,7 +13,7 @@ BlockHeader *BlockList_getNextBlock(word_t *blockHeaderStart, BlockHeader *heade
     if (nextBlockId == LAST_BLOCK) {
         return NULL;
     } else if (nextBlockId == 0) {
-        nextBlockId = BlockList_getBlockIndex(blockHeaderStart, header) + 1;
+        nextBlockId = BlockHeader_GetBlockIndex(blockHeaderStart, header) + 1;
     }
     return BlockList_getBlockFromIndex(blockHeaderStart, nextBlockId);
 }
@@ -47,7 +43,7 @@ void BlockList_AddLast(BlockList *blockList, BlockHeader *blockHeader) {
         blockList->first = blockHeader;
     } else {
         blockList->last->header.nextBlock =
-            BlockList_getBlockIndex(blockList->blockHeaderStart, blockHeader);
+            BlockHeader_GetBlockIndex(blockList->blockHeaderStart, blockHeader);
     }
     blockList->last = blockHeader;
     blockHeader->header.nextBlock = LAST_BLOCK;
@@ -59,7 +55,7 @@ void BlockList_AddBlocksLast(BlockList *blockList, BlockHeader *first,
         blockList->first = first;
     } else {
         blockList->last->header.nextBlock =
-           BlockList_getBlockIndex(blockList->blockHeaderStart, first);
+           BlockHeader_GetBlockIndex(blockList->blockHeaderStart, first);
     }
     blockList->last = last;
     last->header.nextBlock = LAST_BLOCK;
