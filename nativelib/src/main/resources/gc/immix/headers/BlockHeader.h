@@ -107,9 +107,13 @@ static inline word_t *BlockHeader_GetBlockStart(word_t *blockHeaderStart, word_t
     return heapStart + (WORDS_IN_BLOCK * index);
 }
 
+static inline BlockHeader *BlockHeader_GetFromIndex(word_t *blockHeaderStart, uint32_t index) {
+    return (BlockHeader *)(blockHeaderStart + (index * WORDS_IN_BLOCK_METADATA));
+}
+
 static inline BlockHeader *Block_GetBlockHeader(word_t *blockHeaderStart, word_t *heapStart, word_t *word) {
     uint32_t index = Block_GetBlockIndexForWord(heapStart, word);
-    return (BlockHeader *)(blockHeaderStart + (index * WORDS_IN_BLOCK_METADATA));
+    return BlockHeader_GetFromIndex(blockHeaderStart, index);
 }
 
 
