@@ -170,8 +170,7 @@ INLINE word_t *Allocator_Alloc(Allocator *allocator, size_t size) {
  * the recycled block
  */
 bool Allocator_nextLineRecycled(Allocator *allocator) {
-    // The cursor can point on first word of next block, thus `- WORD_SIZE`
-    BlockHeader *block = Block_GetBlockHeader(allocator->cursor - WORD_SIZE);
+    BlockHeader *block = allocator ->block;
     assert(Block_IsRecyclable(block));
 
     int16_t lineIndex = block->header.first;
@@ -197,8 +196,6 @@ bool Allocator_nextLineRecycled(Allocator *allocator) {
  * free line of the new block.
  */
 void Allocator_firstLineNewBlock(Allocator *allocator, BlockHeader *block) {
-    allocator->block = block;
-
     // The block can be free or recycled.
     if (Block_IsFree(block)) {
         allocator->cursor = Block_GetFirstWord(block);
@@ -214,7 +211,7 @@ void Allocator_firstLineNewBlock(Allocator *allocator, BlockHeader *block) {
         block->header.first = lineHeader->next;
         uint16_t size = lineHeader->size;
         assert(size > 0);
-        assert(allocator->limit <= Block_GetBlockEnd(allocator->block));
+        assert(allocator->limit <= Block_GetBlockEnd(block));
         allocator->limit = line + (size * WORDS_IN_LINE);
     }
 }
@@ -222,14 +219,14 @@ void Allocator_firstLineNewBlock(Allocator *allocator, BlockHeader *block) {
 bool Allocator_getNextLine(Allocator *allocator) {
     // If cursor is null or the block was free, we need a new block
     if (allocator->cursor == NULL ||
-        // The cursor can point on first word of next block, thus `- WORD_SIZE`
-        Block_IsFree(Block_GetBlockHeader(allocator->cursor - WORD_SIZE))) {
+        Block_IsFree(allocator->block)) {
         // request the new block.
         BlockHeader *block = Allocator_getNextBlock(allocator);
         // return false if there is no block left.
         if (block == NULL) {
             return false;
         }
+        allocator->block = block;
 
         Allocator_firstLineNewBlock(allocator, block);
 
