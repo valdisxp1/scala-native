@@ -96,6 +96,7 @@ void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
         LargeAllocator_setChunkSize(currentChunk, chunkSize);
         currentChunk->header.type = object_large;
         Object_SetFree(&((Object *)currentChunk)->header);
+        Bytemap_SetPlaceholder(allocator->bytemap, (word_t*) chunk);
         Bitmap_SetBit(allocator->bitmap, current);
 
         current += chunkSize;
@@ -136,6 +137,7 @@ Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
     }
 
     Bitmap_SetBit(allocator->bitmap, (ubyte_t *)chunk);
+    Bytemap_SetAllocated(allocator->bytemap, (word_t*) chunk);
     Object *object = (Object *)chunk;
     Object_SetAllocated(&object->header);
     memset(Object_ToMutatorAddress(object), 0, actualBlockSize - WORD_SIZE);
@@ -177,6 +179,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator) {
             while (next != heapEnd && !Object_IsMarked(&next->header)) {
                 currentSize += Object_ChunkSize(next);
                 Bitmap_ClearBit(allocator->bitmap, (ubyte_t *)next);
+                Bytemap_SetFree(allocator->bytemap, (word_t *)next);
                 next = Object_NextLargeObject(next);
             }
             LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);

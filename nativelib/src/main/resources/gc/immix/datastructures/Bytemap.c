@@ -27,6 +27,10 @@ void Bytemap_SetFree(Bytemap *bytemap, word_t* address) {
     bytemap->data[Bytemap_index(bytemap, address)] = bm_free;
 }
 
+void Bytemap_SetPlaceholder(Bytemap *bytemap, word_t* address) {
+    bytemap->data[Bytemap_index(bytemap, address)] = bm_placeholder;
+}
+
 void Bytemap_SetAllocated(Bytemap *bytemap, word_t* address) {
     bytemap->data[Bytemap_index(bytemap, address)] = bm_allocated;
 }
