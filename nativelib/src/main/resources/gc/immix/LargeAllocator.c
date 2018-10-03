@@ -63,10 +63,11 @@ void LargeAllocator_freeListInit(FreeList *freeList) {
 }
 
 void LargeAllocator_Init(LargeAllocator *allocator, word_t *offset,
-                         size_t size) {
+                         size_t size, Bytemap *bytemap) {
     allocator->offset = offset;
     allocator->size = size;
     allocator->bitmap = Bitmap_Alloc(size, offset);
+    allocator->bytemap = bytemap;
 
     for (int i = 0; i < FREE_LIST_COUNT; i++) {
         LargeAllocator_freeListInit(&allocator->freeLists[i]);

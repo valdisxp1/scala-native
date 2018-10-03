@@ -11,6 +11,7 @@
 #include "StackTrace.h"
 #include "Settings.h"
 #include "Memory.h"
+#include "datastructures/Bytemap.h"
 #include <memory.h>
 #include <time.h>
 
@@ -72,13 +73,18 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
     Allocator_Init(&allocator, blockHeaderStart, smallHeapStart, initialBlockCount);
 
+    // reserve space for bytemap
+    word_t *bytemapStart = Heap_mapAndAlign(memoryLimit / WORD_SIZE + sizeof(Bytemap), WORD_SIZE);
+    Bytemap *largeBytemap = (Bytemap*) blockStart;
+
     // Init heap for large objects
     word_t *largeHeapStart = Heap_mapAndAlign(memoryLimit, MIN_BLOCK_SIZE);
     heap->largeHeapSize = initialLargeHeapSize;
-    LargeAllocator_Init(&largeAllocator, largeHeapStart, initialLargeHeapSize);
     heap->largeHeapStart = largeHeapStart;
     heap->largeHeapEnd =
         (word_t *)((ubyte_t *)largeHeapStart + initialLargeHeapSize);
+    Bytemap_Init(largeBytemap, largeHeapStart, largeHeapEnd);
+    LargeAllocator_Init(&largeAllocator, largeHeapStart, initialLargeHeapSize, largeBytemap);
 
     char *statsFile = Settings_GC_StatsFileName();
     if (statsFile != NULL) {
