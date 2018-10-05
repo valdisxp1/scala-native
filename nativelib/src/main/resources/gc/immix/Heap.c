@@ -72,6 +72,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->heapStart = smallHeapStart;
     heap->heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
     Allocator_Init(&allocator, blockHeaderStart, smallHeapStart, initialBlockCount);
+    Allocator_Init(&allocator, blockHeaderStart, smallHeapStart, initialBlockCount);
 
     // reserve space for bytemap
     word_t *bytemapStart = Heap_mapAndAlign(memoryLimit / WORD_SIZE + sizeof(Bytemap), WORD_SIZE);
