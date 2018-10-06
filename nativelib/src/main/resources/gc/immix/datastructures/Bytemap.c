@@ -2,11 +2,12 @@
 #include "../Constants.h"
 #include "../Log.h"
 #include "../utils/MathUtils.h"
+#include <stdio.h>
 
 void Bytemap_Init(Bytemap *bytemap, word_t *firstAddress, word_t *lastAddress) {
     bytemap->firstAddress = firstAddress;
     bytemap->size = (uint32_t)(lastAddress - firstAddress);
-    bytemap->end = (word_t *) (&bytemap->data[bytemap->size], WORD_SIZE);
+    bytemap->end = &bytemap->data[bytemap->size];
 }
 
 inline uint32_t Bytemap_index(Bytemap *bytemap, word_t* address){

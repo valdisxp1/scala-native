@@ -8,7 +8,7 @@
 typedef struct {
     word_t *firstAddress;
     uint32_t size;
-    uint32_t *end;
+    ubyte_t *end;
     ubyte_t data[0];
 } Bytemap;
 
