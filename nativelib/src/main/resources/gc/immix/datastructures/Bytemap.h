@@ -7,10 +7,10 @@
 
 typedef struct {
     word_t *firstAddress;
-    uint_32_t size;
-    uint_32_t *end;
+    uint32_t size;
+    uint32_t *end;
     ubyte_t data[0];
-} ByteMap;
+} Bytemap;
 
 typedef enum {
     bm_free = 0x0,
@@ -20,7 +20,8 @@ typedef enum {
 
 void Bytemap_Init(Bytemap *bytemap, word_t *firstAddress, word_t *lastAddress);
 ubyte_t Bytemap_Get(Bytemap *bytemap, word_t* address);
-bool Bytemap_IsObject(Bytemap *bytemap, word_t* address);
+int Bytemap_IsAllocated(Bytemap *bytemap, word_t* address);
+int Bytemap_IsFree(Bytemap *bytemap, word_t* address);
 void Bytemap_SetFree(Bytemap *bytemap, word_t* address);
 void Bytemap_SetPlaceholder(Bytemap *bytemap, word_t* address);
 void Bytemap_SetAllocated(Bytemap *bytemap, word_t* address);

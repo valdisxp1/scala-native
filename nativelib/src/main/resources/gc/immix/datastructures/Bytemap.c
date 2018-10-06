@@ -1,15 +1,16 @@
 #include "Bytemap.h"
 #include "../Constants.h"
 #include "../Log.h"
+#include "../utils/MathUtils.h"
 
 void Bytemap_Init(Bytemap *bytemap, word_t *firstAddress, word_t *lastAddress) {
     bytemap->firstAddress = firstAddress;
-    bytemap->size = (uint_32_t)(lastAddress - firstAddress);
-    bytemap->end = &data[size];
+    bytemap->size = (uint32_t)(lastAddress - firstAddress);
+    bytemap->end = (word_t *) (&bytemap->data[bytemap->size], WORD_SIZE);
 }
 
-inline uint_32_t Bytemap_index(Bytemap *bytemap, word_t* address){
-    uint_32_t index = (uint_32_t)((address - bytemap->firstAddress) >> WORD_SIZE_BITS);
+inline uint32_t Bytemap_index(Bytemap *bytemap, word_t* address){
+    uint32_t index = (uint32_t)((address - bytemap->firstAddress) >> WORD_SIZE_BITS);
     assert(index >= 0);
     assert(index < bytemap -> size);
     return index;
@@ -19,7 +20,11 @@ ubyte_t Bytemap_Get(Bytemap *bytemap, word_t* address) {
     return bytemap->data[Bytemap_index(bytemap, address)];
 }
 
-bool Bytemap_IsObject(Bytemap *bytemap, word_t* address) {
+int Bytemap_IsAllocated(Bytemap *bytemap, word_t* address) {
+    return bytemap->data[Bytemap_index(bytemap, address)] == bm_allocated;
+}
+
+int Bytemap_IsFree(Bytemap *bytemap, word_t* address) {
     return bytemap->data[Bytemap_index(bytemap, address)] == bm_allocated;
 }
 

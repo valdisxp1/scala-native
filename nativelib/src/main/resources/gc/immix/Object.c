@@ -97,7 +97,7 @@ Object *Object_GetObject(Heap *heap, word_t *word) {
 Object *Object_getLargeInnerPointer(LargeAllocator *allocator, word_t *word) {
     word_t *current = (word_t *)((word_t)word & LARGE_BLOCK_MASK);
 
-    while (!Bitmap_GetBit(allocator->bitmap, (ubyte_t *)current)) {
+    while (Bytemap_IsFree(allocator->bytemap, current)) {
         current -= LARGE_BLOCK_SIZE / WORD_SIZE;
     }
 
@@ -119,8 +119,7 @@ Object *Object_GetLargeObject(LargeAllocator *allocator, word_t *word) {
     if (((word_t)word & LARGE_BLOCK_MASK) != (word_t)word) {
         word = (word_t *)((word_t)word & LARGE_BLOCK_MASK);
     }
-    if (Bitmap_GetBit(allocator->bitmap, (ubyte_t *)word) &&
-        Object_IsAllocated(&((Object *)word)->header)) {
+    if (Bytemap_IsAllocated(allocator->bytemap, word)) {
         return (Object *)word;
     } else {
         Object *object = Object_getLargeInnerPointer(allocator, word);

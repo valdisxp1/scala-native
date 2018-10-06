@@ -76,14 +76,14 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
 
     // reserve space for bytemap
     word_t *bytemapStart = Heap_mapAndAlign(memoryLimit / WORD_SIZE + sizeof(Bytemap), WORD_SIZE);
-    Bytemap *largeBytemap = (Bytemap*) blockStart;
+    Bytemap *largeBytemap = (Bytemap*) bytemapStart;
 
     // Init heap for large objects
     word_t *largeHeapStart = Heap_mapAndAlign(memoryLimit, MIN_BLOCK_SIZE);
     heap->largeHeapSize = initialLargeHeapSize;
     heap->largeHeapStart = largeHeapStart;
-    heap->largeHeapEnd =
-        (word_t *)((ubyte_t *)largeHeapStart + initialLargeHeapSize);
+    word_t *largeHeapEnd = (word_t *)((ubyte_t *)largeHeapStart + initialLargeHeapSize);
+    heap->largeHeapEnd = largeHeapEnd;
     Bytemap_Init(largeBytemap, largeHeapStart, largeHeapEnd);
     LargeAllocator_Init(&largeAllocator, largeHeapStart, initialLargeHeapSize, largeBytemap);
 

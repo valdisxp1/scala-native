@@ -2,6 +2,7 @@
 #define IMMIX_LARGEALLOCATOR_H
 
 #include "datastructures/Bitmap.h"
+#include "datastructures/Bytemap.h"
 #include "GCTypes.h"
 #include "Constants.h"
 #include "headers/ObjectHeader.h"

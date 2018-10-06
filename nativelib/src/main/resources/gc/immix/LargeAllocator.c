@@ -167,7 +167,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator) {
     void *heapEnd = (ubyte_t *)allocator->offset + allocator->size;
 
     while (current != heapEnd) {
-        assert(Bitmap_GetBit(allocator->bitmap, (ubyte_t *)current));
+        assert(!Bytemap_IsFree(allocator->bitmap, (word_t *)current));
         ObjectHeader *currentHeader = &current->header;
         if (Object_IsMarked(currentHeader)) {
             Object_SetAllocated(currentHeader);
