@@ -10,9 +10,9 @@ void Bytemap_Init(Bytemap *bytemap, word_t *firstAddress, word_t *lastAddress) {
     bytemap->end = &bytemap->data[bytemap->size];
 }
 
-inline uint32_t Bytemap_index(Bytemap *bytemap, word_t* address){
-    uint32_t index = (uint32_t)((address - bytemap->firstAddress) >> WORD_SIZE_BITS);
-    assert(index >= 0);
+inline uint32_t Bytemap_index(Bytemap *bytemap, word_t* address) {
+    uint32_t index = (uint32_t)(address - bytemap->firstAddress);
+    assert(address >= bytemap->firstAddress);
     assert(index < bytemap -> size);
     return index;
 }
@@ -26,7 +26,7 @@ int Bytemap_IsAllocated(Bytemap *bytemap, word_t* address) {
 }
 
 int Bytemap_IsFree(Bytemap *bytemap, word_t* address) {
-    return bytemap->data[Bytemap_index(bytemap, address)] == bm_allocated;
+    return bytemap->data[Bytemap_index(bytemap, address)] == bm_free;
 }
 
 void Bytemap_SetFree(Bytemap *bytemap, word_t* address) {
