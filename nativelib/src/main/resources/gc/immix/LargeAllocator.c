@@ -166,6 +166,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator) {
     while (current != heapEnd) {
         assert(!Bytemap_IsFree(allocator->bytemap, (word_t *)current));
         ObjectHeader *currentHeader = &current->header;
+        assert(Object_IsMarked(currentHeader) == Bytemap_IsMarked(allocator->bytemap, (word_t *)current));
         if (Object_IsMarked(currentHeader)) {
             Object_SetAllocated(currentHeader);
 
@@ -173,6 +174,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator) {
         } else {
             size_t currentSize = Object_ChunkSize(current);
             Object *next = Object_NextLargeObject(current);
+            assert(next != heapEnd || Object_IsMarked(&next->header) == Bytemap_IsMarked(allocator->bytemap, (word_t *)next));
             while (next != heapEnd && !Object_IsMarked(&next->header)) {
                 currentSize += Object_ChunkSize(next);
                 Bytemap_SetFree(allocator->bytemap, (word_t *)next);

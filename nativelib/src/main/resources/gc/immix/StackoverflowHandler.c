@@ -68,6 +68,10 @@ bool StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
 bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack,
                                        Object *object) {
     ObjectHeader *objectHeader = &object->header;
+
+    Bytemap *bytemap = Heap_BytemapForWord(heap, (word_t*) object);
+    assert(Object_IsMarked(&object->header) == Bytemap_IsMarked(bytemap, (word_t*) object));
+
     if (Object_IsMarked(objectHeader)) {
         if (object->rtti->rt.id == __object_array_id) {
             size_t size =
@@ -76,6 +80,9 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack,
             for (int i = 0; i < nbWords; i++) {
                 word_t *field = object->fields[i];
                 Object *fieldObject = Object_FromMutatorAddress(field);
+                Bytemap *bytemapF = Heap_BytemapForWord(heap, (word_t*) fieldObject);
+                assert(!heap_isObjectInHeap(heap, fieldObject)
+                           || Object_IsMarked(&fieldObject->header) == Bytemap_IsMarked(bytemapF, (word_t*) fieldObject));
                 if (heap_isObjectInHeap(heap, fieldObject) &&
                     !Object_IsMarked(&fieldObject->header)) {
                     Stack_Push(stack, object);
@@ -88,6 +95,9 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack,
             while (ptr_map[i] != LAST_FIELD_OFFSET) {
                 word_t *field = object->fields[ptr_map[i]];
                 Object *fieldObject = Object_FromMutatorAddress(field);
+                Bytemap *bytemapF = Heap_BytemapForWord(heap, (word_t*) fieldObject);
+                assert(!heap_isObjectInHeap(heap, fieldObject)
+                           || Object_IsMarked(&fieldObject->header) == Bytemap_IsMarked(bytemapF, (word_t*) fieldObject));
                 if (heap_isObjectInHeap(heap, fieldObject) &&
                     !Object_IsMarked(&fieldObject->header)) {
                     Stack_Push(stack, object);

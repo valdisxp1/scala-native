@@ -48,6 +48,14 @@ static inline bool heap_isObjectInHeap(Heap *heap, Object *object) {
     return Heap_IsWordInHeap(heap, (word_t *)object);
 }
 
+static inline Bytemap *Heap_BytemapForWord(Heap *heap, word_t *word){
+    if (Heap_IsWordInSmallHeap(heap, word)) {
+        return heap->smallBytemap;
+    } else {
+        return heap->largeBytemap;
+    }
+}
+
 void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
                size_t initialLargeHeapSize);
 void Heap_AfterExit(Heap *heap);

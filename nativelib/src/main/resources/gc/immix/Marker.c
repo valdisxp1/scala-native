@@ -22,6 +22,10 @@ bool StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack);
 
 void Marker_markObject(Heap *heap, Stack *stack, Object *object) {
     assert(!Object_IsMarked(&object->header));
+
+    Bytemap *bytemap = Heap_BytemapForWord(heap, (word_t*) object);
+    assert(!Bytemap_IsMarked(bytemap, (word_t*) object));
+
     assert(Object_Size(&object->header) != 0);
     Object_Mark(heap, object);
     if (!overflow) {
@@ -49,6 +53,10 @@ void Marker_markConservative(Heap *heap, Stack *stack, word_t *address) {
         object = Object_GetLargeObject(&largeAllocator, address);
     }
 
+    if (object != NULL) {
+        Bytemap *bytemap = Heap_BytemapForWord(heap, (word_t*) object);
+        assert(Bytemap_IsMarked(bytemap, (word_t*) object) == Object_IsMarked(&object->header));
+    }
     if (object != NULL && !Object_IsMarked(&object->header)) {
         Marker_markObject(heap, stack, object);
     }
@@ -67,6 +75,9 @@ void Marker_Mark(Heap *heap, Stack *stack) {
 
                 word_t *field = object->fields[i];
                 Object *fieldObject = Object_FromMutatorAddress(field);
+                Bytemap *bytemap = Heap_BytemapForWord(heap, (word_t*) fieldObject);
+                assert(!heap_isObjectInHeap(heap, fieldObject)
+                           || Object_IsMarked(&fieldObject->header) == Bytemap_IsMarked(bytemap, (word_t*) fieldObject));
                 if (heap_isObjectInHeap(heap, fieldObject) &&
                     !Object_IsMarked(&fieldObject->header)) {
                     Marker_markObject(heap, stack, fieldObject);
@@ -78,6 +89,9 @@ void Marker_Mark(Heap *heap, Stack *stack) {
             while (ptr_map[i] != LAST_FIELD_OFFSET) {
                 word_t *field = object->fields[ptr_map[i]];
                 Object *fieldObject = Object_FromMutatorAddress(field);
+                Bytemap *bytemap = Heap_BytemapForWord(heap, (word_t*) fieldObject);
+                assert(!heap_isObjectInHeap(heap, fieldObject)
+                           || Object_IsMarked(&fieldObject->header) == Bytemap_IsMarked(bytemap, (word_t*) fieldObject));
                 if (heap_isObjectInHeap(heap, fieldObject) &&
                     !Object_IsMarked(&fieldObject->header)) {
                     Marker_markObject(heap, stack, fieldObject);
@@ -114,6 +128,9 @@ void Marker_markModules(Heap *heap, Stack *stack) {
 
     for (int i = 0; i < nb_modules; i++) {
         Object *object = Object_FromMutatorAddress(modules[i]);
+        Bytemap *bytemap = Heap_BytemapForWord(heap, (word_t*) object);
+        assert(!heap_isObjectInHeap(heap, object)
+                   || Object_IsMarked(&object->header) == Bytemap_IsMarked(bytemap, (word_t*) object));
         if (heap_isObjectInHeap(heap, object) &&
             !Object_IsMarked(&object->header)) {
             Marker_markObject(heap, stack, object);

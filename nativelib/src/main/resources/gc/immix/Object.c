@@ -31,7 +31,7 @@ static inline bool isWordAligned(word_t *word) {
     return ((word_t)word & WORD_INVERSE_MASK) == (word_t)word;
 }
 
-Object *Object_getInLine(BlockHeader *blockHeader, word_t *blockStart, int lineIndex,
+Object *Object_getInLine(BlockHeader *blockHeader, Bytemap *bytemap, word_t *blockStart, int lineIndex,
                          word_t *word) {
     assert(Line_ContainsObject(BlockHeader_GetLineHeader(blockHeader, lineIndex)));
 
@@ -46,6 +46,7 @@ Object *Object_getInLine(BlockHeader *blockHeader, word_t *blockStart, int lineI
         next = Object_NextObject(next);
     }
 
+    assert(Object_IsAllocated(&current->header) == Bytemap_IsAllocated(bytemap, (word_t *) current));
     if (Object_IsAllocated(&current->header) && word >= (word_t *)current &&
         word < (word_t *)next) {
 #ifdef DEBUG_PRINT
@@ -84,7 +85,7 @@ Object *Object_GetObject(Heap *heap, word_t *word) {
     }
 
     if (Line_ContainsObject(BlockHeader_GetLineHeader(blockHeader, lineIndex))) {
-        return Object_getInLine(blockHeader, blockStart, lineIndex, word);
+        return Object_getInLine(blockHeader, heap->smallBytemap, blockStart, lineIndex, word);
     } else {
 #ifdef DEBUG_PRINT
         printf("Word points to empty line %p\n", word);
@@ -119,6 +120,7 @@ Object *Object_GetLargeObject(LargeAllocator *allocator, word_t *word) {
     if (((word_t)word & LARGE_BLOCK_MASK) != (word_t)word) {
         word = (word_t *)((word_t)word & LARGE_BLOCK_MASK);
     }
+    assert(Bytemap_IsAllocated(allocator->bytemap, word) == Object_IsAllocated(&((Object *)word)->header));
     if (Bytemap_IsAllocated(allocator->bytemap, word) && Object_IsAllocated(&((Object *)word)->header)) {
         return (Object *)word;
     } else {
