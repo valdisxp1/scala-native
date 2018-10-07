@@ -134,6 +134,12 @@ void Object_Mark(Heap *heap, Object *object) {
     // Mark the object itself
     Object_MarkObjectHeader(&object->header);
 
+    if (Heap_IsWordInSmallHeap(heap, (word_t*) object)) {
+        Bytemap_SetMarked(heap->smallBytemap, (word_t*) object);
+    } else {
+        Bytemap_SetMarked(heap->largeBytemap, (word_t*) object);
+    }
+
     if (!Object_IsLargeObject(&object->header)) {
         // Mark the block
         BlockHeader *blockHeader = Block_GetBlockHeader(heap->blockHeaderStart, heap->heapStart, (word_t *)object);

@@ -15,9 +15,10 @@ INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
     memset(blockHeader, 0, TOTAL_BLOCK_METADATA_SIZE);
     BlockList_AddLast(&allocator->freeBlocks, blockHeader);
     BlockHeader_SetFlag(blockHeader, block_free);
+    //TODO mark all words in block as free in the bytemap
 }
 
-INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader, word_t *blockStart,
+INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader, Bytemap *bytemap, word_t *blockStart,
                                     LineHeader *lineHeader, int lineIndex) {
     Line_Unmark(lineHeader);
     // If the line contains an object
@@ -30,8 +31,10 @@ INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader, word_t *blockStart
             ObjectHeader *objectHeader = &object->header;
             if (Object_IsMarked(objectHeader)) {
                 Object_SetAllocated(objectHeader);
+                Bytemap_SetAllocated(bytemap, (word_t*) object);
             } else {
                 Object_SetFree(objectHeader);
+                Bytemap_SetPlaceholder(bytemap, (word_t*) object);
             }
             object = Object_NextObject(object);
         }
@@ -53,6 +56,7 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
         assert(BlockHeader_IsMarked(blockHeader));
         BlockHeader_Unmark(blockHeader);
         int16_t lineIndex = 0;
+        Bytemap *bytemap = allocator->bytemap;
         int lastRecyclable = NO_RECYCLABLE_LINE;
         while (lineIndex < LINE_COUNT) {
             LineHeader *lineHeader =
@@ -60,9 +64,10 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
             // If the line is marked, we need to unmark all objects in the line
             if (Line_IsMarked(lineHeader)) {
                 // Unmark line
-                Block_recycleMarkedLine(blockHeader, blockStart, lineHeader, lineIndex);
+                Block_recycleMarkedLine(blockHeader, bytemap, blockStart, lineHeader, lineIndex);
                 lineIndex++;
             } else {
+                //TODO mark all the objects in line as free in the bytemap
                 // If the line is not marked, we need to merge all continuous
                 // unmarked lines.
 

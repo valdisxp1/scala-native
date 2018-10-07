@@ -11,7 +11,6 @@
 #include "StackTrace.h"
 #include "Settings.h"
 #include "Memory.h"
-#include "datastructures/Bytemap.h"
 #include <memory.h>
 #include <time.h>
 
@@ -69,6 +68,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
 
     // reserve space for bytemap
     Bytemap *smallBytemap = (Bytemap *) Heap_mapAndAlign(memoryLimit / WORD_SIZE + sizeof(Bytemap), WORD_SIZE);
+    heap->smallBytemap = smallBytemap;
 
     // Init heap for small objects
     heap->smallHeapSize = initialSmallHeapSize;
@@ -79,6 +79,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
 
     // reserve space for bytemap
     Bytemap *largeBytemap = (Bytemap *) Heap_mapAndAlign(memoryLimit / WORD_SIZE + sizeof(Bytemap), WORD_SIZE);
+    heap->largeBytemap = largeBytemap;
 
     // Init heap for large objects
     word_t *largeHeapStart = Heap_mapAndAlign(memoryLimit, MIN_BLOCK_SIZE);
@@ -169,6 +170,7 @@ done:
     Object_SetObjectType(objectHeader, object_standard);
     Object_SetSize(objectHeader, size);
     Object_SetAllocated(objectHeader);
+    Bytemap_SetAllocated(allocator.bytemap, (word_t *) object);
     return Object_ToMutatorAddress(object);
 }
 
@@ -198,6 +200,7 @@ INLINE word_t *Heap_AllocSmall(Heap *heap, uint32_t objectSize) {
     Object_SetObjectType(objectHeader, object_standard);
     Object_SetSize(objectHeader, size);
     Object_SetAllocated(objectHeader);
+    Bytemap_SetAllocated(allocator.bytemap, (word_t *) object);
 
     __builtin_prefetch(object + 36, 0, 3);
 

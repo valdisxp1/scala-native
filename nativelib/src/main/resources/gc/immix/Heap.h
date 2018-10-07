@@ -5,6 +5,7 @@
 #include "Allocator.h"
 #include "LargeAllocator.h"
 #include "datastructures/Stack.h"
+#include "datastructures/Bytemap.h"
 #include <stdio.h>
 
 typedef struct {
@@ -25,6 +26,8 @@ typedef struct {
     word_t *largeHeapStart;
     word_t *largeHeapEnd;
     size_t largeHeapSize;
+    Bytemap *smallBytemap;
+    Bytemap *largeBytemap;
     HeapStats *stats;
 } Heap;
 
