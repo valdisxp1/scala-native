@@ -18,16 +18,16 @@ void Bytemap_Init(Bytemap *bytemap, word_t *firstAddress, size_t size) {
     assert(Bytemap_index(bytemap, (word_t *)((ubyte_t *)(firstAddress) + size) - 1) < bytemap->size);
 }
 
-ubyte_t Bytemap_Get(Bytemap *bytemap, word_t* address) {
-    return bytemap->data[Bytemap_index(bytemap, address)];
+int Bytemap_IsFree(Bytemap *bytemap, word_t* address) {
+    return bytemap->data[Bytemap_index(bytemap, address)] == bm_free;
 }
 
 int Bytemap_IsAllocated(Bytemap *bytemap, word_t* address) {
     return bytemap->data[Bytemap_index(bytemap, address)] == bm_allocated;
 }
 
-int Bytemap_IsFree(Bytemap *bytemap, word_t* address) {
-    return bytemap->data[Bytemap_index(bytemap, address)] == bm_free;
+int Bytemap_IsMarked(Bytemap *bytemap, word_t* address) {
+    return bytemap->data[Bytemap_index(bytemap, address)] == bm_marked;
 }
 
 void Bytemap_SetFree(Bytemap *bytemap, word_t* address) {
@@ -40,4 +40,8 @@ void Bytemap_SetPlaceholder(Bytemap *bytemap, word_t* address) {
 
 void Bytemap_SetAllocated(Bytemap *bytemap, word_t* address) {
     bytemap->data[Bytemap_index(bytemap, address)] = bm_allocated;
+}
+
+void Bytemap_SetMarked(Bytemap *bytemap, word_t* address) {
+    bytemap->data[Bytemap_index(bytemap, address)] = bm_marked;
 }
