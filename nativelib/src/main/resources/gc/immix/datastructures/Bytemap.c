@@ -4,8 +4,8 @@
 #include "../utils/MathUtils.h"
 #include <stdio.h>
 
-inline uint32_t Bytemap_index(Bytemap *bytemap, word_t* address) {
-    uint32_t index = (uint32_t)(address - bytemap->firstAddress);
+inline size_t Bytemap_index(Bytemap *bytemap, word_t* address) {
+    size_t index = address - bytemap->firstAddress;
     assert(address >= bytemap->firstAddress);
     assert(index < bytemap -> size);
     return index;
