@@ -4,9 +4,11 @@
 #include "GCTypes.h"
 #include <stddef.h>
 #include "datastructures/BlockList.h"
+#include "datastructures/Bytemap.h"
 
 typedef struct {
     word_t *blockHeaderStart;
+    Bytemap *bytemap;
     word_t *heapStart;
     uint64_t blockCount;
     BlockList recycledBlocks;
@@ -24,7 +26,7 @@ typedef struct {
     size_t freeMemoryAfterCollection;
 } Allocator;
 
-void Allocator_Init(Allocator *allocator, word_t *blockHeaderStart, word_t * heapStart, uint32_t blockCount);
+void Allocator_Init(Allocator *allocator, Bytemap *bytemap, word_t *blockHeaderStart, word_t * heapStart, uint32_t blockCount);
 bool Allocator_CanInitCursors(Allocator *allocator);
 void Allocator_InitCursors(Allocator *allocator);
 word_t *Allocator_Alloc(Allocator *allocator, size_t size);

@@ -67,16 +67,18 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
 
     word_t *smallHeapStart = Heap_mapAndAlign(memoryLimit, BLOCK_TOTAL_SIZE);
 
+    // reserve space for bytemap
+    Bytemap *smallBytemap = (Bytemap *) Heap_mapAndAlign(memoryLimit / WORD_SIZE + sizeof(Bytemap), WORD_SIZE);
+
     // Init heap for small objects
     heap->smallHeapSize = initialSmallHeapSize;
     heap->heapStart = smallHeapStart;
     heap->heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
-    Allocator_Init(&allocator, blockHeaderStart, smallHeapStart, initialBlockCount);
-    Allocator_Init(&allocator, blockHeaderStart, smallHeapStart, initialBlockCount);
+    Bytemap_Init(smallBytemap, smallHeapStart, memoryLimit);
+    Allocator_Init(&allocator, smallBytemap, blockHeaderStart, smallHeapStart, initialBlockCount);
 
     // reserve space for bytemap
-    word_t *bytemapStart = Heap_mapAndAlign(memoryLimit / WORD_SIZE + sizeof(Bytemap), WORD_SIZE);
-    Bytemap *largeBytemap = (Bytemap*) bytemapStart;
+    Bytemap *largeBytemap = (Bytemap *) Heap_mapAndAlign(memoryLimit / WORD_SIZE + sizeof(Bytemap), WORD_SIZE);
 
     // Init heap for large objects
     word_t *largeHeapStart = Heap_mapAndAlign(memoryLimit, MIN_BLOCK_SIZE);
@@ -85,7 +87,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     word_t *largeHeapEnd = (word_t *)((ubyte_t *)largeHeapStart + initialLargeHeapSize);
     heap->largeHeapEnd = largeHeapEnd;
     Bytemap_Init(largeBytemap, largeHeapStart, memoryLimit);
-    assert(largeBytemap->end <= ((ubyte_t *)bytemapStart) + memoryLimit / WORD_SIZE + sizeof(Bytemap));
+    assert(largeBytemap->end <= ((ubyte_t *)largeBytemap) + memoryLimit / WORD_SIZE + sizeof(Bytemap));
     LargeAllocator_Init(&largeAllocator, largeHeapStart, initialLargeHeapSize, largeBytemap);
 
     char *statsFile = Settings_GC_StatsFileName();

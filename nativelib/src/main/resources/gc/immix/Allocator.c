@@ -17,8 +17,9 @@ bool Allocator_newBlock(Allocator *allocator);
  * @param blockCount Initial number of blocks in the heap
  * @return
  */
-void Allocator_Init(Allocator *allocator, word_t *blockHeaderStart, word_t * heapStart, uint32_t blockCount) {
+void Allocator_Init(Allocator *allocator, Bytemap *bytemap, word_t *blockHeaderStart, word_t * heapStart, uint32_t blockCount) {
     allocator->blockHeaderStart = blockHeaderStart;
+    allocator->bytemap = bytemap;
     allocator->heapStart = heapStart;
 
     BlockList_Init(&allocator->recycledBlocks, blockHeaderStart);
