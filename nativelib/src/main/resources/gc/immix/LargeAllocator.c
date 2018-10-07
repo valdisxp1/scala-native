@@ -96,7 +96,7 @@ void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
         LargeAllocator_setChunkSize(currentChunk, chunkSize);
         currentChunk->header.type = object_large;
         Object_SetFree(&((Object *)currentChunk)->header);
-        Bytemap_SetPlaceholder(allocator->bytemap, (word_t*) chunk);
+        Bytemap_SetPlaceholder(allocator->bytemap, (word_t*) current);
         Bitmap_SetBit(allocator->bitmap, current);
 
         current += chunkSize;
