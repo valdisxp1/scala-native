@@ -380,8 +380,6 @@ void Heap_GrowLarge(Heap *heap, size_t increment) {
     heap->largeHeapSize += increment * WORD_SIZE;
     largeAllocator.size += increment * WORD_SIZE;
 
-    Bitmap_Grow(largeAllocator.bitmap, increment * WORD_SIZE);
-
     LargeAllocator_AddChunk(&largeAllocator, (Chunk *)heapEnd,
                             increment * WORD_SIZE);
 }
