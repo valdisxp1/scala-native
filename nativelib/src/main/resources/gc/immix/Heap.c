@@ -84,7 +84,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->largeHeapStart = largeHeapStart;
     word_t *largeHeapEnd = (word_t *)((ubyte_t *)largeHeapStart + initialLargeHeapSize);
     heap->largeHeapEnd = largeHeapEnd;
-    Bytemap_Init(largeBytemap, largeHeapStart, largeHeapEnd);
+    Bytemap_Init(largeBytemap, largeHeapStart, memoryLimit);
     assert(largeBytemap->end <= ((ubyte_t *)bytemapStart) + memoryLimit / WORD_SIZE + sizeof(Bytemap));
     LargeAllocator_Init(&largeAllocator, largeHeapStart, initialLargeHeapSize, largeBytemap);
 

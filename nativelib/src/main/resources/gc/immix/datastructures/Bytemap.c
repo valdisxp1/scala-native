@@ -4,17 +4,18 @@
 #include "../utils/MathUtils.h"
 #include <stdio.h>
 
-void Bytemap_Init(Bytemap *bytemap, word_t *firstAddress, word_t *lastAddress) {
-    bytemap->firstAddress = firstAddress;
-    bytemap->size = (uint32_t)(lastAddress - firstAddress);
-    bytemap->end = &bytemap->data[bytemap->size];
-}
-
 inline uint32_t Bytemap_index(Bytemap *bytemap, word_t* address) {
     uint32_t index = (uint32_t)(address - bytemap->firstAddress);
     assert(address >= bytemap->firstAddress);
     assert(index < bytemap -> size);
     return index;
+}
+
+void Bytemap_Init(Bytemap *bytemap, word_t *firstAddress, size_t size) {
+    bytemap->firstAddress = firstAddress;
+    bytemap->size = size / WORD_SIZE;
+    bytemap->end = &bytemap->data[bytemap->size];
+    assert(Bytemap_index(bytemap, (word_t *)((ubyte_t *)(firstAddress) + size) - 1) < bytemap->size);
 }
 
 ubyte_t Bytemap_Get(Bytemap *bytemap, word_t* address) {

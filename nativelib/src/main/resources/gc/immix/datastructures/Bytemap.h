@@ -18,7 +18,7 @@ typedef enum {
     bm_allocated = 0x2,
 } Flag;
 
-void Bytemap_Init(Bytemap *bytemap, word_t *firstAddress, word_t *lastAddress);
+void Bytemap_Init(Bytemap *bytemap, word_t *firstAddress, size_t size);
 ubyte_t Bytemap_Get(Bytemap *bytemap, word_t* address);
 int Bytemap_IsAllocated(Bytemap *bytemap, word_t* address);
 int Bytemap_IsFree(Bytemap *bytemap, word_t* address);
