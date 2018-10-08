@@ -169,6 +169,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator) {
         assert(Object_IsMarked(currentHeader) == Bytemap_IsMarked(allocator->bytemap, (word_t *)current));
         if (Object_IsMarked(currentHeader)) {
             Object_SetAllocated(currentHeader);
+            Bytemap_SetAllocated(allocator->bytemap, (word_t *)current);
 
             current = Object_NextLargeObject(current);
         } else {
