@@ -11,11 +11,11 @@ extern int __object_array_id;
 #define NO_RECYCLABLE_LINE -1
 
 INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
-                                       BlockHeader *blockHeader) {
+                                       BlockHeader *blockHeader, word_t* blockStart) {
     memset(blockHeader, 0, TOTAL_BLOCK_METADATA_SIZE);
     BlockList_AddLast(&allocator->freeBlocks, blockHeader);
     BlockHeader_SetFlag(blockHeader, block_free);
-    //TODO mark all words in block as free in the bytemap
+    Bytemap_SetAreaFree(allocator->bytemap, blockStart, WORDS_IN_BLOCK);
 }
 
 INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader, Bytemap *bytemap, word_t *blockStart,
@@ -49,7 +49,7 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
 
     // If the block is not marked, it means that it's completely free
     if (!BlockHeader_IsMarked(blockHeader)) {
-        Block_recycleUnmarkedBlock(allocator, blockHeader);
+        Block_recycleUnmarkedBlock(allocator, blockHeader, blockStart);
         allocator->freeBlockCount++;
         allocator->freeMemoryAfterCollection += BLOCK_TOTAL_SIZE;
     } else {
@@ -68,7 +68,6 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
                 Block_recycleMarkedLine(blockHeader, bytemap, blockStart, lineHeader, lineIndex);
                 lineIndex++;
             } else {
-                //TODO mark all the objects in line as free in the bytemap
                 // If the line is not marked, we need to merge all continuous
                 // unmarked lines.
 
@@ -95,8 +94,8 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
                     Line_SetEmpty(lineHeader);
                     allocator->freeMemoryAfterCollection += LINE_SIZE;
                 }
-                Block_GetFreeLineHeader(blockStart, lastRecyclable)->size =
-                    size;
+                Bytemap_SetAreaFree(allocator->bytemap, Block_GetLineAddress(blockStart, lastRecyclable), WORDS_IN_LINE * size);
+                Block_GetFreeLineHeader(blockStart, lastRecyclable)->size = size;
             }
         }
         // If there is no recyclable line, the block is unavailable

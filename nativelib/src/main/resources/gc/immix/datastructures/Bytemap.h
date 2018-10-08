@@ -29,4 +29,6 @@ void Bytemap_SetPlaceholder(Bytemap *bytemap, word_t* address);
 void Bytemap_SetAllocated(Bytemap *bytemap, word_t* address);
 void Bytemap_SetMarked(Bytemap *bytemap, word_t* address);
 
+void Bytemap_SetAreaFree(Bytemap *bytemap, word_t* start, size_t words);
+
 #endif // IMMIX_BYTEMAP_H

@@ -3,6 +3,7 @@
 #include "../Log.h"
 #include "../utils/MathUtils.h"
 #include <stdio.h>
+#include <string.h>
 
 inline size_t Bytemap_index(Bytemap *bytemap, word_t* address) {
     size_t index = address - bytemap->firstAddress;
@@ -44,4 +45,8 @@ void Bytemap_SetAllocated(Bytemap *bytemap, word_t* address) {
 
 void Bytemap_SetMarked(Bytemap *bytemap, word_t* address) {
     bytemap->data[Bytemap_index(bytemap, address)] = bm_marked;
+}
+
+void Bytemap_SetAreaFree(Bytemap *bytemap, word_t* start, size_t words){
+    memset(&bytemap->data[Bytemap_index(bytemap, start)], 0, words);
 }
