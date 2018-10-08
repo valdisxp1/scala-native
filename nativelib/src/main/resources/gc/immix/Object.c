@@ -46,8 +46,7 @@ Object *Object_getInLine(BlockHeader *blockHeader, Bytemap *bytemap, word_t *blo
         next = Object_NextObject(next);
     }
 
-    assert(Object_IsAllocated(&current->header) == Bytemap_IsAllocated(bytemap, (word_t *) current));
-    if (Object_IsAllocated(&current->header) && word >= (word_t *)current &&
+    if (Bytemap_IsAllocated(bytemap, (word_t *) current) && word >= (word_t *)current &&
         word < (word_t *)next) {
 #ifdef DEBUG_PRINT
         if ((word_t *)current != word) {
@@ -120,8 +119,7 @@ Object *Object_GetLargeObject(LargeAllocator *allocator, word_t *word) {
     if (((word_t)word & LARGE_BLOCK_MASK) != (word_t)word) {
         word = (word_t *)((word_t)word & LARGE_BLOCK_MASK);
     }
-    assert(Bytemap_IsFree(allocator->bytemap, word) || Bytemap_IsAllocated(allocator->bytemap, word) == Object_IsAllocated(&((Object *)word)->header));
-    if (Bytemap_IsAllocated(allocator->bytemap, word) && Object_IsAllocated(&((Object *)word)->header)) {
+    if (Bytemap_IsAllocated(allocator->bytemap, word)) {
         return (Object *)word;
     } else {
         Object *object = Object_getLargeInnerPointer(allocator, word);
@@ -134,8 +132,6 @@ Object *Object_GetLargeObject(LargeAllocator *allocator, word_t *word) {
 
 void Object_Mark(Heap *heap, Object *object) {
     // Mark the object itself
-    Object_MarkObjectHeader(&object->header);
-
     if (Heap_IsWordInSmallHeap(heap, (word_t*) object)) {
         Bytemap_SetMarked(heap->smallBytemap, (word_t*) object);
     } else {

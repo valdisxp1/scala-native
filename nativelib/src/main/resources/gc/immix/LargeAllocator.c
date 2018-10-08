@@ -94,7 +94,6 @@ void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
                                             (Chunk *)current);
         LargeAllocator_setChunkSize(currentChunk, chunkSize);
         currentChunk->header.type = object_large;
-        Object_SetFree(&((Object *)currentChunk)->header);
         Bytemap_SetPlaceholder(allocator->bytemap, (word_t*) current);
 
         current += chunkSize;
@@ -136,7 +135,6 @@ Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
 
     Bytemap_SetAllocated(allocator->bytemap, (word_t*) chunk);
     Object *object = (Object *)chunk;
-    Object_SetAllocated(&object->header);
     memset(Object_ToMutatorAddress(object), 0, actualBlockSize - WORD_SIZE);
     return object;
 }
@@ -166,17 +164,14 @@ void LargeAllocator_Sweep(LargeAllocator *allocator) {
     while (current != heapEnd) {
         assert(!Bytemap_IsFree(allocator->bytemap, (word_t *)current));
         ObjectHeader *currentHeader = &current->header;
-        assert(Object_IsMarked(currentHeader) == Bytemap_IsMarked(allocator->bytemap, (word_t *)current));
-        if (Object_IsMarked(currentHeader)) {
-            Object_SetAllocated(currentHeader);
+        if (Bytemap_IsMarked(allocator->bytemap, (word_t *)current)) {
             Bytemap_SetAllocated(allocator->bytemap, (word_t *)current);
 
             current = Object_NextLargeObject(current);
         } else {
             size_t currentSize = Object_ChunkSize(current);
             Object *next = Object_NextLargeObject(current);
-            assert(next != heapEnd || Object_IsMarked(&next->header) == Bytemap_IsMarked(allocator->bytemap, (word_t *)next));
-            while (next != heapEnd && !Object_IsMarked(&next->header)) {
+            while (next != heapEnd && !Bytemap_IsMarked(allocator->bytemap, (word_t *)next)) {
                 currentSize += Object_ChunkSize(next);
                 Bytemap_SetFree(allocator->bytemap, (word_t *)next);
                 next = Object_NextLargeObject(next);

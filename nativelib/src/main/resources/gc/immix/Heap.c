@@ -169,7 +169,6 @@ done:
     ObjectHeader *objectHeader = &object->header;
     Object_SetObjectType(objectHeader, object_standard);
     Object_SetSize(objectHeader, size);
-    Object_SetAllocated(objectHeader);
     Bytemap_SetAllocated(allocator.bytemap, (word_t *) object);
     return Object_ToMutatorAddress(object);
 }
@@ -199,7 +198,6 @@ INLINE word_t *Heap_AllocSmall(Heap *heap, uint32_t objectSize) {
     ObjectHeader *objectHeader = &object->header;
     Object_SetObjectType(objectHeader, object_standard);
     Object_SetSize(objectHeader, size);
-    Object_SetAllocated(objectHeader);
     Bytemap_SetAllocated(allocator.bytemap, (word_t *) object);
 
     __builtin_prefetch(object + 36, 0, 3);

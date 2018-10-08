@@ -70,9 +70,8 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack,
     ObjectHeader *objectHeader = &object->header;
 
     Bytemap *bytemap = Heap_BytemapForWord(heap, (word_t*) object);
-    assert(Object_IsMarked(&object->header) == Bytemap_IsMarked(bytemap, (word_t*) object));
 
-    if (Object_IsMarked(objectHeader)) {
+    if (Bytemap_IsMarked(bytemap, (word_t*) object)) {
         if (object->rtti->rt.id == __object_array_id) {
             size_t size =
                 Object_Size(&object->header) - OBJECT_HEADER_SIZE - WORD_SIZE;
@@ -81,10 +80,8 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack,
                 word_t *field = object->fields[i];
                 Object *fieldObject = Object_FromMutatorAddress(field);
                 Bytemap *bytemapF = Heap_BytemapForWord(heap, (word_t*) fieldObject);
-                assert(!heap_isObjectInHeap(heap, fieldObject)
-                           || Object_IsMarked(&fieldObject->header) == Bytemap_IsMarked(bytemapF, (word_t*) fieldObject));
                 if (heap_isObjectInHeap(heap, fieldObject) &&
-                    !Object_IsMarked(&fieldObject->header)) {
+                    !Bytemap_IsMarked(bytemapF, (word_t*) fieldObject)) {
                     Stack_Push(stack, object);
                     return true;
                 }
@@ -96,10 +93,8 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack,
                 word_t *field = object->fields[ptr_map[i]];
                 Object *fieldObject = Object_FromMutatorAddress(field);
                 Bytemap *bytemapF = Heap_BytemapForWord(heap, (word_t*) fieldObject);
-                assert(!heap_isObjectInHeap(heap, fieldObject)
-                           || Object_IsMarked(&fieldObject->header) == Bytemap_IsMarked(bytemapF, (word_t*) fieldObject));
                 if (heap_isObjectInHeap(heap, fieldObject) &&
-                    !Object_IsMarked(&fieldObject->header)) {
+                    !Bytemap_IsMarked(bytemapF, (word_t*) fieldObject)) {
                     Stack_Push(stack, object);
                     return true;
                 }
