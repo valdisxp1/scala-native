@@ -127,7 +127,7 @@ bool overflowScanLine(Heap *heap, Stack *stack, BlockHeader *block, word_t* bloc
     LineHeader *lineHeader = BlockHeader_GetLineHeader(block, lineIndex);
 
     if (Line_IsMarked(lineHeader) && Line_ContainsObject(lineHeader)) {
-        Object *object = Line_GetFirstObject(block, lineHeader, blockStart);
+        Object *object = Line_GetFirstObject(lineIndex, lineHeader, blockStart);
         word_t *lineEnd =
             Block_GetLineAddress(blockStart, lineIndex) + WORDS_IN_LINE;
         while (object != NULL && (word_t *)object < lineEnd) {

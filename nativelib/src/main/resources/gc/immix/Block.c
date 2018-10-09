@@ -24,7 +24,7 @@ INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader, Bytemap *bytemap, 
     // If the line contains an object
     if (Line_ContainsObject(lineHeader)) {
         // Unmark all objects in line
-        Object *object = Line_GetFirstObject(blockHeader, lineHeader, blockStart);
+        Object *object = Line_GetFirstObject(lineIndex, lineHeader, blockStart);
         word_t *lineEnd =
             Block_GetLineAddress(blockStart, lineIndex) + WORDS_IN_LINE;
         while (object != NULL && (word_t *)object < lineEnd) {
