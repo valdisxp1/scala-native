@@ -68,7 +68,7 @@ Object *Object_GetUnmarkedObject(Heap *heap, word_t *word) {
     } else if (Bytemap_IsAllocated(heap->smallBytemap, word)) {
         return (Object *) word;
     } else {
-       return Object_getInnerPointer(heap->smallBytkemap, blockStart, word);
+       return Object_getInnerPointer(heap->smallBytemap, blockStart, word);
     }
 }
 

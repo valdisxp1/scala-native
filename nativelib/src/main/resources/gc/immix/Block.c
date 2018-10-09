@@ -22,9 +22,11 @@ INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader, Bytemap *bytemap, 
                                     LineHeader *lineHeader, int lineIndex) {
     Line_Unmark(lineHeader);
     // If the line contains an object
+    assert(Line_ContainsObject2(bytemap, blockStart, lineIndex) == Line_ContainsObject(lineHeader));
     if (Line_ContainsObject(lineHeader)) {
         // Unmark all objects in line
         Object *object = Line_GetFirstObject(lineIndex, lineHeader, blockStart);
+        assert(object == Line_GetFirstObject2(bytemap, blockStart, lineIndex));
         word_t *lineEnd =
             Block_GetLineAddress(blockStart, lineIndex) + WORDS_IN_LINE;
         while (object != NULL && (word_t *)object < lineEnd) {
