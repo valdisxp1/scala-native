@@ -23,6 +23,10 @@ int Bytemap_IsFree(Bytemap *bytemap, word_t* address) {
     return bytemap->data[Bytemap_index(bytemap, address)] == bm_free;
 }
 
+int Bytemap_IsPlaceholder(Bytemap *bytemap, word_t* address) {
+    return bytemap->data[Bytemap_index(bytemap, address)] == bm_placeholder;
+}
+
 int Bytemap_IsAllocated(Bytemap *bytemap, word_t* address) {
     return bytemap->data[Bytemap_index(bytemap, address)] == bm_allocated;
 }

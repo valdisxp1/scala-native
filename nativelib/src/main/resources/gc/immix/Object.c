@@ -31,40 +31,26 @@ static inline bool isWordAligned(word_t *word) {
     return ((word_t)word & WORD_INVERSE_MASK) == (word_t)word;
 }
 
-Object *Object_getInLine(BlockHeader *blockHeader, Bytemap *bytemap, word_t *blockStart, int lineIndex,
-                         word_t *word) {
-    assert(Line_ContainsObject(BlockHeader_GetLineHeader(blockHeader, lineIndex)));
-
-    Object *current =
-        Line_GetFirstObject(blockHeader, BlockHeader_GetLineHeader(blockHeader, lineIndex), blockStart);
-    Object *next = Object_NextObject(current);
-
-    word_t *lineEnd = Block_GetLineAddress(blockStart, lineIndex) + WORDS_IN_LINE;
-
-    while (next != NULL && (word_t *)next < lineEnd && (word_t *)next <= word) {
-        current = next;
-        next = Object_NextObject(next);
+Object *Object_getInnerPointer(Bytemap *bytemap, word_t *blockStart, word_t *word) {
+    word_t *current = word;
+    while (current >= blockStart && Bytemap_IsFree(bytemap, current)) {
+        current -= 1;// 1 WORD
     }
-
-    if (Bytemap_IsAllocated(bytemap, (word_t *) current) && word >= (word_t *)current &&
-        word < (word_t *)next) {
+    Object *object = (Object *)current;
+    if (Bytemap_IsAllocated(bytemap, current) && word <  current + Object_Size(&object->header) / WORD_SIZE) {
 #ifdef DEBUG_PRINT
         if ((word_t *)current != word) {
             printf("inner pointer: %p object: %p\n", word, current);
             fflush(stdout);
         }
 #endif
-        return current;
+        return object;
     } else {
-#ifdef DEBUG_PRINT
-        printf("ignoring %p\n", word);
-        fflush(stdout);
-#endif
         return NULL;
     }
 }
 
-Object *Object_GetObject(Heap *heap, word_t *word) {
+Object *Object_GetUnmarkedObject(Heap *heap, word_t *word) {
     BlockHeader *blockHeader = Block_GetBlockHeader(heap->blockHeaderStart, heap->heapStart, word);
     word_t *blockStart = Block_GetBlockStartForWord(word);
 
@@ -77,20 +63,12 @@ Object *Object_GetObject(Heap *heap, word_t *word) {
         word = (word_t *)((word_t)word & WORD_INVERSE_MASK);
     }
 
-    int lineIndex = Block_GetLineIndexFromWord(blockStart, word);
-    while (lineIndex > 0 &&
-           !Line_ContainsObject(BlockHeader_GetLineHeader(blockHeader, lineIndex))) {
-        lineIndex--;
-    }
-
-    if (Line_ContainsObject(BlockHeader_GetLineHeader(blockHeader, lineIndex))) {
-        return Object_getInLine(blockHeader, heap->smallBytemap, blockStart, lineIndex, word);
-    } else {
-#ifdef DEBUG_PRINT
-        printf("Word points to empty line %p\n", word);
-        fflush(stdout);
-#endif
+    if (Bytemap_IsPlaceholder(heap->smallBytemap, word) || Bytemap_IsMarked(heap->smallBytemap, word)) {
         return NULL;
+    } else if (Bytemap_IsAllocated(heap->smallBytemap, word)) {
+        return (Object *) word;
+    } else {
+       return Object_getInnerPointer(heap->smallBytkemap, blockStart, word);
     }
 }
 
@@ -115,11 +93,13 @@ Object *Object_getLargeInnerPointer(LargeAllocator *allocator, word_t *word) {
     }
 }
 
-Object *Object_GetLargeObject(LargeAllocator *allocator, word_t *word) {
+Object *Object_GetLargeUnmarkedObject(LargeAllocator *allocator, word_t *word) {
     if (((word_t)word & LARGE_BLOCK_MASK) != (word_t)word) {
         word = (word_t *)((word_t)word & LARGE_BLOCK_MASK);
     }
-    if (Bytemap_IsAllocated(allocator->bytemap, word)) {
+    if (Bytemap_IsPlaceholder(allocator->bytemap, word) || Bytemap_IsMarked(allocator->bytemap, word)) {
+        return NULL;
+    } else if (Bytemap_IsAllocated(allocator->bytemap, word)) {
         return (Object *)word;
     } else {
         Object *object = Object_getLargeInnerPointer(allocator, word);

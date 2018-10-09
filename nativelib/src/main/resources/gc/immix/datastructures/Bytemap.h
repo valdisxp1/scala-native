@@ -22,6 +22,7 @@ typedef enum {
 void Bytemap_Init(Bytemap *bytemap, word_t *firstAddress, size_t size);
 int Bytemap_IsFree(Bytemap *bytemap, word_t* address);
 int Bytemap_IsAllocated(Bytemap *bytemap, word_t* address);
+int Bytemap_IsPlaceholder(Bytemap *bytemap, word_t* address);
 int Bytemap_IsMarked(Bytemap *bytemap, word_t* address);
 
 void Bytemap_SetFree(Bytemap *bytemap, word_t* address);

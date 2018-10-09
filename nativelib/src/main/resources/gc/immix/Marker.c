@@ -35,7 +35,7 @@ void Marker_markConservative(Heap *heap, Stack *stack, word_t *address) {
     assert(Heap_IsWordInHeap(heap, address));
     Object *object = NULL;
     if (Heap_IsWordInSmallHeap(heap, address)) {
-        object = Object_GetObject(heap, address);
+        object = Object_GetUnmarkedObject(heap, address);
         assert(
             object == NULL ||
             Line_ContainsObject(&Block_GetBlockHeader(heap->blockHeaderStart, heap->heapStart, (word_t *)object)
@@ -48,7 +48,7 @@ void Marker_markConservative(Heap *heap, Stack *stack, word_t *address) {
         }
 #endif
     } else {
-        object = Object_GetLargeObject(&largeAllocator, address);
+        object = Object_GetLargeUnmarkedObject(&largeAllocator, address);
     }
 
     if (object != NULL){
