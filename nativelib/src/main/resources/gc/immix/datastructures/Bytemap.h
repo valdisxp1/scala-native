@@ -2,6 +2,7 @@
 #define IMMIX_BYTEMAP_H
 
 #include <stddef.h>
+#include <stdbool.h>
 #include "../GCTypes.h"
 #include "../Constants.h"
 
@@ -20,10 +21,10 @@ typedef enum {
 } Flag;
 
 void Bytemap_Init(Bytemap *bytemap, word_t *firstAddress, size_t size);
-int Bytemap_IsFree(Bytemap *bytemap, word_t* address);
-int Bytemap_IsAllocated(Bytemap *bytemap, word_t* address);
-int Bytemap_IsPlaceholder(Bytemap *bytemap, word_t* address);
-int Bytemap_IsMarked(Bytemap *bytemap, word_t* address);
+bool Bytemap_IsFree(Bytemap *bytemap, word_t* address);
+bool Bytemap_IsAllocated(Bytemap *bytemap, word_t* address);
+bool Bytemap_IsPlaceholder(Bytemap *bytemap, word_t* address);
+bool Bytemap_IsMarked(Bytemap *bytemap, word_t* address);
 
 void Bytemap_SetFree(Bytemap *bytemap, word_t* address);
 void Bytemap_SetPlaceholder(Bytemap *bytemap, word_t* address);
