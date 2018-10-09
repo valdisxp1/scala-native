@@ -128,8 +128,6 @@ word_t *Allocator_overflowAllocation(Allocator *allocator, size_t size) {
 
     allocator->largeCursor = end;
 
-    Line_Update(allocator->largeBlock, allocator->largeBlockStart, start);
-
     return start;
 }
 
@@ -163,8 +161,6 @@ INLINE word_t *Allocator_Alloc(Allocator *allocator, size_t size) {
     }
 
     allocator->cursor = end;
-
-    Line_Update(allocator->block, allocator->blockStart , start);
 
     return start;
 }

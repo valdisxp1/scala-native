@@ -18,26 +18,22 @@ INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
     Bytemap_SetAreaFree(allocator->bytemap, blockStart, WORDS_IN_BLOCK);
 }
 
-INLINE void Block_recycleMarkedLine(BlockHeader *blockHeader, Bytemap *bytemap, word_t *blockStart,
+INLINE void Block_recycleMarkedLine(Bytemap *bytemap, word_t *blockStart,
                                     LineHeader *lineHeader, int lineIndex) {
     Line_Unmark(lineHeader);
     // If the line contains an object
-    assert(Line_ContainsObject2(bytemap, blockStart, lineIndex) == Line_ContainsObject(lineHeader));
-    if (Line_ContainsObject(lineHeader)) {
-        // Unmark all objects in line
-        Object *object = Line_GetFirstObject(lineIndex, lineHeader, blockStart);
-        assert(object == Line_GetFirstObject2(bytemap, blockStart, lineIndex));
-        word_t *lineEnd =
-            Block_GetLineAddress(blockStart, lineIndex) + WORDS_IN_LINE;
-        while (object != NULL && (word_t *)object < lineEnd) {
-            ObjectHeader *objectHeader = &object->header;
-            if (Bytemap_IsMarked(bytemap, (word_t *) object)) {
-                Bytemap_SetAllocated(bytemap, (word_t*) object);
-            } else {
-                Bytemap_SetPlaceholder(bytemap, (word_t*) object);
-            }
-            object = Object_NextObject(object);
+    Object *object = Line_GetFirstObject(bytemap, blockStart, lineIndex);
+    // Unmark all objects in line
+    word_t *lineEnd =
+        Block_GetLineAddress(blockStart, lineIndex) + WORDS_IN_LINE;
+    while (object != NULL && (word_t *)object < lineEnd) {
+        ObjectHeader *objectHeader = &object->header;
+        if (Bytemap_IsMarked(bytemap, (word_t *) object)) {
+            Bytemap_SetAllocated(bytemap, (word_t*) object);
+        } else {
+            Bytemap_SetPlaceholder(bytemap, (word_t*) object);
         }
+        object = Object_NextObject(object);
     }
 }
 
@@ -64,7 +60,7 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
             // If the line is marked, we need to unmark all objects in the line
             if (Line_IsMarked(lineHeader)) {
                 // Unmark line
-                Block_recycleMarkedLine(blockHeader, bytemap, blockStart, lineHeader, lineIndex);
+                Block_recycleMarkedLine(bytemap, blockStart, lineHeader, lineIndex);
                 lineIndex++;
             } else {
                 // If the line is not marked, we need to merge all continuous
@@ -82,7 +78,6 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
                 }
                 lastRecyclable = lineIndex;
                 lineIndex++;
-                Line_SetEmpty(lineHeader);
                 allocator->freeMemoryAfterCollection += LINE_SIZE;
                 uint8_t size = 1;
                 while (lineIndex < LINE_COUNT &&
@@ -90,7 +85,6 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
                                           blockHeader, lineIndex))) {
                     size++;
                     lineIndex++;
-                    Line_SetEmpty(lineHeader);
                     allocator->freeMemoryAfterCollection += LINE_SIZE;
                 }
                 Bytemap_SetAreaFree(allocator->bytemap, Block_GetLineAddress(blockStart, lastRecyclable), WORDS_IN_LINE * size);

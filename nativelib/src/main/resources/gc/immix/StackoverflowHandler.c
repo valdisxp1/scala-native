@@ -126,11 +126,9 @@ bool overflowScanLine(Heap *heap, Stack *stack, BlockHeader *block, word_t* bloc
                       int lineIndex) {
     LineHeader *lineHeader = BlockHeader_GetLineHeader(block, lineIndex);
     Bytemap *bytemap = heap->smallBytemap;
-    assert(Line_ContainsObject(lineHeader) == Line_ContainsObject2(bytemap, blockStart, lineIndex));
 
-    if (Line_IsMarked(lineHeader) && Line_ContainsObject(lineHeader)) {
-        Object *object = Line_GetFirstObject(lineIndex, lineHeader, blockStart);
-        assert(object == Line_GetFirstObject2(bytemap, blockStart, lineIndex));
+    Object *object = Line_GetFirstObject(bytemap, blockStart, lineIndex);
+    if (Line_IsMarked(lineHeader)) {
         word_t *lineEnd =
             Block_GetLineAddress(blockStart, lineIndex) + WORDS_IN_LINE;
         while (object != NULL && (word_t *)object < lineEnd) {

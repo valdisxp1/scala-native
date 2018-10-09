@@ -34,14 +34,10 @@ void Marker_markObject(Heap *heap, Stack *stack, Object *object) {
 void Marker_markConservative(Heap *heap, Stack *stack, word_t *address) {
     assert(Heap_IsWordInHeap(heap, address));
     Object *object = NULL;
+    Bytemap *bytemap;
     if (Heap_IsWordInSmallHeap(heap, address)) {
         object = Object_GetUnmarkedObject(heap, address);
-        assert(
-            object == NULL ||
-            Line_ContainsObject(&Block_GetBlockHeader(heap->blockHeaderStart, heap->heapStart, (word_t *)object)
-                                     ->lineHeaders[Block_GetLineIndexFromWord(
-                                         Block_GetBlockStartForWord((word_t *)object),
-                                         (word_t *)object)]));
+        bytemap = heap->smallBytemap;
 #ifdef DEBUG_PRINT
         if (object == NULL) {
             printf("Not found: %p\n", address);
@@ -49,10 +45,11 @@ void Marker_markConservative(Heap *heap, Stack *stack, word_t *address) {
 #endif
     } else {
         object = Object_GetLargeUnmarkedObject(&largeAllocator, address);
+        bytemap = heap->largeBytemap;
     }
+    assert(object == NULL || Bytemap_IsAllocated(bytemap,(word_t*) object));
 
-    if (object != NULL){
-        Bytemap *bytemap = Heap_BytemapForWord(heap, (word_t*) object);
+    if (object != NULL) {
         if (!Bytemap_IsMarked(bytemap, (word_t*) object)) {
             Marker_markObject(heap, stack, object);
         }

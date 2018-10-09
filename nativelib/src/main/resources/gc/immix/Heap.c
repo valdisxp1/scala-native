@@ -190,8 +190,6 @@ INLINE word_t *Heap_AllocSmall(Heap *heap, uint32_t objectSize) {
 
     allocator.cursor = end;
 
-    Line_Update(allocator.block, allocator.blockStart, start);
-
     memset(start, 0, size + WORD_SIZE);
 
     Object *object = (Object *)start;
