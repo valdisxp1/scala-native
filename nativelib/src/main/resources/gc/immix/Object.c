@@ -132,11 +132,8 @@ Object *Object_GetLargeObject(LargeAllocator *allocator, word_t *word) {
 
 void Object_Mark(Heap *heap, Object *object) {
     // Mark the object itself
-    if (Heap_IsWordInSmallHeap(heap, (word_t*) object)) {
-        Bytemap_SetMarked(heap->smallBytemap, (word_t*) object);
-    } else {
-        Bytemap_SetMarked(heap->largeBytemap, (word_t*) object);
-    }
+    Bytemap *bytemap = Heap_BytemapForWord(heap, (word_t*) object);
+    Bytemap_SetMarked(bytemap, (word_t*) object);
 
     if (!Object_IsLargeObject(&object->header)) {
         // Mark the block
