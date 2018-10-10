@@ -89,7 +89,7 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
                     lineIndex++;
                     allocator->freeMemoryAfterCollection += LINE_SIZE;
                 }
-                assert(Line_IsMarked(lineHeader) == Line_IsMarked(&lineHeaders[lineIndex]));
+                assert(lineIndex >= LINE_COUNT || Line_IsMarked(lineHeader) == Line_IsMarked(&lineHeaders[lineIndex]));
                 Bytemap_SetAreaFree(allocator->bytemap, Block_GetLineAddress(blockStart, lastRecyclable), WORDS_IN_LINE * size);
                 Block_GetFreeLineHeader(blockStart, lastRecyclable)->size = size;
             }

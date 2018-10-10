@@ -57,18 +57,21 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->memoryLimit = memoryLimit;
 
     word_t maxNumberOfBlocks = memoryLimit / BLOCK_TOTAL_SIZE;
-    size_t blockHeaderSpaceSize = maxNumberOfBlocks * BLOCK_METADATA_ALIGNED_SIZE;
     uint32_t initialBlockCount = initialSmallHeapSize / BLOCK_TOTAL_SIZE;
 
     // reserve space for block headers
+    size_t blockHeaderSpaceSize = maxNumberOfBlocks * BLOCK_METADATA_ALIGNED_SIZE;
     word_t *blockHeaderStart = Heap_mapAndAlign(blockHeaderSpaceSize, BLOCK_METADATA_ALIGNED_SIZE);
     heap->blockHeaderStart = blockHeaderStart;
     heap->blockHeaderEnd = blockHeaderStart + initialBlockCount * WORDS_IN_BLOCK_METADATA;
 
     // reserve space for line headers
-    word_t *lineHeaderStart = Heap_mapAndAlign(blockHeaderSpaceSize, LINE_METADATA_SIZE);
+    size_t lineHeaderSpaceSize = maxNumberOfBlocks * LINE_COUNT * LINE_METADATA_SIZE;
+    word_t *lineHeaderStart = Heap_mapAndAlign(lineHeaderSpaceSize, WORD_SIZE);
     heap->lineHeaderStart = lineHeaderStart;
-    heap->lineHeaderEnd = lineHeaderStart + MathUtils_DivAndRoundUp(initialBlockCount * LINE_COUNT * LINE_METADATA_SIZE, WORD_SIZE);
+    assert(LINE_COUNT * LINE_SIZE == BLOCK_TOTAL_SIZE);
+    assert(LINE_COUNT * LINE_METADATA_SIZE % WORD_SIZE == 0);
+    heap->lineHeaderEnd = lineHeaderStart + initialBlockCount * LINE_COUNT * LINE_METADATA_SIZE / WORD_SIZE;
 
     word_t *smallHeapStart = Heap_mapAndAlign(memoryLimit, BLOCK_TOTAL_SIZE);
 
@@ -361,6 +364,7 @@ void Heap_Grow(Heap *heap, size_t increment) {
     heap->smallHeapSize += increment * WORD_SIZE;
     word_t *blockHeaderEnd = heap->blockHeaderEnd;
     heap->blockHeaderEnd += incrementInBlocks * WORDS_IN_BLOCK_METADATA;
+    heap->lineHeaderEnd += incrementInBlocks * LINE_COUNT * LINE_METADATA_SIZE / WORD_SIZE;
 
     BlockHeader *lastBlock = (BlockHeader *)(heap->blockHeaderEnd - WORDS_IN_BLOCK_METADATA);
     BlockList_AddBlocksLast(&allocator.freeBlocks, (BlockHeader *)blockHeaderEnd,
