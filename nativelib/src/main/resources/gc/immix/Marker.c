@@ -22,7 +22,7 @@ bool StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack);
 
 void Marker_markObject(Heap *heap, Stack *stack, Object *object) {
     Bytemap *bytemap = Heap_BytemapForWord(heap, (word_t*) object);
-    assert(!Bytemap_IsMarked(bytemap, (word_t*) object));
+    assert(Bytemap_IsAllocated(bytemap, (word_t*) object));
 
     assert(Object_Size(&object->header) != 0);
     Object_Mark(heap, object);
