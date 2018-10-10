@@ -74,13 +74,15 @@ Object *Object_GetUnmarkedObject(Heap *heap, word_t *word) {
 
 Object *Object_getLargeInnerPointer(LargeAllocator *allocator, word_t *word) {
     word_t *current = (word_t *)((word_t)word & LARGE_BLOCK_MASK);
+    Bytemap *bytemap = allocator->bytemap;
 
-    while (Bytemap_IsFree(allocator->bytemap, current)) {
+    while (Bytemap_IsFree(bytemap, current)) {
         current -= LARGE_BLOCK_SIZE / WORD_SIZE;
     }
 
     Object *object = (Object *)current;
-    if (word < (word_t *)object + Object_ChunkSize(object) / WORD_SIZE &&
+    if (Bytemap_IsAllocated(bytemap, current) &&
+        word < (word_t *)object + Object_ChunkSize(object) / WORD_SIZE &&
         object->rtti != NULL) {
 #ifdef DEBUG_PRINT
         printf("large inner pointer: %p, object: %p\n", word, object);
@@ -88,7 +90,6 @@ Object *Object_getLargeInnerPointer(LargeAllocator *allocator, word_t *word) {
 #endif
         return object;
     } else {
-
         return NULL;
     }
 }
