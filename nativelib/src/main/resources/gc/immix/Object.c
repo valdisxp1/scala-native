@@ -82,8 +82,7 @@ Object *Object_getLargeInnerPointer(LargeAllocator *allocator, word_t *word) {
 
     Object *object = (Object *)current;
     if (Bytemap_IsAllocated(bytemap, current) &&
-        word < (word_t *)object + Object_ChunkSize(object) / WORD_SIZE &&
-        object->rtti != NULL) {
+        word < (word_t *)object + Object_ChunkSize(object) / WORD_SIZE) {
 #ifdef DEBUG_PRINT
         printf("large inner pointer: %p, object: %p\n", word, object);
         fflush(stdout);
