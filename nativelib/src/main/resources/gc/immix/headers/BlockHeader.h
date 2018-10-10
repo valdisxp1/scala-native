@@ -20,7 +20,6 @@ typedef struct {
         int16_t first;
         int32_t nextBlock;
     } header;
-    LineHeader lineHeaders[LINE_COUNT];
 } BlockHeader;
 
 static inline bool BlockHeader_IsRecyclable(BlockHeader *blockHeader) {
@@ -48,11 +47,6 @@ static inline void BlockHeader_Unmark(BlockHeader *blockHeader) {
 
 static inline void BlockHeader_Mark(BlockHeader *blockHeader) {
     blockHeader->header.mark = 1;
-}
-
-static inline LineHeader *BlockHeader_GetLineHeader(BlockHeader *blockHeader,
-                                              int lineIndex) {
-    return &blockHeader->lineHeaders[lineIndex];
 }
 
 // Block specific

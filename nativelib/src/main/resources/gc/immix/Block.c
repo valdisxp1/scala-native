@@ -12,7 +12,8 @@ extern int __object_array_id;
 
 INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
                                        BlockHeader *blockHeader, word_t* blockStart) {
-    memset(blockHeader, 0, TOTAL_BLOCK_METADATA_SIZE);
+    memset(blockHeader, 0, sizeof(BlockHeader));
+    // does not unmark in LineHeaders because those are ignored by the allocator
     BlockList_AddLast(&allocator->freeBlocks, blockHeader);
     BlockHeader_SetFlag(blockHeader, block_free);
     Bytemap_SetAreaFree(allocator->bytemap, blockStart, WORDS_IN_BLOCK);
@@ -53,14 +54,11 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
         Bytemap *bytemap = allocator->bytemap;
         int lastRecyclable = NO_RECYCLABLE_LINE;
         while (lineIndex < LINE_COUNT) {
-            LineHeader *lineHeader =
-                BlockHeader_GetLineHeader(blockHeader, lineIndex);
+            LineHeader *lineHeader = &lineHeaders[lineIndex];
             // If the line is marked, we need to unmark all objects in the line
-            assert(Line_IsMarked(lineHeader) == Line_IsMarked(&lineHeaders[lineIndex]));
             if (Line_IsMarked(lineHeader)) {
                 // Unmark line
                 Line_Unmark(lineHeader);
-                Line_Unmark(&lineHeaders[lineIndex]);
                 Block_recycleMarkedLine(bytemap, blockStart, lineIndex);
                 lineIndex++;
             } else {
@@ -82,14 +80,11 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
                 allocator->freeMemoryAfterCollection += LINE_SIZE;
                 uint8_t size = 1;
                 while (lineIndex < LINE_COUNT &&
-                       !Line_IsMarked(lineHeader = BlockHeader_GetLineHeader(
-                                          blockHeader, lineIndex))) {
-                    assert(Line_IsMarked(lineHeader) == Line_IsMarked(&lineHeaders[lineIndex]));
+                       !Line_IsMarked(lineHeader = &lineHeaders[lineIndex])) {
                     size++;
                     lineIndex++;
                     allocator->freeMemoryAfterCollection += LINE_SIZE;
                 }
-                assert(lineIndex >= LINE_COUNT || Line_IsMarked(lineHeader) == Line_IsMarked(&lineHeaders[lineIndex]));
                 Bytemap_SetAreaFree(allocator->bytemap, Block_GetLineAddress(blockStart, lastRecyclable), WORDS_IN_LINE * size);
                 Block_GetFreeLineHeader(blockStart, lastRecyclable)->size = size;
             }
@@ -121,10 +116,6 @@ void Block_Print(BlockHeader *block) {
     printf("mark: %d, flags: %d, first: %d, nextBlock: %d \n",
            block->header.mark, block->header.flags, block->header.first,
            block->header.nextBlock);
-
-    for (int i = 0; i < LINE_COUNT; i++) {
-        printf("%d ", block->lineHeaders[i]);
-    }
     printf("\n");
     fflush(stdout);
 }
