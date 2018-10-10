@@ -126,6 +126,15 @@ void Object_Mark(Heap *heap, Object *object) {
             Block_GetLineIndexFromWord(blockStart, (word_t *)object);
         word_t *lastWord = (word_t *)Object_NextObject(object) - 1;
         int endIndex = Block_GetLineIndexFromWord(blockStart, lastWord);
+
+        {
+            LineHeader *firstHeader = Heap_LineHeaderForWord(heap, (word_t *)object);
+            LineHeader *lastHeader = Heap_LineHeaderForWord(heap, lastWord);
+            for (LineHeader *lineHeader = firstHeader; lineHeader <= lastHeader; lineHeader++){
+                Line_Mark(lineHeader);
+            }
+        }
+
         assert(startIndex >= 0 && startIndex < LINE_COUNT);
         assert(endIndex >= 0 && endIndex < LINE_COUNT);
         assert(startIndex <= endIndex);

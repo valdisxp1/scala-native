@@ -18,9 +18,7 @@ INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
     Bytemap_SetAreaFree(allocator->bytemap, blockStart, WORDS_IN_BLOCK);
 }
 
-INLINE void Block_recycleMarkedLine(Bytemap *bytemap, word_t *blockStart,
-                                    LineHeader *lineHeader, int lineIndex) {
-    Line_Unmark(lineHeader);
+INLINE void Block_recycleMarkedLine(Bytemap *bytemap, word_t *blockStart, int lineIndex) {
     // If the line contains an object
     Object *object = Line_GetFirstObject(bytemap, blockStart, lineIndex);
     // Unmark all objects in line
@@ -40,7 +38,7 @@ INLINE void Block_recycleMarkedLine(Bytemap *bytemap, word_t *blockStart,
 /**
  * recycles a block and adds it to the allocator
  */
-void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* blockStart) {
+void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* blockStart, LineHeader* lineHeaders) {
 
     // If the block is not marked, it means that it's completely free
     if (!BlockHeader_IsMarked(blockHeader)) {
@@ -58,9 +56,12 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
             LineHeader *lineHeader =
                 BlockHeader_GetLineHeader(blockHeader, lineIndex);
             // If the line is marked, we need to unmark all objects in the line
+            assert(Line_IsMarked(lineHeader) == Line_IsMarked(&lineHeaders[lineIndex]));
             if (Line_IsMarked(lineHeader)) {
                 // Unmark line
-                Block_recycleMarkedLine(bytemap, blockStart, lineHeader, lineIndex);
+                Line_Unmark(lineHeader);
+                Line_Unmark(&lineHeaders[lineIndex]);
+                Block_recycleMarkedLine(bytemap, blockStart, lineIndex);
                 lineIndex++;
             } else {
                 // If the line is not marked, we need to merge all continuous
@@ -83,10 +84,12 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
                 while (lineIndex < LINE_COUNT &&
                        !Line_IsMarked(lineHeader = BlockHeader_GetLineHeader(
                                           blockHeader, lineIndex))) {
+                    assert(Line_IsMarked(lineHeader) == Line_IsMarked(&lineHeaders[lineIndex]));
                     size++;
                     lineIndex++;
                     allocator->freeMemoryAfterCollection += LINE_SIZE;
                 }
+                assert(Line_IsMarked(lineHeader) == Line_IsMarked(&lineHeaders[lineIndex]));
                 Bytemap_SetAreaFree(allocator->bytemap, Block_GetLineAddress(blockStart, lastRecyclable), WORDS_IN_LINE * size);
                 Block_GetFreeLineHeader(blockStart, lastRecyclable)->size = size;
             }

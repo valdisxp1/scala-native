@@ -56,13 +56,19 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     size_t memoryLimit = Heap_getMemoryLimit();
     heap->memoryLimit = memoryLimit;
 
-    // reserve space for block headers
     word_t maxNumberOfBlocks = memoryLimit / BLOCK_TOTAL_SIZE;
     size_t blockHeaderSpaceSize = maxNumberOfBlocks * BLOCK_METADATA_ALIGNED_SIZE;
     uint32_t initialBlockCount = initialSmallHeapSize / BLOCK_TOTAL_SIZE;
+
+    // reserve space for block headers
     word_t *blockHeaderStart = Heap_mapAndAlign(blockHeaderSpaceSize, BLOCK_METADATA_ALIGNED_SIZE);
     heap->blockHeaderStart = blockHeaderStart;
     heap->blockHeaderEnd = blockHeaderStart + initialBlockCount * WORDS_IN_BLOCK_METADATA;
+
+    // reserve space for line headers
+    word_t *lineHeaderStart = Heap_mapAndAlign(blockHeaderSpaceSize, LINE_METADATA_SIZE);
+    heap->lineHeaderStart = lineHeaderStart;
+    heap->lineHeaderEnd = lineHeaderStart + MathUtils_DivAndRoundUp(initialBlockCount * LINE_COUNT * LINE_METADATA_SIZE, WORD_SIZE);
 
     word_t *smallHeapStart = Heap_mapAndAlign(memoryLimit, BLOCK_TOTAL_SIZE);
 
@@ -287,12 +293,14 @@ void Heap_Recycle(Heap *heap) {
 
     word_t *current = heap->blockHeaderStart;
     word_t *currentBlockStart = heap->heapStart;
+    LineHeader *lineHeaders = (LineHeader *) heap->lineHeaderStart;
     while (current < heap->blockHeaderEnd) {
         BlockHeader *blockHeader = (BlockHeader *)current;
-        Block_Recycle(&allocator, blockHeader, currentBlockStart);
+        Block_Recycle(&allocator, blockHeader, currentBlockStart, lineHeaders);
         // block_print(blockHeader);
         current += WORDS_IN_BLOCK_METADATA;
         currentBlockStart += WORDS_IN_BLOCK;
+        lineHeaders += LINE_COUNT;
     }
     LargeAllocator_Sweep(&largeAllocator);
 
