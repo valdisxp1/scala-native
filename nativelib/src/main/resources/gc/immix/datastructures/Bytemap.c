@@ -3,54 +3,10 @@
 #include "../Log.h"
 #include "../utils/MathUtils.h"
 #include <stdio.h>
-#include <string.h>
-
-inline size_t Bytemap_index(Bytemap *bytemap, word_t* address) {
-    size_t index = address - bytemap->firstAddress;
-    assert(address >= bytemap->firstAddress);
-    assert(index < bytemap -> size);
-    return index;
-}
 
 void Bytemap_Init(Bytemap *bytemap, word_t *firstAddress, size_t size) {
     bytemap->firstAddress = firstAddress;
     bytemap->size = size / WORD_SIZE;
     bytemap->end = &bytemap->data[bytemap->size];
     assert(Bytemap_index(bytemap, (word_t *)((ubyte_t *)(firstAddress) + size) - 1) < bytemap->size);
-}
-
-bool Bytemap_IsFree(Bytemap *bytemap, word_t* address) {
-    return bytemap->data[Bytemap_index(bytemap, address)] == bm_free;
-}
-
-bool Bytemap_IsPlaceholder(Bytemap *bytemap, word_t* address) {
-    return bytemap->data[Bytemap_index(bytemap, address)] == bm_placeholder;
-}
-
-bool Bytemap_IsAllocated(Bytemap *bytemap, word_t* address) {
-    return bytemap->data[Bytemap_index(bytemap, address)] == bm_allocated;
-}
-
-bool Bytemap_IsMarked(Bytemap *bytemap, word_t* address) {
-    return bytemap->data[Bytemap_index(bytemap, address)] == bm_marked;
-}
-
-void Bytemap_SetFree(Bytemap *bytemap, word_t* address) {
-    bytemap->data[Bytemap_index(bytemap, address)] = bm_free;
-}
-
-void Bytemap_SetPlaceholder(Bytemap *bytemap, word_t* address) {
-    bytemap->data[Bytemap_index(bytemap, address)] = bm_placeholder;
-}
-
-void Bytemap_SetAllocated(Bytemap *bytemap, word_t* address) {
-    bytemap->data[Bytemap_index(bytemap, address)] = bm_allocated;
-}
-
-void Bytemap_SetMarked(Bytemap *bytemap, word_t* address) {
-    bytemap->data[Bytemap_index(bytemap, address)] = bm_marked;
-}
-
-void Bytemap_SetAreaFree(Bytemap *bytemap, word_t* start, size_t words){
-    memset(&bytemap->data[Bytemap_index(bytemap, start)], 0, words);
 }
