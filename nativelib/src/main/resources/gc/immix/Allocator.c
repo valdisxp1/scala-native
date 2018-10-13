@@ -120,8 +120,6 @@ word_t *Allocator_overflowAllocation(Allocator *allocator, size_t size) {
         return Allocator_overflowAllocation(allocator, size);
     }
 
-    memset(start, 0, size);
-
     allocator->largeCursor = end;
 
     return start;
@@ -149,8 +147,6 @@ INLINE word_t *Allocator_Alloc(Allocator *allocator, size_t size) {
             return NULL;
         }
     }
-
-    memset(start, 0, size);
 
     allocator->cursor = end;
 

@@ -15,6 +15,8 @@ INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
     BlockList_AddLast(&allocator->freeBlocks, blockHeader);
     BlockHeader_SetFlag(blockHeader, block_free);
     Bytemap_ClearBlock(allocator->bytemap, blockStart);
+    // clear the data, so the allocator does not do that in small increments
+    memset(blockStart, 0, BLOCK_TOTAL_SIZE);
 }
 
 /**
@@ -68,6 +70,7 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
                         lineIndex;
                 }
                 Bytemap_ClearLineAt(bytemapCursor);
+                memset(lineStart, 0, LINE_SIZE);
                 lastRecyclable = lineIndex;
 
                 // next line
@@ -82,6 +85,7 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
                 while (lineIndex < LINE_COUNT &&
                        !Line_IsMarked(lineHeader)) {
                     Bytemap_ClearLineAt(bytemapCursor);
+                    memset(lineStart, 0, LINE_SIZE);
                     size++;
 
                     // next line
