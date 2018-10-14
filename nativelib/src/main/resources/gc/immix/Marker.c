@@ -15,21 +15,21 @@ extern word_t **__stack_bottom;
 
 #define LAST_FIELD_OFFSET -1
 
-void Marker_Mark(Stack *stack);
-void StackOverflowHandler_largeHeapOverflowHeapScan(Stack *stack);
-bool StackOverflowHandler_smallHeapOverflowHeapScan(Stack *stack);
+void Marker_Mark();
+void StackOverflowHandler_largeHeapOverflowHeapScan();
+bool StackOverflowHandler_smallHeapOverflowHeapScan();
 
-void Marker_markObject(Stack *stack, Bytemap *bytemap, Object *object) {
+void Marker_markObject(Bytemap *bytemap, Object *object) {
     assert(Bytemap_IsAllocated(bytemap, (word_t*) object));
 
     assert(Object_Size(object) != 0);
     Object_Mark(object);
     if (!overflow) {
-        overflow = Stack_Push(stack, object);
+        overflow = Stack_Push(object);
     }
 }
 
-void Marker_markConservative(Stack *stack, word_t *address) {
+void Marker_markConservative(word_t *address) {
     assert(Heap_IsWordInHeap(address));
     Object *object = NULL;
     Bytemap *bytemap;
@@ -49,14 +49,14 @@ void Marker_markConservative(Stack *stack, word_t *address) {
 
     if (object != NULL) {
         if (Bytemap_IsAllocated(bytemap, (word_t*) object)) {
-            Marker_markObject(stack, bytemap, object);
+            Marker_markObject(bytemap, object);
         }
     }
 }
 
-void Marker_Mark(Stack *stack) {
-    while (!Stack_IsEmpty(stack)) {
-        Object *object = Stack_Pop(stack);
+void Marker_Mark() {
+    while (!Stack_IsEmpty()) {
+        Object *object = Stack_Pop();
 
         if (Object_IsArray(object)) {
             if (object->rtti->rt.id == __object_array_id) {
@@ -69,7 +69,7 @@ void Marker_Mark(Stack *stack) {
                     Bytemap *bytemap = Heap_BytemapForWord((word_t*) fieldObject);
                     if (bytemap != NULL &&
                         Bytemap_IsAllocated(bytemap, (word_t*) fieldObject)) {
-                        Marker_markObject(stack, bytemap, fieldObject);
+                        Marker_markObject(bytemap, fieldObject);
                     }
                 }
             }
@@ -83,7 +83,7 @@ void Marker_Mark(Stack *stack) {
                 Bytemap *bytemap = Heap_BytemapForWord((word_t*) fieldObject);
                 if (bytemap != NULL &&
                     Bytemap_IsAllocated(bytemap, (word_t*) fieldObject)) {
-                    Marker_markObject(stack, bytemap, fieldObject);
+                    Marker_markObject(bytemap, fieldObject);
                 }
                 ++i;
             }
@@ -92,7 +92,7 @@ void Marker_Mark(Stack *stack) {
     StackOverflowHandler_CheckForOverflow();
 }
 
-void Marker_markProgramStack(Stack *stack) {
+void Marker_markProgramStack() {
     // Dumps registers into 'regs' which is on stack
     jmp_buf regs;
     setjmp(regs);
@@ -105,13 +105,13 @@ void Marker_markProgramStack(Stack *stack) {
 
         word_t *stackObject = *current;
         if (Heap_IsWordInHeap(stackObject)) {
-            Marker_markConservative(stack, stackObject);
+            Marker_markConservative(stackObject);
         }
         current += 1;
     }
 }
 
-void Marker_markModules(Stack *stack) {
+void Marker_markModules() {
     word_t **modules = &__modules;
     int nb_modules = __modules_size;
 
@@ -120,16 +120,16 @@ void Marker_markModules(Stack *stack) {
         Bytemap *bytemap = Heap_BytemapForWord((word_t*) object);
         if (bytemap != NULL &&
             Bytemap_IsAllocated(bytemap, (word_t*) object)) {
-            Marker_markObject(stack, bytemap, object);
+            Marker_markObject(bytemap, object);
         }
     }
 }
 
-void Marker_MarkRoots(Stack *stack) {
+void Marker_MarkRoots() {
 
-    Marker_markProgramStack(stack);
+    Marker_markProgramStack();
 
-    Marker_markModules(stack);
+    Marker_markModules();
 
-    Marker_Mark(stack);
+    Marker_Mark();
 }

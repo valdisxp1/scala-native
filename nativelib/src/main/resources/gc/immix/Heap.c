@@ -201,7 +201,7 @@ word_t *Heap_Alloc(uint32_t objectSize) {
     }
 }
 
-void Heap_Collect(Stack *stack) {
+void Heap_Collect() {
     struct timespec start, sweep_start, end;
 #ifdef DEBUG_PRINT
     printf("\nCollect\n");
@@ -210,7 +210,7 @@ void Heap_Collect(Stack *stack) {
     if (heap.stats != NULL) {
         clock_gettime(CLOCK_REALTIME, &start);
     }
-    Marker_MarkRoots(stack);
+    Marker_MarkRoots();
     if (heap.stats != NULL) {
         clock_gettime(CLOCK_REALTIME, &sweep_start);
     }

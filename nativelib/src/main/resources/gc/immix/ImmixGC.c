@@ -19,7 +19,7 @@ void scalanative_afterexit() {
 
 NOINLINE void scalanative_init() {
     Heap_Init(INITIAL_SMALL_HEAP_SIZE, INITIAL_LARGE_HEAP_SIZE);
-    Stack_Init(&stack, INITIAL_STACK_SIZE);
+    Stack_Init(INITIAL_STACK_SIZE);
     atexit(scalanative_afterexit);
 }
 
@@ -51,4 +51,4 @@ INLINE void *scalanative_alloc_atomic(void *info, size_t size) {
     return scalanative_alloc(info, size);
 }
 
-INLINE void scalanative_collect() { Heap_Collect(&stack); }
+INLINE void scalanative_collect() { Heap_Collect(); }
