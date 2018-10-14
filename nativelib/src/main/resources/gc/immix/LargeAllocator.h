@@ -21,13 +21,12 @@ typedef struct {
     Bytemap *bytemap;
 } LargeAllocator;
 
-void LargeAllocator_Init(LargeAllocator *allocator, word_t *offset,
-                         size_t largeHeapSize, Bytemap *bytemap);
-void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
-                             size_t total_block_size);
-Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
-                                size_t requestedBlockSize);
-void LargeAllocator_Sweep(LargeAllocator *allocator);
-void LargeAllocator_Print(LargeAllocator *alloc);
+extern LargeAllocator largeAllocator;
+
+void LargeAllocator_Init(word_t *offset, size_t largeHeapSize, Bytemap *bytemap);
+void LargeAllocator_AddChunk(Chunk *chunk, size_t total_block_size);
+Object *LargeAllocator_GetBlock(size_t requestedBlockSize);
+void LargeAllocator_Sweep();
+void LargeAllocator_Print();
 
 #endif // IMMIX_LARGEALLOCATOR_H

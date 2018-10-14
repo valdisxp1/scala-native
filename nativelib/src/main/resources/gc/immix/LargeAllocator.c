@@ -53,21 +53,19 @@ void LargeAllocator_freeListInit(FreeList *freeList) {
     freeList->last = NULL;
 }
 
-void LargeAllocator_Init(LargeAllocator *allocator, word_t *offset,
-                         size_t size, Bytemap *bytemap) {
-    allocator->offset = offset;
-    allocator->size = size;
-    allocator->bytemap = bytemap;
+void LargeAllocator_Init(word_t *offset, size_t size, Bytemap *bytemap) {
+    largeAllocator.offset = offset;
+    largeAllocator.size = size;
+    largeAllocator.bytemap = bytemap;
 
     for (int i = 0; i < FREE_LIST_COUNT; i++) {
-        LargeAllocator_freeListInit(&allocator->freeLists[i]);
+        LargeAllocator_freeListInit(&largeAllocator.freeLists[i]);
     }
 
-    LargeAllocator_AddChunk(allocator, (Chunk *)offset, size);
+    LargeAllocator_AddChunk((Chunk *)offset, size);
 }
 
-void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
-                             size_t total_block_size) {
+void LargeAllocator_AddChunk(Chunk *chunk, size_t total_block_size) {
     assert(total_block_size >= MIN_BLOCK_SIZE);
     assert(total_block_size % MIN_BLOCK_SIZE == 0);
 
@@ -81,20 +79,19 @@ void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
         int listIndex = LargeAllocator_sizeToLinkedListIndex(chunkSize);
 
         Chunk *currentChunk = (Chunk *)current;
-        LargeAllocator_freeListAddBlockLast(&allocator->freeLists[listIndex],
+        LargeAllocator_freeListAddBlockLast(&largeAllocator.freeLists[listIndex],
                                             (Chunk *)current);
 
         currentChunk->nothing = NULL;
         currentChunk->size = chunkSize;
-        Bytemap_SetPlaceholder(allocator->bytemap, (word_t*) current);
+        Bytemap_SetPlaceholder(largeAllocator.bytemap, (word_t*) current);
 
         current += chunkSize;
         remaining_size -= chunkSize;
     }
 }
 
-Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
-                                size_t requestedBlockSize) {
+Object *LargeAllocator_GetBlock(size_t requestedBlockSize) {
     size_t actualBlockSize =
         MathUtils_RoundToNextMultiple(requestedBlockSize, MIN_BLOCK_SIZE);
     size_t requiredChunkSize = 1UL << MathUtils_Log2Ceil(actualBlockSize);
@@ -102,7 +99,7 @@ Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
     int listIndex = LargeAllocator_sizeToLinkedListIndex(requiredChunkSize);
     Chunk *chunk = NULL;
     while (listIndex <= FREE_LIST_COUNT - 1 &&
-           (chunk = allocator->freeLists[listIndex].first) == NULL) {
+           (chunk = largeAllocator.freeLists[listIndex].first) == NULL) {
         ++listIndex;
     }
 
@@ -117,57 +114,56 @@ Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
         Chunk *remainingChunk =
             LargeAllocator_chunkAddOffset(chunk, actualBlockSize);
         LargeAllocator_freeListRemoveFirstBlock(
-            &allocator->freeLists[listIndex]);
+            &largeAllocator.freeLists[listIndex]);
         size_t remainingChunkSize = chunkSize - actualBlockSize;
-        LargeAllocator_AddChunk(allocator, remainingChunk, remainingChunkSize);
+        LargeAllocator_AddChunk(remainingChunk, remainingChunkSize);
     } else {
         LargeAllocator_freeListRemoveFirstBlock(
-            &allocator->freeLists[listIndex]);
+            &largeAllocator.freeLists[listIndex]);
     }
 
-    Bytemap_SetAllocated(allocator->bytemap, (word_t*) chunk);
+    Bytemap_SetAllocated(largeAllocator.bytemap, (word_t*) chunk);
     Object *object = (Object *)chunk;
     memset(object, 0, actualBlockSize);
     return object;
 }
 
-void LargeAllocator_Print(LargeAllocator *alloc) {
+void LargeAllocator_Print() {
     for (int i = 0; i < FREE_LIST_COUNT; i++) {
-        if (alloc->freeLists[i].first != NULL) {
-
-            LargeAllocator_printFreeList(&alloc->freeLists[i], i);
+        if (largeAllocator.freeLists[i].first != NULL) {
+            LargeAllocator_printFreeList(&largeAllocator.freeLists[i], i);
         }
     }
 }
 
-void LargeAllocator_clearFreeLists(LargeAllocator *allocator) {
+void LargeAllocator_clearFreeLists() {
     for (int i = 0; i < FREE_LIST_COUNT; i++) {
-        allocator->freeLists[i].first = NULL;
-        allocator->freeLists[i].last = NULL;
+       largeAllocator.freeLists[i].first = NULL;
+       largeAllocator.freeLists[i].last = NULL;
     }
 }
 
-void LargeAllocator_Sweep(LargeAllocator *allocator) {
-    LargeAllocator_clearFreeLists(allocator);
+void LargeAllocator_Sweep() {
+    LargeAllocator_clearFreeLists();
 
-    Object *current = (Object *)allocator->offset;
-    void *heapEnd = (ubyte_t *)allocator->offset + allocator->size;
+    Object *current = (Object *)largeAllocator.offset;
+    void *heapEnd = (ubyte_t *)largeAllocator.offset +largeAllocator.size;
 
     while (current != heapEnd) {
-        assert(!Bytemap_IsFree(allocator->bytemap, (word_t *)current));
-        if (Bytemap_IsMarked(allocator->bytemap, (word_t *)current)) {
-            Bytemap_SetAllocated(allocator->bytemap, (word_t *)current);
+        assert(!Bytemap_IsFree(largeAllocator.bytemap, (word_t *)current));
+        if (Bytemap_IsMarked(largeAllocator.bytemap, (word_t *)current)) {
+            Bytemap_SetAllocated(largeAllocator.bytemap, (word_t *)current);
 
             current = Object_NextLargeObject(current);
         } else {
             size_t currentSize = Object_ChunkSize(current);
             Object *next = Object_NextLargeObject(current);
-            while (next != heapEnd && !Bytemap_IsMarked(allocator->bytemap, (word_t *)next)) {
+            while (next != heapEnd && !Bytemap_IsMarked(largeAllocator.bytemap, (word_t *)next)) {
                 currentSize += Object_ChunkSize(next);
-                Bytemap_SetFree(allocator->bytemap, (word_t *)next);
+                Bytemap_SetFree(largeAllocator.bytemap, (word_t *)next);
                 next = Object_NextLargeObject(next);
             }
-            LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
+            LargeAllocator_AddChunk((Chunk *)current, currentSize);
             current = next;
         }
     }

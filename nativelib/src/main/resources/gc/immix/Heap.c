@@ -98,7 +98,7 @@ void Heap_Init(size_t initialSmallHeapSize,
     heap.largeHeapEnd = largeHeapEnd;
     Bytemap_Init(largeBytemap, largeHeapStart, memoryLimit);
     assert(largeBytemap->end <= ((ubyte_t *)largeBytemap) + memoryLimit / WORD_SIZE + sizeof(Bytemap));
-    LargeAllocator_Init(&largeAllocator, largeHeapStart, initialLargeHeapSize, largeBytemap);
+    LargeAllocator_Init(largeHeapStart, initialLargeHeapSize, largeBytemap);
 
     char *statsFile = Settings_GC_StatsFileName();
     if (statsFile != NULL) {
@@ -119,7 +119,7 @@ word_t *Heap_AllocLarge(uint32_t size) {
     assert(size >= MIN_BLOCK_SIZE);
 
     // Request an object from the `LargeAllocator`
-    Object *object = LargeAllocator_GetBlock(&largeAllocator, size);
+    Object *object = LargeAllocator_GetBlock(size);
     // If the object is not NULL, update it's metadata and return it
     if (object != NULL) {
         return (word_t *) object;
@@ -129,14 +129,14 @@ word_t *Heap_AllocLarge(uint32_t size) {
 
         // After collection, try to alloc again, if it fails, grow the heap by
         // at least the size of the object we want to alloc
-        object = LargeAllocator_GetBlock(&largeAllocator, size);
+        object = LargeAllocator_GetBlock(size);
         if (object != NULL) {
             assert(Heap_IsWordInLargeHeap((word_t *) object));
             return (word_t *) object;
         } else {
             Heap_GrowLarge(size);
 
-            object = LargeAllocator_GetBlock(&largeAllocator, size);
+            object = LargeAllocator_GetBlock(size);
             assert(Heap_IsWordInLargeHeap((word_t *) object));
             return (word_t *) object;
         }
@@ -283,7 +283,7 @@ void Heap_Recycle() {
         currentBlockStart += WORDS_IN_BLOCK;
         lineHeaders += LINE_COUNT;
     }
-    LargeAllocator_Sweep(&largeAllocator);
+    LargeAllocator_Sweep();
 
     if (Allocator_ShouldGrow()) {
         double growth;
@@ -371,6 +371,5 @@ void Heap_GrowLarge(size_t increment) {
     heap.largeHeapSize += increment * WORD_SIZE;
     largeAllocator.size += increment * WORD_SIZE;
 
-    LargeAllocator_AddChunk(&largeAllocator, (Chunk *)heapEnd,
-                            increment * WORD_SIZE);
+    LargeAllocator_AddChunk((Chunk *)heapEnd, increment * WORD_SIZE);
 }

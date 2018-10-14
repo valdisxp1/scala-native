@@ -64,9 +64,9 @@ Object *Object_GetUnmarkedObject(word_t *word) {
     }
 }
 
-Object *Object_getLargeInnerPointer(LargeAllocator *allocator, word_t *word) {
+Object *Object_getLargeInnerPointer( word_t *word) {
     word_t *current = (word_t *)((word_t)word & LARGE_BLOCK_MASK);
-    Bytemap *bytemap = allocator->bytemap;
+    Bytemap *bytemap = allocator.bytemap;
 
     while (Bytemap_IsFree(bytemap, current)) {
         current -= LARGE_BLOCK_SIZE / WORD_SIZE;
@@ -85,16 +85,16 @@ Object *Object_getLargeInnerPointer(LargeAllocator *allocator, word_t *word) {
     }
 }
 
-Object *Object_GetLargeUnmarkedObject(LargeAllocator *allocator, word_t *word) {
+Object *Object_GetLargeUnmarkedObject(word_t *word) {
     if (((word_t)word & LARGE_BLOCK_MASK) != (word_t)word) {
         word = (word_t *)((word_t)word & LARGE_BLOCK_MASK);
     }
-    if (Bytemap_IsPlaceholder(allocator->bytemap, word) || Bytemap_IsMarked(allocator->bytemap, word)) {
+    if (Bytemap_IsPlaceholder(largeAllocator.bytemap, word) || Bytemap_IsMarked(largeAllocator.bytemap, word)) {
         return NULL;
-    } else if (Bytemap_IsAllocated(allocator->bytemap, word)) {
+    } else if (Bytemap_IsAllocated(largeAllocator.bytemap, word)) {
         return (Object *)word;
     } else {
-        Object *object = Object_getLargeInnerPointer(allocator, word);
+        Object *object = Object_getLargeInnerPointer(word);
         assert(object == NULL ||
                (word >= (word_t *)object &&
                 word < (word_t *)Object_NextLargeObject(object)));

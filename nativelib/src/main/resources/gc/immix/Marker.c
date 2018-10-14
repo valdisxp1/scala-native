@@ -42,7 +42,7 @@ void Marker_markConservative(Stack *stack, word_t *address) {
         }
 #endif
     } else {
-        object = Object_GetLargeUnmarkedObject(&largeAllocator, address);
+        object = Object_GetLargeUnmarkedObject(address);
         bytemap = heap.largeBytemap;
     }
     assert(object == NULL || Bytemap_IsAllocated(bytemap,(word_t*) object));
