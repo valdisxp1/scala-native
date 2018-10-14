@@ -42,8 +42,8 @@ Object *Object_getInnerPointer(Bytemap *bytemap, word_t *blockStart, word_t *wor
     }
 }
 
-Object *Object_GetUnmarkedObject(Heap *heap, word_t *word) {
-    BlockHeader *blockHeader = Block_GetBlockHeader(heap->blockHeaderStart, heap->heapStart, word);
+Object *Object_GetUnmarkedObject(word_t *word) {
+    BlockHeader *blockHeader = Block_GetBlockHeader(heap.blockHeaderStart, heap.heapStart, word);
     word_t *blockStart = Block_GetBlockStartForWord(word);
 
     if (!Object_isWordAligned(word)) {
@@ -55,12 +55,12 @@ Object *Object_GetUnmarkedObject(Heap *heap, word_t *word) {
         word = (word_t *)((word_t)word & WORD_INVERSE_MASK);
     }
 
-    if (Bytemap_IsPlaceholder(heap->smallBytemap, word) || Bytemap_IsMarked(heap->smallBytemap, word)) {
+    if (Bytemap_IsPlaceholder(heap.smallBytemap, word) || Bytemap_IsMarked(heap.smallBytemap, word)) {
         return NULL;
-    } else if (Bytemap_IsAllocated(heap->smallBytemap, word)) {
+    } else if (Bytemap_IsAllocated(heap.smallBytemap, word)) {
         return (Object *) word;
     } else {
-       return Object_getInnerPointer(heap->smallBytemap, blockStart, word);
+       return Object_getInnerPointer(heap.smallBytemap, blockStart, word);
     }
 }
 
@@ -102,23 +102,23 @@ Object *Object_GetLargeUnmarkedObject(LargeAllocator *allocator, word_t *word) {
     }
 }
 
-void Object_Mark(Heap *heap, Object *object) {
+void Object_Mark(Object *object) {
     // Mark the object itself
-    Bytemap *bytemap = Heap_BytemapForWord(heap, (word_t*) object);
+    Bytemap *bytemap = Heap_BytemapForWord((word_t*) object);
     Bytemap_SetMarked(bytemap, (word_t*) object);
 
-    if (Heap_IsWordInSmallHeap(heap, (word_t*) object)) {
+    if (Heap_IsWordInSmallHeap((word_t*) object)) {
         // Mark the block
-        BlockHeader *blockHeader = Block_GetBlockHeader(heap->blockHeaderStart, heap->heapStart, (word_t *)object);
+        BlockHeader *blockHeader = Block_GetBlockHeader(heap.blockHeaderStart, heap.heapStart, (word_t *)object);
         word_t *blockStart = Block_GetBlockStartForWord((word_t *)object);
         BlockHeader_Mark(blockHeader);
 
         // Mark all Lines
         word_t *lastWord = Object_LastWord(object);
 
-        assert(blockHeader == Block_GetBlockHeader(heap->blockHeaderStart, heap->heapStart, lastWord));
-        LineHeader *firstHeader = Heap_LineHeaderForWord(heap, (word_t *)object);
-        LineHeader *lastHeader = Heap_LineHeaderForWord(heap, lastWord);
+        assert(blockHeader == Block_GetBlockHeader(heap.blockHeaderStart, heap.heapStart, lastWord));
+        LineHeader *firstHeader = Heap_LineHeaderForWord((word_t *)object);
+        LineHeader *lastHeader = Heap_LineHeaderForWord(lastWord);
         assert(firstHeader <= lastHeader);
         for (LineHeader *lineHeader = firstHeader; lineHeader <= lastHeader; lineHeader++) {
             Line_Mark(lineHeader);
