@@ -8,30 +8,29 @@
 
 #define NO_RECYCLABLE_LINE -1
 
-INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
-                                       BlockHeader *blockHeader, word_t* blockStart) {
+INLINE void Block_recycleUnmarkedBlock(BlockHeader *blockHeader, word_t* blockStart) {
     memset(blockHeader, 0, sizeof(BlockHeader));
     // does not unmark in LineHeaders because those are ignored by the allocator
-    BlockList_AddLast(&allocator->freeBlocks, blockHeader);
+    BlockList_AddLast(&allocator.freeBlocks, blockHeader);
     BlockHeader_SetFlag(blockHeader, block_free);
-    Bytemap_ClearBlock(allocator->bytemap, blockStart);
+    Bytemap_ClearBlock(allocator.bytemap, blockStart);
 }
 
 /**
  * recycles a block and adds it to the allocator
  */
-void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* blockStart, LineHeader* lineHeaders) {
+void Block_Recycle(BlockHeader *blockHeader, word_t* blockStart, LineHeader* lineHeaders) {
 
     // If the block is not marked, it means that it's completely free
     if (!BlockHeader_IsMarked(blockHeader)) {
-        Block_recycleUnmarkedBlock(allocator, blockHeader, blockStart);
-        allocator->freeBlockCount++;
-        allocator->freeMemoryAfterCollection += BLOCK_TOTAL_SIZE;
+        Block_recycleUnmarkedBlock(blockHeader, blockStart);
+        allocator.freeBlockCount++;
+        allocator.freeMemoryAfterCollection += BLOCK_TOTAL_SIZE;
     } else {
         // If the block is marked, we need to recycle line by line
         assert(BlockHeader_IsMarked(blockHeader));
         BlockHeader_Unmark(blockHeader);
-        Bytemap *bytemap = allocator->bytemap;
+        Bytemap *bytemap = allocator.bytemap;
 
         // start at line zero, keep separate pointers into all affected data structures
         int16_t lineIndex = 0;
@@ -76,7 +75,7 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
                 lineStart += WORDS_IN_LINE;
                 bytemapCursor = Bytemap_NextLine(bytemapCursor);
 
-                allocator->freeMemoryAfterCollection += LINE_SIZE;
+                allocator.freeMemoryAfterCollection += LINE_SIZE;
 
                 uint8_t size = 1;
                 while (lineIndex < LINE_COUNT &&
@@ -90,7 +89,7 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
                     lineStart += WORDS_IN_LINE;
                     bytemapCursor = Bytemap_NextLine(bytemapCursor);
 
-                    allocator->freeMemoryAfterCollection += LINE_SIZE;
+                    allocator.freeMemoryAfterCollection += LINE_SIZE;
                 }
                 Block_GetFreeLineHeader(blockStart, lastRecyclable)->size = size;
             }
@@ -102,10 +101,10 @@ void Block_Recycle(Allocator *allocator, BlockHeader *blockHeader, word_t* block
             Block_GetFreeLineHeader(blockStart, lastRecyclable)->next =
                 LAST_HOLE;
             BlockHeader_SetFlag(blockHeader, block_recyclable);
-            BlockList_AddLast(&allocator->recycledBlocks, blockHeader);
+            BlockList_AddLast(&allocator.recycledBlocks, blockHeader);
 
             assert(blockHeader->header.first != NO_RECYCLABLE_LINE);
-            allocator->recycledBlockCount++;
+            allocator.recycledBlockCount++;
         }
     }
 }

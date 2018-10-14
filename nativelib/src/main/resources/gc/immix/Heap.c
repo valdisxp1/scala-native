@@ -84,7 +84,7 @@ void Heap_Init(size_t initialSmallHeapSize,
     heap.heapStart = smallHeapStart;
     heap.heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
     Bytemap_Init(smallBytemap, smallHeapStart, memoryLimit);
-    Allocator_Init(&allocator, smallBytemap, blockHeaderStart, smallHeapStart, initialBlockCount);
+    Allocator_Init(smallBytemap, blockHeaderStart, smallHeapStart, initialBlockCount);
 
     // reserve space for bytemap
     Bytemap *largeBytemap = (Bytemap *) Heap_mapAndAlign(memoryLimit / WORD_SIZE + sizeof(Bytemap), WORD_SIZE);
@@ -145,19 +145,19 @@ word_t *Heap_AllocLarge(uint32_t size) {
 
 NOINLINE word_t *Heap_allocSmallSlow(uint32_t size) {
     Object *object;
-    object = (Object *)Allocator_Alloc(&allocator, size);
+    object = (Object *)Allocator_Alloc(size);
 
     if (object != NULL)
         goto done;
 
     Heap_Collect(&stack);
-    object = (Object *)Allocator_Alloc(&allocator, size);
+    object = (Object *)Allocator_Alloc(size);
 
     if (object != NULL)
         goto done;
 
     Heap_Grow(size);
-    object = (Object *)Allocator_Alloc(&allocator, size);
+    object = (Object *)Allocator_Alloc(size);
 
 done:
     assert(Heap_IsWordInSmallHeap((word_t *) object));
@@ -277,7 +277,7 @@ void Heap_Recycle() {
     LineHeader *lineHeaders = (LineHeader *) heap.lineHeaderStart;
     while (current < heap.blockHeaderEnd) {
         BlockHeader *blockHeader = (BlockHeader *)current;
-        Block_Recycle(&allocator, blockHeader, currentBlockStart, lineHeaders);
+        Block_Recycle(blockHeader, currentBlockStart, lineHeaders);
         // block_print(blockHeader);
         current += WORDS_IN_BLOCK_METADATA;
         currentBlockStart += WORDS_IN_BLOCK;
@@ -285,7 +285,7 @@ void Heap_Recycle() {
     }
     LargeAllocator_Sweep(&largeAllocator);
 
-    if (Allocator_ShouldGrow(&allocator)) {
+    if (Allocator_ShouldGrow()) {
         double growth;
         if (heap.smallHeapSize < EARLY_GROWTH_THRESHOLD) {
             growth = EARLY_GROWTH_RATE;
@@ -296,7 +296,7 @@ void Heap_Recycle() {
         size_t increment = blocks * WORDS_IN_BLOCK;
         Heap_Grow(increment);
     }
-    Allocator_InitCursors(&allocator);
+    Allocator_InitCursors();
 }
 
 void Heap_exitWithOutOfMemory() {
@@ -318,7 +318,7 @@ void Heap_Grow(size_t increment) {
     // If we cannot grow because we reached the memory limit
     if (!Heap_isGrowingPossible(increment)) {
         // If we can still init the cursors, grow by max possible increment
-        if (Allocator_CanInitCursors(&allocator)) {
+        if (Allocator_CanInitCursors()) {
             // increment = heap.memoryLimit - (heap.smallHeapSize +
             // heap.largeHeapSize);
             // round down to block size
