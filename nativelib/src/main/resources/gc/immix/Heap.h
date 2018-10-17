@@ -5,15 +5,7 @@
 #include "Allocator.h"
 #include "LargeAllocator.h"
 #include "datastructures/Stack.h"
-#include <stdio.h>
-
-typedef struct {
-    FILE *outFile;
-    uint64_t collections;
-    uint64_t timestamp_us[GC_STATS_MEASUREMENTS];
-    uint64_t mark_time_us[GC_STATS_MEASUREMENTS];
-    uint64_t sweep_time_us[GC_STATS_MEASUREMENTS];
-} HeapStats;
+#include "Stats.h"
 
 typedef struct {
     size_t memoryLimit;
@@ -23,7 +15,7 @@ typedef struct {
     word_t *largeHeapStart;
     word_t *largeHeapEnd;
     size_t largeHeapSize;
-    HeapStats *stats;
+    Stats *stats;
 } Heap;
 
 static inline bool Heap_IsWordInLargeHeap(Heap *heap, word_t *word) {
