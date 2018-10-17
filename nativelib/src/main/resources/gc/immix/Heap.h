@@ -5,6 +5,7 @@
 #include "Allocator.h"
 #include "LargeAllocator.h"
 #include "datastructures/Stack.h"
+#include "Stats.h"
 #include "datastructures/Bytemap.h"
 #include "metadata/LineMeta.h"
 #include <stdio.h>
@@ -23,6 +24,7 @@ typedef struct {
     size_t largeHeapSize;
     Bytemap *smallBytemap;
     Bytemap *largeBytemap;
+    Stats *stats;
 } Heap;
 
 static inline bool Heap_IsWordInLargeHeap(Heap *heap, word_t *word) {
@@ -62,6 +64,7 @@ static inline LineMeta *Heap_LineMetaForWord(Heap *heap, word_t *word) {
 
 void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
                size_t initialLargeHeapSize);
+void Heap_AfterExit(Heap *heap);
 word_t *Heap_Alloc(Heap *heap, uint32_t objectSize);
 word_t *Heap_AllocSmall(Heap *heap, uint32_t objectSize);
 word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize);
