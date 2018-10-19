@@ -10,7 +10,7 @@ typedef struct {
     struct {
         BlockMeta *cursor;
         BlockMeta *limit;
-    } currentSuperblock;
+    } smallestSuperblock;
     SuperblockList freeSuperblocks;
     uint64_t freeBlockCount;
 } BlockAllocator;

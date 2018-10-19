@@ -9,8 +9,6 @@ BlockMeta *SuperblockList_getNextBlock(word_t *blockMetaStart,
     int32_t nextBlockId = blockMeta->nextSuperblock;
     if (nextBlockId == LAST_BLOCK) {
         return NULL;
-    } else if (nextBlockId == 0) {
-        nextBlockId = BlockMeta_GetBlockIndex(blockMetaStart, blockMeta) + 1;
     }
     return BlockMeta_GetFromIndex(blockMetaStart, nextBlockId);
 }
@@ -27,12 +25,14 @@ BlockMeta *SuperblockList_Poll(SuperblockList *blockList) {
         if (block == blockList->last) {
             blockList->first = NULL;
         }
-        blockList->first = BlockList_getNextBlock(blockList->blockMetaStart, block);
+        blockList->first = SuperblockList_getNextBlock(blockList->blockMetaStart, block);
+        assert(block->superblockSize > 0);
     }
     return block;
 }
 
 void SuperblockList_AddLast(SuperblockList *blockList, BlockMeta *blockMeta) {
+    assert(blockMeta->superblockSize > 0);
     if (blockList->first == NULL) {
         blockList->first = blockMeta;
     } else {
@@ -41,18 +41,6 @@ void SuperblockList_AddLast(SuperblockList *blockList, BlockMeta *blockMeta) {
     }
     blockList->last = blockMeta;
     blockMeta->nextSuperblock = LAST_BLOCK;
-}
-
-void SuperblockList_AddBlocksLast(SuperblockList *blockList, BlockMeta *first,
-                                  BlockMeta *last) {
-    if (blockList->first == NULL) {
-        blockList->first = first;
-    } else {
-        blockList->last->nextSuperblock =
-            BlockMeta_GetBlockIndex(blockList->blockMetaStart, first);
-    }
-    blockList->last = last;
-    last->nextSuperblock = LAST_BLOCK;
 }
 
 void SuperblockList_Clear(SuperblockList *blockList) {
