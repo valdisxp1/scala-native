@@ -13,8 +13,7 @@ typedef struct {
 
 void SuperblockList_Init(SuperblockList *blockList, word_t *blockMetaStart);
 void SuperblockList_Clear(SuperblockList *blockList);
-bool SuperblockList_IsEmpty(SuperblockList *blockList);
-BlockMeta *SuperblockList_RemoveFirstBlock(SuperblockList *blockList);
+BlockMeta *SuperblockList_Poll(SuperblockList *blockList);
 void SuperblockList_AddLast(SuperblockList *blockList, BlockMeta *block);
 void SuperblockList_AddBlocksLast(SuperblockList *blockList, BlockMeta *first,
                              BlockMeta *last);

@@ -235,10 +235,8 @@ bool Allocator_getNextLine(Allocator *allocator) {
  * chunk_allocator
  */
 BlockMeta *Allocator_getNextBlock(Allocator *allocator) {
-    BlockMeta *block = NULL;
-    if (!BlockList_IsEmpty(&allocator->recycledBlocks)) {
-        block = BlockList_RemoveFirstBlock(&allocator->recycledBlocks);
-    } else {
+    BlockMeta *block = BlockList_Poll(&allocator->recycledBlocks);
+    if (block == NULL) {
         block = BlockAllocator_GetFreeBlock(allocator->blockAllocator);
     }
     assert(block == NULL ||

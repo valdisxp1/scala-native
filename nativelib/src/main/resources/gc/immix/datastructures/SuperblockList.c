@@ -21,17 +21,14 @@ void SuperblockList_Init(SuperblockList *blockList, word_t *blockMetaStart) {
     blockList->last = NULL;
 }
 
-inline bool SuperblockList_IsEmpty(SuperblockList *blockList) {
-    return blockList->first == NULL;
-}
-
-BlockMeta *SuperblockList_RemoveFirstBlock(SuperblockList *blockList) {
-    assert(blockList->first != NULL);
+BlockMeta *SuperblockList_Poll(SuperblockList *blockList) {
     BlockMeta *block = blockList->first;
-    if (block == blockList->last) {
-        blockList->first = NULL;
+    if (block != NULL) {
+        if (block == blockList->last) {
+            blockList->first = NULL;
+        }
+        blockList->first = BlockList_getNextBlock(blockList->blockMetaStart, block);
     }
-    blockList->first = SuperblockList_getNextBlock(blockList->blockMetaStart, block);
     return block;
 }
 

@@ -9,14 +9,9 @@ void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart,
 
 BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
     BlockMeta *block = NULL;
-    if (!BlockList_IsEmpty(&blockAllocator->freeBlocks)) {
-        block = BlockList_RemoveFirstBlock(&blockAllocator->freeBlocks);
-        assert(!SuperblockList_IsEmpty(&blockAllocator->freeSuperblocks));
-        BlockMeta *superblock = SuperblockList_RemoveFirstBlock(&blockAllocator->freeSuperblocks);
-        assert(block == superblock);
-    } else {
-        assert(SuperblockList_IsEmpty(&blockAllocator->freeSuperblocks));
-    }
+    block = BlockList_Poll(&blockAllocator->freeBlocks);
+    BlockMeta *superblock = SuperblockList_Poll(&blockAllocator->freeSuperblocks);
+    assert(block == superblock);
     // not decrementing freeBlockCount, because it is only used after sweep
     return block;
 }
