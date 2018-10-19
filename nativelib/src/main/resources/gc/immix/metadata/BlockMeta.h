@@ -88,8 +88,7 @@ static inline word_t *Block_GetBlockStartForWord(word_t *word) {
 // Transitional Block<->BlockMeta
 static inline uint32_t BlockMeta_GetBlockIndex(word_t *blockMetaStart,
                                                BlockMeta *blockMeta) {
-    return (uint32_t)((word_t *)blockMeta - blockMetaStart) /
-           WORDS_IN_BLOCK_METADATA;
+    return blockMeta - (BlockMeta *) blockMetaStart;
 }
 
 static inline uint32_t Block_GetBlockIndexForWord(word_t *heapStart,
@@ -107,7 +106,7 @@ static inline word_t *BlockMeta_GetBlockStart(word_t *blockMetaStart,
 
 static inline BlockMeta *BlockMeta_GetFromIndex(word_t *blockMetaStart,
                                                 uint32_t index) {
-    return (BlockMeta *)(blockMetaStart + (index * WORDS_IN_BLOCK_METADATA));
+    return (BlockMeta *) blockMetaStart + index;
 }
 
 static inline BlockMeta *Block_GetBlockMeta(word_t *blockMetaStart,
