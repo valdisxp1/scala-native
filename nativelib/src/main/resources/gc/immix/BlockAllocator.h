@@ -1,12 +1,10 @@
 #ifndef IMMIX_BLOCKALLOCATOR_H
 #define IMMIX_BLOCKALLOCATOR_H
 
-#include "datastructures/BlockList.h"
 #include "datastructures/SuperblockList.h"
 #include <stddef.h>
 
 typedef struct {
-    BlockList freeBlocks;
     struct {
         BlockMeta *cursor;
         BlockMeta *limit;
