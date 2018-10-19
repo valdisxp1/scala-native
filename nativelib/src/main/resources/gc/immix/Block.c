@@ -14,7 +14,7 @@ INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
                                        word_t *blockStart) {
     memset(blockMeta, 0, sizeof(BlockMeta));
     // does not unmark in LineMetas because those are ignored by the allocator
-    BlockList_AddLast(&allocator->blockAllocator->freeBlocks, blockMeta);
+    BlockAllocator_AddFreeBlock(allocator->blockAllocator, blockMeta);
     BlockMeta_SetFlag(blockMeta, block_free);
     ObjectMeta_ClearBlockAt(Bytemap_Get(allocator->bytemap, blockStart));
 }
@@ -28,7 +28,6 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
     // If the block is not marked, it means that it's completely free
     if (!BlockMeta_IsMarked(blockMeta)) {
         Block_recycleUnmarkedBlock(allocator, blockMeta, blockStart);
-        allocator->freeBlockCount++;
         allocator->freeMemoryAfterCollection += BLOCK_TOTAL_SIZE;
     } else {
         // If the block is marked, we need to recycle line by line

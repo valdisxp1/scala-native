@@ -223,12 +223,8 @@ void Heap_Collect(Heap *heap, Stack *stack) {
 }
 
 void Heap_Recycle(Heap *heap) {
-    BlockList_Clear(&allocator.recycledBlocks);
-    BlockList_Clear(&blockAllocator.freeBlocks);
-
-    allocator.freeBlockCount = 0;
-    allocator.recycledBlockCount = 0;
-    allocator.freeMemoryAfterCollection = 0;
+    Allocator_Clear(&allocator);
+    BlockAllocator_Clear(&blockAllocator);
 
     word_t *current = heap->blockMetaStart;
     word_t *currentBlockStart = heap->heapStart;
@@ -303,13 +299,9 @@ void Heap_Grow(Heap *heap, size_t increment) {
     heap->lineMetaEnd +=
         incrementInBlocks * LINE_COUNT * LINE_METADATA_SIZE / WORD_SIZE;
 
-    BlockMeta *lastBlock =
-        (BlockMeta *)(heap->blockMetaEnd - WORDS_IN_BLOCK_METADATA);
-    BlockList_AddBlocksLast(&blockAllocator.freeBlocks, (BlockMeta *)blockMetaEnd,
-                            lastBlock);
+    BlockAllocator_AddFreeBlocks(&blockAllocator, (BlockMeta *)blockMetaEnd, incrementInBlocks);
 
     allocator.blockCount += incrementInBlocks;
-    allocator.freeBlockCount += incrementInBlocks;
 }
 
 /** Grows the large heap by at least `increment` words */

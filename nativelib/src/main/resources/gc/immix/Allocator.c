@@ -28,7 +28,6 @@ void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator, Bytema
 
     // Block stats
     allocator->blockCount = (uint64_t)blockCount;
-    allocator->freeBlockCount = (uint64_t)blockCount;
     allocator->recycledBlockCount = 0;
 
     Allocator_InitCursors(allocator);
@@ -43,9 +42,8 @@ void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator, Bytema
  * otherwise.
  */
 bool Allocator_CanInitCursors(Allocator *allocator) {
-    return allocator->freeBlockCount >= 2 ||
-           (allocator->freeBlockCount == 1 &&
-            allocator->recycledBlockCount > 0);
+    uint64_t freeBlockCount = allocator->blockAllocator->freeBlockCount;
+    return freeBlockCount >= 2 || (freeBlockCount == 1 && allocator->recycledBlockCount > 0);
 }
 
 /**
@@ -71,23 +69,30 @@ void Allocator_InitCursors(Allocator *allocator) {
     allocator->largeLimit = Block_GetBlockEnd(largeBlockStart);
 }
 
+void Allocator_Clear(Allocator *allocator) {
+    BlockList_Clear(&allocator->recycledBlocks);
+    allocator->recycledBlockCount = 0;
+    allocator->freeMemoryAfterCollection = 0;
+}
+
 /**
  * Heuristic that tells if the heap should be grown or not.
  */
 bool Allocator_ShouldGrow(Allocator *allocator) {
+    uint64_t freeBlockCount = allocator->blockAllocator->freeBlockCount;
     uint64_t unavailableBlockCount =
         allocator->blockCount -
-        (allocator->freeBlockCount + allocator->recycledBlockCount);
+        (freeBlockCount + allocator->recycledBlockCount);
 
 #ifdef DEBUG_PRINT
     printf("\n\nBlock count: %llu\n", allocator->blockCount);
     printf("Unavailable: %llu\n", unavailableBlockCount);
-    printf("Free: %llu\n", allocator->freeBlockCount);
+    printf("Free: %llu\n", freeBlockCount);
     printf("Recycled: %llu\n", allocator->recycledBlockCount);
     fflush(stdout);
 #endif
 
-    return allocator->freeBlockCount * 2 < allocator->blockCount ||
+    return freeBlockCount * 2 < allocator->blockCount ||
            4 * unavailableBlockCount > allocator->blockCount;
 }
 

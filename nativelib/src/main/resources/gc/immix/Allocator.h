@@ -15,7 +15,6 @@ typedef struct {
     uint64_t blockCount;
     BlockList recycledBlocks;
     uint64_t recycledBlockCount;
-    uint64_t freeBlockCount;
     BlockMeta *block;
     word_t *blockStart;
     word_t *cursor;
@@ -32,6 +31,7 @@ void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator, Bytema
                     uint32_t blockCount);
 bool Allocator_CanInitCursors(Allocator *allocator);
 void Allocator_InitCursors(Allocator *allocator);
+void Allocator_Clear(Allocator *allocator);
 word_t *Allocator_Alloc(Allocator *allocator, size_t size);
 
 bool Allocator_ShouldGrow(Allocator *allocator);
