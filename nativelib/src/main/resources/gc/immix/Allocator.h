@@ -5,15 +5,16 @@
 #include <stddef.h>
 #include "datastructures/BlockList.h"
 #include "datastructures/Bytemap.h"
+#include "BlockAllocator.h"
 
 typedef struct {
     word_t *blockMetaStart;
     Bytemap *bytemap;
+    BlockAllocator *blockAllocator;
     word_t *heapStart;
     uint64_t blockCount;
     BlockList recycledBlocks;
     uint64_t recycledBlockCount;
-    BlockList freeBlocks;
     uint64_t freeBlockCount;
     BlockMeta *block;
     word_t *blockStart;
@@ -26,7 +27,7 @@ typedef struct {
     size_t freeMemoryAfterCollection;
 } Allocator;
 
-void Allocator_Init(Allocator *allocator, Bytemap *bytemap,
+void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator, Bytemap *bytemap,
                     word_t *blockMetaStart, word_t *heapStart,
                     uint32_t blockCount);
 bool Allocator_CanInitCursors(Allocator *allocator);

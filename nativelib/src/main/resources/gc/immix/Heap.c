@@ -77,6 +77,8 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
 
     word_t *smallHeapStart = Heap_mapAndAlign(memoryLimit, BLOCK_TOTAL_SIZE);
 
+    BlockAllocator_Init(&blockAllocator, blockMetaStart, initialBlockCount);
+
     // reserve space for bytemap
     Bytemap *smallBytemap = (Bytemap *)Heap_mapAndAlign(
         memoryLimit / ALLOCATION_ALIGNMENT + sizeof(Bytemap),
@@ -88,7 +90,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->heapStart = smallHeapStart;
     heap->heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
     Bytemap_Init(smallBytemap, smallHeapStart, memoryLimit);
-    Allocator_Init(&allocator, smallBytemap, blockMetaStart, smallHeapStart,
+    Allocator_Init(&allocator, &blockAllocator, smallBytemap, blockMetaStart, smallHeapStart,
                    initialBlockCount);
 
     // reserve space for bytemap
@@ -222,7 +224,7 @@ void Heap_Collect(Heap *heap, Stack *stack) {
 
 void Heap_Recycle(Heap *heap) {
     BlockList_Clear(&allocator.recycledBlocks);
-    BlockList_Clear(&allocator.freeBlocks);
+    BlockList_Clear(&blockAllocator.freeBlocks);
 
     allocator.freeBlockCount = 0;
     allocator.recycledBlockCount = 0;
@@ -303,7 +305,7 @@ void Heap_Grow(Heap *heap, size_t increment) {
 
     BlockMeta *lastBlock =
         (BlockMeta *)(heap->blockMetaEnd - WORDS_IN_BLOCK_METADATA);
-    BlockList_AddBlocksLast(&allocator.freeBlocks, (BlockMeta *)blockMetaEnd,
+    BlockList_AddBlocksLast(&blockAllocator.freeBlocks, (BlockMeta *)blockMetaEnd,
                             lastBlock);
 
     allocator.blockCount += incrementInBlocks;

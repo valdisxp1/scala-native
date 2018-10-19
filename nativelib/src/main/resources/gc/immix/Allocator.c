@@ -16,23 +16,15 @@ bool Allocator_newBlock(Allocator *allocator);
  * @param blockCount Initial number of blocks in the heap
  * @return
  */
-void Allocator_Init(Allocator *allocator, Bytemap *bytemap,
+void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator, Bytemap *bytemap,
                     word_t *blockMetaStart, word_t *heapStart,
                     uint32_t blockCount) {
     allocator->blockMetaStart = blockMetaStart;
+    allocator->blockAllocator = blockAllocator;
     allocator->bytemap = bytemap;
     allocator->heapStart = heapStart;
 
     BlockList_Init(&allocator->recycledBlocks, blockMetaStart);
-    BlockList_Init(&allocator->freeBlocks, blockMetaStart);
-
-    // Init the free block list
-    allocator->freeBlocks.first = (BlockMeta *)blockMetaStart;
-    BlockMeta *lastBlockMeta =
-        (BlockMeta *)(blockMetaStart +
-                      ((blockCount - 1) * WORDS_IN_BLOCK_METADATA));
-    allocator->freeBlocks.last = lastBlockMeta;
-    lastBlockMeta->nextBlock = LAST_BLOCK;
 
     // Block stats
     allocator->blockCount = (uint64_t)blockCount;
@@ -69,9 +61,8 @@ void Allocator_InitCursors(Allocator *allocator) {
     assert(didInit);
 
     // Init large cursor
-    assert(!BlockList_IsEmpty(&allocator->freeBlocks));
-
-    BlockMeta *largeBlock = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
+    BlockMeta *largeBlock = BlockAllocator_GetFreeBlock(allocator->blockAllocator);
+    assert(largeBlock != NULL);
     allocator->largeBlock = largeBlock;
     word_t *largeBlockStart = BlockMeta_GetBlockStart(
         allocator->blockMetaStart, allocator->heapStart, largeBlock);
@@ -110,10 +101,10 @@ word_t *Allocator_overflowAllocation(Allocator *allocator, size_t size) {
     word_t *end = (word_t *)((uint8_t *)start + size);
 
     if (end > allocator->largeLimit) {
-        if (BlockList_IsEmpty(&allocator->freeBlocks)) {
+        BlockMeta *block = BlockAllocator_GetFreeBlock(allocator->blockAllocator);
+        if (block == NULL) {
             return NULL;
         }
-        BlockMeta *block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
         allocator->largeBlock = block;
         word_t *blockStart = BlockMeta_GetBlockStart(
             allocator->blockMetaStart, allocator->heapStart, block);
@@ -242,8 +233,8 @@ BlockMeta *Allocator_getNextBlock(Allocator *allocator) {
     BlockMeta *block = NULL;
     if (!BlockList_IsEmpty(&allocator->recycledBlocks)) {
         block = BlockList_RemoveFirstBlock(&allocator->recycledBlocks);
-    } else if (!BlockList_IsEmpty(&allocator->freeBlocks)) {
-        block = BlockList_RemoveFirstBlock(&allocator->freeBlocks);
+    } else {
+        block = BlockAllocator_GetFreeBlock(allocator->blockAllocator);
     }
     assert(block == NULL ||
            BlockMeta_GetBlockIndex(allocator->blockMetaStart, block) <
