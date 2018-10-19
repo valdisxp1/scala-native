@@ -10,6 +10,7 @@
 
 #define BLOCK_SIZE_BITS 15
 #define LINE_SIZE_BITS 8
+#define BLOCK_COUNT_BITS 31
 
 #define LINE_METADATA_SIZE_BITS 0
 

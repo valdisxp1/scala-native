@@ -2,14 +2,19 @@
 #define IMMIX_BLOCKALLOCATOR_H
 
 #include "datastructures/SuperblockList.h"
+#include "Constants.h"
 #include <stddef.h>
+
+#define SUPERBLOCK_LIST_SIZE (BLOCK_COUNT_BITS + 1)
 
 typedef struct {
     struct {
         BlockMeta *cursor;
         BlockMeta *limit;
     } smallestSuperblock;
-    SuperblockList freeSuperblocks;
+    SuperblockList freeSuperblocks[SUPERBLOCK_LIST_SIZE];
+    int minNonEmptyIndex;
+    int maxNonEmptyIndex;
     uint64_t freeBlockCount;
 } BlockAllocator;
 
