@@ -10,7 +10,9 @@
 typedef enum {
     block_free = 0x0,
     block_recyclable = 0x1,
-    block_unavailable = 0x2
+    block_unavailable = 0x2,
+    block_superblock_start = 0x3,
+    block_superblock_middle = 0x4
 } BlockFlag;
 
 typedef struct {
@@ -18,6 +20,7 @@ typedef struct {
     uint8_t flags;
     int16_t first;
     int32_t nextBlock;
+    int32_t superblockSize;
 } BlockMeta;
 
 static inline bool BlockMeta_IsRecyclable(BlockMeta *blockMeta) {
@@ -28,6 +31,12 @@ static inline bool BlockMeta_IsUnavailable(BlockMeta *blockMeta) {
 }
 static inline bool BlockMeta_IsFree(BlockMeta *blockMeta) {
     return blockMeta->flags == block_free;
+}
+static inline bool BlockMeta_IsSuperblockStart(BlockMeta *blockMeta) {
+    return blockMeta->flags == block_superblock_start;
+}
+static inline bool BlockMeta_IsSuperblockMiddle(BlockMeta *blockMeta) {
+    return blockMeta->flags == block_superblock_middle;
 }
 
 static inline void BlockMeta_SetFlag(BlockMeta *blockMeta,

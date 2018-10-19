@@ -28,6 +28,7 @@ size_t Heap_getMemoryLimit() { return getMemorySize(); }
  * `alignement` mask
  */
 word_t *Heap_mapAndAlign(size_t memoryLimit, size_t alignmentSize) {
+    assert(alignmentSize % WORD_SIZE == 0);
     word_t *heapStart = mmap(NULL, memoryLimit, HEAP_MEM_PROT, HEAP_MEM_FLAGS,
                              HEAP_MEM_FD, HEAP_MEM_FD_OFFSET);
 
@@ -35,8 +36,8 @@ word_t *Heap_mapAndAlign(size_t memoryLimit, size_t alignmentSize) {
     // Heap start not aligned on
     if (((word_t)heapStart & alignmentMask) != (word_t)heapStart) {
         word_t *previousBlock =
-            (word_t *)((word_t)heapStart & BLOCK_SIZE_IN_BYTES_INVERSE_MASK);
-        heapStart = previousBlock + WORDS_IN_BLOCK;
+            (word_t *)((word_t)heapStart & alignmentMask);
+        heapStart = previousBlock + alignmentSize / WORD_SIZE;
     }
     return heapStart;
 }
@@ -58,12 +59,11 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     uint32_t initialBlockCount = initialSmallHeapSize / BLOCK_TOTAL_SIZE;
 
     // reserve space for block headers
-    size_t blockMetaSpaceSize = maxNumberOfBlocks * BLOCK_METADATA_SIZE;
+    size_t blockMetaSpaceSize = maxNumberOfBlocks * sizeof(BlockMeta);
     word_t *blockMetaStart =
-        Heap_mapAndAlign(blockMetaSpaceSize, BLOCK_METADATA_SIZE);
+        Heap_mapAndAlign(blockMetaSpaceSize, WORD_SIZE);
     heap->blockMetaStart = blockMetaStart;
-    heap->blockMetaEnd =
-        blockMetaStart + initialBlockCount * WORDS_IN_BLOCK_METADATA;
+    heap->blockMetaEnd = blockMetaStart + initialBlockCount * sizeof(BlockMeta) / WORD_SIZE;
 
     // reserve space for line headers
     size_t lineMetaSpaceSize =
@@ -226,14 +226,14 @@ void Heap_Recycle(Heap *heap) {
     Allocator_Clear(&allocator);
     BlockAllocator_Clear(&blockAllocator);
 
-    word_t *current = heap->blockMetaStart;
+    BlockMeta *current = (BlockMeta *) heap->blockMetaStart;
     word_t *currentBlockStart = heap->heapStart;
     LineMeta *lineMetas = (LineMeta *)heap->lineMetaStart;
-    while (current < heap->blockMetaEnd) {
-        BlockMeta *blockMeta = (BlockMeta *)current;
-        Block_Recycle(&allocator, blockMeta, currentBlockStart, lineMetas);
+    word_t *end = heap->blockMetaEnd;
+    while ((word_t *) current < end) {
+        Block_Recycle(&allocator, current, currentBlockStart, lineMetas);
         // block_print(blockMeta);
-        current += WORDS_IN_BLOCK_METADATA;
+        current++;
         currentBlockStart += WORDS_IN_BLOCK;
         lineMetas += LINE_COUNT;
     }
@@ -295,7 +295,7 @@ void Heap_Grow(Heap *heap, size_t increment) {
     heap->heapEnd = heapEnd + increment;
     heap->smallHeapSize += increment * WORD_SIZE;
     word_t *blockMetaEnd = heap->blockMetaEnd;
-    heap->blockMetaEnd += incrementInBlocks * WORDS_IN_BLOCK_METADATA;
+    heap->blockMetaEnd = (word_t *)(((BlockMeta *) heap->blockMetaEnd) + incrementInBlocks);
     heap->lineMetaEnd +=
         incrementInBlocks * LINE_COUNT * LINE_METADATA_SIZE / WORD_SIZE;
 

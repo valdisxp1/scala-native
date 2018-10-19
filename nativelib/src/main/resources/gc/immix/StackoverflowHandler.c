@@ -60,8 +60,7 @@ bool StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
         if (StackOverflowHandler_overflowBlockScan(currentBlock, heap, stack)) {
             return true;
         }
-        currentBlock =
-            (BlockMeta *)((word_t *)currentBlock + WORDS_IN_BLOCK_METADATA);
+        currentBlock++;
         currentOverflowAddress = BlockMeta_GetBlockStart(
             heap->blockMetaStart, heap->heapStart, currentBlock);
     }
