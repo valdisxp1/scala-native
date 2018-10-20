@@ -250,6 +250,7 @@ void Heap_Recycle(Heap *heap) {
         size_t increment = blocks * WORDS_IN_BLOCK;
         Heap_Grow(heap, increment);
     }
+    BlockAllocator_SweepDone(&blockAllocator);
     Allocator_InitCursors(&allocator);
 }
 

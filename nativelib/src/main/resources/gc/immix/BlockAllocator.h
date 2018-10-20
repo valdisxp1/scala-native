@@ -12,6 +12,10 @@ typedef struct {
         BlockMeta *cursor;
         BlockMeta *limit;
     } smallestSuperblock;
+    struct {
+        BlockMeta *first;
+        BlockMeta *limit;
+    } coalescingSuperblock;
     SuperblockList freeSuperblocks[SUPERBLOCK_LIST_SIZE];
     int minNonEmptyIndex;
     int maxNonEmptyIndex;
@@ -20,8 +24,8 @@ typedef struct {
 
 void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart, uint32_t blockCount);
 BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator);
-void BlockAllocator_AddFreeBlock(BlockAllocator *blockAllocator, BlockMeta *block);
 void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator, BlockMeta *block, uint32_t count);
+void BlockAllocator_SweepDone(BlockAllocator *blockAllocator);
 void BlockAllocator_Clear(BlockAllocator *blockAllocator);
 
 #endif // IMMIX_BLOCKALLOCATOR_H

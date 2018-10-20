@@ -14,7 +14,7 @@ INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
                                        word_t *blockStart) {
     memset(blockMeta, 0, sizeof(BlockMeta));
     // does not unmark in LineMetas because those are ignored by the allocator
-    BlockAllocator_AddFreeBlock(allocator->blockAllocator, blockMeta);
+    BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta, 1);
     BlockMeta_SetFlag(blockMeta, block_free);
     ObjectMeta_ClearBlockAt(Bytemap_Get(allocator->bytemap, blockStart));
 }
