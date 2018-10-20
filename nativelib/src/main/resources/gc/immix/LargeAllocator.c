@@ -130,9 +130,11 @@ void LargeAllocator_clearFreeLists(LargeAllocator *allocator) {
     }
 }
 
-void LargeAllocator_Sweep(LargeAllocator *allocator) {
+void LargeAllocator_Clear(LargeAllocator *allocator) {
     LargeAllocator_clearFreeLists(allocator);
+}
 
+void LargeAllocator_Sweep(LargeAllocator *allocator) {
     Object *current = (Object *)allocator->offset;
     void *heapEnd = (ubyte_t *)allocator->offset + allocator->size;
 

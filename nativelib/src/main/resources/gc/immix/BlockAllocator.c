@@ -65,20 +65,29 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator, uint
         BlockAllocator_addFreeBlocksInternal(blockAllocator, leftover, superblock->superblockSize - size);
     }
     superblock->superblockSize = size;
+    BlockMeta_SetFlag(superblock, block_superblock_start);
+    BlockMeta *limit = superblock + size;
+    for (BlockMeta *current = superblock + 1; current < limit; current++) {
+        BlockMeta_SetFlag(current, block_superblock_middle);
+    }
     // not decrementing freeBlockCount, because it is only used after sweep
     return superblock;
 }
 
-void BlockAllocator_addFreeBlocksInternal(BlockAllocator *blockAllocator, BlockMeta *block, uint32_t count) {
-    block->superblockSize = count;
+void BlockAllocator_addFreeBlocksInternal(BlockAllocator *blockAllocator, BlockMeta *superblock, uint32_t count) {
+    superblock->superblockSize = count;
     int i = BlockAllocator_sizeToLinkedListIndex(count);
     if (i < blockAllocator->minNonEmptyIndex) {
         blockAllocator->minNonEmptyIndex = i;
     }
     if (i > blockAllocator->maxNonEmptyIndex) {
-            blockAllocator->maxNonEmptyIndex = i;
+        blockAllocator->maxNonEmptyIndex = i;
     }
-    SuperblockList_AddLast(&blockAllocator->freeSuperblocks[i], block);
+    BlockMeta *limit = superblock + count;
+    for (BlockMeta *current = superblock; current < limit; current++) {
+        BlockMeta_SetFlag(current, block_free);
+    }
+    SuperblockList_AddLast(&blockAllocator->freeSuperblocks[i], superblock);
 }
 
 void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator, BlockMeta *block, uint32_t count) {

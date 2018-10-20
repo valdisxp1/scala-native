@@ -224,6 +224,7 @@ void Heap_Collect(Heap *heap, Stack *stack) {
 
 void Heap_Recycle(Heap *heap) {
     Allocator_Clear(&allocator);
+    LargeAllocator_Clear(&largeAllocator);
     BlockAllocator_Clear(&blockAllocator);
 
     BlockMeta *current = (BlockMeta *) heap->blockMetaStart;
@@ -231,11 +232,16 @@ void Heap_Recycle(Heap *heap) {
     LineMeta *lineMetas = (LineMeta *)heap->lineMetaStart;
     word_t *end = heap->blockMetaEnd;
     while ((word_t *) current < end) {
-        Block_Recycle(&allocator, current, currentBlockStart, lineMetas);
-        // block_print(blockMeta);
-        current++;
-        currentBlockStart += WORDS_IN_BLOCK;
-        lineMetas += LINE_COUNT;
+        int size = 1;
+        if (BlockMeta_IsSuperblockStart(current)) {
+            //TODO large sweep
+            size = current-> superblockSize;
+        } else if(!BlockMeta_IsSuperblockMiddle(current)) {
+            Block_Recycle(&allocator, current, currentBlockStart, lineMetas);
+        }
+        current += size;
+        currentBlockStart += WORDS_IN_BLOCK * size;
+        lineMetas += LINE_COUNT * size;
     }
     LargeAllocator_Sweep(&largeAllocator);
 
