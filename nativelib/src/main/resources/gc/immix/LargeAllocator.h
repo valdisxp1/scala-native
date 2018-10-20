@@ -15,14 +15,15 @@ typedef struct {
 } FreeList;
 
 typedef struct {
-    word_t *offset;
-    size_t size;
     FreeList freeLists[FREE_LIST_COUNT];
+    word_t *heapStart;
+    word_t *blockMetaStart;
     Bytemap *bytemap;
+    BlockAllocator *blockAllocator;
 } LargeAllocator;
 
-void LargeAllocator_Init(LargeAllocator *allocator, word_t *offset,
-                         size_t largeHeapSize, Bytemap *bytemap);
+void LargeAllocator_Init(LargeAllocator *allocator, BlockAllocator *blockAllocator, Bytemap *bytemap,
+                         word_t *blockMetaStart, word_t *heapStart);
 void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
                              size_t total_block_size);
 Object *LargeAllocator_GetBlock(LargeAllocator *allocator,

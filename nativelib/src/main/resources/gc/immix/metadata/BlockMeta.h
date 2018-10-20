@@ -40,6 +40,10 @@ static inline bool BlockMeta_IsSuperblockMiddle(BlockMeta *blockMeta) {
     return blockMeta->flags == block_superblock_middle;
 }
 
+static inline bool BlockMeta_ContainsLargeObjects(BlockMeta *blockMeta) {
+    return BlockMeta_IsSuperblockStart(blockMeta) || BlockMeta_IsSuperblockMiddle(blockMeta);
+}
+
 static inline void BlockMeta_SetFlag(BlockMeta *blockMeta,
                                      BlockFlag blockFlag) {
     blockMeta->flags = blockFlag;

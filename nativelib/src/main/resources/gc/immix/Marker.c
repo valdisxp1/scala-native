@@ -30,14 +30,10 @@ void Marker_markConservative(Heap *heap, Stack *stack, word_t *address) {
     assert(Heap_IsWordInHeap(heap, address));
     Object *object = NULL;
     Bytemap *bytemap;
+    //TODO combine
     if (Heap_IsWordInSmallHeap(heap, address)) {
         object = Object_GetUnmarkedObject(heap, address);
         bytemap = heap->smallBytemap;
-#ifdef DEBUG_PRINT
-        if (object == NULL) {
-            printf("Not found: %p\n", address);
-        }
-#endif
     } else {
         bytemap = heap->largeBytemap;
         object = Object_GetLargeUnmarkedObject(bytemap, address);

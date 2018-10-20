@@ -42,17 +42,16 @@ void LargeAllocator_freeListInit(FreeList *freeList) {
     freeList->last = NULL;
 }
 
-void LargeAllocator_Init(LargeAllocator *allocator, word_t *offset, size_t size,
-                         Bytemap *bytemap) {
-    allocator->offset = offset;
-    allocator->size = size;
+void LargeAllocator_Init(LargeAllocator *allocator, BlockAllocator *blockAllocator, Bytemap *bytemap,
+                         word_t *blockMetaStart, word_t *heapStart) {
+    allocator->heapStart = heapStart;
+    allocator->blockMetaStart = blockMetaStart;
     allocator->bytemap = bytemap;
+    allocator->blockAllocator = blockAllocator;
 
     for (int i = 0; i < FREE_LIST_COUNT; i++) {
         LargeAllocator_freeListInit(&allocator->freeLists[i]);
     }
-
-    LargeAllocator_AddChunk(allocator, (Chunk *)offset, size);
 }
 
 void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
@@ -134,11 +133,11 @@ void LargeAllocator_Clear(LargeAllocator *allocator) {
     LargeAllocator_clearFreeLists(allocator);
 }
 
-void LargeAllocator_Sweep(LargeAllocator *allocator) {
-    Object *current = (Object *)allocator->offset;
-    void *heapEnd = (ubyte_t *)allocator->offset + allocator->size;
+void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_t *blockStart) {
+    Object *current = (Object *)blockStart;
+    void *blockEnd = blockStart + WORDS_IN_BLOCK * blockMeta->superblockSize;
 
-    while (current != heapEnd) {
+    while (current != blockEnd) {
         ObjectMeta *currentMeta =
             Bytemap_Get(allocator->bytemap, (word_t *)current);
         assert(!ObjectMeta_IsFree(currentMeta));
@@ -151,7 +150,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator) {
             Object *next = Object_NextLargeObject(current);
             ObjectMeta *nextMeta =
                 Bytemap_Get(allocator->bytemap, (word_t *)next);
-            while (next != heapEnd && !ObjectMeta_IsMarked(nextMeta)) {
+            while (next != blockEnd && !ObjectMeta_IsMarked(nextMeta)) {
                 currentSize += Object_ChunkSize(next);
                 ObjectMeta_SetFree(nextMeta);
                 next = Object_NextLargeObject(next);

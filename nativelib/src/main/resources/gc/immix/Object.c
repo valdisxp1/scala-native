@@ -113,10 +113,10 @@ void Object_Mark(Heap *heap, Object *object, ObjectMeta *objectMeta) {
     // Mark the object itself
     ObjectMeta_SetMarked(objectMeta);
 
-    if (Heap_IsWordInSmallHeap(heap, (word_t *)object)) {
+    BlockMeta *blockMeta = Block_GetBlockMeta(
+        heap->blockMetaStart, heap->heapStart, (word_t *)object);
+    if (!BlockMeta_ContainsLargeObjects(blockMeta)) {
         // Mark the block
-        BlockMeta *blockMeta = Block_GetBlockMeta(
-            heap->blockMetaStart, heap->heapStart, (word_t *)object);
         word_t *blockStart = Block_GetBlockStartForWord((word_t *)object);
         BlockMeta_Mark(blockMeta);
 

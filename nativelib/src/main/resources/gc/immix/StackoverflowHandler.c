@@ -33,6 +33,7 @@ void StackOverflowHandler_CheckForOverflow() {
 
             // If the current overflow address is in the small heap, scan the
             // small heap.
+            //TODO fix
             if (Heap_IsWordInSmallHeap(&heap, currentOverflowAddress)) {
                 // If no object was found in the small heap, move on to large
                 // heap
@@ -121,6 +122,7 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
  * Scans through the large heap to find marked blocks with unmarked children.
  * Updates `currentOverflowAddress` while doing so.
  */
+ //TODO fix
 void StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
     assert(Heap_IsWordInLargeHeap(heap, currentOverflowAddress));
     void *heapEnd = heap->largeHeapEnd;

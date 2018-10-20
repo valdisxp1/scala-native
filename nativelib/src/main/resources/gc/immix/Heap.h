@@ -18,31 +18,17 @@ typedef struct {
     word_t *heapStart;
     word_t *heapEnd;
     size_t smallHeapSize;
-    word_t *largeHeapStart;
-    word_t *largeHeapEnd;
-    size_t largeHeapSize;
     Bytemap *smallBytemap;
     Bytemap *largeBytemap;
 } Heap;
 
-static inline bool Heap_IsWordInLargeHeap(Heap *heap, word_t *word) {
-    return word >= heap->largeHeapStart && word < heap->largeHeapEnd;
-}
-
-static inline bool Heap_IsWordInSmallHeap(Heap *heap, word_t *word) {
+static inline bool Heap_IsWordInHeap(Heap *heap, word_t *word) {
     return word >= heap->heapStart && word < heap->heapEnd;
 }
 
-static inline bool Heap_IsWordInHeap(Heap *heap, word_t *word) {
-    return Heap_IsWordInSmallHeap(heap, word) ||
-           Heap_IsWordInLargeHeap(heap, word);
-}
-
 static inline Bytemap *Heap_BytemapForWord(Heap *heap, word_t *word) {
-    if (Heap_IsWordInSmallHeap(heap, word)) {
+    if (Heap_IsWordInHeap(heap, word)) {
         return heap->smallBytemap;
-    } else if (Heap_IsWordInLargeHeap(heap, word)) {
-        return heap->largeBytemap;
     } else {
         return NULL;
     }
@@ -51,7 +37,7 @@ static inline Bytemap *Heap_BytemapForWord(Heap *heap, word_t *word) {
 static inline LineMeta *Heap_LineMetaForWord(Heap *heap, word_t *word) {
     // assumes there are no gaps between lines
     assert(LINE_COUNT * LINE_SIZE == BLOCK_TOTAL_SIZE);
-    assert(Heap_IsWordInSmallHeap(heap, word));
+    assert(Heap_IsWordInHeap(heap, word));
     word_t lineGlobalIndex =
         ((word_t)word - (word_t)heap->heapStart) >> LINE_SIZE_BITS;
     assert(lineGlobalIndex >= 0);
@@ -70,6 +56,6 @@ void Heap_Collect(Heap *heap, Stack *stack);
 
 void Heap_Recycle(Heap *heap);
 void Heap_Grow(Heap *heap, size_t increment);
-void Heap_GrowLarge(Heap *heap, size_t increment);
+void Heap_GrowLarge(Heap *heap, uint32_t increment);
 
 #endif // IMMIX_HEAP_H
