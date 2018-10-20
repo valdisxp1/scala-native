@@ -9,7 +9,7 @@
 
 inline static int LargeAllocator_sizeToLinkedListIndex(size_t size) {
     assert(size >= MIN_BLOCK_SIZE);
-    return MathUtils_log2_floor(size) - LARGE_OBJECT_MIN_SIZE_BITS;
+    return MathUtils_Log2Floor(size) - LARGE_OBJECT_MIN_SIZE_BITS;
 }
 
 Chunk *LargeAllocator_chunkAddOffset(Chunk *chunk, size_t words) {
@@ -63,7 +63,7 @@ void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
     size_t remaining_size = total_block_size;
     ubyte_t *current = (ubyte_t *)chunk;
     while (remaining_size > 0) {
-        int log2_f = MathUtils_log2_floor(remaining_size);
+        int log2_f = MathUtils_Log2Floor(remaining_size);
         size_t chunkSize = 1UL << log2_f;
         chunkSize = chunkSize > MAX_BLOCK_SIZE ? MAX_BLOCK_SIZE : chunkSize;
         assert(chunkSize >= MIN_BLOCK_SIZE && chunkSize <= MAX_BLOCK_SIZE);
