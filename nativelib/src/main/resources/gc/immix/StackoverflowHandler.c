@@ -9,14 +9,14 @@ extern int __object_array_id;
 
 #define LAST_FIELD_OFFSET -1
 
-bool StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack);
+void StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack);
 void StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack);
-bool StackOverflowHandler_overflowBlockScan(BlockMeta *block, Heap *heap,
-                                            Stack *stack);
+bool StackOverflowHandler_overflowBlockScan(Heap *heap, Stack *stack);
 
 void StackOverflowHandler_CheckForOverflow() {
     if (overflow) {
         // Set overflow address to the first word of the heap
+        currentOverflowBlock = (BlockMeta *) heap.blockMetaStart;
         currentOverflowAddress = heap.heapStart;
         overflow = false;
         Stack_DoubleSize(&stack);
@@ -27,23 +27,10 @@ void StackOverflowHandler_CheckForOverflow() {
         fflush(stdout);
 #endif
 
-        word_t *largeHeapEnd = heap.largeHeapEnd;
-        // Continue while we don' hit the end of the large heap.
-        while (currentOverflowAddress != largeHeapEnd) {
-
-            // If the current overflow address is in the small heap, scan the
-            // small heap.
-            //TODO fix
-            if (Heap_IsWordInSmallHeap(&heap, currentOverflowAddress)) {
-                // If no object was found in the small heap, move on to large
-                // heap
-                if (!StackOverflowHandler_smallHeapOverflowHeapScan(&heap,
-                                                                    &stack)) {
-                    currentOverflowAddress = heap.largeHeapStart;
-                }
-            } else {
-                StackOverflowHandler_largeHeapOverflowHeapScan(&heap, &stack);
-            }
+        word_t *heapEnd = heap.heapEnd;
+        // Continue while we don't hit the end of the heap.
+        while (currentOverflowAddress < heapEnd) {
+            StackOverflowHandler_smallHeapOverflowHeapScan(&heap,&stack);
 
             // At every iteration when a object is found, trace it
             Marker_Mark(&heap, &stack);
@@ -51,21 +38,27 @@ void StackOverflowHandler_CheckForOverflow() {
     }
 }
 
-bool StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
+void StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
     assert(Heap_IsWordInSmallHeap(heap, currentOverflowAddress));
-    BlockMeta *currentBlock = Block_GetBlockMeta(
-        heap->blockMetaStart, heap->heapStart, currentOverflowAddress);
     word_t *blockMetaEnd = heap->blockMetaEnd;
 
-    while ((word_t *)currentBlock < blockMetaEnd) {
-        if (StackOverflowHandler_overflowBlockScan(currentBlock, heap, stack)) {
-            return true;
+    while ((word_t *)currentOverflowBlock < blockMetaEnd) {
+        assert(!BlockMeta_IsSuperblockMiddle(currentOverflowBlock));
+        int size;
+        if (BlockMeta_IsSuperblockStart(currentOverflowBlock)) {
+            size = currentOverflowBlock->superblockSize;
+            if (StackOverflowHandler_largeHeapOverflowHeapScan(heap, stack)) {
+                return;
+            }
+        } else {
+            size = 1;
+            if (StackOverflowHandler_overflowBlockScan(heap, stack)) {
+                return;
+            }
         }
-        currentBlock++;
-        currentOverflowAddress = BlockMeta_GetBlockStart(
-            heap->blockMetaStart, heap->heapStart, currentBlock);
+        currentOverflowBlock += size;
     }
-    return false;
+    return;
 }
 
 bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
@@ -122,21 +115,19 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
  * Scans through the large heap to find marked blocks with unmarked children.
  * Updates `currentOverflowAddress` while doing so.
  */
- //TODO fix
-void StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
-    assert(Heap_IsWordInLargeHeap(heap, currentOverflowAddress));
-    void *heapEnd = heap->largeHeapEnd;
-
-    while (currentOverflowAddress != heapEnd) {
+bool StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
+    word_t *end = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, currentOverflowBlock) + WORDS_IN_BLOCK * currentOverflowBlock->superblockSize;
+    while (currentOverflowAddress < end) {
         Object *object = (Object *)currentOverflowAddress;
         ObjectMeta *cursorMeta =
             Bytemap_Get(heap->largeBytemap, currentOverflowAddress);
         if (StackOverflowHandler_overflowMark(heap, stack, object,
                                               cursorMeta)) {
-            return;
+            return true;
         }
         currentOverflowAddress = (word_t *)Object_NextLargeObject(object);
     }
+    return false;
 }
 
 bool overflowScanLine(Heap *heap, Stack *stack, BlockMeta *block,

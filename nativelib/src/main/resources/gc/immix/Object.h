@@ -9,7 +9,6 @@
 Object *Object_NextLargeObject(Object *object);
 word_t *Object_LastWord(Object *object);
 Object *Object_GetUnmarkedObject(Heap *heap, word_t *address);
-Object *Object_GetLargeUnmarkedObject(Bytemap *bytemap, word_t *address);
 void Object_Mark(Heap *heap, Object *object, ObjectMeta *objectMeta);
 size_t Object_ChunkSize(Object *object);
 
