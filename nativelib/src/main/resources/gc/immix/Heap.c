@@ -45,19 +45,15 @@ word_t *Heap_mapAndAlign(size_t memoryLimit, size_t alignmentSize) {
 /**
  * Allocates the heap struct and initializes it
  */
-void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
-               size_t initialLargeHeapSize) {
-    assert(initialSmallHeapSize >= 2 * BLOCK_TOTAL_SIZE);
-    assert(initialSmallHeapSize % BLOCK_TOTAL_SIZE == 0);
-    assert(initialLargeHeapSize >= 2 * BLOCK_TOTAL_SIZE);
-    assert(initialLargeHeapSize % BLOCK_TOTAL_SIZE == 0);
+void Heap_Init(Heap *heap, size_t initialHeapSize) {
+    assert(initialHeapSize >= 2 * BLOCK_TOTAL_SIZE);
+    assert(initialHeapSize % BLOCK_TOTAL_SIZE == 0);
 
     size_t memoryLimit = Heap_getMemoryLimit();
     heap->memoryLimit = memoryLimit;
 
     word_t maxNumberOfBlocks = memoryLimit / BLOCK_TOTAL_SIZE;
-    uint32_t initialBlockCount = initialSmallHeapSize / BLOCK_TOTAL_SIZE;
-    uint32_t initialLargeHeapBlockCount = initialLargeHeapSize / BLOCK_TOTAL_SIZE;
+    uint32_t initialBlockCount = initialHeapSize / BLOCK_TOTAL_SIZE;
 
     // reserve space for block headers
     size_t blockMetaSpaceSize = maxNumberOfBlocks * sizeof(BlockMeta);
@@ -76,7 +72,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->lineMetaEnd = lineMetaStart + initialBlockCount * LINE_COUNT *
                                             LINE_METADATA_SIZE / WORD_SIZE;
 
-    word_t *smallHeapStart = Heap_mapAndAlign(memoryLimit, BLOCK_TOTAL_SIZE);
+    word_t *heapStart = Heap_mapAndAlign(memoryLimit, BLOCK_TOTAL_SIZE);
 
     BlockAllocator_Init(&blockAllocator, blockMetaStart, initialBlockCount);
 
@@ -87,14 +83,13 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->bytemap = bytemap;
 
     // Init heap for small objects
-    heap->heapSize = initialSmallHeapSize;
-    heap->heapStart = smallHeapStart;
-    heap->heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
-    Bytemap_Init(bytemap, smallHeapStart, memoryLimit);
-    Allocator_Init(&allocator, &blockAllocator, bytemap, blockMetaStart, smallHeapStart);
+    heap->heapSize = initialHeapSize;
+    heap->heapStart = heapStart;
+    heap->heapEnd = heapStart + initialHeapSize / WORD_SIZE;
+    Bytemap_Init(bytemap, heapStart, memoryLimit);
+    Allocator_Init(&allocator, &blockAllocator, bytemap, blockMetaStart, heapStart);
 
-    LargeAllocator_Init(&largeAllocator, &blockAllocator, bytemap, blockMetaStart, smallHeapStart);
-    Heap_GrowLarge(heap, initialLargeHeapBlockCount);
+    LargeAllocator_Init(&largeAllocator, &blockAllocator, bytemap, blockMetaStart, heapStart);
 }
 /**
  * Allocates large objects using the `LargeAllocator`.
