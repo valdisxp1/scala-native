@@ -122,15 +122,11 @@ Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
     return object;
 }
 
-void LargeAllocator_clearFreeLists(LargeAllocator *allocator) {
+void LargeAllocator_Clear(LargeAllocator *allocator) {
     for (int i = 0; i < FREE_LIST_COUNT; i++) {
         allocator->freeLists[i].first = NULL;
         allocator->freeLists[i].last = NULL;
     }
-}
-
-void LargeAllocator_Clear(LargeAllocator *allocator) {
-    LargeAllocator_clearFreeLists(allocator);
 }
 
 void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_t *blockStart) {
