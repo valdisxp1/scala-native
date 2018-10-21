@@ -81,20 +81,20 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     BlockAllocator_Init(&blockAllocator, blockMetaStart, initialBlockCount);
 
     // reserve space for bytemap
-    Bytemap *smallBytemap = (Bytemap *)Heap_mapAndAlign(
+    Bytemap *bytemap = (Bytemap *)Heap_mapAndAlign(
         memoryLimit / ALLOCATION_ALIGNMENT + sizeof(Bytemap),
         ALLOCATION_ALIGNMENT);
-    heap->smallBytemap = smallBytemap;
+    heap->bytemap = bytemap;
 
     // Init heap for small objects
     heap->smallHeapSize = initialSmallHeapSize;
     heap->heapStart = smallHeapStart;
     heap->heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
-    Bytemap_Init(smallBytemap, smallHeapStart, memoryLimit);
-    Allocator_Init(&allocator, &blockAllocator, smallBytemap, blockMetaStart, smallHeapStart,
+    Bytemap_Init(bytemap, smallHeapStart, memoryLimit);
+    Allocator_Init(&allocator, &blockAllocator, bytemap, blockMetaStart, smallHeapStart,
                    initialBlockCount);
 
-    LargeAllocator_Init(&largeAllocator, &blockAllocator, smallBytemap, blockMetaStart, smallHeapStart);
+    LargeAllocator_Init(&largeAllocator, &blockAllocator, bytemap, blockMetaStart, smallHeapStart);
     Heap_GrowLarge(heap, initialLargeHeapBlockCount);
 }
 /**

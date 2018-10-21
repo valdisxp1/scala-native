@@ -53,7 +53,7 @@ Object *Object_GetUnmarkedObject(Heap *heap, word_t *word) {
         word = (word_t *)((word_t)word & ALLOCATION_ALIGNMENT_INVERSE_MASK);
     }
 
-    ObjectMeta *wordMeta = Bytemap_Get(heap->smallBytemap, word);
+    ObjectMeta *wordMeta = Bytemap_Get(heap->bytemap, word);
     if (ObjectMeta_IsPlaceholder(wordMeta) || ObjectMeta_IsMarked(wordMeta)) {
         return NULL;
     } else if (ObjectMeta_IsAllocated(wordMeta)) {

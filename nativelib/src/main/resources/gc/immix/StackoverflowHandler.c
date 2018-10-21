@@ -64,6 +64,7 @@ void StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
 bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
                                        ObjectMeta *objectMeta) {
 
+    Bytemap *bytemap = heap->bytemap;
     if (ObjectMeta_IsMarked(objectMeta)) {
         if (Object_IsArray(object)) {
             if (object->rtti->rt.id == __object_array_id) {
@@ -73,12 +74,8 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
                 for (int i = 0; i < length; i++) {
                     word_t *field = fields[i];
                     Object *fieldObject = (Object *)field;
-                    Bytemap *bytemapF =
-                        Heap_BytemapForWord(heap, (word_t *)fieldObject);
-                    if (bytemapF != NULL) {
-                        // is within heap
-                        ObjectMeta *metaF =
-                            Bytemap_Get(bytemapF, (word_t *)fieldObject);
+                    if (Heap_IsWordInHeap(heap, field)) {
+                        ObjectMeta *metaF = Bytemap_Get(bytemap, field);
                         if (ObjectMeta_IsAllocated(metaF)) {
                             Stack_Push(stack, object);
                             return true;
@@ -93,12 +90,8 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
             while (ptr_map[i] != LAST_FIELD_OFFSET) {
                 word_t *field = object->fields[ptr_map[i]];
                 Object *fieldObject = (Object *)field;
-                Bytemap *bytemapF =
-                    Heap_BytemapForWord(heap, (word_t *)fieldObject);
-                if (bytemapF != NULL) {
-                    // is within heap
-                    ObjectMeta *metaF =
-                        Bytemap_Get(bytemapF, (word_t *)fieldObject);
+                if (Heap_IsWordInHeap(heap, field)) {
+                    ObjectMeta *metaF = Bytemap_Get(bytemapF, field);
                     if (ObjectMeta_IsAllocated(metaF)) {
                         Stack_Push(stack, object);
                         return true;
@@ -120,7 +113,7 @@ bool StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
     while (currentOverflowAddress < end) {
         Object *object = (Object *)currentOverflowAddress;
         ObjectMeta *cursorMeta =
-            Bytemap_Get(heap->largeBytemap, currentOverflowAddress);
+            Bytemap_Get(heap->bytemap, currentOverflowAddress);
         if (StackOverflowHandler_overflowMark(heap, stack, object,
                                               cursorMeta)) {
             return true;
@@ -132,7 +125,7 @@ bool StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
 
 bool overflowScanLine(Heap *heap, Stack *stack, BlockMeta *block,
                       word_t *blockStart, int lineIndex) {
-    Bytemap *bytemap = heap->smallBytemap;
+    Bytemap *bytemap = heap->bytemap;
 
     word_t *lineStart = Block_GetLineAddress(blockStart, lineIndex);
     if (Line_IsMarked(Heap_LineMetaForWord(heap, lineStart))) {

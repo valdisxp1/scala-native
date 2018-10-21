@@ -18,20 +18,11 @@ typedef struct {
     word_t *heapStart;
     word_t *heapEnd;
     size_t smallHeapSize;
-    Bytemap *smallBytemap;
-    Bytemap *largeBytemap;
+    Bytemap *bytemap;
 } Heap;
 
 static inline bool Heap_IsWordInHeap(Heap *heap, word_t *word) {
     return word >= heap->heapStart && word < heap->heapEnd;
-}
-
-static inline Bytemap *Heap_BytemapForWord(Heap *heap, word_t *word) {
-    if (Heap_IsWordInHeap(heap, word)) {
-        return heap->smallBytemap;
-    } else {
-        return NULL;
-    }
 }
 
 static inline LineMeta *Heap_LineMetaForWord(Heap *heap, word_t *word) {
