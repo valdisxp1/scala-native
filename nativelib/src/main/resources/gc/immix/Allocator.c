@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <memory.h>
 
-BlockMeta *Allocator_getNextBlock(Allocator *allocator);
 bool Allocator_getNextLine(Allocator *allocator);
 bool Allocator_newBlock(Allocator *allocator);
 
@@ -183,23 +182,13 @@ bool Allocator_nextLineRecycled(Allocator *allocator) {
  * free line of the new block.
  */
 bool Allocator_newBlock(Allocator *allocator) {
-    // request the new block.
-    BlockMeta *block = Allocator_getNextBlock(allocator);
-    // return false if there is no block left.
-    if (block == NULL) {
-        return false;
-    }
-    allocator->block = block;
-    word_t *blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart,
-                                                 allocator->heapStart, block);
-    allocator->blockStart = blockStart;
+    BlockMeta *block = BlockList_Poll(&allocator->recycledBlocks);
+    word_t *blockStart;
 
-    // The block can be free or recycled.
-    if (BlockMeta_IsFree(block)) {
-        allocator->cursor = blockStart;
-        allocator->limit = Block_GetBlockEnd(blockStart);
-    } else {
+    if (block != NULL) {
         assert(BlockMeta_IsRecyclable(block));
+        blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart, allocator->heapStart, block);
+
         int16_t lineIndex = block->first;
         assert(lineIndex < LINE_COUNT);
         word_t *line = Block_GetLineAddress(blockStart, lineIndex);
@@ -211,8 +200,23 @@ bool Allocator_newBlock(Allocator *allocator) {
         assert(size > 0);
         allocator->limit = line + (size * WORDS_IN_LINE);
         assert(allocator->limit <= Block_GetBlockEnd(blockStart));
+
+    } else {
+        block = BlockAllocator_GetFreeBlock(allocator->blockAllocator);
+        if (block == NULL) {
+            return false;
+        }
+        assert(BlockMeta_IsFree(block));
+        blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart, allocator->heapStart, block);
+
+        allocator->cursor = blockStart;
+        allocator->limit = Block_GetBlockEnd(blockStart);
     }
 
+    allocator->block = block;
+    allocator->blockStart = blockStart;
+
+    assert(BlockMeta_GetBlockIndex(allocator->blockMetaStart, block) < allocator->blockAllocator->blockCount);
     return true;
 }
 
@@ -224,19 +228,4 @@ bool Allocator_getNextLine(Allocator *allocator) {
         // If we have a recycled block
         return Allocator_nextLineRecycled(allocator);
     }
-}
-
-/**
- * Returns a block, first from recycled if available, otherwise from
- * chunk_allocator
- */
-BlockMeta *Allocator_getNextBlock(Allocator *allocator) {
-    BlockMeta *block = BlockList_Poll(&allocator->recycledBlocks);
-    if (block == NULL) {
-        block = BlockAllocator_GetFreeBlock(allocator->blockAllocator);
-    }
-    assert(block == NULL ||
-           BlockMeta_GetBlockIndex(allocator->blockMetaStart, block) <
-               allocator->blockAllocator->blockCount);
-    return block;
 }
