@@ -7,7 +7,7 @@ void BlockAllocator_addFreeBlocksInternal(BlockAllocator *blockAllocator, BlockM
 
 void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart, uint32_t blockCount) {
     for (int i = 0; i < SUPERBLOCK_LIST_SIZE; i++) {
-        SuperblockList_Init(&blockAllocator->freeSuperblocks[i], blockMetaStart);
+        BlockList_Init(&blockAllocator->freeSuperblocks[i], blockMetaStart);
     }
     blockAllocator->blockCount = blockCount;
     BlockAllocator_Clear(blockAllocator);
@@ -24,8 +24,9 @@ inline static int BlockAllocator_sizeToLinkedListIndex(uint32_t size) {
 inline static BlockMeta *BlockAllocator_pollSuperblock(BlockAllocator *blockAllocator, int first) {
     int maxNonEmptyIndex = blockAllocator->maxNonEmptyIndex;
     for (int i = first; i <= maxNonEmptyIndex; i++) {
-        BlockMeta *superblock = SuperblockList_Poll(&blockAllocator->freeSuperblocks[i]);
+        BlockMeta *superblock = BlockList_Poll(&blockAllocator->freeSuperblocks[i]);
         if (superblock != NULL) {
+            assert(superblock->superblockSize > 0);
             return superblock;
         } else {
             blockAllocator->minNonEmptyIndex = i + 1;
@@ -97,7 +98,7 @@ void BlockAllocator_addFreeBlocksInternal(BlockAllocator *blockAllocator, BlockM
     for (BlockMeta *current = superblock; current < limit; current++) {
         BlockMeta_SetFlag(current, block_free);
     }
-    SuperblockList_AddLast(&blockAllocator->freeSuperblocks[i], superblock);
+    BlockList_AddLast(&blockAllocator->freeSuperblocks[i], superblock);
 }
 
 void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator, BlockMeta *block, uint32_t count) {
@@ -127,7 +128,7 @@ void BlockAllocator_SweepDone(BlockAllocator *blockAllocator) {
 
 void BlockAllocator_Clear(BlockAllocator *blockAllocator) {
     for (int i = 0; i < SUPERBLOCK_LIST_SIZE; i++) {
-        SuperblockList_Clear(&blockAllocator->freeSuperblocks[i]);
+        BlockList_Clear(&blockAllocator->freeSuperblocks[i]);
     }
     blockAllocator->freeBlockCount = 0;
     blockAllocator->smallestSuperblock.cursor = NULL;

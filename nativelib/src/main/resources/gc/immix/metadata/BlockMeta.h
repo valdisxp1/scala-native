@@ -21,7 +21,6 @@ typedef struct {
     int16_t first;
     int32_t nextBlock;
     int32_t superblockSize;
-    int32_t nextSuperblock;
 } BlockMeta;
 
 static inline bool BlockMeta_IsRecyclable(BlockMeta *blockMeta) {

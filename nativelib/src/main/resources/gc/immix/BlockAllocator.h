@@ -1,7 +1,7 @@
 #ifndef IMMIX_BLOCKALLOCATOR_H
 #define IMMIX_BLOCKALLOCATOR_H
 
-#include "datastructures/SuperblockList.h"
+#include "datastructures/BlockList.h"
 #include "Constants.h"
 #include <stddef.h>
 
@@ -16,7 +16,7 @@ typedef struct {
         BlockMeta *first;
         BlockMeta *limit;
     } coalescingSuperblock;
-    SuperblockList freeSuperblocks[SUPERBLOCK_LIST_SIZE];
+    BlockList freeSuperblocks[SUPERBLOCK_LIST_SIZE];
     int minNonEmptyIndex;
     int maxNonEmptyIndex;
     uint32_t freeBlockCount;
