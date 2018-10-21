@@ -85,7 +85,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator, uint
     return superblock;
 }
 
-void BlockAllocator_addFreeBlocksInternal(BlockAllocator *blockAllocator, BlockMeta *superblock, uint32_t count) {
+static inline void BlockAllocator_addFreeBlocksInternal0(BlockAllocator *blockAllocator, BlockMeta *superblock, uint32_t count) {
     superblock->superblockSize = count;
     int i = BlockAllocator_sizeToLinkedListIndex(count);
     if (i < blockAllocator->minNonEmptyIndex) {
@@ -99,6 +99,21 @@ void BlockAllocator_addFreeBlocksInternal(BlockAllocator *blockAllocator, BlockM
         BlockMeta_SetFlag(current, block_free);
     }
     BlockList_AddLast(&blockAllocator->freeSuperblocks[i], superblock);
+}
+
+void BlockAllocator_addFreeBlocksInternal(BlockAllocator *blockAllocator, BlockMeta *superblock, uint32_t count) {
+    uint32_t remaining_count = count;
+    uint32_t powerOf2 = 1;
+    BlockMeta *current = superblock;
+    // splits the superblock into smaller superblocks that are a powers of 2
+    while (remaining_count > 0) {
+        if ((powerOf2 & remaining_count) > 0) {
+            BlockAllocator_addFreeBlocksInternal0(blockAllocator, current, powerOf2);
+            remaining_count -= powerOf2;
+            current += powerOf2;
+        }
+        powerOf2 <<= 1;
+    }
 }
 
 void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator, BlockMeta *block, uint32_t count) {
