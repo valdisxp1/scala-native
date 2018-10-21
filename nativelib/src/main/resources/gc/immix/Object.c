@@ -25,7 +25,7 @@ Object *Object_getInnerPointer(word_t *blockStart, word_t *word,
     while (current >= blockStart && ObjectMeta_IsFree(currentMeta)) {
         // maybe use MIN_LARGE_BLOCK/WORDS when traversing large objects
         current -= ALLOCATION_ALIGNMENT_WORDS;
-        currentMeta = Bytemap_PreviousWord(currentMeta);
+        currentMeta -= 1;
     }
     Object *object = (Object *)current;
     if (ObjectMeta_IsAllocated(currentMeta) &&

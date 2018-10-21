@@ -145,7 +145,7 @@ bool overflowScanLine(Heap *heap, Stack *stack, BlockMeta *block,
             }
 
             cursor += ALLOCATION_ALIGNMENT_WORDS;
-            cursorMeta = Bytemap_NextWord(cursorMeta);
+            cursorMeta += 1;
         }
     }
     return false;
