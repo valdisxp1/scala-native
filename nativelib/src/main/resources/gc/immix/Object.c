@@ -14,28 +14,31 @@ Object *Object_NextLargeObject(Object *object) {
 word_t *Object_LastWord(Object *object) {
     size_t size = Object_Size(object);
     assert(size < LARGE_BLOCK_SIZE);
-    word_t *last = (word_t *)((ubyte_t *)object + size) - 1;
+    word_t *last = (word_t *)((ubyte_t *)object + size) - ALLOCATION_ALIGNMENT_WORDS;
     return last;
 }
 
-Object *Object_getInnerPointer(word_t *blockStart, word_t *word,
-                               ObjectMeta *wordMeta) {
+Object *Object_getInnerPointer(Heap *heap, BlockMeta *blockMeta, word_t *word, ObjectMeta *wordMeta) {
+    int stride;
+    word_t *blockStart;
+    if (BlockMeta_ContainsLargeObjects(blockMeta)) {
+        stride = MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
+        BlockMeta *superblockStart = BlockMeta_GetSuperblockStart(heap->blockMetaStart, blockMeta);
+        blockStart = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, superblockStart);
+    } else {
+        stride = 1;
+        blockStart = Block_GetBlockStartForWord(word);
+    }
+
     word_t *current = word;
     ObjectMeta *currentMeta = wordMeta;
     while (current >= blockStart && ObjectMeta_IsFree(currentMeta)) {
-        // maybe use MIN_LARGE_BLOCK/WORDS when traversing large objects
-        current -= ALLOCATION_ALIGNMENT_WORDS;
-        currentMeta -= 1;
+        current -= ALLOCATION_ALIGNMENT_WORDS * stride;
+        currentMeta -= stride;
     }
     Object *object = (Object *)current;
     if (ObjectMeta_IsAllocated(currentMeta) &&
         word < current + Object_Size(object) / WORD_SIZE) {
-#ifdef DEBUG_PRINT
-        if ((word_t *)current != word) {
-            printf("inner pointer: %p object: %p\n", word, current);
-            fflush(stdout);
-        }
-#endif
         return object;
     } else {
         return NULL;
@@ -45,7 +48,6 @@ Object *Object_getInnerPointer(word_t *blockStart, word_t *word,
 Object *Object_GetUnmarkedObject(Heap *heap, word_t *word) {
     BlockMeta *blockMeta =
         Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, word);
-    word_t *blockStart = Block_GetBlockStartForWord(word);
 
     if (BlockMeta_ContainsLargeObjects(blockMeta)) {
         word = (word_t *)((word_t)word & LARGE_BLOCK_MASK);
@@ -59,7 +61,7 @@ Object *Object_GetUnmarkedObject(Heap *heap, word_t *word) {
     } else if (ObjectMeta_IsAllocated(wordMeta)) {
         return (Object *)word;
     } else {
-        return Object_getInnerPointer(blockStart, word, wordMeta);
+        return Object_getInnerPointer(heap, blockMeta, word, wordMeta);
     }
 }
 

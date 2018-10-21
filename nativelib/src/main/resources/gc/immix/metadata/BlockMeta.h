@@ -89,6 +89,16 @@ static inline word_t *Block_GetBlockStartForWord(word_t *word) {
     return (word_t *)((word_t)word & BLOCK_SIZE_IN_BYTES_INVERSE_MASK);
 }
 
+static inline BlockMeta *BlockMeta_GetSuperblockStart(word_t *blockMetaStart, BlockMeta *blockMeta) {
+    BlockMeta *current = blockMeta;
+    while (BlockMeta_IsSuperblockMiddle(current)) {
+        current--;
+        assert((word_t *) current >= blockMetaStart);
+    }
+    assert(BlockMeta_IsSuperblockStart(current));
+    return current;
+}
+
 // Transitional Block<->BlockMeta
 static inline uint32_t BlockMeta_GetBlockIndex(word_t *blockMetaStart,
                                                BlockMeta *blockMeta) {
