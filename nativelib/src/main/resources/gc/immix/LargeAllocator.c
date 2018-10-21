@@ -129,6 +129,33 @@ void LargeAllocator_Clear(LargeAllocator *allocator) {
     }
 }
 
+static inline void LargeAllocator_FreeSpace(LargeAllocator *allocator, Chunk *chunk, size_t total_block_size) {
+    // round the start up
+    word_t *superblockStart = (word_t *) MathUtils_RoundToNextMultiple((word_t) chunk, BLOCK_TOTAL_SIZE);
+    word_t *chunkEnd = (word_t *) ((ubyte_t *) chunk + total_block_size);
+    // round the end down
+    word_t *superblockEnd = Block_GetBlockStartForWord(chunkEnd);
+
+    if (superblockEnd > superblockStart) {
+        // before
+        size_t beforeSize = (ubyte_t *) superblockStart - (ubyte_t *) chunk;
+        if (beforeSize > 0) {
+            LargeAllocator_AddChunk(allocator, chunk, beforeSize);
+        }
+        // superblock
+        BlockMeta *superblock = Block_GetBlockMeta(allocator->blockMetaStart, allocator->heapStart, superblockStart);
+        uint32_t size = (uint32_t) ((superblockEnd - superblockStart) / WORDS_IN_BLOCK);
+        BlockAllocator_AddFreeBlocks(allocator->blockAllocator, superblock, size);
+        // after
+        size_t afterSize = (ubyte_t *) chunkEnd - (ubyte_t *) superblockEnd;
+        if (afterSize > 0) {
+            LargeAllocator_AddChunk(allocator, (Chunk *) superblockEnd, total_block_size);
+        }
+    } else {
+        LargeAllocator_AddChunk(allocator, chunk, total_block_size);
+    }
+}
+
 void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_t *blockStart) {
     Object *current = (Object *)blockStart;
     void *blockEnd = blockStart + WORDS_IN_BLOCK * blockMeta->superblockSize;
@@ -153,7 +180,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
                 next = Object_NextLargeObject(next);
                 nextMeta = Bytemap_Get(allocator->bytemap, (word_t *)next);
             }
-            LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
+            LargeAllocator_FreeSpace(allocator, (Chunk *)current, currentSize);
             current = next;
         }
     }
