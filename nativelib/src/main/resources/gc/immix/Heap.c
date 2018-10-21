@@ -220,6 +220,7 @@ void Heap_Recycle(Heap *heap) {
         } else if(!BlockMeta_IsSuperblockMiddle(current)) {
             Block_Recycle(&allocator, current, currentBlockStart, lineMetas);
         }
+        assert(size > 0);
         current += size;
         currentBlockStart += WORDS_IN_BLOCK * size;
         lineMetas += LINE_COUNT * size;

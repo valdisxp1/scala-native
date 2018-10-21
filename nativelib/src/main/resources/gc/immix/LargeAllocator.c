@@ -129,7 +129,7 @@ void LargeAllocator_Clear(LargeAllocator *allocator) {
     }
 }
 
-static inline void LargeAllocator_FreeSpace(LargeAllocator *allocator, Chunk *chunk, size_t total_block_size) {
+static inline BlockMeta *LargeAllocator_splitSuperblock(LargeAllocator *allocator, BlockMeta *previousSuperblock, Chunk *chunk, size_t total_block_size) {
     // round the start up
     word_t *superblockStart = (word_t *) MathUtils_RoundToNextMultiple((word_t) chunk, BLOCK_TOTAL_SIZE);
     word_t *chunkEnd = (word_t *) ((ubyte_t *) chunk + total_block_size);
@@ -142,7 +142,7 @@ static inline void LargeAllocator_FreeSpace(LargeAllocator *allocator, Chunk *ch
         if (beforeSize > 0) {
             LargeAllocator_AddChunk(allocator, chunk, beforeSize);
         }
-        // superblock
+        // empty superblock
         BlockMeta *superblock = Block_GetBlockMeta(allocator->blockMetaStart, allocator->heapStart, superblockStart);
         uint32_t size = (uint32_t) ((superblockEnd - superblockStart) / WORDS_IN_BLOCK);
         BlockAllocator_AddFreeBlocks(allocator->blockAllocator, superblock, size);
@@ -151,14 +151,33 @@ static inline void LargeAllocator_FreeSpace(LargeAllocator *allocator, Chunk *ch
         if (afterSize > 0) {
             LargeAllocator_AddChunk(allocator, (Chunk *) superblockEnd, total_block_size);
         }
+
+        // update the previous superblock
+        uint32_t previousSize = previousSuperblock->superblockSize;
+        previousSuperblock->superblockSize = (uint32_t) (superblock - previousSuperblock);
+
+        // create a new superblock after the split
+        uint32_t nextSize = previousSize - size - previousSuperblock->superblockSize;
+        if (nextSize > 0) {
+            BlockMeta *nextSuperblock = superblock + size;
+            BlockMeta_SetFlag(nextSuperblock, block_superblock_start);
+            nextSuperblock->superblockSize = nextSize;
+            return nextSuperblock;
+        } else {
+            // this is the end of the original superblock
+            return previousSuperblock;
+        }
     } else {
+        // no need to split, free space does not align to whole blocks
         LargeAllocator_AddChunk(allocator, chunk, total_block_size);
+        return previousSuperblock;
     }
 }
 
 void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_t *blockStart) {
     Object *current = (Object *)blockStart;
-    void *blockEnd = blockStart + WORDS_IN_BLOCK * blockMeta->superblockSize;
+    BlockMeta *currentSuperblock = blockMeta;
+    void *blockEnd = blockStart + WORDS_IN_BLOCK * currentSuperblock->superblockSize;
 
     while (current != blockEnd) {
         ObjectMeta *currentMeta =
@@ -180,7 +199,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
                 next = Object_NextLargeObject(next);
                 nextMeta = Bytemap_Get(allocator->bytemap, (word_t *)next);
             }
-            LargeAllocator_FreeSpace(allocator, (Chunk *)current, currentSize);
+            currentSuperblock = LargeAllocator_splitSuperblock(allocator, currentSuperblock, (Chunk *)current, currentSize);
             current = next;
         }
     }
