@@ -53,6 +53,7 @@ BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
 }
 
 BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator, uint32_t size) {
+    //TODO look into currentSuperblock
     int target = MathUtils_Log2Ceil((size_t) size);
     int minNonEmptyIndex = blockAllocator->minNonEmptyIndex;
     int first = (minNonEmptyIndex > target) ? minNonEmptyIndex : target;

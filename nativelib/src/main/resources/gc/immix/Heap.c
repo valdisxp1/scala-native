@@ -87,7 +87,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->bytemap = bytemap;
 
     // Init heap for small objects
-    heap->smallHeapSize = initialSmallHeapSize;
+    heap->heapSize = initialSmallHeapSize;
     heap->heapStart = smallHeapStart;
     heap->heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
     Bytemap_Init(bytemap, smallHeapStart, memoryLimit);
@@ -233,7 +233,7 @@ void Heap_Recycle(Heap *heap) {
 
     if (Allocator_ShouldGrow(&allocator)) {
         double growth;
-        if (heap->smallHeapSize < EARLY_GROWTH_THRESHOLD) {
+        if (heap->heapSize < EARLY_GROWTH_THRESHOLD) {
             growth = EARLY_GROWTH_RATE;
         } else {
             growth = GROWTH_RATE;
@@ -253,8 +253,7 @@ void Heap_exitWithOutOfMemory() {
 }
 
 bool Heap_isGrowingPossible(Heap *heap, size_t increment) {
-    return heap->smallHeapSize + heap->largeHeapSize + increment * WORD_SIZE <=
-           heap->memoryLimit;
+    return heap->heapSize + increment * WORD_SIZE <= heap->memoryLimit;
 }
 
 /** Grows the small heap by at least `increment` words */
@@ -280,13 +279,13 @@ void Heap_Grow(Heap *heap, size_t increment) {
 
 #ifdef DEBUG_PRINT
     printf("Growing small heap by %zu bytes, to %zu bytes\n",
-           increment * WORD_SIZE, heap->smallHeapSize + increment * WORD_SIZE);
+           increment * WORD_SIZE, heap->heapSize + increment * WORD_SIZE);
     fflush(stdout);
 #endif
 
     word_t *heapEnd = heap->heapEnd;
     heap->heapEnd = heapEnd + increment;
-    heap->smallHeapSize += increment * WORD_SIZE;
+    heap->heapSize += increment * WORD_SIZE;
     word_t *blockMetaEnd = heap->blockMetaEnd;
     heap->blockMetaEnd = (word_t *)(((BlockMeta *) heap->blockMetaEnd) + incrementInBlocks);
     heap->lineMetaEnd +=
@@ -307,6 +306,15 @@ void Heap_GrowLarge(Heap *heap, uint32_t increment) {
 #endif
 
     BlockMeta *superblock = BlockAllocator_GetFreeSuperblock(&blockAllocator, increment);
+    if (superblock == NULL) {
+        Heap_Recycle(heap);
+        superblock = BlockAllocator_GetFreeSuperblock(&blockAllocator, increment);
+        if (superblock == NULL) {
+            Heap_Grow(heap, WORDS_IN_BLOCK * increment);
+            superblock = BlockAllocator_GetFreeSuperblock(&blockAllocator, increment);
+        }
+    }
+    assert(superblock != NULL);
     word_t *superblockStart = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, superblock);
-    LargeAllocator_AddChunk(&largeAllocator, (Chunk *)heapEnd, (size_t) increment * BLOCK_TOTAL_SIZE);
+    LargeAllocator_AddChunk(&largeAllocator, (Chunk *)superblock, (size_t) increment * BLOCK_TOTAL_SIZE);
 }

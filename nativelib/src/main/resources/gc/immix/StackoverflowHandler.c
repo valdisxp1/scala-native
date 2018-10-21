@@ -10,7 +10,7 @@ extern int __object_array_id;
 #define LAST_FIELD_OFFSET -1
 
 void StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack);
-void StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack);
+bool StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack);
 bool StackOverflowHandler_overflowBlockScan(Heap *heap, Stack *stack);
 
 void StackOverflowHandler_CheckForOverflow() {
@@ -39,7 +39,6 @@ void StackOverflowHandler_CheckForOverflow() {
 }
 
 void StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
-    assert(Heap_IsWordInSmallHeap(heap, currentOverflowAddress));
     word_t *blockMetaEnd = heap->blockMetaEnd;
 
     while ((word_t *)currentOverflowBlock < blockMetaEnd) {
@@ -91,7 +90,7 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
                 word_t *field = object->fields[ptr_map[i]];
                 Object *fieldObject = (Object *)field;
                 if (Heap_IsWordInHeap(heap, field)) {
-                    ObjectMeta *metaF = Bytemap_Get(bytemapF, field);
+                    ObjectMeta *metaF = Bytemap_Get(bytemap, field);
                     if (ObjectMeta_IsAllocated(metaF)) {
                         Stack_Push(stack, object);
                         return true;
@@ -158,18 +157,17 @@ bool overflowScanLine(Heap *heap, Stack *stack, BlockMeta *block,
  * object is found it returns `false`.
  *
  */
-bool StackOverflowHandler_overflowBlockScan(BlockMeta *block, Heap *heap,
-                                            Stack *stack) {
-    if (!BlockMeta_IsMarked(block)) {
+bool StackOverflowHandler_overflowBlockScan(Heap *heap, Stack *stack) {
+    if (!BlockMeta_IsMarked(currentOverflowBlock)) {
         return false;
     }
 
     word_t *blockStart =
-        BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, block);
+        BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, currentOverflowBlock);
     int lineIndex =
         Block_GetLineIndexFromWord(blockStart, currentOverflowAddress);
     while (lineIndex < LINE_COUNT) {
-        if (overflowScanLine(heap, stack, block, blockStart, lineIndex)) {
+        if (overflowScanLine(heap, stack, currentOverflowBlock, blockStart, lineIndex)) {
             return true;
         }
 

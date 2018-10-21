@@ -17,7 +17,7 @@ typedef struct {
     word_t *lineMetaEnd;
     word_t *heapStart;
     word_t *heapEnd;
-    size_t smallHeapSize;
+    size_t heapSize;
     Bytemap *bytemap;
 } Heap;
 

@@ -5,6 +5,7 @@
 #include "GCTypes.h"
 #include "Constants.h"
 #include "headers/ObjectHeader.h"
+#include "BlockAllocator.h"
 
 #define FREE_LIST_COUNT                                                        \
     (LARGE_OBJECT_MAX_SIZE_BITS - LARGE_OBJECT_MIN_SIZE_BITS + 1)
@@ -29,6 +30,6 @@ void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
 Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
                                 size_t requestedBlockSize);
 void LargeAllocator_Clear(LargeAllocator *allocator);
-void LargeAllocator_Sweep(LargeAllocator *allocator);
+void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_t *blockStart);
 
 #endif // IMMIX_LARGEALLOCATOR_H
