@@ -113,8 +113,8 @@ bool StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
         Object *object = (Object *)currentOverflowAddress;
         ObjectMeta *cursorMeta =
             Bytemap_Get(heap->bytemap, currentOverflowAddress);
-        if (StackOverflowHandler_overflowMark(heap, stack, object,
-                                              cursorMeta)) {
+        assert(!ObjectMeta_IsFree(cursorMeta));
+        if (StackOverflowHandler_overflowMark(heap, stack, object, cursorMeta)) {
             return true;
         }
         currentOverflowAddress = (word_t *)Object_NextLargeObject(object);

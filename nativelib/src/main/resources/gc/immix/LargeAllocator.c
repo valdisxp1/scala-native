@@ -151,6 +151,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
             ObjectMeta *nextMeta =
                 Bytemap_Get(allocator->bytemap, (word_t *)next);
             while (next != blockEnd && !ObjectMeta_IsMarked(nextMeta)) {
+                assert(!ObjectMeta_IsFree(nextMeta));
                 currentSize += Object_ChunkSize(next);
                 ObjectMeta_SetFree(nextMeta);
                 next = Object_NextLargeObject(next);
