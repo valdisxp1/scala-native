@@ -57,7 +57,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator, uint
     if (blockAllocator->smallestSuperblock.limit - blockAllocator->smallestSuperblock.cursor >= size) {
         // first check the smallestSuperblock
         superblock = blockAllocator->smallestSuperblock.cursor;
-        blockAllocator->smallestSuperblock.limit += size;
+        blockAllocator->smallestSuperblock.cursor += size;
     } else {
         // look in the freelists
         int target = MathUtils_Log2Ceil((size_t) size);
