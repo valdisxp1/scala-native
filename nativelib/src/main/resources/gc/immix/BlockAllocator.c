@@ -53,18 +53,26 @@ BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
 }
 
 BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator, uint32_t size) {
-    //TODO look into currentSuperblock
-    int target = MathUtils_Log2Ceil((size_t) size);
-    int minNonEmptyIndex = blockAllocator->minNonEmptyIndex;
-    int first = (minNonEmptyIndex > target) ? minNonEmptyIndex : target;
-    BlockMeta *superblock = BlockAllocator_pollSuperblock(blockAllocator, first);
-    if (superblock == NULL) {
-        return NULL;
+    BlockMeta *superblock;
+    if (blockAllocator->smallestSuperblock.limit - blockAllocator->smallestSuperblock.cursor >= size) {
+        // first check the smallestSuperblock
+        superblock = blockAllocator->smallestSuperblock.cursor;
+        blockAllocator->smallestSuperblock.limit += size;
+    } else {
+        // look in the freelists
+        int target = MathUtils_Log2Ceil((size_t) size);
+        int minNonEmptyIndex = blockAllocator->minNonEmptyIndex;
+        int first = (minNonEmptyIndex > target) ? minNonEmptyIndex : target;
+        superblock = BlockAllocator_pollSuperblock(blockAllocator, first);
+        if (superblock == NULL) {
+            return NULL;
+        }
+        if (superblock->superblockSize > size) {
+            BlockMeta *leftover = superblock + size;
+            BlockAllocator_addFreeBlocksInternal(blockAllocator, leftover, superblock->superblockSize - size);
+        }
     }
-    if (superblock->superblockSize > size) {
-        BlockMeta *leftover = superblock + size;
-        BlockAllocator_addFreeBlocksInternal(blockAllocator, leftover, superblock->superblockSize - size);
-    }
+
     superblock->superblockSize = size;
     BlockMeta_SetFlag(superblock, block_superblock_start);
     BlockMeta *limit = superblock + size;
