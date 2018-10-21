@@ -17,8 +17,7 @@ bool Allocator_newBlock(Allocator *allocator);
  * @return
  */
 void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator, Bytemap *bytemap,
-                    word_t *blockMetaStart, word_t *heapStart,
-                    uint32_t blockCount) {
+                    word_t *blockMetaStart, word_t *heapStart) {
     allocator->blockMetaStart = blockMetaStart;
     allocator->blockAllocator = blockAllocator;
     allocator->bytemap = bytemap;
@@ -26,8 +25,6 @@ void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator, Bytema
 
     BlockList_Init(&allocator->recycledBlocks, blockMetaStart);
 
-    // Block stats
-    allocator->blockCount = (uint64_t)blockCount;
     allocator->recycledBlockCount = 0;
 
     Allocator_InitCursors(allocator);
@@ -79,21 +76,20 @@ void Allocator_Clear(Allocator *allocator) {
  * Heuristic that tells if the heap should be grown or not.
  */
 bool Allocator_ShouldGrow(Allocator *allocator) {
-    uint64_t freeBlockCount = allocator->blockAllocator->freeBlockCount;
-    uint64_t unavailableBlockCount =
-        allocator->blockCount -
-        (freeBlockCount + allocator->recycledBlockCount);
+    uint32_t freeBlockCount = allocator->blockAllocator->freeBlockCount;
+    uint32_t blockCount = allocator->blockAllocator->blockCount;
+    uint32_t recycledBlockCount = allocator->recycledBlockCount;
+    uint32_t unavailableBlockCount = blockCount - (freeBlockCount + recycledBlockCount);
 
 #ifdef DEBUG_PRINT
-    printf("\n\nBlock count: %llu\n", allocator->blockCount);
+    printf("\n\nBlock count: %llu\n", blockCount);
     printf("Unavailable: %llu\n", unavailableBlockCount);
     printf("Free: %llu\n", freeBlockCount);
-    printf("Recycled: %llu\n", allocator->recycledBlockCount);
+    printf("Recycled: %llu\n", recycledBlockCount);
     fflush(stdout);
 #endif
 
-    return freeBlockCount * 2 < allocator->blockCount ||
-           4 * unavailableBlockCount > allocator->blockCount;
+    return freeBlockCount * 2 < blockCount || 4 * unavailableBlockCount > blockCount;
 }
 
 /**
@@ -241,6 +237,6 @@ BlockMeta *Allocator_getNextBlock(Allocator *allocator) {
     }
     assert(block == NULL ||
            BlockMeta_GetBlockIndex(allocator->blockMetaStart, block) <
-               allocator->blockCount);
+               allocator->blockAllocator->blockCount);
     return block;
 }

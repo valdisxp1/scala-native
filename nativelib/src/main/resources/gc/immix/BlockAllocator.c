@@ -9,6 +9,7 @@ void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart,
     for (int i = 0; i < SUPERBLOCK_LIST_SIZE; i++) {
         SuperblockList_Init(&blockAllocator->freeSuperblocks[i], blockMetaStart);
     }
+    blockAllocator->blockCount = blockCount;
     BlockAllocator_Clear(blockAllocator);
     BlockAllocator_addFreeBlocksInternal(blockAllocator, (BlockMeta *) blockMetaStart, blockCount);
 }

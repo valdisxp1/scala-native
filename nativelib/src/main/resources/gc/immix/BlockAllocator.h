@@ -19,7 +19,8 @@ typedef struct {
     SuperblockList freeSuperblocks[SUPERBLOCK_LIST_SIZE];
     int minNonEmptyIndex;
     int maxNonEmptyIndex;
-    uint64_t freeBlockCount;
+    uint32_t freeBlockCount;
+    uint32_t blockCount;
 } BlockAllocator;
 
 void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart, uint32_t blockCount);

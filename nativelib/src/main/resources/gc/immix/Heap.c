@@ -238,7 +238,7 @@ void Heap_Recycle(Heap *heap) {
         } else {
             growth = GROWTH_RATE;
         }
-        size_t blocks = allocator.blockCount * (growth - 1);
+        size_t blocks = blockAllocator.blockCount * (growth - 1);
         size_t increment = blocks * WORDS_IN_BLOCK;
         Heap_Grow(heap, increment);
     }
@@ -293,7 +293,7 @@ void Heap_Grow(Heap *heap, size_t increment) {
 
     BlockAllocator_AddFreeBlocks(&blockAllocator, (BlockMeta *)blockMetaEnd, incrementInBlocks);
 
-    allocator.blockCount += incrementInBlocks;
+    blockAllocator.blockCount += incrementInBlocks;
 }
 
 /** Grows the large heap by `increment` blocks */
