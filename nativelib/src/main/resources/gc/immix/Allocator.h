@@ -22,7 +22,6 @@ typedef struct {
     word_t *largeBlockStart;
     word_t *largeCursor;
     word_t *largeLimit;
-    size_t freeMemoryAfterCollection;
 } Allocator;
 
 void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator, Bytemap *bytemap,

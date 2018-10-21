@@ -27,7 +27,6 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
     // If the block is not marked, it means that it's completely free
     if (!BlockMeta_IsMarked(blockMeta)) {
         Block_recycleUnmarkedBlock(allocator, blockMeta, blockStart);
-        allocator->freeMemoryAfterCollection += BLOCK_TOTAL_SIZE;
     } else {
         // If the block is marked, we need to recycle line by line
         assert(BlockMeta_IsMarked(blockMeta));
@@ -77,8 +76,6 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
                 lineStart += WORDS_IN_LINE;
                 bytemapCursor = Bytemap_NextLine(bytemapCursor);
 
-                allocator->freeMemoryAfterCollection += LINE_SIZE;
-
                 uint8_t size = 1;
                 while (lineIndex < LINE_COUNT && !Line_IsMarked(lineMeta)) {
                     ObjectMeta_ClearLineAt(bytemapCursor);
@@ -89,8 +86,6 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
                     lineMeta++;
                     lineStart += WORDS_IN_LINE;
                     bytemapCursor = Bytemap_NextLine(bytemapCursor);
-
-                    allocator->freeMemoryAfterCollection += LINE_SIZE;
                 }
                 Block_GetFreeLineMeta(blockStart, lastRecyclable)->size = size;
             }

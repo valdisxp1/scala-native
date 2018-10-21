@@ -68,7 +68,6 @@ void Allocator_InitCursors(Allocator *allocator) {
 void Allocator_Clear(Allocator *allocator) {
     BlockList_Clear(&allocator->recycledBlocks);
     allocator->recycledBlockCount = 0;
-    allocator->freeMemoryAfterCollection = 0;
 }
 
 /**

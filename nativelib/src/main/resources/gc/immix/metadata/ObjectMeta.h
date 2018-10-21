@@ -59,8 +59,9 @@ static inline void ObjectMeta_SweepLineAt(ObjectMeta *start) {
     //
     //    size_t startIndex = Bytemap_index(bytemap, start);
     //    size_t endIndex = startIndex + WORDS_IN_LINE /
-    //    ALLOCATION_ALIGNMENT_WORDS; ObjectMeta *data = bytemap->data; for
-    //    (size_t i = startIndex; i < endIndex; i++) {
+    //    ALLOCATION_ALIGNMENT_WORDS; ObjectMeta *data = bytemap->data;
+    //
+    //    for (size_t i = startIndex; i < endIndex; i++) {
     //        if (data[i] == om_marked) {
     //            data[i] = om_allocated;
     //        } else if (data[i] == om_allocated) {
