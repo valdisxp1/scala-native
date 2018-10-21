@@ -91,8 +91,7 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->heapStart = smallHeapStart;
     heap->heapEnd = smallHeapStart + initialSmallHeapSize / WORD_SIZE;
     Bytemap_Init(bytemap, smallHeapStart, memoryLimit);
-    Allocator_Init(&allocator, &blockAllocator, bytemap, blockMetaStart, smallHeapStart,
-                   initialBlockCount);
+    Allocator_Init(&allocator, &blockAllocator, bytemap, blockMetaStart, smallHeapStart);
 
     LargeAllocator_Init(&largeAllocator, &blockAllocator, bytemap, blockMetaStart, smallHeapStart);
     Heap_GrowLarge(heap, initialLargeHeapBlockCount);
