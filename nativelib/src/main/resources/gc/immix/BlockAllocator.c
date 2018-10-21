@@ -26,7 +26,7 @@ inline static BlockMeta *BlockAllocator_pollSuperblock(BlockAllocator *blockAllo
     for (int i = first; i <= maxNonEmptyIndex; i++) {
         BlockMeta *superblock = BlockList_Poll(&blockAllocator->freeSuperblocks[i]);
         if (superblock != NULL) {
-            assert(superblock->superblockSize > 0);
+            assert(BlockMeta_SuperblockSize(superblock) > 0);
             return superblock;
         } else {
             blockAllocator->minNonEmptyIndex = i + 1;
@@ -40,8 +40,9 @@ BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
         BlockMeta *superblock = BlockAllocator_pollSuperblock(blockAllocator, blockAllocator->minNonEmptyIndex);
         if (superblock != NULL) {
             blockAllocator->smallestSuperblock.cursor = superblock;
-            blockAllocator->smallestSuperblock.limit = superblock + superblock->superblockSize;
+            blockAllocator->smallestSuperblock.limit = superblock + BlockMeta_SuperblockSize(superblock);
             // it might be safe to remove this
+            // not using BlockMeta_SetSuperblockSize, because it is just empty space
             superblock->superblockSize = 0;
         } else {
             return NULL;
@@ -69,14 +70,14 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator, uint
         if (superblock == NULL) {
             return NULL;
         }
-        if (superblock->superblockSize > size) {
+        if (BlockMeta_SuperblockSize(superblock) > size) {
             BlockMeta *leftover = superblock + size;
-            BlockAllocator_addFreeBlocksInternal(blockAllocator, leftover, superblock->superblockSize - size);
+            BlockAllocator_addFreeBlocksInternal(blockAllocator, leftover, BlockMeta_SuperblockSize(superblock) - size);
         }
     }
 
-    superblock->superblockSize = size;
     BlockMeta_SetFlag(superblock, block_superblock_start);
+    BlockMeta_SetSuperblockSize(superblock, size);
     BlockMeta *limit = superblock + size;
     for (BlockMeta *current = superblock + 1; current < limit; current++) {
         BlockMeta_SetFlag(current, block_superblock_middle);
@@ -86,6 +87,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator, uint
 }
 
 static inline void BlockAllocator_addFreeBlocksInternal0(BlockAllocator *blockAllocator, BlockMeta *superblock, uint32_t count) {
+    // not using BlockMeta_SetSuperblockSize, because it is just empty space
     superblock->superblockSize = count;
     int i = BlockAllocator_sizeToLinkedListIndex(count);
     if (i < blockAllocator->minNonEmptyIndex) {

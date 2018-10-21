@@ -216,7 +216,7 @@ void Heap_Recycle(Heap *heap) {
         int size = 1;
         if (BlockMeta_IsSuperblockStart(current)) {
             LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart);
-            size = current->superblockSize;
+            size = BlockMeta_SuperblockSize(current);
         } else if(!BlockMeta_IsSuperblockMiddle(current)) {
             Block_Recycle(&allocator, current, currentBlockStart, lineMetas);
         }

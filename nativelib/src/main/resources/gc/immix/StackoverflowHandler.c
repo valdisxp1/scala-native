@@ -45,7 +45,7 @@ void StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
         assert(!BlockMeta_IsSuperblockMiddle(currentOverflowBlock));
         int size;
         if (BlockMeta_IsSuperblockStart(currentOverflowBlock)) {
-            size = currentOverflowBlock->superblockSize;
+            size = BlockMeta_SuperblockSize(currentOverflowBlock);
             if (StackOverflowHandler_largeHeapOverflowHeapScan(heap, stack)) {
                 return;
             }
@@ -109,7 +109,7 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
  */
 bool StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
     word_t *blockStart = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, currentOverflowBlock);
-    word_t *end = blockStart + WORDS_IN_BLOCK * currentOverflowBlock->superblockSize;
+    word_t *end = blockStart + WORDS_IN_BLOCK * BlockMeta_SuperblockSize(currentOverflowBlock);
     if (currentOverflowAddress < blockStart) {
         // first time entering the superblock
         currentOverflowAddress = blockStart;

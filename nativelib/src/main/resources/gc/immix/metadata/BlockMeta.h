@@ -39,8 +39,19 @@ static inline bool BlockMeta_IsSuperblockMiddle(BlockMeta *blockMeta) {
     return blockMeta->flags == block_superblock_middle;
 }
 
+static inline uint32_t BlockMeta_SuperblockSize(BlockMeta *blockMeta) {
+    return blockMeta->superblockSize;
+}
+
 static inline bool BlockMeta_ContainsLargeObjects(BlockMeta *blockMeta) {
     return BlockMeta_IsSuperblockStart(blockMeta) || BlockMeta_IsSuperblockMiddle(blockMeta);
+}
+
+static inline void BlockMeta_SetSuperblockSize(BlockMeta *blockMeta, int32_t superblockSize) {
+    assert(superblockSize > 0);
+    assert(BlockMeta_IsSuperblockStart(blockMeta));
+
+    blockMeta->superblockSize = superblockSize;
 }
 
 static inline void BlockMeta_SetFlag(BlockMeta *blockMeta,

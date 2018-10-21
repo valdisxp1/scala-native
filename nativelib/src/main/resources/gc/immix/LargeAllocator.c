@@ -153,15 +153,18 @@ static inline BlockMeta *LargeAllocator_splitSuperblock(LargeAllocator *allocato
         }
 
         // update the previous superblock
-        uint32_t previousSize = previousSuperblock->superblockSize;
-        previousSuperblock->superblockSize = (uint32_t) (superblock - previousSuperblock);
+        uint32_t previousSize = BlockMeta_SuperblockSize(previousSuperblock);
+        uint32_t previousSizeUpdated = (uint32_t) (superblock - previousSuperblock);
+        if (previousSizeUpdated > 0) {
+            BlockMeta_SetSuperblockSize(previousSuperblock, previousSizeUpdated);
+        }
 
         // create a new superblock after the split
-        uint32_t nextSize = previousSize - size - previousSuperblock->superblockSize;
+        uint32_t nextSize = previousSize - size - previousSizeUpdated;
         if (nextSize > 0) {
             BlockMeta *nextSuperblock = superblock + size;
             BlockMeta_SetFlag(nextSuperblock, block_superblock_start);
-            nextSuperblock->superblockSize = nextSize;
+            BlockMeta_SetSuperblockSize(nextSuperblock, nextSize);
             return nextSuperblock;
         } else {
             // this is the end of the original superblock
@@ -177,7 +180,7 @@ static inline BlockMeta *LargeAllocator_splitSuperblock(LargeAllocator *allocato
 void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_t *blockStart) {
     Object *current = (Object *)blockStart;
     BlockMeta *currentSuperblock = blockMeta;
-    void *blockEnd = blockStart + WORDS_IN_BLOCK * currentSuperblock->superblockSize;
+    void *blockEnd = blockStart + WORDS_IN_BLOCK * BlockMeta_SuperblockSize(currentSuperblock);
 
     while (current != blockEnd) {
         ObjectMeta *currentMeta =
