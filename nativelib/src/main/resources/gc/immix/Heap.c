@@ -316,5 +316,5 @@ void Heap_GrowLarge(Heap *heap, uint32_t increment) {
     }
     assert(superblock != NULL);
     word_t *superblockStart = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, superblock);
-    LargeAllocator_AddChunk(&largeAllocator, (Chunk *)superblock, (size_t) increment * BLOCK_TOTAL_SIZE);
+    LargeAllocator_AddChunk(&largeAllocator, (Chunk *)superblockStart, (size_t) increment * BLOCK_TOTAL_SIZE);
 }
