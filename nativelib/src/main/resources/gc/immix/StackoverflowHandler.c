@@ -108,7 +108,12 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
  * Updates `currentOverflowAddress` while doing so.
  */
 bool StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
-    word_t *end = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, currentOverflowBlock) + WORDS_IN_BLOCK * currentOverflowBlock->superblockSize;
+    word_t *blockStart = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, currentOverflowBlock);
+    word_t *end = blockStart + WORDS_IN_BLOCK * currentOverflowBlock->superblockSize;
+    if (currentOverflowAddress < blockStart) {
+        // first time entering the superblock
+        currentOverflowAddress = blockStart;
+    }
     while (currentOverflowAddress < end) {
         Object *object = (Object *)currentOverflowAddress;
         ObjectMeta *cursorMeta =
