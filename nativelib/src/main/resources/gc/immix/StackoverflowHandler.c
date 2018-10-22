@@ -46,6 +46,7 @@ void StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
         int size;
         if (BlockMeta_IsSuperblockStart(currentOverflowBlock)) {
             size = currentOverflowBlock->superblockSize;
+            assert(size > 0);
             if (StackOverflowHandler_largeHeapOverflowHeapScan(heap, stack)) {
                 return;
             }
@@ -56,6 +57,7 @@ void StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
             }
         }
         currentOverflowBlock += size;
+        currentOverflowAddress = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, currentOverflowBlock);
     }
     return;
 }
@@ -110,10 +112,7 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
 bool StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
     word_t *blockStart = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, currentOverflowBlock);
     word_t *end = blockStart + WORDS_IN_BLOCK * currentOverflowBlock->superblockSize;
-    if (currentOverflowAddress < blockStart) {
-        // first time entering the superblock
-        currentOverflowAddress = blockStart;
-    }
+
     while (currentOverflowAddress < end) {
         Object *object = (Object *)currentOverflowAddress;
         ObjectMeta *cursorMeta =
