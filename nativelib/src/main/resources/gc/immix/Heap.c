@@ -309,7 +309,8 @@ void Heap_GrowLarge(Heap *heap, uint32_t increment) {
         Heap_Recycle(heap);
         superblock = BlockAllocator_GetFreeSuperblock(&blockAllocator, increment);
         if (superblock == NULL) {
-            Heap_Grow(heap, WORDS_IN_BLOCK * increment);
+            word_t pow2increment = 1UL << MathUtils_Log2Ceil(increment);
+            Heap_Grow(heap, WORDS_IN_BLOCK * pow2increment);
             superblock = BlockAllocator_GetFreeSuperblock(&blockAllocator, increment);
         }
     }
