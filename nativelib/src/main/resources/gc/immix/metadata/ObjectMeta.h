@@ -74,4 +74,8 @@ static inline void ObjectMeta_SweepLineAt(ObjectMeta *start) {
     first[1] = (first[1] & SWEEP_MASK) >> 1;
 }
 
+static inline void ObjectMeta_Sweep(ObjectMeta *cursor) {
+    *cursor = (*cursor & 0x04) >> 1;
+}
+
 #endif // IMMIX_OBJECTMETA_H

@@ -135,80 +135,73 @@ void LargeAllocator_Clear(LargeAllocator *allocator) {
 }
 
 void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_t *blockStart) {
+    assert(MIN_BLOCK_SIZE * 4 == BLOCK_TOTAL_SIZE);
     uint32_t superblockSize = BlockMeta_SuperblockSize(blockMeta);
     word_t *blockEnd = blockStart + WORDS_IN_BLOCK * superblockSize;
 //    printf("block [%p] (%p %p) size:%u\n", blockMeta, blockStart, blockEnd, superblockSize);
 
     ObjectMeta *firstObject = Bytemap_Get(allocator->bytemap, blockStart);
+
 //    printf("firstObject [%p] %p=%d\n", firstObject , blockStart, *firstObject);
 //    fflush(stdout);
-    Object *current = (Object *)blockStart;
     assert(!ObjectMeta_IsFree(firstObject));
-    if (!ObjectMeta_IsMarked(firstObject)) {
+    if (superblockSize > 1 && !ObjectMeta_IsMarked(firstObject)) {
         // release free superblocks starting from the first object
-        ObjectMeta_SetFree(firstObject);
-        Object *next = Object_NextLargeObject(current);
-        ObjectMeta *nextMeta = Bytemap_Get(allocator->bytemap, (word_t *)next);
-        while ((word_t *) next < blockEnd && !ObjectMeta_IsMarked(nextMeta)) {
-//            printf("object %p=%d NEXT\n", next, *nextMeta);
-//            fflush(stdout);
-            assert(!ObjectMeta_IsFree(nextMeta));
-            ObjectMeta_SetFree(nextMeta);
-            next = Object_NextLargeObject(next);
-            nextMeta = Bytemap_Get(allocator->bytemap, (word_t *)next);
-        }
-        word_t *freeBlockEnd = Block_GetBlockStartForWord((word_t *) next);
-        uint32_t size = (uint32_t) (((word_t *) freeBlockEnd - blockStart) / WORDS_IN_BLOCK);
         if (size > 0) {
-//            printf("SUPERBLOCK (%p, %p) size:%u\n", blockMeta, freeBlockEnd, size);
-//            fflush(stdout);
-            BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta, size);
+            printf("SUPERBLOCK [%p] (%p %p) size:%u\n", blockMeta, blockStart, blockEnd - WORDS_IN_BLOCK, superblockSize - 1);
+            fflush(stdout);
+            BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta, superblockSize - 1);
         }
 
-        assert(size <= superblockSize);
-        // mark the remaining superblock
-        uint32_t remainingSuperblockSize = superblockSize - size;
-        if (size > 0 && remainingSuperblockSize > 0) {
-            BlockMeta *remainingSuperblock = blockMeta + size;
-            BlockMeta_SetFlag(remainingSuperblock, block_superblock_start);
-            BlockMeta_SetSuperblockSize(remainingSuperblock, remainingSuperblockSize);
-        }
+    }
+    ObjectMeta beforeSweep[4];
 
-        assert(freeBlockEnd <= (word_t *) next);
-        size_t remainingSizeInWords = (word_t *) next - freeBlockEnd;
-        if (remainingSizeInWords > 0) {
-            LargeAllocator_AddChunk(allocator, (Chunk *) freeBlockEnd, remainingSizeInWords * WORD_SIZE);
-        }
+    beforeSweep[0] = *firstObject;
+    ObjectMeta_Sweep(firstObject);
 
-        current = next;
+    word_t *startOfLastBlock = blockEnd - WORDS_IN_BLOCK;
+    ObjectMeta *cutpoint = Bytemap_Get(allocator->bytemap, startOfLastBlock);
+
+    ObjectMeta *cutpoint1 = cutpoint + MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
+    beforeSweep[1] = *cutpoint1;
+    ObjectMeta_Sweep(cutpoint1);
+
+    ObjectMeta *cutpoint2 = cutpoint + 2 * MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
+    beforeSweep[2] = *cutpoint2;
+    ObjectMeta_Sweep(cutpoint2);
+
+    ObjectMeta *cutpoint3 = cutpoint + 3 * MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
+    beforeSweep[3] = *cutpoint3;
+    ObjectMeta_Sweep(cutpoint3);
+
+    uint64_t = beforeSweep_singleNum = ((uint32_t *)beforeSweep)[0]
+    if ((beforeSweep_singleNum & 0x04040404) == 0) {
+        // all is free, therefore the block is free
+        BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta + superblockSize - 1, 1);
+        return;
     }
 
-    while ((word_t *) current < blockEnd) {
-        ObjectMeta *currentMeta =
-            Bytemap_Get(allocator->bytemap, (word_t *)current);
-//        printf("object %p=%d\n", current, *currentMeta);
-//        fflush(stdout);
-        assert(!ObjectMeta_IsFree(currentMeta));
-        if (ObjectMeta_IsMarked(currentMeta)) {
-            ObjectMeta_SetAllocated(currentMeta);
 
-            current = Object_NextLargeObject(current);
-        } else {
-            size_t currentSize = Object_ChunkSize(current);
-            Object *next = Object_NextLargeObject(current);
-            ObjectMeta *nextMeta =
-                Bytemap_Get(allocator->bytemap, (word_t *)next);
-            while ((word_t *) next < blockEnd && !ObjectMeta_IsMarked(nextMeta)) {
-                assert(!ObjectMeta_IsFree(nextMeta));
-                currentSize += Object_ChunkSize(next);
-                ObjectMeta_SetFree(nextMeta);
-                next = Object_NextLargeObject(next);
-                nextMeta = Bytemap_Get(allocator->bytemap, (word_t *)next);
-//                printf("object %p=%d NEXT\n", next, *nextMeta);
-//                fflush(stdout);
+    int startIndex = -1;
+    for (int i = 0; i < 4; i++) {
+        if (startIndex == -1) {
+            if (ObjectMeta_IsAllocated(beforeSweep[i])|| ObjectMeta_IsPlaceholder(beforeSweep[i])) {
+                startIndex = i;
             }
-            LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
-            current = next;
+        } else {
+            if (ObjectMeta_IsMarked(beforeSweep[i])) {
+                // send [startIndex, i - 1]
+                word_t *current = startOfLastBlock + startIndex * MIN_BLOCK_SIZE;
+                size_t currentSize = (size_t) (i - startIndex) * MIN_BLOCK_SIZE;
+                LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
+                startIndex = -1;
+            }
         }
+    }
+    if (startIndex != -1) {
+        // send [startIndex, 3]
+        word_t *current = startOfLastBlock + startIndex * MIN_BLOCK_SIZE;
+        size_t currentSize = (size_t) (3 - startIndex) * MIN_BLOCK_SIZE;
+        LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
     }
 }
