@@ -89,6 +89,7 @@ static inline Chunk* LargeAllocator_getChunkForSize(LargeAllocator *allocator, s
     for (int listIndex = LargeAllocator_sizeToLinkedListIndex(requiredChunkSize); listIndex < FREE_LIST_COUNT; listIndex++) {
         Chunk *chunk = allocator->freeLists[listIndex].first;
         if (chunk != NULL) {
+            LargeAllocator_freeListRemoveFirstBlock(&allocator->freeLists[listIndex]);
             return chunk;
         }
     }
@@ -113,7 +114,7 @@ Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
         if (superblock != NULL) {
             chunk = (Chunk *) BlockMeta_GetBlockStart(allocator->blockMetaStart, allocator->heapStart, superblock);
             chunk->nothing = NULL;
-            chunk->size = requiredChunkSize;
+            chunk->size = superblockSize * BLOCK_TOTAL_SIZE;
         }
     }
 
@@ -161,6 +162,8 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
         Object *next = Object_NextLargeObject(current);
         ObjectMeta *nextMeta = Bytemap_Get(allocator->bytemap, (word_t *)next);
         while ((word_t *) next < blockEnd && !ObjectMeta_IsMarked(nextMeta)) {
+//            printf("object %p=%d NEXT\n", next, *nextMeta);
+//            fflush(stdout);
             assert(!ObjectMeta_IsFree(nextMeta));
             ObjectMeta_SetFree(nextMeta);
             next = Object_NextLargeObject(next);
