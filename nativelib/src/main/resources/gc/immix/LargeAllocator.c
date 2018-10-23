@@ -143,24 +143,26 @@ void LargeAllocator_Sweep(LargeAllocator *largeAllocator, bool collectingOld) {
             Bytemap_Get(largeAllocator->bytemap, (word_t *)current);
         assert(!ObjectMeta_IsFree(currentMeta));
         if (!collectingOld && ObjectMeta_IsMarked(currentMeta)) {
+            /*
             if (Object_HasPointerToYoungObject(&heap, current, true)) {
-                printf("Should never be printed\n");fflush(stdout);
                 Stack_Push(allocator.rememberedObjects, current);
             }
+            */
             current = Object_NextLargeObject(current);
         } else if (collectingOld && ObjectMeta_IsAllocated(currentMeta)) {
             ObjectMeta_SetMarked(currentMeta);
+            /*
             if (Object_HasPointerToYoungObject(&heap, current, true)) {
-                printf("Should never be printed\n");fflush(stdout);
                 Stack_Push(allocator.rememberedObjects, current);
             }
+            */
             current = Object_NextLargeObject(current);
         } else {
             size_t currentSize = Object_ChunkSize(current);
             Object *next = Object_NextLargeObject(current);
             ObjectMeta *nextMeta =
                 Bytemap_Get(largeAllocator->bytemap, (word_t *)next);
-            while (next != heapEnd && !ObjectMeta_IsMarked(nextMeta)) {
+            while (next != heapEnd && ((!collectingOld &&!ObjectMeta_IsMarked(nextMeta)) || (collectingOld && !ObjectMeta_IsAllocated(nextMeta)))) {
                 currentSize += Object_ChunkSize(next);
                 ObjectMeta_SetFree(nextMeta);
                 next = Object_NextLargeObject(next);

@@ -62,10 +62,13 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
                 // Unmark line
                 Line_Unmark(lineMeta);
                 if (collectingOld) {
+                    assert(BlockMeta_IsOld(blockMeta));
                     ObjectMeta_SweepOldLineAt(bytemapCursor);
                 } else if (BlockMeta_IsOld(blockMeta)) {
+                    assert(BlockMeta_IsOld(blockMeta));
                     ObjectMeta_SweepNewOldLineAt(bytemapCursor);
                 } else {
+                    assert(BlockMeta_IsUnavailable(blockMeta));
                     ObjectMeta_SweepLineAt(bytemapCursor);
                 }
 
@@ -115,10 +118,7 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
                 Block_GetFreeLineMeta(blockStart, lastRecyclable)->size = size;
             }
         }
-        // If there is no recyclable line, the block is unavailable
-        if (lastRecyclable == NO_RECYCLABLE_LINE) {
-            //BlockMeta_SetFlag(blockMeta, block_unavailable);
-        } else {
+        if (lastRecyclable != NO_RECYCLABLE_LINE) {
             Block_GetFreeLineMeta(blockStart, lastRecyclable)->next = LAST_HOLE;
         }
     }

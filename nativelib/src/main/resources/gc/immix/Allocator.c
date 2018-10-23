@@ -159,6 +159,14 @@ INLINE word_t *Allocator_Alloc(Allocator *allocator, size_t size) {
         } else {
             // Otherwise try to get a new line.
             // TODO: add check for full young generation
+            if (allocator->youngBlockCount >= MAX_YOUNG_BLOCKS) {
+#ifdef DEBUG_PRINT
+                printf("Young generation full\n");
+                fflush(stdout);
+#endif
+                return NULL;
+            }
+
             if (Allocator_getNextLine(allocator)) {
                 return Allocator_Alloc(allocator, size);
             }
@@ -264,6 +272,7 @@ bool Allocator_newPretenuredBlock(Allocator *allocator) {
     allocator->pretenuredBlockStart = blockStart;
 
     assert(BlockMeta_IsFree(block));
+    BlockMeta_SetFlag(block, block_old);
     allocator->pretenuredCursor = blockStart;
     allocator->pretenuredLimit = Block_GetBlockEnd(blockStart);
     allocator->oldBlockCount++;

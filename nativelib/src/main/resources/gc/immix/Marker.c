@@ -38,6 +38,7 @@ bool Marker_mark(Heap *heap, Stack *stack, Bytemap *bytemap, Object *object, Obj
 void Marker_markConservative(Heap *heap, Stack *stack, word_t *address, bool collectingOld) {
     assert(Heap_IsWordInHeap(heap, address));
     Object *object = NULL;
+    bool largeObject = false;
     Bytemap *bytemap;
     if (Heap_IsWordInSmallHeap(heap, address)) {
         if (!collectingOld) {
@@ -45,7 +46,6 @@ void Marker_markConservative(Heap *heap, Stack *stack, word_t *address, bool col
         } else {
             object = Object_GetOldObject(heap, address);
         }
-        //object = Object_GetUnmarkedObject(heap, address);
         bytemap = heap->smallBytemap;
 #ifdef DEBUG_PRINT
         if (object == NULL) {
@@ -59,7 +59,6 @@ void Marker_markConservative(Heap *heap, Stack *stack, word_t *address, bool col
         } else {
             object = Object_GetLargeOldObject(bytemap, address);
         }
-        //object = Object_GetLargeUnmarkedObject(bytemap, address);
     }
     if (object != NULL) {
         ObjectMeta *objectMeta = Bytemap_Get(bytemap, (word_t *)object);
@@ -71,9 +70,12 @@ void Marker_Mark(Heap *heap, Stack *stack, bool collectingOld) {
     while (!Stack_IsEmpty(stack)) {
         Object *object = Stack_Pop(stack);
         ObjectMeta *objectMeta = Bytemap_Get(Heap_BytemapForWord(heap, (word_t *)object), (word_t *)object);
-        word_t *bStart = Block_GetBlockStartForWord((word_t *)object);
-        BlockMeta *bMeta = Block_GetBlockMeta(bStart, heap->heapStart, (word_t *)object);
-        bool willBeOld = BlockMeta_IsOld(bMeta) || (BlockMeta_GetAge(bMeta) == MAX_AGE_YOUNG_BLOCK - 1);
+        bool willBeOld = true;
+
+        if (Heap_IsWordInSmallHeap(heap, (word_t *)object)) {
+            BlockMeta *bMeta = Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, (word_t *)object);
+            willBeOld = BlockMeta_IsOld(bMeta) || (BlockMeta_GetAge(bMeta) == MAX_AGE_YOUNG_BLOCK - 1);
+        }
 
         bool hasPointerToYoung = false;
         bool hasPointerToOld = false;
@@ -90,18 +92,19 @@ void Marker_Mark(Heap *heap, Stack *stack, bool collectingOld) {
                     if (bytemap != NULL) {
                         // is within heap
                         ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
-                        word_t *blockStart = Block_GetBlockStartForWord(field);
-                        BlockMeta *blockMeta = Block_GetBlockMeta(blockStart, heap->heapStart, field);
-                        bool marked = Marker_mark(heap, stack, bytemap, (Object *)field, fieldMeta, collectingOld);
-                        if (marked) {
-                            if (willBeOld && hasPointerToYoung && !ObjectMeta_IsRemembered(objectMeta)) {
-                                //ObjectMeta_SetRemembered(objectMeta);
-                                //Stack_Push(allocator.rememberedObjects, object);
-                            } else if (!willBeOld && hasPointerToOld && !ObjectMeta_IsRemembered(objectMeta)) {
-                                //ObjectMeta_SetRemembered(objectMeta);
-                                //Stack_Push(allocator.rememberedYoungObjects, object);
+                        Marker_mark(heap, stack, bytemap, (Object *)field, fieldMeta, collectingOld);
+
+                        if (Heap_IsWordInLargeHeap(heap, field)) {
+                            hasPointerToOld = true;
+                        } else {
+                            BlockMeta *blockMeta = Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, field);
+                            if (BlockMeta_IsOld(blockMeta) || BlockMeta_GetAge(blockMeta) == (MAX_AGE_YOUNG_BLOCK - 1)) {
+                                hasPointerToOld = true;
+                            } else {
+                                hasPointerToYoung = true;
                             }
                         }
+
                     }
                 }
             }
@@ -117,19 +120,28 @@ void Marker_Mark(Heap *heap, Stack *stack, bool collectingOld) {
                     // is within heap
                     ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
                     Marker_mark(heap, stack, bytemap, (Object *)field, fieldMeta, collectingOld);
+
+                    if (Heap_IsWordInLargeHeap(heap, field)) {
+                        hasPointerToOld = true;
+                    } else {
+                        BlockMeta *blockMeta = Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, field);
+                        if (BlockMeta_IsOld(blockMeta) || BlockMeta_GetAge(blockMeta) == (MAX_AGE_YOUNG_BLOCK - 1)) {
+                            hasPointerToOld = true;
+                        } else {
+                            hasPointerToYoung = true;
+                        }
+                    }
                 }
                 ++i;
             }
         }
-        if (hasPointerToYoung) {
-            //ObjectMeta_SetRemembered(objectMeta);
-            //Stack_Push(allocator.rememberedObjects, object);
-        } else if (hasPointerToOld) {
-            printf("Should not pass here\n");fflush(stdout);
-            //ObjectMeta_SetRemembered(objectMeta);
-            //Stack_Push(allocator.rememberedYoungObjects, object);
-        }
 
+        if (willBeOld && hasPointerToYoung && !ObjectMeta_IsRemembered(objectMeta)) {
+            ObjectMeta_SetRemembered(objectMeta);
+            Stack_Push(allocator.rememberedObjects, object);
+        } else if (!willBeOld && hasPointerToOld) {
+            Stack_Push(allocator.rememberedYoungObjects, object);
+        }
     }
 }
 
@@ -162,9 +174,7 @@ void Marker_markModules(Heap *heap, Stack *stack, bool collectingOld) {
         if (bytemap != NULL) {
             // is within heap
             ObjectMeta *objectMeta = Bytemap_Get(bytemap, (word_t *)object);
-            if (ObjectMeta_IsAllocated(objectMeta)) {
-                Marker_mark(heap, stack, bytemap, object, objectMeta, collectingOld);
-            }
+            Marker_mark(heap, stack, bytemap, object, objectMeta, collectingOld);
         }
     }
 }
@@ -192,7 +202,6 @@ void Marker_markYoungRemembered(Heap *heap,Stack *stack) {
         if (bytemap != NULL) {
             ObjectMeta *objectMeta = Bytemap_Get(bytemap, (word_t *)object);
             if (ObjectMeta_IsAllocated(objectMeta)) {
-                ObjectMeta_SetUnremembered(objectMeta);
                 Stack_Push(stack, object);
             }
         }

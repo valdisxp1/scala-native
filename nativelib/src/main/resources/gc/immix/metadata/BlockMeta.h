@@ -7,10 +7,13 @@
 #include "../Constants.h"
 #include "../Log.h"
 
+#define BLOCK_AGE_MASK 0x3
+
 typedef enum {
     block_free = 0x0,
     block_recyclable = 0x1,
-    block_unavailable = 0x2
+    block_unavailable = 0x2,
+    block_old = 0x3
 } BlockFlag;
 
 typedef struct {
@@ -21,29 +24,41 @@ typedef struct {
 } BlockMeta;
 
 static inline bool BlockMeta_IsRecyclable(BlockMeta *blockMeta) {
-    return blockMeta->flags == block_recyclable;
+    return (blockMeta->flags & BLOCK_AGE_MASK) == block_recyclable;
 }
 static inline bool BlockMeta_IsUnavailable(BlockMeta *blockMeta) {
-    return blockMeta->flags == block_unavailable;
+    return (blockMeta->flags & BLOCK_AGE_MASK) == block_unavailable;
 }
 static inline bool BlockMeta_IsFree(BlockMeta *blockMeta) {
-    return blockMeta->flags == block_free;
+    return (blockMeta->flags & BLOCK_AGE_MASK) == block_free;
+}
+
+static inline bool BlockMeta_IsOld(BlockMeta *blockMeta) {
+    return (blockMeta->flags & BLOCK_AGE_MASK) == block_old;
 }
 
 static inline void BlockMeta_SetFlag(BlockMeta *blockMeta,
                                      BlockFlag blockFlag) {
-    blockMeta->flags = blockFlag;
+    blockMeta->flags = (blockMeta->flags & ~BLOCK_AGE_MASK) | blockFlag;
 }
 
 static inline bool BlockMeta_IsMarked(BlockMeta *blockMeta) {
     return blockMeta->mark == 1;
 }
 
+static inline void BlockMeta_Mark(BlockMeta *blockMeta) { blockMeta->mark = 1; }
+
 static inline void BlockMeta_Unmark(BlockMeta *blockMeta) {
     blockMeta->mark = 0;
 }
 
-static inline void BlockMeta_Mark(BlockMeta *blockMeta) { blockMeta->mark = 1; }
+static inline int BlockMeta_GetAge(BlockMeta *blockMeta) {
+    return blockMeta->flags >> 2;
+}
+
+static inline void BlockMeta_IncrementAge(BlockMeta *blockMeta) {
+    blockMeta->flags += 0x4;
+}
 
 // Block specific
 

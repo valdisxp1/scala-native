@@ -13,8 +13,6 @@
 #include <memory.h>
 #include <time.h>
 
-#define DEBUG_PRINT
-
 // Allow read and write
 #define HEAP_MEM_PROT (PROT_READ | PROT_WRITE)
 // Map private anonymous memory, and prevent from reserving swap
@@ -118,7 +116,6 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
  * trigger a collection of both the small and the large heap.
  */
 word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
-
     assert(size % ALLOCATION_ALIGNMENT == 0);
     assert(size >= MIN_BLOCK_SIZE);
 
@@ -181,13 +178,8 @@ done:
     assert(Heap_IsWordInSmallHeap(heap, (word_t *)object));
     assert(object != NULL);
     ObjectMeta *objectMeta = Bytemap_Get(allocator.bytemap, (word_t *)object);
-    while(!Stack_IsEmpty(allocator.rememberedYoungObjects)) {
-        Object *current = Stack_Pop(allocator.rememberedYoungObjects);
-        ObjectMeta *currentMeta = Bytemap_Get(allocator.bytemap,(word_t *) object);
-        ObjectMeta_SetUnremembered(currentMeta);
-    }
-
     ObjectMeta_SetAllocated(objectMeta);
+    Stack_Clear(allocator.rememberedYoungObjects);
     return (word_t *)object;
 }
 
@@ -216,13 +208,9 @@ NOINLINE word_t *Heap_allocPretenuredSlow(Heap *heap, uint32_t size) {
 done:
     assert(Heap_IsWordInSmallHeap(heap, (word_t *)object));
     assert(object != NULL);
-    while(!Stack_IsEmpty(allocator.rememberedYoungObjects)) {
-        Object *current = Stack_Pop(allocator.rememberedYoungObjects);
-        ObjectMeta *currentMeta = Bytemap_Get(allocator.bytemap,(word_t *) object);
-        ObjectMeta_SetUnremembered(currentMeta);
-    }
     ObjectMeta *objectMeta = Bytemap_Get(allocator.bytemap, (word_t *)object);
     ObjectMeta_SetMarked(objectMeta);
+    Stack_Clear(allocator.rememberedYoungObjects);
     return (word_t *)object;
 }
 
@@ -325,7 +313,6 @@ void Heap_Recycle(Heap *heap, bool collectingOld) {
     } else {
         allocator.oldBlockCount = 0;
     }
-
     word_t *current = heap->blockMetaStart;
     word_t *currentBlockStart = heap->heapStart;
     LineMeta *lineMetas = (LineMeta *)heap->lineMetaStart;
@@ -337,7 +324,9 @@ void Heap_Recycle(Heap *heap, bool collectingOld) {
         currentBlockStart += WORDS_IN_BLOCK;
         lineMetas += LINE_COUNT;
     }
+#ifdef DEBUG_PRINT
     printf("Free memory after collection : %zu\n", allocator.freeMemoryAfterCollection);fflush(stdout);
+#endif
     LargeAllocator_Sweep(&largeAllocator, collectingOld);
 
     if (collectingOld && Allocator_ShouldGrow(&allocator)) {

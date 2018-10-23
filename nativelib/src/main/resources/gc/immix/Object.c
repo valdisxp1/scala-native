@@ -8,9 +8,6 @@
 
 #define LAST_FIELD_OFFSET -1
 
-extern int __object_array_id;
-#define LAST_FIELD_OFFSET -1
-
 Object *Object_NextLargeObject(Object *object) {
     size_t size = Object_ChunkSize(object);
     assert(size != 0);
@@ -53,7 +50,6 @@ Object *Object_getInnerPointer(word_t *blockStart, word_t *word,
 
 Object *Object_findObject(Heap *heap, word_t *word, bool youngObject) {
     BlockMeta *blockMeta = Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, word);
-    word_t *blockStart = Block_GetBlockStartForWord(word);
 
     if (!Object_isAligned(word)) {
 #ifdef DEBUG_PRINT
@@ -65,14 +61,19 @@ Object *Object_findObject(Heap *heap, word_t *word, bool youngObject) {
     }
 
     ObjectMeta *wordMeta = Bytemap_Get(heap->smallBytemap, word);
-    if (ObjectMeta_IsPlaceholder(wordMeta) || (youngObject && ObjectMeta_IsMarked(wordMeta)) || (!youngObject && ObjectMeta_IsAllocated(wordMeta))) {
+    if (ObjectMeta_IsPlaceholder(wordMeta)) {
         return NULL;
     }
     else if (youngObject && ObjectMeta_IsAllocated(wordMeta)) {
         return (Object *)word;
+    } else if (youngObject && ObjectMeta_IsMarked(wordMeta)) {
+        return NULL;
     } else if (!youngObject && ObjectMeta_IsMarked(wordMeta)) {
         return (Object *)word;
+    } else if (!youngObject && ObjectMeta_IsAllocated(wordMeta)) {
+        return NULL;
     } else {
+        word_t *blockStart = Block_GetBlockStartForWord(word);
         return Object_getInnerPointer(blockStart, word, wordMeta, youngObject);
     }
 }
@@ -113,11 +114,16 @@ Object *Object_findLargeObject(Bytemap *bytemap, word_t *word, bool youngObject)
     }
     ObjectMeta *wordMeta = Bytemap_Get(bytemap, word);
     if (ObjectMeta_IsPlaceholder(wordMeta)) {
+        printf("Placeholder object\n");fflush(stdout);
         return NULL;
     } else if (youngObject && ObjectMeta_IsAllocated(wordMeta)) {
         return (Object *)word;
+    } else if (youngObject && ObjectMeta_IsMarked(wordMeta)) {
+        return NULL;
     } else if (!youngObject && ObjectMeta_IsMarked(wordMeta)) {
         return (Object *)word;
+    } else if (!youngObject && ObjectMeta_IsAllocated(wordMeta)) {
+        return NULL;
     } else {
         Object *object = Object_getLargeInnerPointer(word, wordMeta, youngObject);
         assert(object == NULL ||
@@ -138,8 +144,10 @@ Object *Object_GetLargeOldObject(Bytemap *bytemap, word_t *word) {
 void Object_Mark(Heap *heap, Object *object, ObjectMeta *objectMeta, bool collectingOld) {
     // Mark the object itself
     if(!collectingOld) {
+        assert(ObjectMeta_IsAllocated(objectMeta));
         ObjectMeta_SetMarked(objectMeta);
     } else {
+        assert(ObjectMeta_IsMarked(objectMeta));
         ObjectMeta_SetAllocated(objectMeta);
     }
 
@@ -165,105 +173,6 @@ void Object_Mark(Heap *heap, Object *object, ObjectMeta *objectMeta, bool collec
     }
 }
 
-bool Object_HasPointerToOldObject(Heap *heap, Object *object) {
-    BlockHeader *currentBlockHeader = Block_GetBlockHeader((word_t *)object);
-    if (object->rtti->rt.id == __object_array_id) {
-        // remove header and rtti from size
-        size_t size =
-            Object_Size(&object->header) - OBJECT_HEADER_SIZE - WORD_SIZE;
-        size_t nbWords = size / WORD_SIZE;
-        for (int i = 0; i < nbWords; i++) {
-
-            word_t *field = object->fields[i];
-            Object *fieldObject = Object_FromMutatorAddress(field);
-            if (heap_isObjectInHeap(heap, fieldObject)) {
-                if (Object_IsLargeObject(&fieldObject->header)) {
-                    if (Object_IsMarked(&fieldObject->header)) {
-                        return true;
-                    }
-                } else {
-                    BlockHeader *blockHeader = Block_GetBlockHeader((word_t *)fieldObject);
-                    if (Block_IsOld(blockHeader) || ( currentBlockHeader < blockHeader && Block_IsMarked(blockHeader) && (Block_GetAge(blockHeader) == MAX_AGE_YOUNG_OBJECT - 1))) {
-                        return true;
-                    }
-                }
-            }
-        }
-    } else {
-        int64_t *ptr_map = object->rtti->refMapStruct;
-        int i = 0;
-        while (ptr_map[i] != LAST_FIELD_OFFSET) {
-            word_t *field = object->fields[ptr_map[i]];
-            Object *fieldObject = Object_FromMutatorAddress(field);
-            if (heap_isObjectInHeap(heap, fieldObject)) {
-                if (Object_IsLargeObject(&fieldObject->header)) {
-                    if (Object_IsMarked(&fieldObject->header)) {
-                        return true;
-                    }
-                } else {
-                    BlockHeader *blockHeader = Block_GetBlockHeader((word_t *)fieldObject);
-                    if (Block_IsOld(blockHeader) || (currentBlockHeader < blockHeader && Block_IsMarked(blockHeader) && Block_GetAge(blockHeader) == MAX_AGE_YOUNG_OBJECT - 1)) {
-                        return true;
-                    }
-                }
-            }
-            ++i;
-        }
-    }
-    return false;
-
-}
-
-bool Object_HasPointerToYoungObject(Heap *heap, Object *object) {
-    BlockHeader *currentBlockHeader = Block_GetBlockHeader((word_t *)object);
-    if (object->rtti->rt.id == __object_array_id) {
-        // remove header and rtti from size
-        size_t size =
-            Object_Size(&object->header) - OBJECT_HEADER_SIZE - WORD_SIZE;
-        size_t nbWords = size / WORD_SIZE;
-        for (int i = 0; i < nbWords; i++) {
-
-            word_t *field = object->fields[i];
-            Object *fieldObject = Object_FromMutatorAddress(field);
-            if (!heap_isObjectInHeap(heap, fieldObject)) {
-                continue;
-            }
-            // At the moment, large object are still promoted in masse after
-            // first collection. So when collecting old gen, large object can only be old
-            if (!Object_IsLargeObject(&fieldObject->header)) {
-                BlockHeader *blockHeader = Block_GetBlockHeader((word_t *)fieldObject);
-                if ((word_t *)currentBlockHeader > (word_t *)blockHeader && !Block_IsFree(blockHeader) && !Block_IsOld(blockHeader)) {
-                    return true;
-                } else if (currentBlockHeader < blockHeader && Block_IsMarked(blockHeader) && (Block_GetAge(blockHeader) < MAX_AGE_YOUNG_OBJECT - 1)) {
-                    return true;
-                }
-            }
-        }
-    } else {
-        int64_t *ptr_map = object->rtti->refMapStruct;
-        int i = 0;
-        while (ptr_map[i] != LAST_FIELD_OFFSET) {
-            word_t *field = object->fields[ptr_map[i]];
-            Object *fieldObject = Object_FromMutatorAddress(field);
-            if (!heap_isObjectInHeap(heap, fieldObject)) {
-                ++i;
-                continue;
-            }
-            if (!Object_IsLargeObject(&fieldObject->header)) {
-                BlockHeader *blockHeader = Block_GetBlockHeader((word_t *)fieldObject);
-                if ((word_t *)currentBlockHeader > (word_t *)blockHeader && !Block_IsFree(blockHeader) && !Block_IsOld(blockHeader)) {
-                    return true;
-                } else if (currentBlockHeader < blockHeader && Block_IsMarked(blockHeader) && (Block_GetAge(blockHeader) < MAX_AGE_YOUNG_OBJECT - 1)) {
-                    return true;
-                }
-            }
-            ++i;
-        }
-    }
-    return false;
-
-}
-
 size_t Object_ChunkSize(Object *object) {
     if (object->rtti == NULL) {
         Chunk *chunk = (Chunk *)object;
@@ -287,7 +196,7 @@ bool Object_HasPointerToYoungObject(Heap *heap, Object *object, bool largeObject
                 if (bytemap != NULL) {
                     ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
                     word_t *currentBlockStart = Block_GetBlockStartForWord(field);
-                    BlockMeta *currentBlockMeta = Block_GetBlockMeta(currentBlockStart, heap->heapStart, field);
+                    BlockMeta *currentBlockMeta = Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, field);
                     if (largeObject) {
                         if (!BlockMeta_IsOld(currentBlockMeta) && ObjectMeta_IsAllocated(fieldMeta)) {
                             return true;
@@ -312,7 +221,7 @@ bool Object_HasPointerToYoungObject(Heap *heap, Object *object, bool largeObject
             if (bytemap != NULL) {
                 ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
                 word_t *currentBlockStart = Block_GetBlockStartForWord(field);
-                BlockMeta *currentBlockMeta = Block_GetBlockMeta(currentBlockStart, heap->heapStart, field);
+                BlockMeta *currentBlockMeta = Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, field);
                 if (largeObject) {
                     if (!BlockMeta_IsOld(currentBlockMeta) && ObjectMeta_IsAllocated(fieldMeta)) {
                         return true;
@@ -344,7 +253,7 @@ bool Object_HasPointerToOldObject(Heap *heap, Object *object, bool largeObject) 
                 if (bytemap != NULL) {
                     ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
                     word_t *currentBlockStart = Block_GetBlockStartForWord(field);
-                    BlockMeta *currentBlockMeta = Block_GetBlockMeta(currentBlockStart, heap->heapStart, field);
+                    BlockMeta *currentBlockMeta = Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, field);
                     if (largeObject) {
                         if (BlockMeta_IsOld(currentBlockMeta) && ObjectMeta_IsMarked(fieldMeta)) {
                             return true;
@@ -369,7 +278,7 @@ bool Object_HasPointerToOldObject(Heap *heap, Object *object, bool largeObject) 
             if (bytemap != NULL) {
                 ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
                 word_t *currentBlockStart = Block_GetBlockStartForWord(field);
-                BlockMeta *currentBlockMeta = Block_GetBlockMeta(currentBlockStart, heap->heapStart, field);
+                BlockMeta *currentBlockMeta = Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, field);
                 if (largeObject) {
                     if (BlockMeta_IsOld(currentBlockMeta) && ObjectMeta_IsMarked(fieldMeta)) {
                         return true;
