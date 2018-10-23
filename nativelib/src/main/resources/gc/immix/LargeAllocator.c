@@ -181,6 +181,8 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
         }
 
         current = next;
+    } else {
+        ObjectMeta_SetAllocated(firstObject);
     }
 
     while ((word_t *) current < blockEnd) {
