@@ -117,8 +117,7 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
             assert(Heap_IsWordInHeap(heap, (word_t *)object));
             return (word_t *)object;
         } else {
-            size_t increment = MathUtils_DivAndRoundUp(1UL << MathUtils_Log2Ceil(size), BLOCK_TOTAL_SIZE);
-            assert(increment < (1UL << BLOCK_COUNT_BITS));
+            size_t increment = MathUtils_DivAndRoundUp(size, BLOCK_TOTAL_SIZE);
             Heap_GrowLarge(heap, (uint32_t) increment);
 
             object = LargeAllocator_GetBlock(&largeAllocator, size);
@@ -143,7 +142,7 @@ NOINLINE word_t *Heap_allocSmallSlow(Heap *heap, uint32_t size) {
 
     // A small object can always fit in a single free block
     // because it is no larger than 8K while the block is 32K.
-    Heap_Grow(heap, WORDS_IN_BLOCK);
+    Heap_Grow(heap, 1);
     object = (Object *)Allocator_Alloc(&allocator, size);
 
 done:
@@ -234,8 +233,7 @@ void Heap_Recycle(Heap *heap) {
             growth = GROWTH_RATE;
         }
         size_t blocks = blockAllocator.blockCount * (growth - 1);
-        size_t increment = blocks * WORDS_IN_BLOCK;
-        Heap_Grow(heap, increment);
+        Heap_Grow(heap, blocks);
     }
     BlockAllocator_SweepDone(&blockAllocator);
     Allocator_InitCursors(&allocator);
@@ -248,16 +246,14 @@ void Heap_exitWithOutOfMemory() {
 }
 
 bool Heap_isGrowingPossible(Heap *heap, size_t increment) {
-    return heap->heapSize + increment * WORD_SIZE <= heap->memoryLimit;
+    return heap->heapSize + increment <= heap->memoryLimit;
 }
 
 /** Grows the small heap by at least `increment` words */
-void Heap_Grow(Heap *heap, size_t increment) {
-    assert(increment % WORDS_IN_BLOCK == 0);
-    uint32_t incrementInBlocks = increment / WORDS_IN_BLOCK;
+void Heap_Grow(Heap *heap, size_t incrementInBlocks) {
 
     // If we cannot grow because we reached the memory limit
-    if (!Heap_isGrowingPossible(heap, increment)) {
+    if (!Heap_isGrowingPossible(heap, incrementInBlocks * BLOCK_TOTAL_SIZE)) {
         // If we can still init the cursors, grow by max possible increment
         if (Allocator_CanInitCursors(&allocator)) {
             // increment = heap->memoryLimit - (heap->smallHeapSize +
@@ -279,8 +275,8 @@ void Heap_Grow(Heap *heap, size_t increment) {
 #endif
 
     word_t *heapEnd = heap->heapEnd;
-    heap->heapEnd = heapEnd + increment;
-    heap->heapSize += increment * WORD_SIZE;
+    heap->heapEnd = heapEnd + incrementInBlocks * BLOCK_TOTAL_SIZE;
+    heap->heapSize += incrementInBlocks * BLOCK_TOTAL_SIZE;
     word_t *blockMetaEnd = heap->blockMetaEnd;
     heap->blockMetaEnd = (word_t *)(((BlockMeta *) heap->blockMetaEnd) + incrementInBlocks);
     heap->lineMetaEnd +=
@@ -306,7 +302,7 @@ void Heap_GrowLarge(Heap *heap, uint32_t increment) {
         superblock = BlockAllocator_GetFreeSuperblock(&blockAllocator, increment);
         if (superblock == NULL) {
             word_t pow2increment = 1UL << MathUtils_Log2Ceil(increment);
-            Heap_Grow(heap, WORDS_IN_BLOCK * pow2increment);
+            Heap_Grow(heap, pow2increment);
             superblock = BlockAllocator_GetFreeSuperblock(&blockAllocator, increment);
         }
     }
