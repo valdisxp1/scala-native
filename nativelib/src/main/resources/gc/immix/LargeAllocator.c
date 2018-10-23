@@ -162,17 +162,30 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
     word_t *startOfLastBlock = blockEnd - WORDS_IN_BLOCK;
     ObjectMeta *cutpoint = Bytemap_Get(allocator->bytemap, startOfLastBlock);
 
-    ObjectMeta *cutpoint1 = cutpoint + MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
-    beforeSweep[1] = *cutpoint1;
-    ObjectMeta_Sweep(cutpoint1);
+    {
+    int i = 1;
+    ObjectMeta *cutpoint0 = cutpoint + i * MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
+    ObjectMeta before = *cutpoint0;
+    beforeSweep[i] = *before;
+    *cutpoint0 = (before & 0x04) >> 1;
+    }
 
-    ObjectMeta *cutpoint2 = cutpoint + 2 * MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
-    beforeSweep[2] = *cutpoint2;
-    ObjectMeta_Sweep(cutpoint2);
+    {
+    int i = 2;
+    ObjectMeta *cutpoint0 = cutpoint + i * MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
+    ObjectMeta before = *cutpoint0;
+    beforeSweep[i] = *before;
+    *cutpoint0 = (before & 0x04) >> 1;
+    }
 
-    ObjectMeta *cutpoint3 = cutpoint + 3 * MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
-    beforeSweep[3] = *cutpoint3;
-    ObjectMeta_Sweep(cutpoint3);
+    {
+    int i = 3;
+    ObjectMeta *cutpoint0 = cutpoint + i * MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
+    ObjectMeta before = *cutpoint0;
+    beforeSweep[i] = *before;
+    *cutpoint0 = (before & 0x04) >> 1;
+    }
+
 
     uint64_t = beforeSweep_singleNum = ((uint32_t *)beforeSweep)[0]
     if ((beforeSweep_singleNum & 0x04040404) == 0) {
@@ -182,10 +195,21 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
     }
 
 
-    int startIndex = -1;
-    for (int i = 0; i < 4; i++) {
+    int startIndex;
+
+    {
+    int i = 0;
+        if (beforeSweep[i] & 0x3) {
+            startIndex = i;
+        } else {
+            startIndex = -1
+        }
+    }
+
+    {
+    int i = 1;
         if (startIndex == -1) {
-            if (ObjectMeta_IsAllocated(beforeSweep[i])|| ObjectMeta_IsPlaceholder(beforeSweep[i])) {
+            if (beforeSweep[i] & 0x3) {
                 startIndex = i;
             }
         } else {
@@ -198,10 +222,47 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
             }
         }
     }
-    if (startIndex != -1) {
-        // send [startIndex, 3]
-        word_t *current = startOfLastBlock + startIndex * MIN_BLOCK_SIZE;
-        size_t currentSize = (size_t) (3 - startIndex) * MIN_BLOCK_SIZE;
-        LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
+
+    {
+    int i = 2;
+        if (startIndex == -1) {
+            if (beforeSweep[i] & 0x3) {
+                startIndex = i;
+            }
+        } else {
+            if (ObjectMeta_IsMarked(beforeSweep[i])) {
+                // send [startIndex, i - 1]
+                word_t *current = startOfLastBlock + startIndex * MIN_BLOCK_SIZE;
+                size_t currentSize = (size_t) (i - startIndex) * MIN_BLOCK_SIZE;
+                LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
+                startIndex = -1;
+            }
+        }
+    }
+
+    {
+    int i = 3;
+        if (startIndex == -1) {
+            if (beforeSweep[i] & 0x3) {
+                startIndex = i;
+                // send [startIndex, 3]
+                word_t *current = startOfLastBlock + startIndex * MIN_BLOCK_SIZE;
+                size_t currentSize = (size_t) (3 - startIndex) * MIN_BLOCK_SIZE;
+                LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
+            }
+        } else {
+            if (ObjectMeta_IsMarked(beforeSweep[i])) {
+                // send [startIndex, i - 1]
+                word_t *current = startOfLastBlock + startIndex * MIN_BLOCK_SIZE;
+                size_t currentSize = (size_t) (i - startIndex) * MIN_BLOCK_SIZE;
+                LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
+                startIndex = -1;
+            } else {
+                // send [startIndex, 3]
+                word_t *current = startOfLastBlock + startIndex * MIN_BLOCK_SIZE;
+                size_t currentSize = (size_t) (3 - startIndex) * MIN_BLOCK_SIZE;
+                LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
+            }
+        }
     }
 }
