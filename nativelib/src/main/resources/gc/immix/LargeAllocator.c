@@ -56,6 +56,8 @@ void LargeAllocator_Init(LargeAllocator *allocator, BlockAllocator *blockAllocat
 
 void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
                              size_t total_block_size) {
+//    printf("ADD chunk (%p %p) size: %zu\n", chunk, (ubyte_t *) chunk + total_block_size, total_block_size);
+//    fflush(stdout);
     assert(total_block_size >= MIN_BLOCK_SIZE);
     assert(total_block_size % MIN_BLOCK_SIZE == 0);
 
@@ -129,62 +131,57 @@ void LargeAllocator_Clear(LargeAllocator *allocator) {
     }
 }
 
-static inline BlockMeta *LargeAllocator_splitSuperblock(LargeAllocator *allocator, BlockMeta *previousSuperblock, Chunk *chunk, size_t total_block_size) {
-    // round the start up
-    word_t *superblockStart = (word_t *) MathUtils_RoundToNextMultiple((word_t) chunk, BLOCK_TOTAL_SIZE);
-    word_t *chunkEnd = (word_t *) ((ubyte_t *) chunk + total_block_size);
-    // round the end down
-    word_t *superblockEnd = Block_GetBlockStartForWord(chunkEnd);
-
-    if (superblockEnd > superblockStart) {
-        // before
-        size_t beforeSize = (ubyte_t *) superblockStart - (ubyte_t *) chunk;
-        if (beforeSize > 0) {
-            LargeAllocator_AddChunk(allocator, chunk, beforeSize);
-        }
-        // empty superblock
-        BlockMeta *superblock = Block_GetBlockMeta(allocator->blockMetaStart, allocator->heapStart, superblockStart);
-        uint32_t size = (uint32_t) ((superblockEnd - superblockStart) / WORDS_IN_BLOCK);
-        BlockAllocator_AddFreeBlocks(allocator->blockAllocator, superblock, size);
-        // after
-        size_t afterSize = (ubyte_t *) chunkEnd - (ubyte_t *) superblockEnd;
-        if (afterSize > 0) {
-            LargeAllocator_AddChunk(allocator, (Chunk *) superblockEnd, total_block_size);
-        }
-
-        // update the previous superblock
-        uint32_t previousSize = BlockMeta_SuperblockSize(previousSuperblock);
-        uint32_t previousSizeUpdated = (uint32_t) (superblock - previousSuperblock);
-        if (previousSizeUpdated > 0) {
-            BlockMeta_SetSuperblockSize(previousSuperblock, previousSizeUpdated);
-        }
-
-        // create a new superblock after the split
-        uint32_t nextSize = previousSize - size - previousSizeUpdated;
-        if (nextSize > 0) {
-            BlockMeta *nextSuperblock = superblock + size;
-            BlockMeta_SetFlag(nextSuperblock, block_superblock_start);
-            BlockMeta_SetSuperblockSize(nextSuperblock, nextSize);
-            return nextSuperblock;
-        } else {
-            // this is the end of the original superblock
-            return previousSuperblock;
-        }
-    } else {
-        // no need to split, free space does not align to whole blocks
-        LargeAllocator_AddChunk(allocator, chunk, total_block_size);
-        return previousSuperblock;
-    }
-}
-
 void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_t *blockStart) {
-    Object *current = (Object *)blockStart;
-    BlockMeta *currentSuperblock = blockMeta;
-    void *blockEnd = blockStart + WORDS_IN_BLOCK * BlockMeta_SuperblockSize(currentSuperblock);
+    uint32_t superblockSize = BlockMeta_SuperblockSize(blockMeta);
+    word_t *blockEnd = blockStart + WORDS_IN_BLOCK * superblockSize;
+//    printf("block (%p %p) size:%u\n", blockStart, blockEnd, superblockSize);
 
-    while (current != blockEnd) {
+    ObjectMeta *firstObject = Bytemap_Get(allocator->bytemap, blockStart);
+//    printf("firstObject %p=%d\n", blockStart, *firstObject);
+//    fflush(stdout);
+    Object *current = (Object *)blockStart;
+    if (!ObjectMeta_IsMarked(firstObject)) {
+        // release free superblocks starting from the first object
+        ObjectMeta_SetFree(firstObject);
+        Object *next = Object_NextLargeObject(current);
+        ObjectMeta *nextMeta = Bytemap_Get(allocator->bytemap, (word_t *)next);
+        while ((word_t *) next < blockEnd && !ObjectMeta_IsMarked(nextMeta)) {
+            assert(!ObjectMeta_IsFree(nextMeta));
+            ObjectMeta_SetFree(nextMeta);
+            next = Object_NextLargeObject(next);
+            nextMeta = Bytemap_Get(allocator->bytemap, (word_t *)next);
+        }
+        word_t *freeBlockEnd = Block_GetBlockStartForWord((word_t *) next);
+        uint32_t size = (uint32_t) (((word_t *) freeBlockEnd - blockStart) / WORDS_IN_BLOCK);
+        if (size > 0) {
+//            printf("SUPERBLOCK (%p, %p) size:%u\n", blockMeta, freeBlockEnd, size);
+//            fflush(stdout);
+            BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta, size);
+        }
+
+        assert(size <= superblockSize);
+        // mark the remaining superblock
+        uint32_t remainingSuperblockSize = superblockSize - size;
+        if (size > 0 && remainingSuperblockSize > 0) {
+            BlockMeta *remainingSuperblock = blockMeta + size;
+            BlockMeta_SetFlag(remainingSuperblock, block_superblock_start);
+            BlockMeta_SetSuperblockSize(remainingSuperblock, remainingSuperblockSize);
+        }
+
+        assert(freeBlockEnd <= (word_t *) next);
+        size_t remainingSizeInWords = (word_t *) next - freeBlockEnd;
+        if (remainingSizeInWords > 0) {
+            LargeAllocator_AddChunk(allocator, (Chunk *) current, remainingSizeInWords * WORD_SIZE);
+        }
+
+        current = next;
+    }
+
+    while ((word_t *) current < blockEnd) {
         ObjectMeta *currentMeta =
             Bytemap_Get(allocator->bytemap, (word_t *)current);
+//        printf("object %p=%d\n", current, *currentMeta);
+//        fflush(stdout);
         assert(!ObjectMeta_IsFree(currentMeta));
         if (ObjectMeta_IsMarked(currentMeta)) {
             ObjectMeta_SetAllocated(currentMeta);
@@ -195,14 +192,16 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
             Object *next = Object_NextLargeObject(current);
             ObjectMeta *nextMeta =
                 Bytemap_Get(allocator->bytemap, (word_t *)next);
-            while (next != blockEnd && !ObjectMeta_IsMarked(nextMeta)) {
+            while ((word_t *) next < blockEnd && !ObjectMeta_IsMarked(nextMeta)) {
                 assert(!ObjectMeta_IsFree(nextMeta));
                 currentSize += Object_ChunkSize(next);
                 ObjectMeta_SetFree(nextMeta);
                 next = Object_NextLargeObject(next);
                 nextMeta = Bytemap_Get(allocator->bytemap, (word_t *)next);
+//                printf("object %p=%d NEXT\n", next, *nextMeta);
+//                fflush(stdout);
             }
-            currentSuperblock = LargeAllocator_splitSuperblock(allocator, currentSuperblock, (Chunk *)current, currentSize);
+            LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
             current = next;
         }
     }
