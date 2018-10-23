@@ -143,6 +143,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
 //    printf("firstObject %p=%d\n", blockStart, *firstObject);
 //    fflush(stdout);
     Object *current = (Object *)blockStart;
+    assert(!ObjectMeta_IsFree(firstObject));
     if (!ObjectMeta_IsMarked(firstObject)) {
         // release free superblocks starting from the first object
         ObjectMeta_SetFree(firstObject);

@@ -216,8 +216,8 @@ void Heap_Recycle(Heap *heap) {
     while ((word_t *) current < end) {
         int size = 1;
         if (BlockMeta_IsSuperblockStart(current)) {
-            LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart);
             size = BlockMeta_SuperblockSize(current);
+            LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart);
         } else if(!BlockMeta_IsSuperblockMiddle(current)) {
             Block_Recycle(&allocator, current, currentBlockStart, lineMetas);
         }
