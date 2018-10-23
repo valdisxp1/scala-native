@@ -46,6 +46,5 @@ void Heap_Collect(Heap *heap, Stack *stack);
 
 void Heap_Recycle(Heap *heap);
 void Heap_Grow(Heap *heap, size_t increment);
-void Heap_GrowLarge(Heap *heap, uint32_t increment);
 
 #endif // IMMIX_HEAP_H

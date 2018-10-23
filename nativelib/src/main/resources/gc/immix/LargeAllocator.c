@@ -85,17 +85,36 @@ void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
     }
 }
 
+static inline Chunk* LargeAllocator_getChunkForSize(LargeAllocator *allocator, size_t requiredChunkSize) {
+    for (int listIndex = LargeAllocator_sizeToLinkedListIndex(requiredChunkSize); listIndex < FREE_LIST_COUNT; listIndex++) {
+        Chunk *chunk = allocator->freeLists[listIndex].first;
+        if (chunk != NULL) {
+            return chunk;
+        }
+    }
+    return NULL;
+}
+
 Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
                                 size_t requestedBlockSize) {
     size_t actualBlockSize =
         MathUtils_RoundToNextMultiple(requestedBlockSize, MIN_BLOCK_SIZE);
-    size_t requiredChunkSize = 1UL << MathUtils_Log2Ceil(actualBlockSize);
 
-    int listIndex = LargeAllocator_sizeToLinkedListIndex(requiredChunkSize);
     Chunk *chunk = NULL;
-    while (listIndex <= FREE_LIST_COUNT - 1 &&
-           (chunk = allocator->freeLists[listIndex].first) == NULL) {
-        ++listIndex;
+    size_t requiredChunkSize = 1UL << MathUtils_Log2Ceil(actualBlockSize);
+    if (requiredChunkSize < BLOCK_TOTAL_SIZE) {
+        // only need to look in free lists for chunks smaller than a block
+        chunk = LargeAllocator_getChunkForSize(allocator, requiredChunkSize);
+    }
+
+    if (chunk == NULL) {
+        uint32_t superblockSize = (uint32_t) MathUtils_DivAndRoundUp(requiredChunkSize, BLOCK_TOTAL_SIZE);
+        BlockMeta *superblock = BlockAllocator_GetFreeSuperblock(allocator->blockAllocator, superblockSize);
+        if (superblock != NULL) {
+            chunk = (Chunk *) BlockMeta_GetBlockStart(allocator->blockMetaStart, allocator->heapStart, superblock);
+            chunk->nothing = NULL;
+            chunk->size = requiredChunkSize;
+        }
     }
 
     if (chunk == NULL) {
@@ -108,13 +127,9 @@ Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
     if (chunkSize - MIN_BLOCK_SIZE >= actualBlockSize) {
         Chunk *remainingChunk =
             LargeAllocator_chunkAddOffset(chunk, actualBlockSize);
-        LargeAllocator_freeListRemoveFirstBlock(
-            &allocator->freeLists[listIndex]);
+
         size_t remainingChunkSize = chunkSize - actualBlockSize;
         LargeAllocator_AddChunk(allocator, remainingChunk, remainingChunkSize);
-    } else {
-        LargeAllocator_freeListRemoveFirstBlock(
-            &allocator->freeLists[listIndex]);
     }
 
     ObjectMeta *objectMeta = Bytemap_Get(allocator->bytemap, (word_t *)chunk);

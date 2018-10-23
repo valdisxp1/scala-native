@@ -118,7 +118,8 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
             return (word_t *)object;
         } else {
             size_t increment = MathUtils_DivAndRoundUp(size, BLOCK_TOTAL_SIZE);
-            Heap_GrowLarge(heap, (uint32_t) increment);
+            uint32_t pow2increment = 1U << MathUtils_Log2Ceil(increment);
+            Heap_Grow(heap, pow2increment);
 
             object = LargeAllocator_GetBlock(&largeAllocator, size);
             assert(object !=  NULL);
@@ -286,28 +287,4 @@ void Heap_Grow(Heap *heap, size_t incrementInBlocks) {
     BlockAllocator_AddFreeBlocks(&blockAllocator, (BlockMeta *)blockMetaEnd, incrementInBlocks);
 
     blockAllocator.blockCount += incrementInBlocks;
-}
-
-/** Grows the large heap by `increment` blocks */
-void Heap_GrowLarge(Heap *heap, uint32_t increment) {
-
-#ifdef DEBUG_PRINT
-    printf("Growing large heap by %zu bytes, to %zu bytes\n",
-           increment * WORD_SIZE, heap->largeHeapSize + increment * WORD_SIZE);
-    fflush(stdout);
-#endif
-
-    BlockMeta *superblock = BlockAllocator_GetFreeSuperblock(&blockAllocator, increment);
-    if (superblock == NULL) {
-        Heap_Recycle(heap);
-        superblock = BlockAllocator_GetFreeSuperblock(&blockAllocator, increment);
-        if (superblock == NULL) {
-            word_t pow2increment = 1UL << MathUtils_Log2Ceil(increment);
-            Heap_Grow(heap, pow2increment);
-            superblock = BlockAllocator_GetFreeSuperblock(&blockAllocator, increment);
-        }
-    }
-    assert(superblock != NULL);
-    word_t *superblockStart = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, superblock);
-    LargeAllocator_AddChunk(&largeAllocator, (Chunk *)superblockStart, (size_t) increment * BLOCK_TOTAL_SIZE);
 }
