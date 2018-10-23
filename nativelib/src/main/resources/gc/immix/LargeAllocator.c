@@ -137,10 +137,10 @@ void LargeAllocator_Clear(LargeAllocator *allocator) {
 void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_t *blockStart) {
     uint32_t superblockSize = BlockMeta_SuperblockSize(blockMeta);
     word_t *blockEnd = blockStart + WORDS_IN_BLOCK * superblockSize;
-//    printf("block (%p %p) size:%u\n", blockStart, blockEnd, superblockSize);
+//    printf("block [%p] (%p %p) size:%u\n", blockMeta, blockStart, blockEnd, superblockSize);
 
     ObjectMeta *firstObject = Bytemap_Get(allocator->bytemap, blockStart);
-//    printf("firstObject %p=%d\n", blockStart, *firstObject);
+//    printf("firstObject [%p] %p=%d\n", firstObject , blockStart, *firstObject);
 //    fflush(stdout);
     Object *current = (Object *)blockStart;
     assert(!ObjectMeta_IsFree(firstObject));
@@ -177,7 +177,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
         assert(freeBlockEnd <= (word_t *) next);
         size_t remainingSizeInWords = (word_t *) next - freeBlockEnd;
         if (remainingSizeInWords > 0) {
-            LargeAllocator_AddChunk(allocator, (Chunk *) current, remainingSizeInWords * WORD_SIZE);
+            LargeAllocator_AddChunk(allocator, (Chunk *) freeBlockEnd, remainingSizeInWords * WORD_SIZE);
         }
 
         current = next;

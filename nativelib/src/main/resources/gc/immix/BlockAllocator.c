@@ -52,6 +52,8 @@ BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
     blockAllocator->smallestSuperblock.cursor++;
 
     // not decrementing freeBlockCount, because it is only used after sweep
+//    printf("GOT block %p\n", block);
+//    fflush(stdout);
     return block;
 }
 
@@ -83,6 +85,8 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator, uint
         BlockMeta_SetFlag(current, block_superblock_middle);
     }
     // not decrementing freeBlockCount, because it is only used after sweep
+//    printf("GOT superblock %p , size=%u\n", superblock, size);
+//    fflush(stdout);
     return superblock;
 }
 
