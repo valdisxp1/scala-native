@@ -121,6 +121,7 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
             Heap_GrowLarge(heap, (uint32_t) increment);
 
             object = LargeAllocator_GetBlock(&largeAllocator, size);
+            assert(object !=  NULL);
             assert(Heap_IsWordInHeap(heap, (word_t *)object));
             return (word_t *)object;
         }
