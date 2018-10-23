@@ -213,7 +213,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
                 startIndex = i;
             }
         } else {
-            if (ObjectMeta_IsMarked(beforeSweep[i])) {
+            if (ObjectMeta_IsMarked(&beforeSweep[i])) {
                 // send [startIndex, i - 1]
                 word_t *current = startOfLastBlock + startIndex * MIN_BLOCK_SIZE;
                 size_t currentSize = (size_t) (i - startIndex) * MIN_BLOCK_SIZE;
@@ -230,7 +230,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
                 startIndex = i;
             }
         } else {
-            if (ObjectMeta_IsMarked(beforeSweep[i])) {
+            if (ObjectMeta_IsMarked(&beforeSweep[i])) {
                 // send [startIndex, i - 1]
                 word_t *current = startOfLastBlock + startIndex * MIN_BLOCK_SIZE;
                 size_t currentSize = (size_t) (i - startIndex) * MIN_BLOCK_SIZE;
@@ -251,7 +251,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
                 LargeAllocator_AddChunk(allocator, (Chunk *)current, currentSize);
             }
         } else {
-            if (ObjectMeta_IsMarked(beforeSweep[i])) {
+            if (ObjectMeta_IsMarked(&beforeSweep[i])) {
                 // send [startIndex, i - 1]
                 word_t *current = startOfLastBlock + startIndex * MIN_BLOCK_SIZE;
                 size_t currentSize = (size_t) (i - startIndex) * MIN_BLOCK_SIZE;
