@@ -30,7 +30,7 @@ void StackOverflowHandler_CheckForOverflow() {
         word_t *heapEnd = heap.heapEnd;
         // Continue while we don't hit the end of the heap.
         while (currentOverflowAddress < heapEnd) {
-            StackOverflowHandler_smallHeapOverflowHeapScan(&heap,&stack);
+            StackOverflowHandler_smallHeapOverflowHeapScan(&heap, &stack);
 
             // At every iteration when a object is found, trace it
             Marker_Mark(&heap, &stack);
@@ -125,7 +125,7 @@ bool StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
     return false;
 }
 
-bool overflowScanLine(Heap *heap, Stack *stack, BlockMeta *block,
+bool StackOverflowHandler_overflowScanLine(Heap *heap, Stack *stack, BlockMeta *block,
                       word_t *blockStart, int lineIndex) {
     Bytemap *bytemap = heap->bytemap;
 
@@ -170,7 +170,7 @@ bool StackOverflowHandler_overflowBlockScan(Heap *heap, Stack *stack) {
     int lineIndex =
         Block_GetLineIndexFromWord(blockStart, currentOverflowAddress);
     while (lineIndex < LINE_COUNT) {
-        if (overflowScanLine(heap, stack, currentOverflowBlock, blockStart, lineIndex)) {
+        if (StackOverflowHandler_overflowScanLine(heap, stack, currentOverflowBlock, blockStart, lineIndex)) {
             return true;
         }
 
