@@ -8,7 +8,7 @@
 #include "BlockAllocator.h"
 
 #define FREE_LIST_COUNT                                                        \
-    (LARGE_OBJECT_MAX_SIZE_BITS - LARGE_OBJECT_MIN_SIZE_BITS + 1)
+    (1UL << (BLOCK_SIZE_BITS - LARGE_OBJECT_MIN_SIZE_BITS))
 
 typedef struct {
     Chunk *first;
