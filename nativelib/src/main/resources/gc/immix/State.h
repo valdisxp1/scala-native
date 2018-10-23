@@ -10,7 +10,5 @@ extern LargeAllocator largeAllocator;
 extern BlockAllocator blockAllocator;
 
 extern bool overflow;
-extern BlockMeta *currentOverflowBlock;
-extern word_t *currentOverflowAddress;
 
 #endif // IMMIX_STATE_H

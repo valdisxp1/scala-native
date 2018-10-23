@@ -9,15 +9,11 @@ extern int __object_array_id;
 
 #define LAST_FIELD_OFFSET -1
 
-void StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack);
-bool StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack);
-bool StackOverflowHandler_overflowBlockScan(Heap *heap, Stack *stack);
+void StackOverflowHandler_largeBlockScan(Heap *heap, Stack *stack, word_t *blockStart, word_t *blockEnd);
+void StackOverflowHandler_blockScan(Heap *heap, Stack *stack, word_t *blockStart);
 
 void StackOverflowHandler_CheckForOverflow() {
     if (overflow) {
-        // Set overflow address to the first word of the heap
-        currentOverflowBlock = (BlockMeta *) heap.blockMetaStart;
-        currentOverflowAddress = heap.heapStart;
         overflow = false;
         Stack_DoubleSize(&stack);
 
@@ -27,42 +23,31 @@ void StackOverflowHandler_CheckForOverflow() {
         fflush(stdout);
 #endif
 
-        word_t *heapEnd = heap.heapEnd;
-        // Continue while we don't hit the end of the heap.
-        while (currentOverflowAddress < heapEnd) {
-            StackOverflowHandler_smallHeapOverflowHeapScan(&heap, &stack);
+        word_t *blockMetaEnd = heap.blockMetaEnd;
+        BlockMeta *currentBlock = (BlockMeta *) heap.blockMetaStart;
+        word_t *blockStart = heap.heapStart;
 
-            // At every iteration when a object is found, trace it
-            Marker_Mark(&heap, &stack);
+        while ((word_t *)currentBlock < blockMetaEnd) {
+            assert(!BlockMeta_IsSuperblockMiddle(currentBlock));
+            int size;
+            if (BlockMeta_IsSuperblockStart(currentBlock)) {
+                size = BlockMeta_SuperblockSize(currentBlock);
+                assert(size > 0);
+                StackOverflowHandler_largeBlockScan(&heap, &stack, blockStart, blockStart + size * WORDS_IN_BLOCK);
+            } else {
+                size = 1;
+                if (BlockMeta_IsMarked(currentBlock)) {
+                    StackOverflowHandler_blockScan(&heap, &stack, blockStart);
+                }
+            }
+            currentBlock += size;
+            blockStart += size * WORDS_IN_BLOCK;
         }
+
     }
 }
 
-void StackOverflowHandler_smallHeapOverflowHeapScan(Heap *heap, Stack *stack) {
-    word_t *blockMetaEnd = heap->blockMetaEnd;
-
-    while ((word_t *)currentOverflowBlock < blockMetaEnd) {
-        assert(!BlockMeta_IsSuperblockMiddle(currentOverflowBlock));
-        int size;
-        if (BlockMeta_IsSuperblockStart(currentOverflowBlock)) {
-            size = BlockMeta_SuperblockSize(currentOverflowBlock);
-            assert(size > 0);
-            if (StackOverflowHandler_largeHeapOverflowHeapScan(heap, stack)) {
-                return;
-            }
-        } else {
-            size = 1;
-            if (StackOverflowHandler_overflowBlockScan(heap, stack)) {
-                return;
-            }
-        }
-        currentOverflowBlock += size;
-        currentOverflowAddress = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, currentOverflowBlock);
-    }
-    return;
-}
-
-bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
+void StackOverflowHandler_mark(Heap *heap, Stack *stack, Object *object,
                                        ObjectMeta *objectMeta) {
 
     Bytemap *bytemap = heap->bytemap;
@@ -79,7 +64,7 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
                         ObjectMeta *metaF = Bytemap_Get(bytemap, field);
                         if (ObjectMeta_IsAllocated(metaF)) {
                             Stack_Push(stack, object);
-                            return true;
+                            Marker_Mark(heap, stack);
                         }
                     }
                 }
@@ -95,86 +80,47 @@ bool StackOverflowHandler_overflowMark(Heap *heap, Stack *stack, Object *object,
                     ObjectMeta *metaF = Bytemap_Get(bytemap, field);
                     if (ObjectMeta_IsAllocated(metaF)) {
                         Stack_Push(stack, object);
-                        return true;
+                        Marker_Mark(heap, stack);
                     }
                 }
-                ++i;
+                i++;
             }
         }
     }
-    return false;
 }
 
-/**
- * Scans through the large heap to find marked blocks with unmarked children.
- * Updates `currentOverflowAddress` while doing so.
- */
-bool StackOverflowHandler_largeHeapOverflowHeapScan(Heap *heap, Stack *stack) {
-    word_t *blockStart = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, currentOverflowBlock);
-    word_t *end = blockStart + WORDS_IN_BLOCK * BlockMeta_SuperblockSize(currentOverflowBlock);
-    while (currentOverflowAddress < end) {
-        Object *object = (Object *)currentOverflowAddress;
-        ObjectMeta *cursorMeta =
-            Bytemap_Get(heap->bytemap, currentOverflowAddress);
-        assert(!ObjectMeta_IsFree(cursorMeta));
-        if (StackOverflowHandler_overflowMark(heap, stack, object, cursorMeta)) {
-            return true;
-        }
-        currentOverflowAddress = (word_t *)Object_NextLargeObject(object);
+void StackOverflowHandler_largeBlockScan(Heap *heap, Stack *stack, word_t *blockStart, word_t* blockEnd) {
+    word_t *current = blockStart;
+    while (current < blockEnd) {
+        Object *object = (Object *)current;
+        ObjectMeta *currentMeta = Bytemap_Get(heap->bytemap, current);
+        assert(!ObjectMeta_IsFree(currentMeta));
+        StackOverflowHandler_mark(heap, stack, object, currentMeta);
+
+        current = (word_t *)Object_NextLargeObject(object);
     }
-    return false;
 }
 
-bool StackOverflowHandler_overflowScanLine(Heap *heap, Stack *stack, BlockMeta *block,
-                      word_t *blockStart, int lineIndex) {
+
+void StackOverflowHandler_blockScan(Heap *heap, Stack *stack, word_t *blockStart) {
     Bytemap *bytemap = heap->bytemap;
+    word_t *lineStart = blockStart;
+    for (int lineIndex = 0; lineIndex < LINE_COUNT; lineIndex++) {
 
-    word_t *lineStart = Block_GetLineAddress(blockStart, lineIndex);
-    if (Line_IsMarked(Heap_LineMetaForWord(heap, lineStart))) {
+        word_t *lineStart = Block_GetLineAddress(blockStart, lineIndex);
         word_t *lineEnd = lineStart + WORDS_IN_LINE;
-        word_t *cursor = lineStart;
-        ObjectMeta *cursorMeta = Bytemap_Get(bytemap, cursor);
-        while (cursor < lineEnd) {
-            Object *object = (Object *)cursor;
-            if (ObjectMeta_IsMarked(cursorMeta) &&
-                StackOverflowHandler_overflowMark(heap, stack, object,
-                                                  cursorMeta)) {
-                return true;
+
+        if (Line_IsMarked(Heap_LineMetaForWord(heap, lineStart))) {
+            word_t *cursor = lineStart;
+            ObjectMeta *cursorMeta = Bytemap_Get(bytemap, cursor);
+            while (cursor < lineEnd) {
+                StackOverflowHandler_mark(heap, stack, (Object *)cursor, cursorMeta);
+
+                cursor += ALLOCATION_ALIGNMENT_WORDS;
+                cursorMeta += 1;
             }
-
-            cursor += ALLOCATION_ALIGNMENT_WORDS;
-            cursorMeta += 1;
-        }
-    }
-    return false;
-}
-
-/**
- *
- * This method is used in case of overflow during the marking phase.
- * It sweeps through the block starting at `currentOverflowAddress` until it
- * finds a marked block with unmarked children.
- * It updates the value of `currentOverflowAddress` while sweeping through the
- * block
- * Once an object is found it adds it to the stack and returns `true`. If no
- * object is found it returns `false`.
- *
- */
-bool StackOverflowHandler_overflowBlockScan(Heap *heap, Stack *stack) {
-    if (!BlockMeta_IsMarked(currentOverflowBlock)) {
-        return false;
-    }
-
-    word_t *blockStart =
-        BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, currentOverflowBlock);
-    int lineIndex =
-        Block_GetLineIndexFromWord(blockStart, currentOverflowAddress);
-    while (lineIndex < LINE_COUNT) {
-        if (StackOverflowHandler_overflowScanLine(heap, stack, currentOverflowBlock, blockStart, lineIndex)) {
-            return true;
         }
 
-        lineIndex++;
+        lineStart = lineEnd;
     }
-    return false;
 }
