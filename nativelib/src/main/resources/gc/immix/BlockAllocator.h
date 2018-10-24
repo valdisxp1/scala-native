@@ -12,15 +12,15 @@ typedef struct {
         BlockMeta *cursor;
         BlockMeta *limit;
     } smallestSuperblock;
+    int minNonEmptyIndex;
+    int maxNonEmptyIndex;
+    uint32_t freeBlockCount;
+    uint32_t blockCount;
     struct {
         BlockMeta *first;
         BlockMeta *limit;
     } coalescingSuperblock;
     BlockList freeSuperblocks[SUPERBLOCK_LIST_SIZE];
-    int minNonEmptyIndex;
-    int maxNonEmptyIndex;
-    uint32_t freeBlockCount;
-    uint32_t blockCount;
 } BlockAllocator;
 
 void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart,
