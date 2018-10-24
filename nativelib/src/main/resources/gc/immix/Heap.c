@@ -216,11 +216,15 @@ void Heap_Recycle(Heap *heap) {
     word_t *end = heap->blockMetaEnd;
     while ((word_t *)current < end) {
         int size = 1;
-        if (BlockMeta_IsSuperblockStart(current)) {
+        assert(!BlockMeta_IsSuperblockMiddle(current));
+        if (BlockMeta_IsSimpleBlock(current)) {
+            Block_Recycle(&allocator, current, currentBlockStart, lineMetas);
+        } else if (BlockMeta_IsSuperblockStart(current)) {
             size = BlockMeta_SuperblockSize(current);
             LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart);
-        } else if (!BlockMeta_IsSuperblockMiddle(current)) {
-            Block_Recycle(&allocator, current, currentBlockStart, lineMetas);
+        } else {
+            assert(BlockMeta_IsFree(current));
+            BlockAllocator_AddFreeBlocks(&blockAllocator, current, 1);
         }
         assert(size > 0);
         current += size;
