@@ -74,4 +74,15 @@ static inline void ObjectMeta_SweepLineAt(ObjectMeta *start) {
     first[1] = (first[1] & SWEEP_MASK) >> 1;
 }
 
+static inline void ObjectMeta_Sweep(ObjectMeta *cursor) {
+    //    implements this, just with hardcoded constants:
+    //
+    //    if (ObjectMeta_IsMarked(cursor)) {
+    //        ObjectMeta_SetAllocated(cursor);
+    //    } else {
+    //        ObjectMeta_SetFree(cursor)
+    //    }
+    *cursor = (*cursor & 0x04) >> 1;
+}
+
 #endif // IMMIX_OBJECTMETA_H
