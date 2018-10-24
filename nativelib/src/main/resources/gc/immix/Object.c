@@ -5,12 +5,6 @@
 #include "Log.h"
 #include "utils/MathUtils.h"
 
-Object *Object_NextLargeObject(Object *object) {
-    size_t size = Object_ChunkSize(object);
-    assert(size != 0);
-    return (Object *)((ubyte_t *)object + size);
-}
-
 word_t *Object_LastWord(Object *object) {
     size_t size = Object_Size(object);
     assert(size < LARGE_BLOCK_SIZE);
@@ -88,15 +82,5 @@ void Object_Mark(Heap *heap, Object *object, ObjectMeta *objectMeta) {
              lineMeta++) {
             Line_Mark(lineMeta);
         }
-    }
-}
-
-size_t Object_ChunkSize(Object *object) {
-    if (object->rtti == NULL) {
-        Chunk *chunk = (Chunk *)object;
-        return chunk->size;
-    } else {
-        return MathUtils_RoundToNextMultiple(Object_Size(object),
-                                             MIN_BLOCK_SIZE);
     }
 }

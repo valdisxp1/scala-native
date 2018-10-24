@@ -160,7 +160,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
     ObjectMeta_Sweep(firstObject);
 
     word_t *current = lastBlockStart + (MIN_BLOCK_SIZE / WORD_SIZE);
-    ObjectMeta *currentMeta = Bytemap_Get(allocator->bytemap, (word_t *)current);
+    ObjectMeta *currentMeta = Bytemap_Get(allocator->bytemap, current);
     while (current < blockEnd) {
         if (chunkStart == NULL) {
             // if (ObjectMeta_IsAllocated(currentMeta)|| ObjectMeta_IsPlaceholder(currentMeta)) {

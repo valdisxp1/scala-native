@@ -50,8 +50,8 @@ void StackOverflowHandler_CheckForOverflow() {
 void StackOverflowHandler_mark(Heap *heap, Stack *stack, Object *object,
                                        ObjectMeta *objectMeta) {
 
-    Bytemap *bytemap = heap->bytemap;
     if (ObjectMeta_IsMarked(objectMeta)) {
+        Bytemap *bytemap = heap->bytemap;
         if (Object_IsArray(object)) {
             if (object->rtti->rt.id == __object_array_id) {
                 ArrayHeader *arrayHeader = (ArrayHeader *)object;
@@ -90,14 +90,22 @@ void StackOverflowHandler_mark(Heap *heap, Stack *stack, Object *object,
 }
 
 void StackOverflowHandler_largeBlockScan(Heap *heap, Stack *stack, word_t *blockStart, word_t* blockEnd) {
-    word_t *current = blockStart;
-    while (current < blockEnd) {
-        Object *object = (Object *)current;
-        ObjectMeta *currentMeta = Bytemap_Get(heap->bytemap, current);
-        assert(!ObjectMeta_IsFree(currentMeta));
-        StackOverflowHandler_mark(heap, stack, object, currentMeta);
+    // We only need to look at the first object and the last block.
+    // See LargeAllocator_Sweep
+    ObjectMeta *firstObject = Bytemap_Get(heap->bytemap, blockStart);
+    assert(!ObjectMeta_IsFree(firstObject));
+    if (ObjectMeta_IsMarked(firstObject)) {
+        StackOverflowHandler_mark(heap, stack, (Object *) blockStart, firstObject);
+    }
 
-        current = (word_t *)Object_NextLargeObject(object);
+    word_t *lastBlockStart = blockEnd - WORDS_IN_BLOCK;
+    word_t *current = lastBlockStart + (MIN_BLOCK_SIZE / WORD_SIZE);
+    ObjectMeta *currentMeta = Bytemap_Get(heap->bytemap, current);
+    while (current < blockEnd) {
+        StackOverflowHandler_mark(heap, stack, (Object *)current, currentMeta);
+
+        current += MIN_BLOCK_SIZE / WORD_SIZE;
+        currentMeta += MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
     }
 }
 
