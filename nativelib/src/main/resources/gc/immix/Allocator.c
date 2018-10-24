@@ -189,7 +189,6 @@ bool Allocator_newBlock(Allocator *allocator) {
     word_t *blockStart;
 
     if (block != NULL) {
-        assert(BlockMeta_IsRecyclable(block));
         blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart,
                                              allocator->heapStart, block);
 
@@ -209,7 +208,6 @@ bool Allocator_newBlock(Allocator *allocator) {
         if (block == NULL) {
             return false;
         }
-        assert(BlockMeta_IsFree(block));
         blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart,
                                              allocator->heapStart, block);
 

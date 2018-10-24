@@ -88,11 +88,8 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
             }
         }
         // If there is no recyclable line, the block is unavailable
-        if (lastRecyclable == NULL) {
-            BlockMeta_SetFlag(blockMeta, block_unavailable);
-        } else {
+        if (lastRecyclable != NULL) {
             lastRecyclable->next = LAST_HOLE;
-            BlockMeta_SetFlag(blockMeta, block_recyclable);
             BlockList_AddLast(&allocator->recycledBlocks, blockMeta);
 
             assert(blockMeta->first != NO_RECYCLABLE_LINE);
