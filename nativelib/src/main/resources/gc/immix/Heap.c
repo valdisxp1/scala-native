@@ -316,4 +316,7 @@ void Heap_Grow(Heap *heap, size_t incrementInBlocks) {
                                  incrementInBlocks);
 
     blockAllocator.blockCount += incrementInBlocks;
+
+    // immediately add the block to freelists
+    BlockAllocator_SweepDone(&blockAllocator);
 }
