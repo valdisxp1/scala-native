@@ -17,7 +17,7 @@ typedef enum {
 
 typedef struct {
     uint8_t flags;
-    int16_t first;
+    int8_t first;
     int32_t nextBlock;
     int32_t superblockSize;
 } BlockMeta;
@@ -72,6 +72,7 @@ static inline void BlockMeta_Mark(BlockMeta *blockMeta) {
 // Block specific
 
 static inline word_t *Block_GetLineAddress(word_t *blockStart, int lineIndex) {
+    assert(lineIndex >= 0);
     assert(lineIndex < LINE_COUNT);
     return blockStart + (WORDS_IN_LINE * lineIndex);
 }

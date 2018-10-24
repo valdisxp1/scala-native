@@ -92,7 +92,8 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
             lastRecyclable->next = LAST_HOLE;
             BlockList_AddLast(&allocator->recycledBlocks, blockMeta);
 
-            assert(blockMeta->first != NO_RECYCLABLE_LINE);
+            assert(blockMeta->first >= 0);
+            assert(blockMeta->first < LINE_COUNT);
             allocator->recycledBlockCount++;
         }
     }

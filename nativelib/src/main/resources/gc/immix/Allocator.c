@@ -163,7 +163,7 @@ bool Allocator_getNextLine(Allocator *allocator) {
     BlockMeta *block = allocator->block;
     word_t *blockStart = allocator->blockStart;
 
-    int16_t lineIndex = block->first;
+    int lineIndex = block->first;
     if (lineIndex == LAST_HOLE) {
         return Allocator_newBlock(allocator);
     }
@@ -192,7 +192,7 @@ bool Allocator_newBlock(Allocator *allocator) {
         blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart,
                                              allocator->heapStart, block);
 
-        int16_t lineIndex = block->first;
+        int lineIndex = block->first;
         assert(lineIndex < LINE_COUNT);
         word_t *line = Block_GetLineAddress(blockStart, lineIndex);
 
