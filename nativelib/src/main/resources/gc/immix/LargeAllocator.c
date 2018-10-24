@@ -59,8 +59,6 @@ void LargeAllocator_Init(LargeAllocator *allocator, BlockAllocator *blockAllocat
 
 void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
                              size_t total_block_size) {
-//    printf("ADD chunk (%p %p) size: %zu\n", chunk, (ubyte_t *) chunk + total_block_size, total_block_size);
-//    fflush(stdout);
     assert(total_block_size >= MIN_BLOCK_SIZE);
     assert(total_block_size < BLOCK_TOTAL_SIZE);
     assert(total_block_size % MIN_BLOCK_SIZE == 0);
@@ -136,24 +134,26 @@ void LargeAllocator_Clear(LargeAllocator *allocator) {
 }
 
 void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_t *blockStart) {
+    // Objects that are larger than a block
+    // are always allocated at the begining the smallest possible superblock.
+    // Any gaps at the end can be filled with large objects, that are smaller than a block.
+    // This means that objects can ONLY start at the begining at the first block
+    // or anywhere at the last block, except the begining.
+    // Therefore we only need to look at a few locations.
     uint32_t superblockSize = BlockMeta_SuperblockSize(blockMeta);
     word_t *blockEnd = blockStart + WORDS_IN_BLOCK * superblockSize;
-//    printf("block [%p] (%p %p) size:%u\n", blockMeta, blockStart, blockEnd, superblockSize);
 
     ObjectMeta *firstObject = Bytemap_Get(allocator->bytemap, blockStart);
-//    printf("firstObject [%p] %p=%d\n", firstObject , blockStart, *firstObject);
-//    fflush(stdout);
     assert(!ObjectMeta_IsFree(firstObject));
     if (superblockSize > 1 && !ObjectMeta_IsMarked(firstObject)) {
         // release free superblock starting from the first object
-//        printf("SUPERBLOCK [%p] (%p %p) size:%u\n", blockMeta, blockStart, blockEnd - WORDS_IN_BLOCK, superblockSize - 1);
-//        fflush(stdout);
         BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta, superblockSize - 1);
     }
 
     word_t *lastBlockStart = blockEnd - WORDS_IN_BLOCK;
     word_t *chunkStart = NULL;
 
+    // the tail end of the first object
     if (!ObjectMeta_IsMarked(firstObject)){
         chunkStart = lastBlockStart;
     }
@@ -181,8 +181,6 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
     }
     if (chunkStart == lastBlockStart) {
         //free chunk covers the entire last block, released it to the block allocator
-//        printf("SUPERBLOCK2 [%p] (%p %p) size:%u\n", blockMeta, blockStart, blockEnd - WORDS_IN_BLOCK, superblockSize - 1);
-//        fflush(stdout);
         BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta + superblockSize - 1, 1);
     } else if (chunkStart != NULL) {
         size_t currentSize = (current - chunkStart) * WORD_SIZE;
