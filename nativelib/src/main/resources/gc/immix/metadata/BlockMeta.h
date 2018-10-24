@@ -1,6 +1,8 @@
 #ifndef IMMIX_BLOCKHEADER_H
 #define IMMIX_BLOCKHEADER_H
 
+#define LAST_HOLE -1
+
 #include <stdint.h>
 #include "LineMeta.h"
 #include "../GCTypes.h"
@@ -17,9 +19,11 @@ typedef enum {
 
 typedef struct {
     uint8_t flags;
-    int8_t first;
+    union {
+        int8_t first;
+        int32_t superblockSize : BLOCK_COUNT_BITS;
+    } firstOrSuperblockSize;
     int32_t nextBlock;
-    int32_t superblockSize;
 } BlockMeta;
 
 static inline bool BlockMeta_IsFree(BlockMeta *blockMeta) {
@@ -36,7 +40,7 @@ static inline bool BlockMeta_IsSuperblockMiddle(BlockMeta *blockMeta) {
 }
 
 static inline uint32_t BlockMeta_SuperblockSize(BlockMeta *blockMeta) {
-    return blockMeta->superblockSize;
+    return blockMeta->firstOrSuperblockSize.superblockSize;
 }
 
 static inline bool BlockMeta_ContainsLargeObjects(BlockMeta *blockMeta) {
@@ -46,10 +50,22 @@ static inline bool BlockMeta_ContainsLargeObjects(BlockMeta *blockMeta) {
 
 static inline void BlockMeta_SetSuperblockSize(BlockMeta *blockMeta,
                                                int32_t superblockSize) {
-    assert(superblockSize > 0);
-    assert(BlockMeta_IsSuperblockStart(blockMeta));
+    assert(!BlockMeta_IsSuperblockStart(blockMeta) || superblockSize > 0);
+    assert(!BlockMeta_IsSimpleBlock(blockMeta));
 
-    blockMeta->superblockSize = superblockSize;
+    blockMeta->firstOrSuperblockSize.superblockSize = superblockSize;
+}
+
+static inline void BlockMeta_SetFirstFreeLine(BlockMeta *blockMeta, int8_t freeLine) {
+    assert(BlockMeta_IsSimpleBlock(blockMeta));
+    assert(freeLine == LAST_HOLE || (freeLine >= 0 && freeLine < LINE_COUNT));
+    blockMeta->firstOrSuperblockSize.first = freeLine;
+}
+
+static inline int8_t BlockMeta_FirstFreeLine(BlockMeta *blockMeta) {
+    assert(BlockMeta_IsSimpleBlock(blockMeta));
+
+    return blockMeta->firstOrSuperblockSize.first;
 }
 
 static inline void BlockMeta_SetFlag(BlockMeta *blockMeta,

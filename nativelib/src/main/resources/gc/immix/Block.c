@@ -58,7 +58,7 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
                 // If it's the first free line, update the block header to point
                 // to it.
                 if (lastRecyclable == NULL) {
-                    blockMeta->first = lineIndex;
+                    BlockMeta_SetFirstFreeLine(blockMeta, lineIndex);
                 } else {
                     // Update the last recyclable line to point to the current
                     // one
@@ -92,8 +92,8 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
             lastRecyclable->next = LAST_HOLE;
             BlockList_AddLast(&allocator->recycledBlocks, blockMeta);
 
-            assert(blockMeta->first >= 0);
-            assert(blockMeta->first < LINE_COUNT);
+            assert(BlockMeta_FirstFreeLine(blockMeta) >= 0);
+            assert(BlockMeta_FirstFreeLine(blockMeta) < LINE_COUNT);
             allocator->recycledBlockCount++;
         }
     }

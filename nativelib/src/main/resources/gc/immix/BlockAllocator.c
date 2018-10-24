@@ -50,9 +50,7 @@ BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
             blockAllocator->smallestSuperblock.limit =
                 superblock + BlockMeta_SuperblockSize(superblock);
             // it might be safe to remove this
-            // not using BlockMeta_SetSuperblockSize, because it is just empty
-            // space
-            superblock->superblockSize = 0;
+            BlockMeta_SetSuperblockSize(superblock, 0);
         } else {
             return NULL;
         }
@@ -104,8 +102,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
 static inline void
 BlockAllocator_addFreeBlocksInternal0(BlockAllocator *blockAllocator,
                                       BlockMeta *superblock, uint32_t count) {
-    // not using BlockMeta_SetSuperblockSize, because it is just empty space
-    superblock->superblockSize = count;
+    BlockMeta_SetSuperblockSize(superblock, count);
     int i = BlockAllocator_sizeToLinkedListIndex(count);
     if (i < blockAllocator->minNonEmptyIndex) {
         blockAllocator->minNonEmptyIndex = i;

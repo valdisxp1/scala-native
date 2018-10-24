@@ -163,7 +163,7 @@ bool Allocator_getNextLine(Allocator *allocator) {
     BlockMeta *block = allocator->block;
     word_t *blockStart = allocator->blockStart;
 
-    int lineIndex = block->first;
+    int lineIndex = BlockMeta_FirstFreeLine(block);
     if (lineIndex == LAST_HOLE) {
         return Allocator_newBlock(allocator);
     }
@@ -172,7 +172,7 @@ bool Allocator_getNextLine(Allocator *allocator) {
 
     allocator->cursor = line;
     FreeLineMeta *lineMeta = (FreeLineMeta *)line;
-    block->first = lineMeta->next;
+    BlockMeta_SetFirstFreeLine(block, lineMeta->next);
     uint16_t size = lineMeta->size;
     allocator->limit = line + (size * WORDS_IN_LINE);
     assert(allocator->limit <= Block_GetBlockEnd(blockStart));
@@ -192,13 +192,13 @@ bool Allocator_newBlock(Allocator *allocator) {
         blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart,
                                              allocator->heapStart, block);
 
-        int lineIndex = block->first;
+        int lineIndex = BlockMeta_FirstFreeLine(block);
         assert(lineIndex < LINE_COUNT);
         word_t *line = Block_GetLineAddress(blockStart, lineIndex);
 
         allocator->cursor = line;
         FreeLineMeta *lineMeta = (FreeLineMeta *)line;
-        block->first = lineMeta->next;
+        BlockMeta_SetFirstFreeLine(block, lineMeta->next);
         uint16_t size = lineMeta->size;
         assert(size > 0);
         allocator->limit = line + (size * WORDS_IN_LINE);
@@ -213,7 +213,7 @@ bool Allocator_newBlock(Allocator *allocator) {
 
         allocator->cursor = blockStart;
         allocator->limit = Block_GetBlockEnd(blockStart);
-        block->first = LAST_HOLE;
+        BlockMeta_SetFirstFreeLine(block, LAST_HOLE);
     }
 
     allocator->block = block;
