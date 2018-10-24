@@ -93,11 +93,6 @@ static inline word_t *Block_GetLineWord(word_t *blockStart, int lineIndex,
     return &Block_GetLineAddress(blockStart, lineIndex)[wordIndex];
 }
 
-static inline FreeLineMeta *Block_GetFreeLineMeta(word_t *blockStart,
-                                                  int lineIndex) {
-    return (FreeLineMeta *)Block_GetLineAddress(blockStart, lineIndex);
-}
-
 static inline word_t *Block_GetBlockStartForWord(word_t *word) {
     return (word_t *)((word_t)word & BLOCK_SIZE_IN_BYTES_INVERSE_MASK);
 }
