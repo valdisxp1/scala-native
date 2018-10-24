@@ -7,6 +7,7 @@
 #include "datastructures/Stack.h"
 #include "datastructures/Bytemap.h"
 #include "metadata/LineMeta.h"
+#include "Stats.h"
 #include <stdio.h>
 
 typedef struct {
@@ -19,6 +20,7 @@ typedef struct {
     word_t *heapEnd;
     size_t heapSize;
     Bytemap *bytemap;
+    Stats *stats;
 } Heap;
 
 static inline bool Heap_IsWordInHeap(Heap *heap, word_t *word) {
@@ -38,6 +40,7 @@ static inline LineMeta *Heap_LineMetaForWord(Heap *heap, word_t *word) {
 }
 
 void Heap_Init(Heap *heap, size_t heapSize);
+void Heap_AfterExit(Heap *heap);
 word_t *Heap_Alloc(Heap *heap, uint32_t objectSize);
 word_t *Heap_AllocSmall(Heap *heap, uint32_t objectSize);
 word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize);
