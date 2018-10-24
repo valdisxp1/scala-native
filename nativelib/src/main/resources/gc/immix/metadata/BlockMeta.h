@@ -1,6 +1,8 @@
 #ifndef IMMIX_BLOCKHEADER_H
 #define IMMIX_BLOCKHEADER_H
 
+#define LAST_HOLE -1
+
 #include <stdint.h>
 #include "LineMeta.h"
 #include "../GCTypes.h"
@@ -9,28 +11,26 @@
 
 typedef enum {
     block_free = 0x0,
-    block_recyclable = 0x1,
-    block_unavailable = 0x2,
-    block_superblock_start = 0x3,
-    block_superblock_middle = 0x4
+    block_simple = 0x1,
+    block_superblock_start = 0x2,
+    block_superblock_middle = 0x3,
+    block_marked = 0x5
 } BlockFlag;
 
 typedef struct {
-    uint8_t mark;
     uint8_t flags;
-    int16_t first;
+    union {
+        int8_t first;
+        int32_t superblockSize : BLOCK_COUNT_BITS;
+    } firstOrSuperblockSize;
     int32_t nextBlock;
-    int32_t superblockSize;
 } BlockMeta;
 
-static inline bool BlockMeta_IsRecyclable(BlockMeta *blockMeta) {
-    return blockMeta->flags == block_recyclable;
-}
-static inline bool BlockMeta_IsUnavailable(BlockMeta *blockMeta) {
-    return blockMeta->flags == block_unavailable;
-}
 static inline bool BlockMeta_IsFree(BlockMeta *blockMeta) {
     return blockMeta->flags == block_free;
+}
+static inline bool BlockMeta_IsSimpleBlock(BlockMeta *blockMeta) {
+    return (blockMeta->flags & block_simple) != 0;
 }
 static inline bool BlockMeta_IsSuperblockStart(BlockMeta *blockMeta) {
     return blockMeta->flags == block_superblock_start;
@@ -40,7 +40,7 @@ static inline bool BlockMeta_IsSuperblockMiddle(BlockMeta *blockMeta) {
 }
 
 static inline uint32_t BlockMeta_SuperblockSize(BlockMeta *blockMeta) {
-    return blockMeta->superblockSize;
+    return blockMeta->firstOrSuperblockSize.superblockSize;
 }
 
 static inline bool BlockMeta_ContainsLargeObjects(BlockMeta *blockMeta) {
@@ -50,10 +50,22 @@ static inline bool BlockMeta_ContainsLargeObjects(BlockMeta *blockMeta) {
 
 static inline void BlockMeta_SetSuperblockSize(BlockMeta *blockMeta,
                                                int32_t superblockSize) {
-    assert(superblockSize > 0);
-    assert(BlockMeta_IsSuperblockStart(blockMeta));
+    assert(!BlockMeta_IsSuperblockStart(blockMeta) || superblockSize > 0);
+    assert(!BlockMeta_IsSimpleBlock(blockMeta));
 
-    blockMeta->superblockSize = superblockSize;
+    blockMeta->firstOrSuperblockSize.superblockSize = superblockSize;
+}
+
+static inline void BlockMeta_SetFirstFreeLine(BlockMeta *blockMeta, int8_t freeLine) {
+    assert(BlockMeta_IsSimpleBlock(blockMeta));
+    assert(freeLine == LAST_HOLE || (freeLine >= 0 && freeLine < LINE_COUNT));
+    blockMeta->firstOrSuperblockSize.first = freeLine;
+}
+
+static inline int8_t BlockMeta_FirstFreeLine(BlockMeta *blockMeta) {
+    assert(BlockMeta_IsSimpleBlock(blockMeta));
+
+    return blockMeta->firstOrSuperblockSize.first;
 }
 
 static inline void BlockMeta_SetFlag(BlockMeta *blockMeta,
@@ -62,18 +74,21 @@ static inline void BlockMeta_SetFlag(BlockMeta *blockMeta,
 }
 
 static inline bool BlockMeta_IsMarked(BlockMeta *blockMeta) {
-    return blockMeta->mark == 1;
+    return blockMeta->flags == block_marked;
 }
 
 static inline void BlockMeta_Unmark(BlockMeta *blockMeta) {
-    blockMeta->mark = 0;
+    blockMeta->flags = block_simple;
 }
 
-static inline void BlockMeta_Mark(BlockMeta *blockMeta) { blockMeta->mark = 1; }
+static inline void BlockMeta_Mark(BlockMeta *blockMeta) {
+    blockMeta->flags = block_marked;
+}
 
 // Block specific
 
 static inline word_t *Block_GetLineAddress(word_t *blockStart, int lineIndex) {
+    assert(lineIndex >= 0);
     assert(lineIndex < LINE_COUNT);
     return blockStart + (WORDS_IN_LINE * lineIndex);
 }
@@ -91,11 +106,6 @@ static inline word_t *Block_GetLineWord(word_t *blockStart, int lineIndex,
                                         int wordIndex) {
     assert(wordIndex < WORDS_IN_LINE);
     return &Block_GetLineAddress(blockStart, lineIndex)[wordIndex];
-}
-
-static inline FreeLineMeta *Block_GetFreeLineMeta(word_t *blockStart,
-                                                  int lineIndex) {
-    return (FreeLineMeta *)Block_GetLineAddress(blockStart, lineIndex);
 }
 
 static inline word_t *Block_GetBlockStartForWord(word_t *word) {

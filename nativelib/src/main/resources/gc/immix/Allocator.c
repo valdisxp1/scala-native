@@ -163,7 +163,7 @@ bool Allocator_getNextLine(Allocator *allocator) {
     BlockMeta *block = allocator->block;
     word_t *blockStart = allocator->blockStart;
 
-    int16_t lineIndex = block->first;
+    int lineIndex = BlockMeta_FirstFreeLine(block);
     if (lineIndex == LAST_HOLE) {
         return Allocator_newBlock(allocator);
     }
@@ -172,7 +172,7 @@ bool Allocator_getNextLine(Allocator *allocator) {
 
     allocator->cursor = line;
     FreeLineMeta *lineMeta = (FreeLineMeta *)line;
-    block->first = lineMeta->next;
+    BlockMeta_SetFirstFreeLine(block, lineMeta->next);
     uint16_t size = lineMeta->size;
     allocator->limit = line + (size * WORDS_IN_LINE);
     assert(allocator->limit <= Block_GetBlockEnd(blockStart));
@@ -189,17 +189,16 @@ bool Allocator_newBlock(Allocator *allocator) {
     word_t *blockStart;
 
     if (block != NULL) {
-        assert(BlockMeta_IsRecyclable(block));
         blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart,
                                              allocator->heapStart, block);
 
-        int16_t lineIndex = block->first;
+        int lineIndex = BlockMeta_FirstFreeLine(block);
         assert(lineIndex < LINE_COUNT);
         word_t *line = Block_GetLineAddress(blockStart, lineIndex);
 
         allocator->cursor = line;
         FreeLineMeta *lineMeta = (FreeLineMeta *)line;
-        block->first = lineMeta->next;
+        BlockMeta_SetFirstFreeLine(block, lineMeta->next);
         uint16_t size = lineMeta->size;
         assert(size > 0);
         allocator->limit = line + (size * WORDS_IN_LINE);
@@ -209,13 +208,12 @@ bool Allocator_newBlock(Allocator *allocator) {
         if (block == NULL) {
             return false;
         }
-        assert(BlockMeta_IsFree(block));
         blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart,
                                              allocator->heapStart, block);
 
         allocator->cursor = blockStart;
         allocator->limit = Block_GetBlockEnd(blockStart);
-        block->first = LAST_HOLE;
+        BlockMeta_SetFirstFreeLine(block, LAST_HOLE);
     }
 
     allocator->block = block;

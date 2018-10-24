@@ -50,19 +50,16 @@ BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
             blockAllocator->smallestSuperblock.limit =
                 superblock + BlockMeta_SuperblockSize(superblock);
             // it might be safe to remove this
-            // not using BlockMeta_SetSuperblockSize, because it is just empty
-            // space
-            superblock->superblockSize = 0;
+            BlockMeta_SetSuperblockSize(superblock, 0);
         } else {
             return NULL;
         }
     }
     BlockMeta *block = blockAllocator->smallestSuperblock.cursor;
+    BlockMeta_SetFlag(block, block_simple);
     blockAllocator->smallestSuperblock.cursor++;
 
     // not decrementing freeBlockCount, because it is only used after sweep
-    //    printf("GOT block %p\n", block);
-    //    fflush(stdout);
     return block;
 }
 
@@ -99,16 +96,13 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
         BlockMeta_SetFlag(current, block_superblock_middle);
     }
     // not decrementing freeBlockCount, because it is only used after sweep
-    //    printf("GOT superblock %p , size=%u\n", superblock, size);
-    //    fflush(stdout);
     return superblock;
 }
 
 static inline void
 BlockAllocator_addFreeBlocksInternal0(BlockAllocator *blockAllocator,
                                       BlockMeta *superblock, uint32_t count) {
-    // not using BlockMeta_SetSuperblockSize, because it is just empty space
-    superblock->superblockSize = count;
+    BlockMeta_SetSuperblockSize(superblock, count);
     int i = BlockAllocator_sizeToLinkedListIndex(count);
     if (i < blockAllocator->minNonEmptyIndex) {
         blockAllocator->minNonEmptyIndex = i;
