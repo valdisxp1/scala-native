@@ -18,29 +18,34 @@ typedef enum {
 } BlockFlag;
 
 typedef struct {
-    uint8_t flags;
     union {
-        int8_t first;
-        int32_t superblockSize : BLOCK_COUNT_BITS;
-    } firstOrSuperblockSize;
+        struct {
+            uint8_t flags;
+            int8_t first;
+        } simple;
+        struct {
+            uint8_t flags;
+            int32_t size : BLOCK_COUNT_BITS;
+        } superblock;
+    } block;
     int32_t nextBlock;
 } BlockMeta;
 
 static inline bool BlockMeta_IsFree(BlockMeta *blockMeta) {
-    return blockMeta->flags == block_free;
+    return blockMeta->block.simple.flags == block_free;
 }
 static inline bool BlockMeta_IsSimpleBlock(BlockMeta *blockMeta) {
-    return (blockMeta->flags & block_simple) != 0;
+    return (blockMeta->block.simple.flags & block_simple) != 0;
 }
 static inline bool BlockMeta_IsSuperblockStart(BlockMeta *blockMeta) {
-    return blockMeta->flags == block_superblock_start;
+    return blockMeta->block.simple.flags == block_superblock_start;
 }
 static inline bool BlockMeta_IsSuperblockMiddle(BlockMeta *blockMeta) {
-    return blockMeta->flags == block_superblock_middle;
+    return blockMeta->block.simple.flags == block_superblock_middle;
 }
 
 static inline uint32_t BlockMeta_SuperblockSize(BlockMeta *blockMeta) {
-    return blockMeta->firstOrSuperblockSize.superblockSize;
+    return blockMeta->block.superblock.size;
 }
 
 static inline bool BlockMeta_ContainsLargeObjects(BlockMeta *blockMeta) {
@@ -53,36 +58,36 @@ static inline void BlockMeta_SetSuperblockSize(BlockMeta *blockMeta,
     assert(!BlockMeta_IsSuperblockStart(blockMeta) || superblockSize > 0);
     assert(!BlockMeta_IsSimpleBlock(blockMeta));
 
-    blockMeta->firstOrSuperblockSize.superblockSize = superblockSize;
+    blockMeta->block.superblock.size = superblockSize;
 }
 
 static inline void BlockMeta_SetFirstFreeLine(BlockMeta *blockMeta, int8_t freeLine) {
     assert(BlockMeta_IsSimpleBlock(blockMeta));
     assert(freeLine == LAST_HOLE || (freeLine >= 0 && freeLine < LINE_COUNT));
-    blockMeta->firstOrSuperblockSize.first = freeLine;
+    blockMeta->block.simple.first = freeLine;
 }
 
 static inline int8_t BlockMeta_FirstFreeLine(BlockMeta *blockMeta) {
     assert(BlockMeta_IsSimpleBlock(blockMeta));
 
-    return blockMeta->firstOrSuperblockSize.first;
+    return blockMeta->block.simple.first;
 }
 
 static inline void BlockMeta_SetFlag(BlockMeta *blockMeta,
                                      BlockFlag blockFlag) {
-    blockMeta->flags = blockFlag;
+    blockMeta->block.simple.flags = blockFlag;
 }
 
 static inline bool BlockMeta_IsMarked(BlockMeta *blockMeta) {
-    return blockMeta->flags == block_marked;
+    return blockMeta->block.simple.flags == block_marked;
 }
 
 static inline void BlockMeta_Unmark(BlockMeta *blockMeta) {
-    blockMeta->flags = block_simple;
+    blockMeta->block.simple.flags = block_simple;
 }
 
 static inline void BlockMeta_Mark(BlockMeta *blockMeta) {
-    blockMeta->flags = block_marked;
+    blockMeta->block.simple.flags = block_marked;
 }
 
 // Block specific
