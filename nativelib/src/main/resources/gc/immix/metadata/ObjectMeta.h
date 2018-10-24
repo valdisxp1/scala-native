@@ -64,7 +64,7 @@ static inline void ObjectMeta_SweepLineAt(ObjectMeta *start) {
     //    for (size_t i = startIndex; i < endIndex; i++) {
     //        if (data[i] == om_marked) {
     //            data[i] = om_allocated;
-    //        } else if (data[i] == om_allocated) {
+    //        } else {
     //            data[i] = om_free;
     //        }
     //    }
