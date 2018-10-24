@@ -11,7 +11,7 @@ typedef enum {
     block_free = 0x0,
     block_simple = 0x1,
     block_superblock_start = 0x2,
-    block_superblock_middle = 0x3
+    block_superblock_middle = 0x3,
     block_marked = 0x5
 } BlockFlag;
 
@@ -26,7 +26,7 @@ static inline bool BlockMeta_IsFree(BlockMeta *blockMeta) {
     return blockMeta->flags == block_free;
 }
 static inline bool BlockMeta_IsSimpleBlock(BlockMeta *blockMeta) {
-    return blockMeta->flags == block_simple;
+    return (blockMeta->flags & block_simple) != 0;
 }
 static inline bool BlockMeta_IsSuperblockStart(BlockMeta *blockMeta) {
     return blockMeta->flags == block_superblock_start;
@@ -58,15 +58,15 @@ static inline void BlockMeta_SetFlag(BlockMeta *blockMeta,
 }
 
 static inline bool BlockMeta_IsMarked(BlockMeta *blockMeta) {
-    return blockMeta->flag == block_marked;
+    return blockMeta->flags == block_marked;
 }
 
 static inline void BlockMeta_Unmark(BlockMeta *blockMeta) {
-    blockMeta->flag = block_simple;
+    blockMeta->flags = block_simple;
 }
 
 static inline void BlockMeta_Mark(BlockMeta *blockMeta) {
-    blockMeta->flag = block_marked;
+    blockMeta->flags = block_marked;
 }
 
 // Block specific
