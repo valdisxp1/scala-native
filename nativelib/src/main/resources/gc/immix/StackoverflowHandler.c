@@ -9,8 +9,10 @@ extern int __object_array_id;
 
 #define LAST_FIELD_OFFSET -1
 
-void StackOverflowHandler_largeBlockScan(Heap *heap, Stack *stack, word_t *blockStart, word_t *blockEnd);
-void StackOverflowHandler_blockScan(Heap *heap, Stack *stack, word_t *blockStart);
+void StackOverflowHandler_largeBlockScan(Heap *heap, Stack *stack,
+                                         word_t *blockStart, word_t *blockEnd);
+void StackOverflowHandler_blockScan(Heap *heap, Stack *stack,
+                                    word_t *blockStart);
 
 void StackOverflowHandler_CheckForOverflow() {
     if (overflow) {
@@ -24,7 +26,7 @@ void StackOverflowHandler_CheckForOverflow() {
 #endif
 
         word_t *blockMetaEnd = heap.blockMetaEnd;
-        BlockMeta *currentBlock = (BlockMeta *) heap.blockMetaStart;
+        BlockMeta *currentBlock = (BlockMeta *)heap.blockMetaStart;
         word_t *blockStart = heap.heapStart;
 
         while ((word_t *)currentBlock < blockMetaEnd) {
@@ -33,7 +35,9 @@ void StackOverflowHandler_CheckForOverflow() {
             if (BlockMeta_IsSuperblockStart(currentBlock)) {
                 size = BlockMeta_SuperblockSize(currentBlock);
                 assert(size > 0);
-                StackOverflowHandler_largeBlockScan(&heap, &stack, blockStart, blockStart + size * WORDS_IN_BLOCK);
+                StackOverflowHandler_largeBlockScan(&heap, &stack, blockStart,
+                                                    blockStart +
+                                                        size * WORDS_IN_BLOCK);
             } else {
                 size = 1;
                 if (BlockMeta_IsMarked(currentBlock)) {
@@ -43,12 +47,11 @@ void StackOverflowHandler_CheckForOverflow() {
             currentBlock += size;
             blockStart += size * WORDS_IN_BLOCK;
         }
-
     }
 }
 
 void StackOverflowHandler_mark(Heap *heap, Stack *stack, Object *object,
-                                       ObjectMeta *objectMeta) {
+                               ObjectMeta *objectMeta) {
 
     if (ObjectMeta_IsMarked(objectMeta)) {
         Bytemap *bytemap = heap->bytemap;
@@ -89,13 +92,15 @@ void StackOverflowHandler_mark(Heap *heap, Stack *stack, Object *object,
     }
 }
 
-void StackOverflowHandler_largeBlockScan(Heap *heap, Stack *stack, word_t *blockStart, word_t* blockEnd) {
+void StackOverflowHandler_largeBlockScan(Heap *heap, Stack *stack,
+                                         word_t *blockStart, word_t *blockEnd) {
     // We only need to look at the first object and the last block.
     // See LargeAllocator_Sweep
     ObjectMeta *firstObject = Bytemap_Get(heap->bytemap, blockStart);
     assert(!ObjectMeta_IsFree(firstObject));
     if (ObjectMeta_IsMarked(firstObject)) {
-        StackOverflowHandler_mark(heap, stack, (Object *) blockStart, firstObject);
+        StackOverflowHandler_mark(heap, stack, (Object *)blockStart,
+                                  firstObject);
     }
 
     word_t *lastBlockStart = blockEnd - WORDS_IN_BLOCK;
@@ -109,8 +114,8 @@ void StackOverflowHandler_largeBlockScan(Heap *heap, Stack *stack, word_t *block
     }
 }
 
-
-void StackOverflowHandler_blockScan(Heap *heap, Stack *stack, word_t *blockStart) {
+void StackOverflowHandler_blockScan(Heap *heap, Stack *stack,
+                                    word_t *blockStart) {
     Bytemap *bytemap = heap->bytemap;
     word_t *lineStart = blockStart;
     for (int lineIndex = 0; lineIndex < LINE_COUNT; lineIndex++) {
@@ -122,7 +127,8 @@ void StackOverflowHandler_blockScan(Heap *heap, Stack *stack, word_t *blockStart
             word_t *cursor = lineStart;
             ObjectMeta *cursorMeta = Bytemap_Get(bytemap, cursor);
             while (cursor < lineEnd) {
-                StackOverflowHandler_mark(heap, stack, (Object *)cursor, cursorMeta);
+                StackOverflowHandler_mark(heap, stack, (Object *)cursor,
+                                          cursorMeta);
 
                 cursor += ALLOCATION_ALIGNMENT_WORDS;
                 cursorMeta += 1;

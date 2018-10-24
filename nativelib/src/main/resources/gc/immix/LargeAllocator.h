@@ -23,13 +23,15 @@ typedef struct {
     BlockAllocator *blockAllocator;
 } LargeAllocator;
 
-void LargeAllocator_Init(LargeAllocator *allocator, BlockAllocator *blockAllocator, Bytemap *bytemap,
+void LargeAllocator_Init(LargeAllocator *allocator,
+                         BlockAllocator *blockAllocator, Bytemap *bytemap,
                          word_t *blockMetaStart, word_t *heapStart);
 void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
                              size_t total_block_size);
 Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
                                 size_t requestedBlockSize);
 void LargeAllocator_Clear(LargeAllocator *allocator);
-void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_t *blockStart);
+void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
+                          word_t *blockStart);
 
 #endif // IMMIX_LARGEALLOCATOR_H

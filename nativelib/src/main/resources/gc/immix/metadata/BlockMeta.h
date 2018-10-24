@@ -44,10 +44,12 @@ static inline uint32_t BlockMeta_SuperblockSize(BlockMeta *blockMeta) {
 }
 
 static inline bool BlockMeta_ContainsLargeObjects(BlockMeta *blockMeta) {
-    return BlockMeta_IsSuperblockStart(blockMeta) || BlockMeta_IsSuperblockMiddle(blockMeta);
+    return BlockMeta_IsSuperblockStart(blockMeta) ||
+           BlockMeta_IsSuperblockMiddle(blockMeta);
 }
 
-static inline void BlockMeta_SetSuperblockSize(BlockMeta *blockMeta, int32_t superblockSize) {
+static inline void BlockMeta_SetSuperblockSize(BlockMeta *blockMeta,
+                                               int32_t superblockSize) {
     assert(superblockSize > 0);
     assert(BlockMeta_IsSuperblockStart(blockMeta));
 
@@ -100,11 +102,12 @@ static inline word_t *Block_GetBlockStartForWord(word_t *word) {
     return (word_t *)((word_t)word & BLOCK_SIZE_IN_BYTES_INVERSE_MASK);
 }
 
-static inline BlockMeta *BlockMeta_GetSuperblockStart(word_t *blockMetaStart, BlockMeta *blockMeta) {
+static inline BlockMeta *BlockMeta_GetSuperblockStart(word_t *blockMetaStart,
+                                                      BlockMeta *blockMeta) {
     BlockMeta *current = blockMeta;
     while (BlockMeta_IsSuperblockMiddle(current)) {
         current--;
-        assert((word_t *) current >= blockMetaStart);
+        assert((word_t *)current >= blockMetaStart);
     }
     assert(BlockMeta_IsSuperblockStart(current));
     return current;
@@ -113,7 +116,7 @@ static inline BlockMeta *BlockMeta_GetSuperblockStart(word_t *blockMetaStart, Bl
 // Transitional Block<->BlockMeta
 static inline uint32_t BlockMeta_GetBlockIndex(word_t *blockMetaStart,
                                                BlockMeta *blockMeta) {
-    return blockMeta - (BlockMeta *) blockMetaStart;
+    return blockMeta - (BlockMeta *)blockMetaStart;
 }
 
 static inline uint32_t Block_GetBlockIndexForWord(word_t *heapStart,
@@ -131,7 +134,7 @@ static inline word_t *BlockMeta_GetBlockStart(word_t *blockMetaStart,
 
 static inline BlockMeta *BlockMeta_GetFromIndex(word_t *blockMetaStart,
                                                 uint32_t index) {
-    return (BlockMeta *) blockMetaStart + index;
+    return (BlockMeta *)blockMetaStart + index;
 }
 
 static inline BlockMeta *Block_GetBlockMeta(word_t *blockMetaStart,

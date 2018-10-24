@@ -27,7 +27,8 @@ BlockMeta *BlockList_Poll(BlockList *blockList) {
         if (block == blockList->last) {
             blockList->first = NULL;
         }
-        blockList->first = BlockList_getNextBlock(blockList->blockMetaStart, block);
+        blockList->first =
+            BlockList_getNextBlock(blockList->blockMetaStart, block);
     }
     return block;
 }

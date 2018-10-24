@@ -8,17 +8,21 @@
 word_t *Object_LastWord(Object *object) {
     size_t size = Object_Size(object);
     assert(size < LARGE_BLOCK_SIZE);
-    word_t *last = (word_t *)((ubyte_t *)object + size) - ALLOCATION_ALIGNMENT_WORDS;
+    word_t *last =
+        (word_t *)((ubyte_t *)object + size) - ALLOCATION_ALIGNMENT_WORDS;
     return last;
 }
 
-Object *Object_getInnerPointer(Heap *heap, BlockMeta *blockMeta, word_t *word, ObjectMeta *wordMeta) {
+Object *Object_getInnerPointer(Heap *heap, BlockMeta *blockMeta, word_t *word,
+                               ObjectMeta *wordMeta) {
     int stride;
     word_t *blockStart;
     if (BlockMeta_ContainsLargeObjects(blockMeta)) {
         stride = MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
-        BlockMeta *superblockStart = BlockMeta_GetSuperblockStart(heap->blockMetaStart, blockMeta);
-        blockStart = BlockMeta_GetBlockStart(heap->blockMetaStart, heap->heapStart, superblockStart);
+        BlockMeta *superblockStart =
+            BlockMeta_GetSuperblockStart(heap->blockMetaStart, blockMeta);
+        blockStart = BlockMeta_GetBlockStart(heap->blockMetaStart,
+                                             heap->heapStart, superblockStart);
     } else {
         stride = 1;
         blockStart = Block_GetBlockStartForWord(word);

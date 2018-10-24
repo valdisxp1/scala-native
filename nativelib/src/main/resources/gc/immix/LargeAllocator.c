@@ -45,7 +45,8 @@ void LargeAllocator_freeListInit(FreeList *freeList) {
     freeList->last = NULL;
 }
 
-void LargeAllocator_Init(LargeAllocator *allocator, BlockAllocator *blockAllocator, Bytemap *bytemap,
+void LargeAllocator_Init(LargeAllocator *allocator,
+                         BlockAllocator *blockAllocator, Bytemap *bytemap,
                          word_t *blockMetaStart, word_t *heapStart) {
     allocator->heapStart = heapStart;
     allocator->blockMetaStart = blockMetaStart;
@@ -69,14 +70,19 @@ void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
     ObjectMeta *chunkMeta = Bytemap_Get(allocator->bytemap, (word_t *)chunk);
     ObjectMeta_SetPlaceholder(chunkMeta);
 
-    LargeAllocator_freeListAddBlockLast(&allocator->freeLists[listIndex], chunk);
+    LargeAllocator_freeListAddBlockLast(&allocator->freeLists[listIndex],
+                                        chunk);
 }
 
-static inline Chunk* LargeAllocator_getChunkForSize(LargeAllocator *allocator, size_t requiredChunkSize) {
-    for (int listIndex = LargeAllocator_sizeToLinkedListIndex(requiredChunkSize); listIndex < FREE_LIST_COUNT; listIndex++) {
+static inline Chunk *LargeAllocator_getChunkForSize(LargeAllocator *allocator,
+                                                    size_t requiredChunkSize) {
+    for (int listIndex =
+             LargeAllocator_sizeToLinkedListIndex(requiredChunkSize);
+         listIndex < FREE_LIST_COUNT; listIndex++) {
         Chunk *chunk = allocator->freeLists[listIndex].first;
         if (chunk != NULL) {
-            LargeAllocator_freeListRemoveFirstBlock(&allocator->freeLists[listIndex]);
+            LargeAllocator_freeListRemoveFirstBlock(
+                &allocator->freeLists[listIndex]);
             return chunk;
         }
     }
@@ -95,10 +101,13 @@ Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
     }
 
     if (chunk == NULL) {
-        uint32_t superblockSize = (uint32_t) MathUtils_DivAndRoundUp(actualBlockSize, BLOCK_TOTAL_SIZE);
-        BlockMeta *superblock = BlockAllocator_GetFreeSuperblock(allocator->blockAllocator, superblockSize);
+        uint32_t superblockSize = (uint32_t)MathUtils_DivAndRoundUp(
+            actualBlockSize, BLOCK_TOTAL_SIZE);
+        BlockMeta *superblock = BlockAllocator_GetFreeSuperblock(
+            allocator->blockAllocator, superblockSize);
         if (superblock != NULL) {
-            chunk = (Chunk *) BlockMeta_GetBlockStart(allocator->blockMetaStart, allocator->heapStart, superblock);
+            chunk = (Chunk *)BlockMeta_GetBlockStart(
+                allocator->blockMetaStart, allocator->heapStart, superblock);
             chunk->nothing = NULL;
             chunk->size = superblockSize * BLOCK_TOTAL_SIZE;
         }
@@ -133,12 +142,13 @@ void LargeAllocator_Clear(LargeAllocator *allocator) {
     }
 }
 
-void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_t *blockStart) {
+void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
+                          word_t *blockStart) {
     // Objects that are larger than a block
     // are always allocated at the begining the smallest possible superblock.
-    // Any gaps at the end can be filled with large objects, that are smaller than a block.
-    // This means that objects can ONLY start at the begining at the first block
-    // or anywhere at the last block, except the begining.
+    // Any gaps at the end can be filled with large objects, that are smaller
+    // than a block. This means that objects can ONLY start at the begining at
+    // the first block or anywhere at the last block, except the begining.
     // Therefore we only need to look at a few locations.
     uint32_t superblockSize = BlockMeta_SuperblockSize(blockMeta);
     word_t *blockEnd = blockStart + WORDS_IN_BLOCK * superblockSize;
@@ -147,14 +157,15 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
     assert(!ObjectMeta_IsFree(firstObject));
     if (superblockSize > 1 && !ObjectMeta_IsMarked(firstObject)) {
         // release free superblock starting from the first object
-        BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta, superblockSize - 1);
+        BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta,
+                                     superblockSize - 1);
     }
 
     word_t *lastBlockStart = blockEnd - WORDS_IN_BLOCK;
     word_t *chunkStart = NULL;
 
     // the tail end of the first object
-    if (!ObjectMeta_IsMarked(firstObject)){
+    if (!ObjectMeta_IsMarked(firstObject)) {
         chunkStart = lastBlockStart;
     }
     ObjectMeta_Sweep(firstObject);
@@ -163,14 +174,16 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
     ObjectMeta *currentMeta = Bytemap_Get(allocator->bytemap, current);
     while (current < blockEnd) {
         if (chunkStart == NULL) {
-            // if (ObjectMeta_IsAllocated(currentMeta)|| ObjectMeta_IsPlaceholder(currentMeta)) {
+            // if (ObjectMeta_IsAllocated(currentMeta)||
+            // ObjectMeta_IsPlaceholder(currentMeta)) {
             if (*currentMeta & 0x3) {
                 chunkStart = current;
             }
         } else {
             if (ObjectMeta_IsMarked(currentMeta)) {
                 size_t currentSize = (current - chunkStart) * WORD_SIZE;
-                LargeAllocator_AddChunk(allocator, (Chunk *)chunkStart, currentSize);
+                LargeAllocator_AddChunk(allocator, (Chunk *)chunkStart,
+                                        currentSize);
                 chunkStart = NULL;
             }
         }
@@ -180,8 +193,10 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta, word_
         currentMeta += MIN_BLOCK_SIZE / ALLOCATION_ALIGNMENT;
     }
     if (chunkStart == lastBlockStart) {
-        //free chunk covers the entire last block, released it to the block allocator
-        BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta + superblockSize - 1, 1);
+        // free chunk covers the entire last block, released it to the block
+        // allocator
+        BlockAllocator_AddFreeBlocks(allocator->blockAllocator,
+                                     blockMeta + superblockSize - 1, 1);
     } else if (chunkStart != NULL) {
         size_t currentSize = (current - chunkStart) * WORD_SIZE;
         LargeAllocator_AddChunk(allocator, (Chunk *)chunkStart, currentSize);

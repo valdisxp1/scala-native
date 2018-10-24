@@ -105,7 +105,7 @@ void Marker_markModules(Heap *heap, Stack *stack) {
     Bytemap *bytemap = heap->bytemap;
     for (int i = 0; i < nb_modules; i++) {
         Object *object = (Object *)modules[i];
-        if (Heap_IsWordInHeap(heap,(word_t *)object)) {
+        if (Heap_IsWordInHeap(heap, (word_t *)object)) {
             // is within heap
             ObjectMeta *objectMeta = Bytemap_Get(bytemap, (word_t *)object);
             if (ObjectMeta_IsAllocated(objectMeta)) {

@@ -15,8 +15,9 @@ bool Allocator_newBlock(Allocator *allocator);
  * @param blockCount Initial number of blocks in the heap
  * @return
  */
-void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator, Bytemap *bytemap,
-                    word_t *blockMetaStart, word_t *heapStart) {
+void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator,
+                    Bytemap *bytemap, word_t *blockMetaStart,
+                    word_t *heapStart) {
     allocator->blockMetaStart = blockMetaStart;
     allocator->blockAllocator = blockAllocator;
     allocator->bytemap = bytemap;
@@ -39,7 +40,8 @@ void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator, Bytema
  */
 bool Allocator_CanInitCursors(Allocator *allocator) {
     uint64_t freeBlockCount = allocator->blockAllocator->freeBlockCount;
-    return freeBlockCount >= 2 || (freeBlockCount == 1 && allocator->recycledBlockCount > 0);
+    return freeBlockCount >= 2 ||
+           (freeBlockCount == 1 && allocator->recycledBlockCount > 0);
 }
 
 /**
@@ -55,7 +57,8 @@ void Allocator_InitCursors(Allocator *allocator) {
     assert(didInit);
 
     // Init large cursor
-    BlockMeta *largeBlock = BlockAllocator_GetFreeBlock(allocator->blockAllocator);
+    BlockMeta *largeBlock =
+        BlockAllocator_GetFreeBlock(allocator->blockAllocator);
     assert(largeBlock != NULL);
     allocator->largeBlock = largeBlock;
     word_t *largeBlockStart = BlockMeta_GetBlockStart(
@@ -77,7 +80,8 @@ bool Allocator_ShouldGrow(Allocator *allocator) {
     uint32_t freeBlockCount = allocator->blockAllocator->freeBlockCount;
     uint32_t blockCount = allocator->blockAllocator->blockCount;
     uint32_t recycledBlockCount = allocator->recycledBlockCount;
-    uint32_t unavailableBlockCount = blockCount - (freeBlockCount + recycledBlockCount);
+    uint32_t unavailableBlockCount =
+        blockCount - (freeBlockCount + recycledBlockCount);
 
 #ifdef DEBUG_PRINT
     printf("\n\nBlock count: %llu\n", blockCount);
@@ -87,7 +91,8 @@ bool Allocator_ShouldGrow(Allocator *allocator) {
     fflush(stdout);
 #endif
 
-    return freeBlockCount * 2 < blockCount || 4 * unavailableBlockCount > blockCount;
+    return freeBlockCount * 2 < blockCount ||
+           4 * unavailableBlockCount > blockCount;
 }
 
 /**
@@ -100,7 +105,8 @@ word_t *Allocator_overflowAllocation(Allocator *allocator, size_t size) {
     word_t *end = (word_t *)((uint8_t *)start + size);
 
     if (end > allocator->largeLimit) {
-        BlockMeta *block = BlockAllocator_GetFreeBlock(allocator->blockAllocator);
+        BlockMeta *block =
+            BlockAllocator_GetFreeBlock(allocator->blockAllocator);
         if (block == NULL) {
             return NULL;
         }
@@ -184,7 +190,8 @@ bool Allocator_newBlock(Allocator *allocator) {
 
     if (block != NULL) {
         assert(BlockMeta_IsRecyclable(block));
-        blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart, allocator->heapStart, block);
+        blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart,
+                                             allocator->heapStart, block);
 
         int16_t lineIndex = block->first;
         assert(lineIndex < LINE_COUNT);
@@ -203,7 +210,8 @@ bool Allocator_newBlock(Allocator *allocator) {
             return false;
         }
         assert(BlockMeta_IsFree(block));
-        blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart, allocator->heapStart, block);
+        blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart,
+                                             allocator->heapStart, block);
 
         allocator->cursor = blockStart;
         allocator->limit = Block_GetBlockEnd(blockStart);
@@ -213,6 +221,7 @@ bool Allocator_newBlock(Allocator *allocator) {
     allocator->block = block;
     allocator->blockStart = blockStart;
 
-    assert(BlockMeta_GetBlockIndex(allocator->blockMetaStart, block) < allocator->blockAllocator->blockCount);
+    assert(BlockMeta_GetBlockIndex(allocator->blockMetaStart, block) <
+           allocator->blockAllocator->blockCount);
     return true;
 }

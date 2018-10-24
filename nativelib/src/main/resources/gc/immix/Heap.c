@@ -35,8 +35,7 @@ word_t *Heap_mapAndAlign(size_t memoryLimit, size_t alignmentSize) {
     size_t alignmentMask = ~(alignmentSize - 1);
     // Heap start not aligned on
     if (((word_t)heapStart & alignmentMask) != (word_t)heapStart) {
-        word_t *previousBlock =
-            (word_t *)((word_t)heapStart & alignmentMask);
+        word_t *previousBlock = (word_t *)((word_t)heapStart & alignmentMask);
         heapStart = previousBlock + alignmentSize / WORD_SIZE;
     }
     return heapStart;
@@ -57,10 +56,10 @@ void Heap_Init(Heap *heap, size_t initialHeapSize) {
 
     // reserve space for block headers
     size_t blockMetaSpaceSize = maxNumberOfBlocks * sizeof(BlockMeta);
-    word_t *blockMetaStart =
-        Heap_mapAndAlign(blockMetaSpaceSize, WORD_SIZE);
+    word_t *blockMetaStart = Heap_mapAndAlign(blockMetaSpaceSize, WORD_SIZE);
     heap->blockMetaStart = blockMetaStart;
-    heap->blockMetaEnd = blockMetaStart + initialBlockCount * sizeof(BlockMeta) / WORD_SIZE;
+    heap->blockMetaEnd =
+        blockMetaStart + initialBlockCount * sizeof(BlockMeta) / WORD_SIZE;
 
     // reserve space for line headers
     size_t lineMetaSpaceSize =
@@ -87,9 +86,11 @@ void Heap_Init(Heap *heap, size_t initialHeapSize) {
     heap->heapStart = heapStart;
     heap->heapEnd = heapStart + initialHeapSize / WORD_SIZE;
     Bytemap_Init(bytemap, heapStart, memoryLimit);
-    Allocator_Init(&allocator, &blockAllocator, bytemap, blockMetaStart, heapStart);
+    Allocator_Init(&allocator, &blockAllocator, bytemap, blockMetaStart,
+                   heapStart);
 
-    LargeAllocator_Init(&largeAllocator, &blockAllocator, bytemap, blockMetaStart, heapStart);
+    LargeAllocator_Init(&largeAllocator, &blockAllocator, bytemap,
+                        blockMetaStart, heapStart);
 }
 /**
  * Allocates large objects using the `LargeAllocator`.
@@ -122,7 +123,7 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
             Heap_Grow(heap, pow2increment);
 
             object = LargeAllocator_GetBlock(&largeAllocator, size);
-            assert(object !=  NULL);
+            assert(object != NULL);
             assert(Heap_IsWordInHeap(heap, (word_t *)object));
             return (word_t *)object;
         }
@@ -209,16 +210,16 @@ void Heap_Recycle(Heap *heap) {
     LargeAllocator_Clear(&largeAllocator);
     BlockAllocator_Clear(&blockAllocator);
 
-    BlockMeta *current = (BlockMeta *) heap->blockMetaStart;
+    BlockMeta *current = (BlockMeta *)heap->blockMetaStart;
     word_t *currentBlockStart = heap->heapStart;
     LineMeta *lineMetas = (LineMeta *)heap->lineMetaStart;
     word_t *end = heap->blockMetaEnd;
-    while ((word_t *) current < end) {
+    while ((word_t *)current < end) {
         int size = 1;
         if (BlockMeta_IsSuperblockStart(current)) {
             size = BlockMeta_SuperblockSize(current);
             LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart);
-        } else if(!BlockMeta_IsSuperblockMiddle(current)) {
+        } else if (!BlockMeta_IsSuperblockMiddle(current)) {
             Block_Recycle(&allocator, current, currentBlockStart, lineMetas);
         }
         assert(size > 0);
@@ -280,11 +281,13 @@ void Heap_Grow(Heap *heap, size_t incrementInBlocks) {
     heap->heapEnd = heapEnd + incrementInBlocks * BLOCK_TOTAL_SIZE;
     heap->heapSize += incrementInBlocks * BLOCK_TOTAL_SIZE;
     word_t *blockMetaEnd = heap->blockMetaEnd;
-    heap->blockMetaEnd = (word_t *)(((BlockMeta *) heap->blockMetaEnd) + incrementInBlocks);
+    heap->blockMetaEnd =
+        (word_t *)(((BlockMeta *)heap->blockMetaEnd) + incrementInBlocks);
     heap->lineMetaEnd +=
         incrementInBlocks * LINE_COUNT * LINE_METADATA_SIZE / WORD_SIZE;
 
-    BlockAllocator_AddFreeBlocks(&blockAllocator, (BlockMeta *)blockMetaEnd, incrementInBlocks);
+    BlockAllocator_AddFreeBlocks(&blockAllocator, (BlockMeta *)blockMetaEnd,
+                                 incrementInBlocks);
 
     blockAllocator.blockCount += incrementInBlocks;
 }
