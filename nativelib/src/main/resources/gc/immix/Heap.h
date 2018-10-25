@@ -10,7 +10,6 @@
 #include <stdio.h>
 
 typedef struct {
-    size_t memoryLimit;
     word_t *blockMetaStart;
     word_t *blockMetaEnd;
     word_t *lineMetaStart;
@@ -18,6 +17,9 @@ typedef struct {
     word_t *heapStart;
     word_t *heapEnd;
     size_t heapSize;
+    size_t maxHeapSize;
+    uint32_t blockCount;
+    uint32_t maxBlockCount;
     Bytemap *bytemap;
 } Heap;
 
@@ -45,6 +47,6 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize);
 void Heap_Collect(Heap *heap, Stack *stack);
 
 void Heap_Recycle(Heap *heap);
-void Heap_Grow(Heap *heap, size_t increment);
+void Heap_Grow(Heap *heap, uint32_t increment);
 
 #endif // IMMIX_HEAP_H
