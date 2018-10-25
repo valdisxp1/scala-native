@@ -13,8 +13,9 @@ void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart,
     }
     blockAllocator->blockCount = blockCount;
     BlockAllocator_Clear(blockAllocator);
-    BlockAllocator_addFreeBlocksInternal(
-        blockAllocator, (BlockMeta *)blockMetaStart, blockCount);
+
+    blockAllocator->smallestSuperblock.cursor = (BlockMeta *)blockMetaStart;
+    blockAllocator->smallestSuperblock.limit = superblock + blockCount;
 }
 
 inline static int BlockAllocator_sizeToLinkedListIndex(uint32_t size) {
