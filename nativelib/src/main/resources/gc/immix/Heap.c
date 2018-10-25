@@ -23,8 +23,6 @@
 #define HEAP_MEM_FD_OFFSET 0
 
 size_t Heap_getMemoryLimit() { return getMemorySize(); }
-void Heap_writeStatsToFile(Stats * stats);
-
 /**
  * Maps `MAX_SIZE` of memory and returns the first address aligned on
  * `alignement` mask
@@ -93,7 +91,7 @@ void Heap_Init(Heap *heap, size_t initialHeapSize) {
 
     LargeAllocator_Init(&largeAllocator, &blockAllocator, bytemap,
                         blockMetaStart, heapStart);
-    char *statsFile = Settings_GC_StatsFileName();
+    char *statsFile = Settings_StatsFileName();
     if (statsFile != NULL) {
         heap->stats = malloc(sizeof(Stats));
         Stats_Init(heap->stats, statsFile);
@@ -222,13 +220,6 @@ void Heap_Collect(Heap *heap, Stack *stack) {
     printf("End collect\n");
     fflush(stdout);
 #endif
-}
-
-void Heap_AfterExit(Heap *heap) {
-    Stats* stats = heap->stats;
-    if (stats != NULL) {
-        Stats_Close(stats);
-    }
 }
 
 void Heap_Recycle(Heap *heap) {
