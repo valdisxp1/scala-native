@@ -159,6 +159,8 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
         // release free superblock starting from the first object
         BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta,
                                      superblockSize - 1);
+        BlockMeta_SetFlag(current, block_superblock_start);
+        BlockMeta_SetSuperblockSize(blockMeta + superblockSize - 1, 1);
     }
 
     word_t *lastBlockStart = blockEnd - WORDS_IN_BLOCK;
