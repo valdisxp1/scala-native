@@ -13,8 +13,10 @@ void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart,
     }
     blockAllocator->blockCount = blockCount;
     BlockAllocator_Clear(blockAllocator);
-    BlockAllocator_addFreeBlocksInternal(
-        blockAllocator, (BlockMeta *)blockMetaStart, blockCount);
+
+    blockAllocator->smallestSuperblock.cursor = (BlockMeta *)blockMetaStart;
+    blockAllocator->smallestSuperblock.limit =
+        (BlockMeta *)blockMetaStart + blockCount;
 }
 
 inline static int BlockAllocator_sizeToLinkedListIndex(uint32_t size) {
@@ -40,20 +42,27 @@ BlockAllocator_pollSuperblock(BlockAllocator *blockAllocator, int first) {
     return NULL;
 }
 
-BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
+NOINLINE BlockMeta *
+BlockAllocator_getFreeBlockSlow(BlockAllocator *blockAllocator) {
+    BlockMeta *superblock = BlockAllocator_pollSuperblock(
+        blockAllocator, blockAllocator->minNonEmptyIndex);
+    if (superblock != NULL) {
+        blockAllocator->smallestSuperblock.cursor = superblock + 1;
+        blockAllocator->smallestSuperblock.limit =
+            superblock + BlockMeta_SuperblockSize(superblock);
+        // it might be safe to remove this
+        BlockMeta_SetSuperblockSize(superblock, 0);
+        BlockMeta_SetFlag(superblock, block_simple);
+        return superblock;
+    } else {
+        return NULL;
+    }
+}
+
+INLINE BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
     if (blockAllocator->smallestSuperblock.cursor >=
         blockAllocator->smallestSuperblock.limit) {
-        BlockMeta *superblock = BlockAllocator_pollSuperblock(
-            blockAllocator, blockAllocator->minNonEmptyIndex);
-        if (superblock != NULL) {
-            blockAllocator->smallestSuperblock.cursor = superblock;
-            blockAllocator->smallestSuperblock.limit =
-                superblock + BlockMeta_SuperblockSize(superblock);
-            // it might be safe to remove this
-            BlockMeta_SetSuperblockSize(superblock, 0);
-        } else {
-            return NULL;
-        }
+        return BlockAllocator_getFreeBlockSlow(blockAllocator);
     }
     BlockMeta *block = blockAllocator->smallestSuperblock.cursor;
     BlockMeta_SetFlag(block, block_simple);
@@ -102,7 +111,6 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
 static inline void
 BlockAllocator_addFreeBlocksInternal0(BlockAllocator *blockAllocator,
                                       BlockMeta *superblock, uint32_t count) {
-    BlockMeta_SetSuperblockSize(superblock, count);
     int i = BlockAllocator_sizeToLinkedListIndex(count);
     if (i < blockAllocator->minNonEmptyIndex) {
         blockAllocator->minNonEmptyIndex = i;
@@ -114,6 +122,7 @@ BlockAllocator_addFreeBlocksInternal0(BlockAllocator *blockAllocator,
     for (BlockMeta *current = superblock; current < limit; current++) {
         BlockMeta_SetFlag(current, block_free);
     }
+    BlockMeta_SetSuperblockSize(superblock, count);
     BlockList_AddLast(&blockAllocator->freeSuperblocks[i], superblock);
 }
 

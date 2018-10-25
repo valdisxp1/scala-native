@@ -155,10 +155,14 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
 
     ObjectMeta *firstObject = Bytemap_Get(allocator->bytemap, blockStart);
     assert(!ObjectMeta_IsFree(firstObject));
+    BlockMeta *lastBlock = blockMeta + superblockSize - 1;
     if (superblockSize > 1 && !ObjectMeta_IsMarked(firstObject)) {
         // release free superblock starting from the first object
         BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta,
                                      superblockSize - 1);
+
+        BlockMeta_SetFlag(lastBlock, block_superblock_start);
+        BlockMeta_SetSuperblockSize(lastBlock, 1);
     }
 
     word_t *lastBlockStart = blockEnd - WORDS_IN_BLOCK;
@@ -196,7 +200,7 @@ void LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
         // free chunk covers the entire last block, released it to the block
         // allocator
         BlockAllocator_AddFreeBlocks(allocator->blockAllocator,
-                                     blockMeta + superblockSize - 1, 1);
+                                     lastBlock, 1);
     } else if (chunkStart != NULL) {
         size_t currentSize = (current - chunkStart) * WORD_SIZE;
         LargeAllocator_AddChunk(allocator, (Chunk *)chunkStart, currentSize);
