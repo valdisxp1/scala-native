@@ -10,11 +10,12 @@
 #include "State.h"
 #include "utils/MathUtils.h"
 #include "Constants.h"
+#include "Settings.h"
 
 void scalanative_collect();
 
 NOINLINE void scalanative_init() {
-    Heap_Init(&heap, INITIAL_HEAP_SIZE);
+    Heap_Init(&heap, Settings_MinHeapSize(), Settings_MaxHeapSize());
     Stack_Init(&stack, INITIAL_STACK_SIZE);
 }
 

@@ -21,7 +21,14 @@
 #define HEAP_MEM_FD -1
 #define HEAP_MEM_FD_OFFSET 0
 
-size_t Heap_getMemoryLimit() { return getMemorySize(); }
+size_t Heap_getMemoryLimit() {
+    size_t memorySize = getMemorySize();
+    if ((uint64_t) memorySize > MAX_HEAP_SIZE) {
+        return (size_t) MAX_HEAP_SIZE;
+    } else {
+        return memorySize;
+    }
+}
 
 /**
  * Maps `MAX_SIZE` of memory and returns the first address aligned on
@@ -44,15 +51,40 @@ word_t *Heap_mapAndAlign(size_t memoryLimit, size_t alignmentSize) {
 /**
  * Allocates the heap struct and initializes it
  */
-void Heap_Init(Heap *heap, size_t initialHeapSize) {
-    assert(initialHeapSize >= 2 * BLOCK_TOTAL_SIZE);
-    assert(initialHeapSize % BLOCK_TOTAL_SIZE == 0);
-
+void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     size_t memoryLimit = Heap_getMemoryLimit();
-    heap->memoryLimit = memoryLimit;
 
-    word_t maxNumberOfBlocks = memoryLimit / BLOCK_TOTAL_SIZE;
-    uint32_t initialBlockCount = initialHeapSize / BLOCK_TOTAL_SIZE;
+    if (maxHeapSize < MIN_HEAP_SIZE) {
+        fprintf(stderr, "SCALANATIVE_MAX_HEAP_SIZE too small to initialize heap.\n");
+        fprintf(stderr, "Minimum required: %lum \n", MIN_HEAP_SIZE / 1024 / 1024);
+        fflush(stderr);
+        exit(1);
+    }
+
+    if (minHeapSize > memoryLimit) {
+        fprintf(stderr, "SCALANATIVE_MIN_HEAP_SIZE is too large.\n");
+        fprintf(stderr, "Maximum possible: %lug \n", memoryLimit / 1024 / 1024 / 1024);
+        fflush(stderr);
+        exit(1);
+    }
+
+    if (maxHeapSize < minHeapSize) {
+        fprintf(stderr, "SCALANATIVE_MAX_HEAP_SIZE should be at least SCALANATIVE_MIN_HEAP_SIZE\n");
+        fflush(stderr);
+        exit(1);
+    }
+
+    if (minHeapSize < MIN_HEAP_SIZE) {
+        minHeapSize = MIN_HEAP_SIZE;
+    }
+
+    if (maxHeapSize == UNLIMITED_HEAP_SIZE) {
+        maxHeapSize = memoryLimit;
+    }
+
+    word_t maxNumberOfBlocks = maxHeapSize / SPACE_USED_PER_BLOCK;
+    uint32_t initialBlockCount = minHeapSize / SPACE_USED_PER_BLOCK;
+    heap->memoryLimit = maxHeapSize;
 
     // reserve space for block headers
     size_t blockMetaSpaceSize = maxNumberOfBlocks * sizeof(BlockMeta);
@@ -82,9 +114,9 @@ void Heap_Init(Heap *heap, size_t initialHeapSize) {
     heap->bytemap = bytemap;
 
     // Init heap for small objects
-    heap->heapSize = initialHeapSize;
+    heap->heapSize = minHeapSize;
     heap->heapStart = heapStart;
-    heap->heapEnd = heapStart + initialHeapSize / WORD_SIZE;
+    heap->heapEnd = heapStart + minHeapSize / WORD_SIZE;
     Bytemap_Init(bytemap, heapStart, memoryLimit);
     Allocator_Init(&allocator, &blockAllocator, bytemap, blockMetaStart,
                    heapStart);
@@ -260,7 +292,7 @@ bool Heap_isGrowingPossible(Heap *heap, size_t increment) {
 void Heap_Grow(Heap *heap, size_t incrementInBlocks) {
 
     // If we cannot grow because we reached the memory limit
-    if (!Heap_isGrowingPossible(heap, incrementInBlocks * BLOCK_TOTAL_SIZE)) {
+    if (!Heap_isGrowingPossible(heap, incrementInBlocks * SPACE_USED_PER_BLOCK)) {
         // If we can still init the cursors, grow by max possible increment
         if (Allocator_CanInitCursors(&allocator)) {
             // increment = heap->memoryLimit - (heap->smallHeapSize +
@@ -277,13 +309,13 @@ void Heap_Grow(Heap *heap, size_t incrementInBlocks) {
 
 #ifdef DEBUG_PRINT
     printf("Growing small heap by %zu bytes, to %zu bytes\n",
-           increment * WORD_SIZE, heap->heapSize + increment * WORD_SIZE);
+           increment * WORD_SIZE, heap->heapSize + incrementInBlocks * SPACE_USED_PER_BLOCK);
     fflush(stdout);
 #endif
 
     word_t *heapEnd = heap->heapEnd;
     heap->heapEnd = heapEnd + incrementInBlocks * BLOCK_TOTAL_SIZE;
-    heap->heapSize += incrementInBlocks * BLOCK_TOTAL_SIZE;
+    heap->heapSize += incrementInBlocks * SPACE_USED_PER_BLOCK;
     word_t *blockMetaEnd = heap->blockMetaEnd;
     heap->blockMetaEnd =
         (word_t *)(((BlockMeta *)heap->blockMetaEnd) + incrementInBlocks);
