@@ -65,7 +65,7 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
                     lastRecyclable->next = lineIndex;
                 }
                 ObjectMeta_ClearLineAt(bytemapCursor);
-                lastRecyclable = (FreeLineMeta *) lineStart;
+                lastRecyclable = (FreeLineMeta *)lineStart;
 
                 // next line
                 lineIndex++;

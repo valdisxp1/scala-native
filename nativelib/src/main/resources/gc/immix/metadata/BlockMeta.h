@@ -61,7 +61,8 @@ static inline void BlockMeta_SetSuperblockSize(BlockMeta *blockMeta,
     blockMeta->block.superblock.size = superblockSize;
 }
 
-static inline void BlockMeta_SetFirstFreeLine(BlockMeta *blockMeta, int8_t freeLine) {
+static inline void BlockMeta_SetFirstFreeLine(BlockMeta *blockMeta,
+                                              int8_t freeLine) {
     assert(BlockMeta_IsSimpleBlock(blockMeta));
     assert(freeLine == LAST_HOLE || (freeLine >= 0 && freeLine < LINE_COUNT));
     blockMeta->block.simple.first = freeLine;
