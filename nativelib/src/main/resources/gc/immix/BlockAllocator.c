@@ -25,8 +25,7 @@ inline static int BlockAllocator_sizeToLinkedListIndex(uint32_t size) {
     return result;
 }
 
-inline static BlockMeta *
-BlockAllocator_pollSuperblock(BlockAllocator *blockAllocator, int first) {
+inline static BlockMeta *BlockAllocator_pollSuperblock(BlockAllocator *blockAllocator, int first) {
     int maxNonEmptyIndex = blockAllocator->maxNonEmptyIndex;
     for (int i = first; i <= maxNonEmptyIndex; i++) {
         BlockMeta *superblock =
@@ -41,20 +40,25 @@ BlockAllocator_pollSuperblock(BlockAllocator *blockAllocator, int first) {
     return NULL;
 }
 
-BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
+NOINLINE BlockMeta *BlockAllocator_getFreeBlockSlow(BlockAllocator *blockAllocator) {
+    BlockMeta *superblock = BlockAllocator_pollSuperblock(
+        blockAllocator, blockAllocator->minNonEmptyIndex);
+    if (superblock != NULL) {
+        blockAllocator->smallestSuperblock.cursor = superblock + 1;
+        blockAllocator->smallestSuperblock.limit =
+            superblock + BlockMeta_SuperblockSize(superblock);
+        // it might be safe to remove this
+        BlockMeta_SetSuperblockSize(superblock, 0);
+        return superblock;
+    } else {
+        return NULL;
+    }
+}
+
+INLINE BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
     if (blockAllocator->smallestSuperblock.cursor >=
         blockAllocator->smallestSuperblock.limit) {
-        BlockMeta *superblock = BlockAllocator_pollSuperblock(
-            blockAllocator, blockAllocator->minNonEmptyIndex);
-        if (superblock != NULL) {
-            blockAllocator->smallestSuperblock.cursor = superblock;
-            blockAllocator->smallestSuperblock.limit =
-                superblock + BlockMeta_SuperblockSize(superblock);
-            // it might be safe to remove this
-            BlockMeta_SetSuperblockSize(superblock, 0);
-        } else {
-            return NULL;
-        }
+            return BlockAllocator_getFreeBlockSlow(blockAllocator);
     }
     BlockMeta *block = blockAllocator->smallestSuperblock.cursor;
     BlockMeta_SetFlag(block, block_simple);
