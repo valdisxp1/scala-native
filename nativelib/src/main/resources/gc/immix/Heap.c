@@ -33,8 +33,8 @@ bool Heap_isGrowingPossible(Heap *heap, uint32_t incrementInBlocks) {
 
 size_t Heap_getMemoryLimit() {
     size_t memorySize = getMemorySize();
-    if ((uint64_t) memorySize > MAX_HEAP_SIZE) {
-        return (size_t) MAX_HEAP_SIZE;
+    if ((uint64_t)memorySize > MAX_HEAP_SIZE) {
+        return (size_t)MAX_HEAP_SIZE;
     } else {
         return memorySize;
     }
@@ -65,21 +65,25 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     size_t memoryLimit = Heap_getMemoryLimit();
 
     if (maxHeapSize < MIN_HEAP_SIZE) {
-        fprintf(stderr, "SCALANATIVE_MAX_HEAP_SIZE too small to initialize heap.\n");
-        fprintf(stderr, "Minimum required: %lum \n", MIN_HEAP_SIZE / 1024 / 1024);
+        fprintf(stderr,
+                "SCALANATIVE_MAX_HEAP_SIZE too small to initialize heap.\n");
+        fprintf(stderr, "Minimum required: %lum \n",
+                MIN_HEAP_SIZE / 1024 / 1024);
         fflush(stderr);
         exit(1);
     }
 
     if (minHeapSize > memoryLimit) {
         fprintf(stderr, "SCALANATIVE_MIN_HEAP_SIZE is too large.\n");
-        fprintf(stderr, "Maximum possible: %lug \n", memoryLimit / 1024 / 1024 / 1024);
+        fprintf(stderr, "Maximum possible: %lug \n",
+                memoryLimit / 1024 / 1024 / 1024);
         fflush(stderr);
         exit(1);
     }
 
     if (maxHeapSize < minHeapSize) {
-        fprintf(stderr, "SCALANATIVE_MAX_HEAP_SIZE should be at least SCALANATIVE_MIN_HEAP_SIZE\n");
+        fprintf(stderr, "SCALANATIVE_MAX_HEAP_SIZE should be at least "
+                        "SCALANATIVE_MIN_HEAP_SIZE\n");
         fflush(stderr);
         exit(1);
     }
@@ -107,7 +111,7 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
 
     // reserve space for line headers
     size_t lineMetaSpaceSize =
-        (size_t) maxNumberOfBlocks * LINE_COUNT * LINE_METADATA_SIZE;
+        (size_t)maxNumberOfBlocks * LINE_COUNT * LINE_METADATA_SIZE;
     word_t *lineMetaStart = Heap_mapAndAlign(lineMetaSpaceSize, WORD_SIZE);
     heap->lineMetaStart = lineMetaStart;
     assert(LINE_COUNT * LINE_SIZE == BLOCK_TOTAL_SIZE);
@@ -326,7 +330,8 @@ void Heap_Grow(Heap *heap, uint32_t incrementInBlocks) {
 
 #ifdef DEBUG_PRINT
     printf("Growing small heap by %zu bytes, to %zu bytes\n",
-           increment * WORD_SIZE, heap->heapSize + incrementInBlocks * SPACE_USED_PER_BLOCK);
+           increment * WORD_SIZE,
+           heap->heapSize + incrementInBlocks * SPACE_USED_PER_BLOCK);
     fflush(stdout);
 #endif
 

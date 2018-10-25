@@ -26,7 +26,7 @@ size_t Settings_parseSizeStr(const char *str) {
         case 'm':
         case 'M':
             if (size < (1ULL << (8 * sizeof(size_t) - 20))) {
-            size <<= 20;
+                size <<= 20;
             } else {
                 size = UNLIMITED_HEAP_SIZE;
             }
