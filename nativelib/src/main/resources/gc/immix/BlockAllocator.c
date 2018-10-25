@@ -15,7 +15,7 @@ void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart,
     BlockAllocator_Clear(blockAllocator);
 
     blockAllocator->smallestSuperblock.cursor = (BlockMeta *)blockMetaStart;
-    blockAllocator->smallestSuperblock.limit = superblock + blockCount;
+    blockAllocator->smallestSuperblock.limit = (BlockMeta *)blockMetaStart + blockCount;
 }
 
 inline static int BlockAllocator_sizeToLinkedListIndex(uint32_t size) {
@@ -49,6 +49,7 @@ NOINLINE BlockMeta *BlockAllocator_getFreeBlockSlow(BlockAllocator *blockAllocat
             superblock + BlockMeta_SuperblockSize(superblock);
         // it might be safe to remove this
         BlockMeta_SetSuperblockSize(superblock, 0);
+        BlockMeta_SetFlag(superblock, block_simple);
         return superblock;
     } else {
         return NULL;
