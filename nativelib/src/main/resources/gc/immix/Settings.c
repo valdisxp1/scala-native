@@ -59,3 +59,7 @@ size_t Settings_MaxHeapSize() {
         return UNLIMITED_HEAP_SIZE;
     }
 }
+
+char *Settings_StatsFileName() {
+    return getenv(STATS_FILE_SETTING);
+}

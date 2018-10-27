@@ -7,6 +7,7 @@
 #include "datastructures/Stack.h"
 #include "datastructures/Bytemap.h"
 #include "metadata/LineMeta.h"
+#include "Stats.h"
 #include <stdio.h>
 
 typedef struct {
@@ -21,6 +22,7 @@ typedef struct {
     uint32_t blockCount;
     uint32_t maxBlockCount;
     Bytemap *bytemap;
+    Stats *stats;
 } Heap;
 
 static inline bool Heap_IsWordInHeap(Heap *heap, word_t *word) {
