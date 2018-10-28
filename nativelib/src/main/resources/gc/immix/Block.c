@@ -25,7 +25,11 @@ INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
 void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
                    word_t *blockStart, LineMeta *lineMetas, bool collectingOld) {
 
-    if ((!collectingOld && BlockMeta_IsOld(blockMeta)) || (collectingOld && !BlockMeta_IsOld(blockMeta))) {
+    if (!collectingOld && BlockMeta_IsOld(blockMeta)) {
+        allocator->oldBlockCount ++;
+        return;
+    } else if (collectingOld && !BlockMeta_IsOld(blockMeta)) {
+        allocator->youngBlockCount ++;
         return;
     }
     // If the block is not marked, it means that it's completely free
@@ -40,10 +44,14 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
         if (!collectingOld) {
             BlockMeta_IncrementAge(blockMeta);
             if (BlockMeta_GetAge(blockMeta) == MAX_AGE_YOUNG_BLOCK) {
+                allocator->oldBlockCount ++;
                 BlockMeta_SetFlag(blockMeta, block_old);
             } else {
+                allocator->youngBlockCount ++;
                 BlockMeta_SetFlag(blockMeta, block_unavailable);
             }
+        } else {
+            allocator->oldBlockCount ++;
         }
 
         Bytemap *bytemap = allocator->bytemap;
