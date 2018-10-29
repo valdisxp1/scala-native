@@ -5,6 +5,7 @@
 #include "Allocator.h"
 #include "LargeAllocator.h"
 #include "datastructures/Stack.h"
+#include "Stats.h"
 
 typedef struct {
     size_t memoryLimit;
@@ -14,6 +15,7 @@ typedef struct {
     word_t *largeHeapStart;
     word_t *largeHeapEnd;
     size_t largeHeapSize;
+    Stats *stats;
 } Heap;
 
 static inline bool Heap_IsWordInLargeHeap(Heap *heap, word_t *word) {

@@ -9,6 +9,7 @@
 #include "State.h"
 #include "utils/MathUtils.h"
 #include "StackTrace.h"
+#include "Settings.h"
 #include "Memory.h"
 #include <memory.h>
 
@@ -69,6 +70,12 @@ void Heap_Init(Heap *heap, size_t initialSmallHeapSize,
     heap->largeHeapStart = largeHeapStart;
     heap->largeHeapEnd =
         (word_t *)((ubyte_t *)largeHeapStart + initialLargeHeapSize);
+
+    char *statsFile = Settings_StatsFileName();
+    if (statsFile != NULL) {
+        heap->stats = malloc(sizeof(Stats));
+        Stats_Init(heap->stats, statsFile);
+    }
 }
 /**
  * Allocates large objects using the `LargeAllocator`.
@@ -186,13 +193,24 @@ word_t *Heap_Alloc(Heap *heap, uint32_t objectSize) {
 }
 
 void Heap_Collect(Heap *heap, Stack *stack) {
+    uint64_t start_ns, sweep_start_ns, end_ns;
+    Stats *stats = heap->stats;
 #ifdef DEBUG_PRINT
     printf("\nCollect\n");
     fflush(stdout);
 #endif
+    if (stats != NULL) {
+        start_ns = scalanative_nano_time();
+    }
     Marker_MarkRoots(heap, stack);
+    if (stats != NULL) {
+        sweep_start_ns = scalanative_nano_time();
+    }
     Heap_Recycle(heap);
-
+    if (stats != NULL) {
+        end_ns = scalanative_nano_time();
+        Stats_RecordCollection(stats, start_ns, sweep_start_ns, end_ns);
+    }
 #ifdef DEBUG_PRINT
     printf("End collect\n");
     fflush(stdout);
