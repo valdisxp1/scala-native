@@ -13,6 +13,7 @@ void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart,
     }
     BlockAllocator_Clear(blockAllocator);
 
+    BlockRange_Replace(&blockAllocator->smallestSuperblock0, (BlockMeta *)blockMetaStart, blockCount);
     blockAllocator->smallestSuperblock.cursor = (BlockMeta *)blockMetaStart;
     blockAllocator->smallestSuperblock.limit =
         (BlockMeta *)blockMetaStart + blockCount;
@@ -49,31 +50,36 @@ BlockAllocator_getFreeBlockSlow(BlockAllocator *blockAllocator) {
         blockAllocator->smallestSuperblock.cursor = superblock + 1;
         blockAllocator->smallestSuperblock.limit =
             superblock + BlockMeta_SuperblockSize(superblock);
+        BlockMeta *old0 = BlockRange_Replace(&blockAllocator->smallestSuperblock0, superblock + 1, BlockMeta_SuperblockSize(superblock));
+        assert(old0 == NULL);
         BlockMeta_SetFlag(superblock, block_simple);
         return superblock;
     } else {
         // as the last resort look in the superblock being coalesced
         BlockMeta *first = blockAllocator->coalescingSuperblock.first;
         BlockMeta *limit = blockAllocator->coalescingSuperblock.limit;
-        BlockMeta *block = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock0, 1);
+        BlockMeta *block0 = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock0, 1);
         if (limit - first >= 1) {
             blockAllocator->coalescingSuperblock.first += 1;
             BlockMeta_SetFlag(first, block_simple);
-            assert(block == first);
+            assert(block0 == first);
             return first;
         } else {
-            assert(block == NULL);
+            assert(block0 == NULL);
             return NULL;
         }
     }
 }
 
 INLINE BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
+    BlockMeta *block0 = BlockRange_PollFirst(&blockAllocator->smallestSuperblock0, 1);
     if (blockAllocator->smallestSuperblock.cursor >=
         blockAllocator->smallestSuperblock.limit) {
+        assert(block0 == NULL);
         return BlockAllocator_getFreeBlockSlow(blockAllocator);
     }
     BlockMeta *block = blockAllocator->smallestSuperblock.cursor;
+    assert(block == block0);
     BlockMeta_SetFlag(block, block_simple);
     blockAllocator->smallestSuperblock.cursor++;
 
@@ -86,6 +92,8 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
     BlockMeta *superblock;
     BlockMeta *sCursor = blockAllocator->smallestSuperblock.cursor;
     BlockMeta *sLimit = blockAllocator->smallestSuperblock.limit;
+
+    BlockMeta *superblock0 = BlockRange_PollFirst(&blockAllocator->smallestSuperblock0, size);
     if (sLimit - sCursor >= size) {
         // first check the smallestSuperblock
         blockAllocator->smallestSuperblock.cursor += size;
@@ -95,7 +103,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
         int target = MathUtils_Log2Ceil((size_t)size);
         int minNonEmptyIndex = blockAllocator->minNonEmptyIndex;
         int first = (minNonEmptyIndex > target) ? minNonEmptyIndex : target;
-        superblock = BlockAllocator_pollSuperblock(blockAllocator, first);
+        superblock0 = superblock = BlockAllocator_pollSuperblock(blockAllocator, first);
 
         if (superblock != NULL) {
             if (BlockMeta_SuperblockSize(superblock) > size) {
@@ -112,9 +120,9 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
                 blockAllocator->coalescingSuperblock.first += size;
                 superblock = cFirst;
             }
-            BlockMeta *superblock0 = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock0, size);
-            assert(superblock == superblock0);
+            superblock0 = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock0, size);
         }
+        assert(superblock == superblock0);
 
         if (superblock == NULL) {
             return NULL;
@@ -184,7 +192,7 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
         assert(!didAppend);
         uint32_t size = (uint32_t)(blockAllocator->coalescingSuperblock.limit -
                                    blockAllocator->coalescingSuperblock.first);
-        assert(size == BlockRange_Size(&blockAllocator->coalescingSuperblock));
+        assert(size == BlockRange_Size(&blockAllocator->coalescingSuperblock0));
         BlockMeta *superblock0 = BlockRange_Replace(&blockAllocator->coalescingSuperblock0, superblock, count);
         assert(superblock0 == blockAllocator->coalescingSuperblock.first);
         BlockAllocator_addFreeBlocksInternal(
@@ -204,6 +212,7 @@ void BlockAllocator_Clear(BlockAllocator *blockAllocator) {
     blockAllocator->smallestSuperblock.limit = NULL;
     blockAllocator->coalescingSuperblock.first = NULL;
     blockAllocator->coalescingSuperblock.limit = NULL;
+    BlockRange_Clear(&blockAllocator->smallestSuperblock0);
     BlockRange_Clear(&blockAllocator->coalescingSuperblock0);
     blockAllocator->minNonEmptyIndex = SUPERBLOCK_LIST_SIZE;
     blockAllocator->maxNonEmptyIndex = -1;

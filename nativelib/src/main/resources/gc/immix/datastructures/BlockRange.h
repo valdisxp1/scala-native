@@ -38,7 +38,10 @@ static inline uint32_t BlockRange_Size(BlockRange *blockRange) {
 }
 
 static inline BlockMeta *BlockRange_Replace(BlockRange *blockRange, BlockMeta *first, uint32_t count) {
-    BlockMeta *old = blockRange->first;
+    BlockMeta *old = NULL;
+    if (blockRange->limit > blockRange->first) {
+        old = blockRange->first;
+    }
     blockRange->first = first;
     blockRange->limit = first + count;
     return old;
