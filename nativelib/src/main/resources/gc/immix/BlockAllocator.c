@@ -50,7 +50,7 @@ BlockAllocator_getFreeBlockSlow(BlockAllocator *blockAllocator) {
         blockAllocator->smallestSuperblock.cursor = superblock + 1;
         blockAllocator->smallestSuperblock.limit =
             superblock + BlockMeta_SuperblockSize(superblock);
-        BlockMeta *old0 = BlockRange_Replace(&blockAllocator->smallestSuperblock0, superblock + 1, BlockMeta_SuperblockSize(superblock));
+        BlockMeta *old0 = BlockRange_Replace(&blockAllocator->smallestSuperblock0, superblock + 1, BlockMeta_SuperblockSize(superblock) - 1);
         assert(old0 == NULL);
         BlockMeta_SetFlag(superblock, block_simple);
         return superblock;

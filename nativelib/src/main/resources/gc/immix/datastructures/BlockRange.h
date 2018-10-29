@@ -39,7 +39,7 @@ static inline uint32_t BlockRange_Size(BlockRange *blockRange) {
 
 static inline BlockMeta *BlockRange_Replace(BlockRange *blockRange, BlockMeta *first, uint32_t count) {
     BlockMeta *old = NULL;
-    if (blockRange->limit > blockRange->first) {
+    if (!BlockRange_IsEmpty(blockRange)) {
         old = blockRange->first;
     }
     blockRange->first = first;
@@ -48,7 +48,7 @@ static inline BlockMeta *BlockRange_Replace(BlockRange *blockRange, BlockMeta *f
 }
 
 static inline BlockMeta *BlockRange_PollFirst(BlockRange *blockRange, uint32_t count) {
-    if (BlockRange_Size(blockRange) >= count) {
+    if (!BlockRange_IsEmpty(blockRange) && BlockRange_Size(blockRange) >= count) {
         BlockMeta *old = blockRange->first;
         blockRange->first = old + count;
         return old;
