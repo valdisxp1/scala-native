@@ -1,59 +1,68 @@
 #ifndef IMMIX_BLOCKRANGE_H
 #define IMMIX_BLOCKRANGE_H
 
-#include "../metadata/BlockMeta.h"
 #include "../GCTypes.h"
 #include "../Constants.h"
 #include <stdbool.h>
 
-typedef struct {
-    BlockMeta *first;
-    BlockMeta *limit;
-} BlockRange;
+typedef uint64_t BlockRange;
+
+#define NO_BLOCK_INDEX (~((uint32_t) 0))
+
+static inline BlockRange BlockRange_Pack(uint32_t first, uint32_t limit) {
+    return ((uint64_t) limit  << 32) | (uint64_t) first;
+}
+
+static inline uint32_t BlockRange_First(BlockRange blockRange) {
+    return (uint32_t) (blockRange);
+}
+
+static inline uint32_t BlockRange_Limit(BlockRange blockRange) {
+    return (uint32_t) (blockRange >> 32);
+}
 
 static inline void BlockRange_Clear(BlockRange *blockRange) {
-    blockRange->first = NULL;
-    blockRange->limit = NULL;
+    *blockRange = 0;
 }
 
-static inline bool BlockRange_IsEmpty(BlockRange *blockRange) {
-    return blockRange->first == NULL || blockRange->first >= blockRange->limit;
+static inline bool BlockRange_IsEmpty(BlockRange blockRange) {
+    return BlockRange_First(blockRange) >= BlockRange_Limit(blockRange);
 }
 
-static inline bool BlockRange_AppendLast(BlockRange *blockRange, BlockMeta *first, uint32_t count) {
-    if (BlockRange_IsEmpty(blockRange)) {
-        blockRange->first = first;
-        blockRange->limit = first + count;
+static inline bool BlockRange_AppendLast(BlockRange *blockRange, uint32_t first, uint32_t count) {
+    BlockRange old = *blockRange;
+    if (BlockRange_IsEmpty(old)) {
+        *blockRange = BlockRange_Pack(first, first + count);
         return true;
-    } else if (blockRange->limit == first) {
-        blockRange->limit = first + count;
+    } else if (BlockRange_Limit(old) == first) {
+        *blockRange = BlockRange_Pack(BlockRange_First(old), first + count);
         return true;
     } else {
         return false;
     }
 }
 
-static inline uint32_t BlockRange_Size(BlockRange *blockRange) {
-    return (uint32_t) (blockRange->limit - blockRange->first);
+static inline uint32_t BlockRange_Size(BlockRange blockRange) {
+    assert(!BlockRange_IsEmpty(blockRange));
+    return BlockRange_Limit(blockRange) - BlockRange_First(blockRange);
 }
 
-static inline BlockMeta *BlockRange_Replace(BlockRange *blockRange, BlockMeta *first, uint32_t count) {
-    BlockMeta *old = NULL;
-    if (!BlockRange_IsEmpty(blockRange)) {
-        old = blockRange->first;
-    }
-    blockRange->first = first;
-    blockRange->limit = first + count;
+static inline BlockRange BlockRange_Replace(BlockRange *blockRange, uint32_t first, uint32_t count) {
+    BlockRange old = *blockRange;
+    BlockRange newRange = BlockRange_Pack(first, first + count);
+    *blockRange = newRange;
     return old;
 }
 
-static inline BlockMeta *BlockRange_PollFirst(BlockRange *blockRange, uint32_t count) {
-    if (!BlockRange_IsEmpty(blockRange) && BlockRange_Size(blockRange) >= count) {
-        BlockMeta *old = blockRange->first;
-        blockRange->first = old + count;
-        return old;
+static inline uint32_t BlockRange_PollFirst(BlockRange *blockRange, uint32_t count) {
+    BlockRange old = *blockRange;
+    uint32_t first = BlockRange_First(old);
+    uint32_t limit = BlockRange_Limit(old);
+    if (!BlockRange_IsEmpty(old) && BlockRange_Size(old) >= count) {
+        *blockRange = BlockRange_Pack(old + count, limit);
+        return first;
     } else {
-        return NULL;
+        return NO_BLOCK_INDEX;
     }
 }
 
