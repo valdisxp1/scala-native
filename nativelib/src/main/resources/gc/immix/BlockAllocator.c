@@ -53,11 +53,16 @@ BlockAllocator_getFreeBlockSlow(BlockAllocator *blockAllocator) {
         return superblock;
     } else {
         // as the last resort look in the superblock being coalesced
-        BlockMeta *block = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock, 1);
-        if (block != NULL) {
-            BlockMeta_SetFlag(block, block_simple);
-            return block;
+        BlockMeta *first = blockAllocator->coalescingSuperblock.first;
+        BlockMeta *limit = blockAllocator->coalescingSuperblock.limit;
+        BlockMeta *block = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock0, 1);
+        if (limit - first >= 1) {
+            blockAllocator->coalescingSuperblock.first += 1;
+            BlockMeta_SetFlag(first, block_simple);
+            assert(block == first);
+            return first;
         } else {
+            assert(block == NULL);
             return NULL;
         }
     }
@@ -101,7 +106,14 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
             }
         } else {
             // as the last resort look in the superblock being coalesced
-            superblock = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock, size);
+            BlockMeta *cFirst = blockAllocator->coalescingSuperblock.first;
+            BlockMeta *cLimit = blockAllocator->coalescingSuperblock.limit;
+            if (cLimit - cFirst >= size) {
+                blockAllocator->coalescingSuperblock.first += size;
+                superblock = cFirst;
+            }
+            BlockMeta *superblock0 = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock0, size);
+            assert(superblock == superblock0);
         }
 
         if (superblock == NULL) {
@@ -160,10 +172,25 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
     for (BlockMeta *current = superblock; current < limit; current++) {
         BlockMeta_Clear(current);
     }
-    if (!BlockRange_AppendLast(&blockAllocator->coalescingSuperblock, superblock, count)) {
-        uint32_t size = BlockRange_Size(&blockAllocator->coalescingSuperblock);
-        BlockMeta *superblock = BlockRange_Replace(&blockAllocator->coalescingSuperblock, superblock, count);
-        BlockAllocator_addFreeBlocksInternal(blockAllocator, superblock, size);
+    bool didAppend = BlockRange_AppendLast(&blockAllocator->coalescingSuperblock0, superblock, count);
+    if (blockAllocator->coalescingSuperblock.first == NULL) {
+        blockAllocator->coalescingSuperblock.first = superblock;
+        blockAllocator->coalescingSuperblock.limit = superblock + count;
+        assert(didAppend);
+    } else if (blockAllocator->coalescingSuperblock.limit == superblock) {
+        blockAllocator->coalescingSuperblock.limit = superblock + count;
+        assert(didAppend);
+    } else {
+        assert(!didAppend);
+        uint32_t size = (uint32_t)(blockAllocator->coalescingSuperblock.limit -
+                                   blockAllocator->coalescingSuperblock.first);
+        assert(size == BlockRange_Size(&blockAllocator->coalescingSuperblock));
+        BlockMeta *superblock0 = BlockRange_Replace(&blockAllocator->coalescingSuperblock0, superblock, count);
+        assert(superblock0 == blockAllocator->coalescingSuperblock.first);
+        BlockAllocator_addFreeBlocksInternal(
+            blockAllocator, blockAllocator->coalescingSuperblock.first, size);
+        blockAllocator->coalescingSuperblock.first = superblock;
+        blockAllocator->coalescingSuperblock.limit = superblock + count;
     }
     blockAllocator->freeBlockCount += count;
 }
@@ -175,7 +202,9 @@ void BlockAllocator_Clear(BlockAllocator *blockAllocator) {
     blockAllocator->freeBlockCount = 0;
     blockAllocator->smallestSuperblock.cursor = NULL;
     blockAllocator->smallestSuperblock.limit = NULL;
-    BlockRange_Clear(&blockAllocator->coalescingSuperblock);
+    blockAllocator->coalescingSuperblock.first = NULL;
+    blockAllocator->coalescingSuperblock.limit = NULL;
+    BlockRange_Clear(&blockAllocator->coalescingSuperblock0);
     blockAllocator->minNonEmptyIndex = SUPERBLOCK_LIST_SIZE;
     blockAllocator->maxNonEmptyIndex = -1;
 }
