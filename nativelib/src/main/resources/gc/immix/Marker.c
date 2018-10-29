@@ -98,7 +98,7 @@ void Marker_Mark(Heap *heap, Stack *stack, bool collectingOld) {
                             hasPointerToOld = true;
                         } else {
                             BlockMeta *blockMeta = Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, field);
-                            if (BlockMeta_IsOld(blockMeta) || BlockMeta_GetAge(blockMeta) == (MAX_AGE_YOUNG_BLOCK - 1)) {
+                            if (BlockMeta_GetAge(blockMeta) >= MAX_AGE_YOUNG_BLOCK - 1) {
                                 hasPointerToOld = true;
                             } else {
                                 hasPointerToYoung = true;
@@ -125,7 +125,7 @@ void Marker_Mark(Heap *heap, Stack *stack, bool collectingOld) {
                         hasPointerToOld = true;
                     } else {
                         BlockMeta *blockMeta = Block_GetBlockMeta(heap->blockMetaStart, heap->heapStart, field);
-                        if (BlockMeta_IsOld(blockMeta) || BlockMeta_GetAge(blockMeta) == (MAX_AGE_YOUNG_BLOCK - 1)) {
+                        if (BlockMeta_GetAge(blockMeta) >= MAX_AGE_YOUNG_BLOCK - 1) {
                             hasPointerToOld = true;
                         } else {
                             hasPointerToYoung = true;
@@ -136,7 +136,7 @@ void Marker_Mark(Heap *heap, Stack *stack, bool collectingOld) {
             }
         }
 
-        if (willBeOld && hasPointerToYoung && !ObjectMeta_IsRemembered(objectMeta)) {
+        if (willBeOld && hasPointerToYoung) {
             ObjectMeta_SetRemembered(objectMeta);
             Stack_Push(allocator.rememberedObjects, object);
         } else if (!willBeOld && hasPointerToOld) {

@@ -142,11 +142,7 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
 
 done:
     assert(Heap_IsWordInLargeHeap(heap, (word_t *)object));
-    while(!Stack_IsEmpty(allocator.rememberedYoungObjects)) {
-        Object *current = Stack_Pop(allocator.rememberedYoungObjects);
-        ObjectMeta *currentMeta = Bytemap_Get(allocator.bytemap,(word_t *)object);
-        ObjectMeta_SetUnremembered(currentMeta);
-    }
+    Stack_Clear(allocator.rememberedYoungObjects);
     return (word_t *)object;
 }
 
@@ -308,11 +304,9 @@ void Heap_Recycle(Heap *heap, bool collectingOld) {
 
     allocator.freeBlockCount = 0;
     allocator.freeMemoryAfterCollection = 0;
-    if (!collectingOld) {
-        allocator.youngBlockCount = 0;
-    } else {
-        allocator.oldBlockCount = 0;
-    }
+    allocator.youngBlockCount = 0;
+    allocator.oldBlockCount = 0;
+
     word_t *current = heap->blockMetaStart;
     word_t *currentBlockStart = heap->heapStart;
     LineMeta *lineMetas = (LineMeta *)heap->lineMetaStart;
