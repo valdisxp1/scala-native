@@ -90,7 +90,7 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
         // If there is no recyclable line, the block is unavailable
         if (lastRecyclable != NULL) {
             lastRecyclable->next = LAST_HOLE;
-            BlockList_AddLast(&allocator->recycledBlocks, blockMeta);
+            BlockList_Push(&allocator->recycledBlocks, blockMeta);
 
             assert(BlockMeta_FirstFreeLine(blockMeta) >= 0);
             assert(BlockMeta_FirstFreeLine(blockMeta) < LINE_COUNT);

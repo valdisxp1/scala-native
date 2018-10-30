@@ -31,7 +31,7 @@ BlockAllocator_pollSuperblock(BlockAllocator *blockAllocator, int first) {
     int maxNonEmptyIndex = blockAllocator->maxNonEmptyIndex;
     for (int i = first; i <= maxNonEmptyIndex; i++) {
         BlockMeta *superblock =
-            BlockList_Poll(&blockAllocator->freeSuperblocks[i]);
+            BlockList_Pop(&blockAllocator->freeSuperblocks[i]);
         if (superblock != NULL) {
             assert(BlockMeta_SuperblockSize(superblock) > 0);
             return superblock;
@@ -154,7 +154,7 @@ BlockAllocator_addFreeBlocksInternal0(BlockAllocator *blockAllocator,
         blockAllocator->maxNonEmptyIndex = i;
     }
     BlockMeta_SetSuperblockSize(superblock, count);
-    BlockList_AddLast(&blockAllocator->freeSuperblocks[i], superblock);
+    BlockList_Push(&blockAllocator->freeSuperblocks[i], superblock);
 }
 
 void BlockAllocator_addFreeBlocksInternal(BlockAllocator *blockAllocator,

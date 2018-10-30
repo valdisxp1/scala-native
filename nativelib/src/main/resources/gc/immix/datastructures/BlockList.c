@@ -4,6 +4,8 @@
 #include "../Log.h"
 #include "../metadata/BlockMeta.h"
 
+#define LAST_BLOCK -1
+
 BlockMeta *BlockList_getNextBlock(word_t *blockMetaStart,
                                   BlockMeta *blockMeta) {
     int32_t nextBlockId = blockMeta->nextBlock;
@@ -16,34 +18,28 @@ BlockMeta *BlockList_getNextBlock(word_t *blockMetaStart,
 
 void BlockList_Init(BlockList *blockList, word_t *blockMetaStart) {
     blockList->blockMetaStart = blockMetaStart;
-    blockList->first = NULL;
-    blockList->last = NULL;
+    blockList->head = NULL;
 }
 
-BlockMeta *BlockList_Poll(BlockList *blockList) {
-    BlockMeta *block = blockList->first;
+BlockMeta *BlockList_Pop(BlockList *blockList) {
+    BlockMeta *block = blockList->head;
     if (block != NULL) {
-        if (block == blockList->last) {
-            blockList->first = NULL;
-        }
-        blockList->first =
+        blockList->head =
             BlockList_getNextBlock(blockList->blockMetaStart, block);
     }
     return block;
 }
 
-void BlockList_AddLast(BlockList *blockList, BlockMeta *blockMeta) {
-    if (blockList->first == NULL) {
-        blockList->first = blockMeta;
+void BlockList_Push(BlockList *blockList, BlockMeta *blockMeta) {
+    if (blockList->head == NULL) {
+        blockMeta->nextBlock = LAST_BLOCK;
     } else {
-        blockList->last->nextBlock =
+        blockMeta->nextBlock =
             BlockMeta_GetBlockIndex(blockList->blockMetaStart, blockMeta);
     }
-    blockList->last = blockMeta;
-    blockMeta->nextBlock = LAST_BLOCK;
+    blockList->head = blockMeta;
 }
 
 void BlockList_Clear(BlockList *blockList) {
-    blockList->first = NULL;
-    blockList->last = NULL;
+    blockList->head = NULL;
 }

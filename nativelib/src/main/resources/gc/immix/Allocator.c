@@ -155,7 +155,7 @@ bool Allocator_getNextLine(Allocator *allocator) {
  * free line of the new block.
  */
 bool Allocator_newBlock(Allocator *allocator) {
-    BlockMeta *block = BlockList_Poll(&allocator->recycledBlocks);
+    BlockMeta *block = BlockList_Pop(&allocator->recycledBlocks);
     word_t *blockStart;
 
     if (block != NULL) {
