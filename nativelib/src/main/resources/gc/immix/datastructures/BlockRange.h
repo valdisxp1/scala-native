@@ -59,7 +59,7 @@ static inline uint32_t BlockRange_PollFirst(BlockRange *blockRange, uint32_t cou
     uint32_t first = BlockRange_First(old);
     uint32_t limit = BlockRange_Limit(old);
     if (!BlockRange_IsEmpty(old) && BlockRange_Size(old) >= count) {
-        *blockRange = BlockRange_Pack(old + count, limit);
+        *blockRange = BlockRange_Pack(first + count, limit);
         return first;
     } else {
         return NO_BLOCK_INDEX;

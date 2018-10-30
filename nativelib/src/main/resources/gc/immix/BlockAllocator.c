@@ -121,7 +121,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
             uint32_t superblock0Idx = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock0, size);
             BlockMeta *superblock0 = NULL;
             if (superblock0Idx != NO_BLOCK_INDEX) {
-                BlockMeta_GetFromIndex(blockAllocator->blockMetaStart, superblock0Idx);
+                superblock0 = BlockMeta_GetFromIndex(blockAllocator->blockMetaStart, superblock0Idx);
             }
             assert(superblock == superblock0);
         }
