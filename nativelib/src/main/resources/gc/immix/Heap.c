@@ -2,7 +2,6 @@
 #include <sys/mman.h>
 #include <stdio.h>
 #include "Heap.h"
-#include "Block.h"
 #include "Log.h"
 #include "Allocator.h"
 #include "Marker.h"
@@ -338,7 +337,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         int size = 1;
         int freeCount = 0;
         if (BlockMeta_IsSimpleBlock(current)) {
-            freeCount = Block_Recycle(&allocator, current, currentBlockStart, lineMetas);
+            freeCount = Allocator_Sweep(&allocator, current, currentBlockStart, lineMetas);
         } else if (BlockMeta_IsSuperblockStart(current)) {
             size = BlockMeta_SuperblockSize(current);
             freeCount = LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart);
