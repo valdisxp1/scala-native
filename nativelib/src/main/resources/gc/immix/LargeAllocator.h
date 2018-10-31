@@ -31,7 +31,7 @@ void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
 Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
                                 size_t requestedBlockSize);
 void LargeAllocator_Clear(LargeAllocator *allocator);
-int LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
-                          word_t *blockStart);
+uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
+                              word_t *blockStart);
 
 #endif // IMMIX_LARGEALLOCATOR_H

@@ -191,7 +191,7 @@ bool Allocator_newBlock(Allocator *allocator) {
     return true;
 }
 
-int Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
+uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
                     word_t *blockStart, LineMeta *lineMetas) {
 
     // If the block is not marked, it means that it's completely free

@@ -142,7 +142,7 @@ void LargeAllocator_Clear(LargeAllocator *allocator) {
     }
 }
 
-int LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
+uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
                           word_t *blockStart) {
     // Objects that are larger than a block
     // are always allocated at the begining the smallest possible superblock.

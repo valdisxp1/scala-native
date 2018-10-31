@@ -329,13 +329,15 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         limitIdx = blockCount;
     }
 
+    BlockMeta *lastFreeBlockStart = NULL;
+
     BlockMeta *current = BlockMeta_GetFromIndex(heap->blockMetaStart, startIdx);
     BlockMeta *limit = BlockMeta_GetFromIndex(heap->blockMetaStart, limitIdx);
     word_t *currentBlockStart = Block_GetStartFromIndex(heap->heapStart, startIdx);
     LineMeta *lineMetas = Line_getFromBlockIndex(heap->lineMetaStart, startIdx);
     while (current < limit) {
         int size = 1;
-        int freeCount = 0;
+        uint32_t freeCount = 0;
         if (BlockMeta_IsSimpleBlock(current)) {
             freeCount = Allocator_Sweep(&allocator, current, currentBlockStart, lineMetas);
         } else if (BlockMeta_IsSuperblockStart(current)) {
@@ -346,14 +348,31 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         }
         // ignore superblock middle blocks, that superblock will be swept by someone else
         assert(freeCount <= size);
-        if (freeCount > 0) {
-            BlockAllocator_AddFreeBlocks(&blockAllocator, current, freeCount);
+        if (lastFreeBlockStart == NULL) {
+            if (freeCount > 0) {
+                lastFreeBlockStart = current;
+            }
+        } else {
+            if (freeCount < size) {
+                BlockMeta *freeLimit = current + freeCount;
+                uint32_t totalSize = (uint32_t) (freeLimit - lastFreeBlockStart);
+                assert(totalSize > 0);
+                BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
+                lastFreeBlockStart = NULL;
+            }
         }
+
         assert(size > 0);
         current += size;
         currentBlockStart += WORDS_IN_BLOCK * size;
         lineMetas += LINE_COUNT * size;
     }
+    if (lastFreeBlockStart != NULL) {
+        uint32_t totalSize = (uint32_t) (limit - lastFreeBlockStart);
+        assert(totalSize > 0);
+        BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
+    }
+
     heap->sweep.cursorDone = limitIdx;
 
     if (stats != NULL) {
