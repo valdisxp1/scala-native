@@ -7,24 +7,18 @@
 #include "Allocator.h"
 #include "Marker.h"
 
-INLINE void Block_recycleUnmarkedBlock(Allocator *allocator,
-                                       BlockMeta *blockMeta,
-                                       word_t *blockStart) {
-    memset(blockMeta, 0, sizeof(BlockMeta));
-    // does not unmark in LineMetas because those are ignored by the allocator
-    BlockAllocator_AddFreeBlocks(allocator->blockAllocator, blockMeta, 1);
-    ObjectMeta_ClearBlockAt(Bytemap_Get(allocator->bytemap, blockStart));
-}
-
 /**
  * recycles a block and adds it to the allocator
  */
-void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
+int Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
                    word_t *blockStart, LineMeta *lineMetas) {
 
     // If the block is not marked, it means that it's completely free
     if (!BlockMeta_IsMarked(blockMeta)) {
-        Block_recycleUnmarkedBlock(allocator, blockMeta, blockStart);
+        memset(blockMeta, 0, sizeof(BlockMeta));
+        // does not unmark in LineMetas because those are ignored by the allocator
+        ObjectMeta_ClearBlockAt(Bytemap_Get(allocator->bytemap, blockStart));
+        return 1;
     } else {
         // If the block is marked, we need to recycle line by line
         assert(BlockMeta_IsMarked(blockMeta));
@@ -96,5 +90,6 @@ void Block_Recycle(Allocator *allocator, BlockMeta *blockMeta,
             assert(BlockMeta_FirstFreeLine(blockMeta) < LINE_COUNT);
             allocator->recycledBlockCount++;
         }
+        return 0;
     }
 }

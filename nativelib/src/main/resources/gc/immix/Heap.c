@@ -336,15 +336,20 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     LineMeta *lineMetas = Line_getFromBlockIndex(heap->lineMetaStart, startIdx);
     while (current < limit) {
         int size = 1;
+        int freeCount = 0;
         if (BlockMeta_IsSimpleBlock(current)) {
-            Block_Recycle(&allocator, current, currentBlockStart, lineMetas);
+            freeCount = Block_Recycle(&allocator, current, currentBlockStart, lineMetas);
         } else if (BlockMeta_IsSuperblockStart(current)) {
             size = BlockMeta_SuperblockSize(current);
-            LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart);
+            freeCount = LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart);
         } else if (BlockMeta_IsFree(current)) {
-            BlockAllocator_AddFreeBlocks(&blockAllocator, current, 1);
+            freeCount = 1;
         }
         // ignore superblock middle blocks, that superblock will be swept by someone else
+        assert(freeCount <= size);
+        if (freeCount > 0) {
+            BlockAllocator_AddFreeBlocks(&blockAllocator, current, freeCount);
+        }
         assert(size > 0);
         current += size;
         currentBlockStart += WORDS_IN_BLOCK * size;
