@@ -35,7 +35,7 @@ void BlockList_Push(BlockList *blockList, BlockMeta *blockMeta) {
         blockMeta->nextBlock = LAST_BLOCK;
     } else {
         blockMeta->nextBlock =
-            BlockMeta_GetBlockIndex(blockList->blockMetaStart, blockMeta);
+            BlockMeta_GetBlockIndex(blockList->blockMetaStart, blockList->head);
     }
     blockList->head = blockMeta;
 }
