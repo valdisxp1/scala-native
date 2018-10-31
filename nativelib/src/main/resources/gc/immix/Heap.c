@@ -357,7 +357,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
                 BlockMeta *freeLimit = current + freeCount;
                 uint32_t totalSize = (uint32_t) (freeLimit - lastFreeBlockStart);
                 assert(totalSize > 0);
-                BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
+                BlockAllocator_AddFreeSuperblock(&blockAllocator, lastFreeBlockStart, totalSize);
                 lastFreeBlockStart = NULL;
             }
         }
@@ -370,7 +370,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     if (lastFreeBlockStart != NULL) {
         uint32_t totalSize = (uint32_t) (limit - lastFreeBlockStart);
         assert(totalSize > 0);
-        BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
+        BlockAllocator_AddFreeSuperblock(&blockAllocator, lastFreeBlockStart, totalSize);
     }
 
     heap->sweep.cursorDone = limitIdx;

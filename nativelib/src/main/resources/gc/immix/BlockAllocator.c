@@ -3,9 +3,6 @@
 #include "utils/MathUtils.h"
 #include <stdio.h>
 
-void BlockAllocator_addFreeBlocksInternal(BlockAllocator *blockAllocator,
-                                          BlockMeta *block, uint32_t count);
-
 void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart,
                          uint32_t blockCount) {
     for (int i = 0; i < SUPERBLOCK_LIST_SIZE; i++) {
@@ -106,7 +103,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
         if (superblock != NULL) {
             if (BlockMeta_SuperblockSize(superblock) > size) {
                 BlockMeta *leftover = superblock + size;
-                BlockAllocator_addFreeBlocksInternal(
+                BlockAllocator_AddFreeSuperblock(
                     blockAllocator, leftover,
                     BlockMeta_SuperblockSize(superblock) - size);
             }
@@ -144,7 +141,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
 }
 
 static inline void
-BlockAllocator_addFreeBlocksInternal0(BlockAllocator *blockAllocator,
+BlockAllocator_addSuperblockInternal(BlockAllocator *blockAllocator,
                                       BlockMeta *superblock, uint32_t count) {
     int i = BlockAllocator_sizeToLinkedListIndex(count);
     if (i < blockAllocator->minNonEmptyIndex) {
@@ -157,16 +154,16 @@ BlockAllocator_addFreeBlocksInternal0(BlockAllocator *blockAllocator,
     BlockList_Push(&blockAllocator->freeSuperblocks[i], superblock);
 }
 
-void BlockAllocator_addFreeBlocksInternal(BlockAllocator *blockAllocator,
-                                          BlockMeta *superblock,
-                                          uint32_t count) {
+void BlockAllocator_AddFreeSuperblock(BlockAllocator *blockAllocator,
+                                      BlockMeta *superblock,
+                                      uint32_t count) {
     uint32_t remaining_count = count;
     uint32_t powerOf2 = 1;
     BlockMeta *current = superblock;
     // splits the superblock into smaller superblocks that are a powers of 2
     while (remaining_count > 0) {
         if ((powerOf2 & remaining_count) > 0) {
-            BlockAllocator_addFreeBlocksInternal0(blockAllocator, current,
+            BlockAllocator_addSuperblockInternal(blockAllocator, current,
                                                   powerOf2);
             remaining_count -= powerOf2;
             current += powerOf2;
@@ -202,7 +199,7 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
         BlockMeta *superblock0 = BlockMeta_GetFromIndex(blockAllocator->blockMetaStart, BlockRange_First(oldRange));
 
         assert(superblock0 == blockAllocator->coalescingSuperblock.first);
-        BlockAllocator_addFreeBlocksInternal(
+        BlockAllocator_AddFreeSuperblock(
             blockAllocator, blockAllocator->coalescingSuperblock.first, size);
         blockAllocator->coalescingSuperblock.first = superblock;
         blockAllocator->coalescingSuperblock.limit = superblock + count;
