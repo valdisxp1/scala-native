@@ -15,7 +15,8 @@ typedef enum {
     block_simple = 0x1,
     block_superblock_start = 0x2,
     block_superblock_middle = 0x3,
-    block_marked = 0x5
+    block_marked = 0x5,
+    block_coalesce_me = 0x8
 } BlockFlag;
 
 typedef struct {
@@ -44,6 +45,9 @@ static inline bool BlockMeta_IsSuperblockStart(BlockMeta *blockMeta) {
 static inline bool BlockMeta_IsSuperblockMiddle(BlockMeta *blockMeta) {
     return blockMeta->block.simple.flags == block_superblock_middle;
 }
+static inline bool BlockMeta_IsCoalesceMe(BlockMeta *blockMeta) {
+    return blockMeta->block.simple.flags == block_coalesce_me;
+}
 
 static inline uint32_t BlockMeta_SuperblockSize(BlockMeta *blockMeta) {
     return blockMeta->block.superblock.size;
@@ -57,6 +61,7 @@ static inline bool BlockMeta_ContainsLargeObjects(BlockMeta *blockMeta) {
 static inline void BlockMeta_SetSuperblockSize(BlockMeta *blockMeta,
                                                int32_t superblockSize) {
     assert(!BlockMeta_IsSuperblockStart(blockMeta) || superblockSize > 0);
+    assert(!BlockMeta_IsCoalesceMe(blockMeta) || superblockSize > 0);
     assert(!BlockMeta_IsSimpleBlock(blockMeta));
 
     blockMeta->block.superblock.size = superblockSize;

@@ -25,6 +25,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount);
 void Heap_sweepDone(Heap *heap);
 Object *Heap_lazySweep(Heap *heap, uint32_t size);
 Object *Heap_lazySweepLarge(Heap *heap, uint32_t size);
+void Heap_lazyCoalesce(Heap *heap);
 
 void Heap_exitWithOutOfMemory() {
     printf("Out of heap space\n");
@@ -141,6 +142,8 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     heap->heapEnd = heapStart + minHeapSize / WORD_SIZE;
     heap->sweep.cursor = SWEEP_DONE;
     heap->sweep.cursorDone = SWEEP_DONE;
+    heap->coalesce.cursor = SWEEP_DONE;
+    heap->coalesce.cursorDone = SWEEP_DONE;
     Bytemap_Init(bytemap, heapStart, maxHeapSize);
     Allocator_Init(&allocator, &blockAllocator, bytemap, blockMetaStart,
                    heapStart);
@@ -331,13 +334,15 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
 
     BlockMeta *lastFreeBlockStart = NULL;
 
-    BlockMeta *current = BlockMeta_GetFromIndex(heap->blockMetaStart, startIdx);
+    BlockMeta *first = BlockMeta_GetFromIndex(heap->blockMetaStart, startIdx);
+    BlockMeta *current = first;
     BlockMeta *limit = BlockMeta_GetFromIndex(heap->blockMetaStart, limitIdx);
     word_t *currentBlockStart = Block_GetStartFromIndex(heap->heapStart, startIdx);
     LineMeta *lineMetas = Line_getFromBlockIndex(heap->lineMetaStart, startIdx);
     while (current < limit) {
         int size = 1;
         uint32_t freeCount = 0;
+        assert(!BlockMeta_IsCoalesceMe(current));
         if (BlockMeta_IsSimpleBlock(current)) {
             freeCount = Allocator_Sweep(&allocator, current, currentBlockStart, lineMetas);
         } else if (BlockMeta_IsSuperblockStart(current)) {
@@ -356,9 +361,15 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
             if (freeCount < size) {
                 BlockMeta *freeLimit = current + freeCount;
                 uint32_t totalSize = (uint32_t) (freeLimit - lastFreeBlockStart);
-                assert(totalSize > 0);
-                BlockAllocator_AddFreeSuperblock(&blockAllocator, lastFreeBlockStart, totalSize);
-                lastFreeBlockStart = NULL;
+                if (lastFreeBlockStart == first) {
+                    // There may be some free blocks before this batch that needs to be coalesced with this block.
+                    BlockMeta_SetFlag(first, block_coalesce_me);
+                    BlockMeta_SetSuperblockSize(first, totalSize);
+                } else {
+                    assert(totalSize > 0);
+                    BlockAllocator_AddFreeSuperblock(&blockAllocator, lastFreeBlockStart, totalSize);
+                    lastFreeBlockStart = NULL;
+                }
             }
         }
 
@@ -370,10 +381,14 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     if (lastFreeBlockStart != NULL) {
         uint32_t totalSize = (uint32_t) (limit - lastFreeBlockStart);
         assert(totalSize > 0);
-        BlockAllocator_AddFreeSuperblock(&blockAllocator, lastFreeBlockStart, totalSize);
+        // There may be some free blocks after this batch that needs to be coalesced with this block.
+        BlockMeta_SetFlag(lastFreeBlockStart, block_coalesce_me);
+        BlockMeta_SetSuperblockSize(lastFreeBlockStart, totalSize);
     }
 
     heap->sweep.cursorDone = limitIdx;
+
+    Heap_lazyCoalesce(heap);
 
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
@@ -385,12 +400,53 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     }
 }
 
+void Heap_lazyCoalesce(Heap *heap) {
+    if (heap->coalesce.cursor > heap->sweep.cursorDone) {
+        uint32_t startIdx = heap->coalesce.cursor;
+        uint32_t limitIdx = heap->sweep.cursorDone;
+        heap->coalesce.cursor = limitIdx;
+
+        BlockMeta *lastFreeBlockStart = NULL;
+        BlockMeta *first = BlockMeta_GetFromIndex(heap->blockMetaStart, startIdx);
+        BlockMeta *current = first;
+        BlockMeta *limit = BlockMeta_GetFromIndex(heap->blockMetaStart, limitIdx);
+
+        while (current < limit) {
+            int size = 1;
+            if (lastFreeBlockStart == NULL) {
+                if (BlockMeta_IsCoalesceMe(current)) {
+                    lastFreeBlockStart = current;
+                    size = BlockMeta_SuperblockSize(current);
+                }
+            } else {
+                if (!BlockMeta_IsCoalesceMe(current)) {
+                    BlockMeta *freeLimit = current;
+                    uint32_t totalSize = (uint32_t) (freeLimit - lastFreeBlockStart);
+                    BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
+                    lastFreeBlockStart = NULL;
+                }
+            }
+
+            current += size;
+        }
+        if (lastFreeBlockStart != NULL) {
+            uint32_t totalSize = (uint32_t) (limit - lastFreeBlockStart);
+            BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
+        }
+
+        heap->coalesce.cursorDone = limitIdx;
+    }
+}
+
 void Heap_Recycle(Heap *heap) {
     Allocator_Clear(&allocator);
     LargeAllocator_Clear(&largeAllocator);
     BlockAllocator_Clear(&blockAllocator);
 
     heap->sweep.cursor = 0;
+    heap->sweep.cursorDone = 0;
+    heap->coalesce.cursor = 0;
+    heap->coalesce.cursorDone = 0;
     Heap_sweep(heap, heap->blockCount);
 }
 

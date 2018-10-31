@@ -27,6 +27,10 @@ typedef struct {
         uint32_t cursor;
         uint32_t cursorDone;
     } sweep;
+    struct {
+        uint32_t cursor;
+        uint32_t cursorDone;
+    } coalesce;
     Bytemap *bytemap;
     Stats *stats;
 } Heap;
@@ -48,7 +52,7 @@ static inline LineMeta *Heap_LineMetaForWord(Heap *heap, word_t *word) {
 }
 
 static inline bool Heap_IsSweepDone(Heap *heap) {
-    return heap->sweep.cursorDone >= heap->blockCount;
+    return heap->coalesce.cursorDone >= heap->blockCount;
 }
 
 void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize);
