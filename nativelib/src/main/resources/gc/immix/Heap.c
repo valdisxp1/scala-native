@@ -401,7 +401,9 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
 }
 
 void Heap_lazyCoalesce(Heap *heap) {
-    if (heap->coalesce.cursor > heap->sweep.cursorDone) {
+    // the previous coalesce is done and there is work
+    if (heap->coalesce.cursor == heap->coalesce.cursorDone
+          && heap->coalesce.cursor < heap->sweep.cursorDone) {
         uint32_t startIdx = heap->coalesce.cursor;
         uint32_t limitIdx = heap->sweep.cursorDone;
         heap->coalesce.cursor = limitIdx;
@@ -435,6 +437,9 @@ void Heap_lazyCoalesce(Heap *heap) {
         }
 
         heap->coalesce.cursorDone = limitIdx;
+    } else {
+        // in non-currrent this should never happen
+        assert(false);
     }
 }
 
