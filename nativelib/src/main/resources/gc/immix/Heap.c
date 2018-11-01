@@ -477,6 +477,7 @@ void Heap_sweepDone(Heap *heap) {
         Heap_exitWithOutOfMemory();
     }
     heap->sweep.cursorDone = SWEEP_DONE;
+    heap->coalesce.cursorDone = SWEEP_DONE;
     Stats *stats = heap->stats;
     if (stats != NULL) {
         Stats_RecordCollectionDone(stats);
