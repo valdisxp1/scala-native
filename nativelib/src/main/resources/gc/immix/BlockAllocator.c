@@ -141,8 +141,8 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
 }
 
 static inline void
-BlockAllocator_addSuperblockInternal(BlockAllocator *blockAllocator,
-                                      BlockMeta *superblock, uint32_t count) {
+BlockAllocator_addSuperblockToBlockLists(BlockAllocator *blockAllocator,
+                                         BlockMeta *superblock, uint32_t count) {
     int i = BlockAllocator_sizeToLinkedListIndex(count);
     if (i < blockAllocator->minNonEmptyIndex) {
         blockAllocator->minNonEmptyIndex = i;
@@ -154,22 +154,33 @@ BlockAllocator_addSuperblockInternal(BlockAllocator *blockAllocator,
     BlockList_Push(&blockAllocator->freeSuperblocks[i], superblock);
 }
 
-void BlockAllocator_AddFreeSuperblock(BlockAllocator *blockAllocator,
-                                      BlockMeta *superblock,
-                                      uint32_t count) {
+void BlockAllocator_splitAndAdd(BlockAllocator *blockAllocator,
+                                BlockMeta *superblock,
+                                uint32_t count) {
     uint32_t remaining_count = count;
     uint32_t powerOf2 = 1;
     BlockMeta *current = superblock;
     // splits the superblock into smaller superblocks that are a powers of 2
     while (remaining_count > 0) {
         if ((powerOf2 & remaining_count) > 0) {
-            BlockAllocator_addSuperblockInternal(blockAllocator, current,
+            BlockAllocator_addSuperblockToBlockLists(blockAllocator, current,
                                                   powerOf2);
             remaining_count -= powerOf2;
             current += powerOf2;
         }
         powerOf2 <<= 1;
     }
+}
+
+void BlockAllocator_AddFreeSuperblock(BlockAllocator *blockAllocator,
+                                      BlockMeta *superblock,
+                                      uint32_t count) {
+
+    BlockMeta *limit = superblock + count;
+    for (BlockMeta *current = superblock; current < limit; current++) {
+        BlockMeta_Clear(current);
+    }
+    BlockAllocator_splitAndAdd(blockAllocator, superblock, count);
 }
 
 void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
@@ -199,7 +210,7 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
         BlockMeta *superblock0 = BlockMeta_GetFromIndex(blockAllocator->blockMetaStart, BlockRange_First(oldRange));
 
         assert(superblock0 == blockAllocator->coalescingSuperblock.first);
-        BlockAllocator_AddFreeSuperblock(
+        BlockAllocator_splitAndAdd(
             blockAllocator, blockAllocator->coalescingSuperblock.first, size);
         blockAllocator->coalescingSuperblock.first = superblock;
         blockAllocator->coalescingSuperblock.limit = superblock + count;
