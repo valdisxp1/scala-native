@@ -178,7 +178,7 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
     bool didAppend = BlockRange_AppendLast(&blockAllocator->coalescingSuperblock, superblockIdx, count);
     if(!didAppend) {
         uint32_t superblockIdx = BlockMeta_GetBlockIndex(blockAllocator->blockMetaStart, superblock);
-        BlockRange oldRange = BlockRange_Replace(&blockAllocator->coalescingSuperblock, superblockIdx, count);
+        BlockRangeVal oldRange = BlockRange_Replace(&blockAllocator->coalescingSuperblock, superblockIdx, count);
         uint32_t size = BlockRange_Size(oldRange);
         BlockMeta *replaced = BlockMeta_GetFromIndex(blockAllocator->blockMetaStart, BlockRange_First(oldRange));
 

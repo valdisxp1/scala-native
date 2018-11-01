@@ -29,7 +29,7 @@ BlockMeta *BlockList_Pop(BlockList *blockList) {
             return NULL;
         }
         word_t newValue = (word_t) BlockList_getNextBlock(blockList->blockMetaStart, block);
-    } while (!atomic_compare_exchange_strong(&blockList->head, &(word_t)block, newValue));
+    } while (!atomic_compare_exchange_strong(&blockList->head, (word_t *) &block, newValue));
     return block;
 }
 
@@ -43,7 +43,7 @@ void BlockList_Push(BlockList *blockList, BlockMeta *blockMeta) {
             blockMeta->nextBlock =
                 BlockMeta_GetBlockIndex(blockList->blockMetaStart, block);
         }
-    } while(!atomic_compare_exchange_strong(&blockList->head, &(word_t)block, (word_t) blockMeta));
+    } while(!atomic_compare_exchange_strong(&blockList->head, (word_t *) &block, (word_t) blockMeta));
 
 }
 
