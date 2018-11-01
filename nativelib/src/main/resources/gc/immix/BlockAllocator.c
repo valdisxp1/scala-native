@@ -147,7 +147,7 @@ void BlockAllocator_splitAndAdd(BlockAllocator *blockAllocator,
     while (remaining_count > 0) {
         if ((powerOf2 & remaining_count) > 0) {
             BlockAllocator_addSuperblockToBlockLists(blockAllocator, current,
-                                                  powerOf2);
+                                                     powerOf2);
             remaining_count -= powerOf2;
             current += powerOf2;
         }
@@ -163,6 +163,8 @@ void BlockAllocator_AddFreeSuperblock(BlockAllocator *blockAllocator,
     for (BlockMeta *current = superblock; current < limit; current++) {
         BlockMeta_Clear(current);
     }
+    // all the sweeping changes should be visible to all threads by now
+    atomic_thread_fence(memory_order_seq_cst);
     BlockAllocator_splitAndAdd(blockAllocator, superblock, count);
     blockAllocator->freeBlockCount += count;
 }
@@ -174,9 +176,11 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
     for (BlockMeta *current = superblock; current < limit; current++) {
         BlockMeta_Clear(current);
     }
+    // all the sweeping changes should be visible to all threads by now
+    atomic_thread_fence(memory_order_seq_cst);
     uint32_t superblockIdx = BlockMeta_GetBlockIndex(blockAllocator->blockMetaStart, superblock);
     bool didAppend = BlockRange_AppendLast(&blockAllocator->coalescingSuperblock, superblockIdx, count);
-    if(!didAppend) {
+    if (!didAppend) {
         uint32_t superblockIdx = BlockMeta_GetBlockIndex(blockAllocator->blockMetaStart, superblock);
         BlockRangeVal oldRange = BlockRange_Replace(&blockAllocator->coalescingSuperblock, superblockIdx, count);
         uint32_t size = BlockRange_Size(oldRange);

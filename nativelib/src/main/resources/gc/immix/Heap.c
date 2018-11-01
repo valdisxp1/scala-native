@@ -448,6 +448,8 @@ void Heap_Recycle(Heap *heap) {
     LargeAllocator_Clear(&largeAllocator);
     BlockAllocator_Clear(&blockAllocator);
 
+    // all the marking changes should be visible to all threads by now
+    atomic_thread_fence(memory_order_seq_cst);
     heap->sweep.cursor = 0;
     heap->sweep.cursorDone = 0;
     heap->coalesce.cursor = 0;

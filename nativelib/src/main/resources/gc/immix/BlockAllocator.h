@@ -5,6 +5,7 @@
 #include "datastructures/BlockRange.h"
 #include "Constants.h"
 #include <stddef.h>
+#include <stdatomic.h>
 
 #define SUPERBLOCK_LIST_SIZE (BLOCK_COUNT_BITS + 1)
 
