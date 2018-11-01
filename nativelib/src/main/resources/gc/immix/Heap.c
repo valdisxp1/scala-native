@@ -452,7 +452,6 @@ void Heap_Recycle(Heap *heap) {
     heap->sweep.cursorDone = 0;
     heap->coalesce.cursor = 0;
     heap->coalesce.cursorDone = 0;
-    Heap_sweep(heap, heap->blockCount);
 }
 
 void Heap_sweepDone(Heap *heap) {
