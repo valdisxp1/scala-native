@@ -9,6 +9,7 @@
 #include "metadata/LineMeta.h"
 #include "Stats.h"
 #include <stdio.h>
+#include <stdatomic.h>
 
 #define SWEEP_DONE ~((uint32_t)0)
 
@@ -24,12 +25,14 @@ typedef struct {
     uint32_t blockCount;
     uint32_t maxBlockCount;
     struct {
-        uint32_t cursor;
-        uint32_t cursorDone;
+        atomic_uint_fast32_t cursor;
+        // making cursorDone atomic so it keeps sequential consistency with the other atomics
+        atomic_uint_fast32_t cursorDone;
     } sweep;
     struct {
-        uint32_t cursor;
-        uint32_t cursorDone;
+        atomic_uint_fast32_t cursor;
+        // making cursorDone atomic so it keeps sequential consistency with the other atomics
+        atomic_uint_fast32_t cursorDone;
     } coalesce;
     Bytemap *bytemap;
     Stats *stats;

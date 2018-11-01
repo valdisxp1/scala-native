@@ -325,9 +325,8 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         start_ns = scalanative_nano_time();
     }
 
-    uint32_t startIdx = heap->sweep.cursor;
+    uint32_t startIdx = (uint32_t) atomic_fetch_add(&heap->sweep.cursor, maxCount);
     uint32_t limitIdx = startIdx + maxCount;
-    heap->sweep.cursor = limitIdx;
     uint32_t blockCount = heap->blockCount;
     if (limitIdx > blockCount) {
         limitIdx = blockCount;
@@ -385,7 +384,6 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         // There may be some free blocks after this batch that needs to be coalesced with this block.
         BlockMeta_SetFlag(lastFreeBlockStart, block_coalesce_me);
         BlockMeta_SetSuperblockSize(lastFreeBlockStart, totalSize);
-//        BlockAllocator_AddFreeSuperblock(&blockAllocator, lastFreeBlockStart, totalSize);
     }
 
     heap->sweep.cursorDone = limitIdx;
@@ -404,16 +402,19 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
 
 void Heap_lazyCoalesce(Heap *heap) {
     // the previous coalesce is done and there is work
-    if (heap->coalesce.cursor == heap->coalesce.cursorDone
-          && heap->coalesce.cursor < heap->sweep.cursorDone) {
-        uint32_t startIdx = heap->coalesce.cursor;
-        uint32_t limitIdx = heap->sweep.cursorDone;
-        heap->coalesce.cursor = limitIdx;
+    uint_fast32_t startIdx = heap->coalesce.cursor;
+    uint_fast32_t limitIdx = heap->sweep.cursorDone;
+    while (startIdx == limitIdx && startIdx < limitIdx) {
+        if (!atomic_compare_exchange_strong(&heap->coalesce.cursor, &startIdx, limitIdx)) {
+            // startIdx is updated by atomic_compare_exchange_strong
+            limitIdx = heap->sweep.cursorDone;
+            continue;
+        }
 
         BlockMeta *lastFreeBlockStart = NULL;
-        BlockMeta *first = BlockMeta_GetFromIndex(heap->blockMetaStart, startIdx);
+        BlockMeta *first = BlockMeta_GetFromIndex(heap->blockMetaStart, (uint32_t) startIdx);
         BlockMeta *current = first;
-        BlockMeta *limit = BlockMeta_GetFromIndex(heap->blockMetaStart, limitIdx);
+        BlockMeta *limit = BlockMeta_GetFromIndex(heap->blockMetaStart, (uint32_t) limitIdx);
 
         while (current < limit) {
             int size = 1;
@@ -439,9 +440,6 @@ void Heap_lazyCoalesce(Heap *heap) {
         }
 
         heap->coalesce.cursorDone = limitIdx;
-    } else {
-        // in non-currrent this should never happen
-        assert(false);
     }
 }
 
