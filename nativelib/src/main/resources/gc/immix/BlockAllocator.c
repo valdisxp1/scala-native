@@ -51,7 +51,7 @@ BlockAllocator_getFreeBlockSlow(BlockAllocator *blockAllocator) {
         return superblock;
     } else {
         // as the last resort look in the superblock being coalesced
-        uint32_t blockIdx = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock0, 1);
+        uint32_t blockIdx = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock, 1);
         BlockMeta *block = NULL;
         if (blockIdx != NO_BLOCK_INDEX) {
             block = BlockMeta_GetFromIndex(blockAllocator->blockMetaStart, blockIdx);
@@ -100,7 +100,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
             }
         } else {
             // as the last resort look in the superblock being coalesced
-            uint32_t superblockIdx = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock0, size);
+            uint32_t superblockIdx = BlockRange_PollFirst(&blockAllocator->coalescingSuperblock, size);
             if (superblockIdx != NO_BLOCK_INDEX) {
                 superblock = BlockMeta_GetFromIndex(blockAllocator->blockMetaStart, superblockIdx);
             }
@@ -175,10 +175,10 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
         BlockMeta_Clear(current);
     }
     uint32_t superblockIdx = BlockMeta_GetBlockIndex(blockAllocator->blockMetaStart, superblock);
-    bool didAppend = BlockRange_AppendLast(&blockAllocator->coalescingSuperblock0, superblockIdx, count);
+    bool didAppend = BlockRange_AppendLast(&blockAllocator->coalescingSuperblock, superblockIdx, count);
     if(!didAppend) {
         uint32_t superblockIdx = BlockMeta_GetBlockIndex(blockAllocator->blockMetaStart, superblock);
-        BlockRange oldRange = BlockRange_Replace(&blockAllocator->coalescingSuperblock0, superblockIdx, count);
+        BlockRange oldRange = BlockRange_Replace(&blockAllocator->coalescingSuperblock, superblockIdx, count);
         uint32_t size = BlockRange_Size(oldRange);
         BlockMeta *replaced = BlockMeta_GetFromIndex(blockAllocator->blockMetaStart, BlockRange_First(oldRange));
 
@@ -194,7 +194,7 @@ void BlockAllocator_Clear(BlockAllocator *blockAllocator) {
     blockAllocator->freeBlockCount = 0;
     blockAllocator->smallestSuperblock.cursor = NULL;
     blockAllocator->smallestSuperblock.limit = NULL;
-    BlockRange_Clear(&blockAllocator->coalescingSuperblock0);
+    BlockRange_Clear(&blockAllocator->coalescingSuperblock);
     blockAllocator->minNonEmptyIndex = SUPERBLOCK_LIST_SIZE;
     blockAllocator->maxNonEmptyIndex = -1;
 }

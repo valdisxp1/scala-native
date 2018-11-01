@@ -16,7 +16,7 @@ typedef struct {
     int minNonEmptyIndex;
     int maxNonEmptyIndex;
     uint32_t freeBlockCount;
-    BlockRange coalescingSuperblock0;
+    BlockRange coalescingSuperblock;
     word_t *blockMetaStart;
     BlockList freeSuperblocks[SUPERBLOCK_LIST_SIZE];
 } BlockAllocator;
