@@ -2,10 +2,11 @@
 #define IMMIX_BLOCLIST_H
 
 #include "../metadata/BlockMeta.h"
+#include <stdatomic.h>
 
 typedef struct {
     word_t *blockMetaStart;
-    BlockMeta *head;
+    atomic_uintptr_t head;
 } BlockList;
 
 void BlockList_Init(BlockList *blockList, word_t *blockMetaStart);

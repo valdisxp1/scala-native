@@ -22,22 +22,29 @@ void BlockList_Init(BlockList *blockList, word_t *blockMetaStart) {
 }
 
 BlockMeta *BlockList_Pop(BlockList *blockList) {
-    BlockMeta *block = blockList->head;
-    if (block != NULL) {
-        blockList->head =
-            BlockList_getNextBlock(blockList->blockMetaStart, block);
-    }
+    BlockMeta *block = (BlockMeta *) blockList->head;
+    do {
+        // block will be replaced with actual value if atomic_compare_exchange_strong fails
+        if (block == NULL) {
+            return NULL;
+        }
+        word_t newValue = (word_t) BlockList_getNextBlock(blockList->blockMetaStart, block);
+    } while (!atomic_compare_exchange_strong(&blockList->head, &(word_t)block, newValue));
     return block;
 }
 
 void BlockList_Push(BlockList *blockList, BlockMeta *blockMeta) {
-    if (blockList->head == NULL) {
-        blockMeta->nextBlock = LAST_BLOCK;
-    } else {
-        blockMeta->nextBlock =
-            BlockMeta_GetBlockIndex(blockList->blockMetaStart, blockList->head);
-    }
-    blockList->head = blockMeta;
+    BlockMeta *block = (BlockMeta *) blockList->head;
+    do {
+        // block will be replaced with actual value if atomic_compare_exchange_strong fails
+        if (block == NULL) {
+            blockMeta->nextBlock = LAST_BLOCK;
+        } else {
+            blockMeta->nextBlock =
+                BlockMeta_GetBlockIndex(blockList->blockMetaStart, block);
+        }
+    } while(!atomic_compare_exchange_strong(&blockList->head, &(word_t)block, (word_t) blockMeta));
+
 }
 
 void BlockList_Clear(BlockList *blockList) {
