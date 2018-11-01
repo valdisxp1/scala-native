@@ -10,6 +10,8 @@
 #define SUPERBLOCK_LIST_SIZE (BLOCK_COUNT_BITS + 1)
 
 typedef struct {
+    // no need to synchronize smallestSuperblock,
+    // it is only accessed from the mutator thread
     struct {
         BlockMeta *cursor;
         BlockMeta *limit;
