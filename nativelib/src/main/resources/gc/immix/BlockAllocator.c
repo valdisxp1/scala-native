@@ -181,6 +181,7 @@ void BlockAllocator_AddFreeSuperblock(BlockAllocator *blockAllocator,
         BlockMeta_Clear(current);
     }
     BlockAllocator_splitAndAdd(blockAllocator, superblock, count);
+    blockAllocator->freeBlockCount += count;
 }
 
 void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,

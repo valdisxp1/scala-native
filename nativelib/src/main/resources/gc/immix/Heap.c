@@ -12,6 +12,7 @@
 #include "Memory.h"
 #include <memory.h>
 #include <time.h>
+#include <inttypes.h>
 
 // Allow read and write
 #define HEAP_MEM_PROT (PROT_READ | PROT_WRITE)
@@ -306,10 +307,10 @@ bool Heap_shouldGrow(Heap *heap) {
         blockCount - (freeBlockCount + recycledBlockCount);
 
 #ifdef DEBUG_PRINT
-    printf("\n\nBlock count: %llu\n", blockCount);
-    printf("Unavailable: %llu\n", unavailableBlockCount);
-    printf("Free: %llu\n", freeBlockCount);
-    printf("Recycled: %llu\n", recycledBlockCount);
+    printf("\n\nBlock count: %" PRIu32 "\n", blockCount);
+    printf("Unavailable: %" PRIu32 "\n", unavailableBlockCount);
+    printf("Free: %" PRIu32 "\n", freeBlockCount);
+    printf("Recycled: %" PRIu32 "\n", recycledBlockCount);
     fflush(stdout);
 #endif
 
@@ -384,6 +385,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         // There may be some free blocks after this batch that needs to be coalesced with this block.
         BlockMeta_SetFlag(lastFreeBlockStart, block_coalesce_me);
         BlockMeta_SetSuperblockSize(lastFreeBlockStart, totalSize);
+//        BlockAllocator_AddFreeSuperblock(&blockAllocator, lastFreeBlockStart, totalSize);
     }
 
     heap->sweep.cursorDone = limitIdx;
@@ -476,7 +478,9 @@ void Heap_sweepDone(Heap *heap) {
     if (!Allocator_CanInitCursors(&allocator)) {
         Heap_exitWithOutOfMemory();
     }
+    heap->sweep.cursor = SWEEP_DONE;
     heap->sweep.cursorDone = SWEEP_DONE;
+    heap->coalesce.cursor = SWEEP_DONE;
     heap->coalesce.cursorDone = SWEEP_DONE;
     Stats *stats = heap->stats;
     if (stats != NULL) {
@@ -491,7 +495,7 @@ void Heap_Grow(Heap *heap, uint32_t incrementInBlocks) {
 
 #ifdef DEBUG_PRINT
     printf("Growing small heap by %zu bytes, to %zu bytes\n",
-           increment * WORD_SIZE,
+           incrementInBlocks * SPACE_USED_PER_BLOCK,
            heap->heapSize + incrementInBlocks * SPACE_USED_PER_BLOCK);
     fflush(stdout);
 #endif
