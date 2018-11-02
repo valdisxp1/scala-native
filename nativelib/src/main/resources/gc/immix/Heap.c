@@ -10,7 +10,7 @@
 #include "StackTrace.h"
 #include "Settings.h"
 #include "Memory.h"
-#include "GCThreads.h"
+#include "GCThread.h"
 #include <memory.h>
 #include <time.h>
 #include <inttypes.h>

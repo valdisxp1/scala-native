@@ -21,5 +21,5 @@ void GCThread_Init(GCThread *thread, int id, Heap *heap) {
    thread->id = id;
    thread->heap = heap;
 
-   pthead_create(thread->self, NULL, GCThread_loop, (void *) thread);
+   pthread_create(thread->self, NULL, GCThread_loop, (void *) thread);
 }

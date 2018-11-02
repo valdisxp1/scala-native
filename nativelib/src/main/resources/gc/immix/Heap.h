@@ -10,6 +10,7 @@
 #include "Stats.h"
 #include <stdio.h>
 #include <stdatomic.h>
+#include <pthread.h>
 
 #define SWEEP_DONE ~((uint32_t)0)
 
