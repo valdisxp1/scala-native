@@ -25,14 +25,11 @@ inline static int BlockAllocator_sizeToLinkedListIndex(uint32_t size) {
 
 inline static BlockMeta *
 BlockAllocator_pollSuperblock(BlockAllocator *blockAllocator, int* i) {
-    int maxNonEmptyIndex = blockAllocator->maxNonEmptyIndex;
-    for (; i <= maxNonEmptyIndex; i++) {
+    for (; i < SUPERBLOCK_LIST_SIZE; i++) {
         BlockMeta *superblock =
             BlockList_Pop(&blockAllocator->freeSuperblocks[i]);
         if (superblock != NULL) {
             return superblock;
-        } else {
-            blockAllocator->minNonEmptyIndex = i + 1;
         }
     }
     return NULL;
@@ -40,7 +37,7 @@ BlockAllocator_pollSuperblock(BlockAllocator *blockAllocator, int* i) {
 
 NOINLINE BlockMeta *
 BlockAllocator_getFreeBlockSlow(BlockAllocator *blockAllocator) {
-    int index = blockAllocator->minNonEmptyIndex;
+    int index = 0;
     BlockMeta *superblock = BlockAllocator_pollSuperblock(blockAllocator, &index);
     if (superblock != NULL) {
         blockAllocator->smallestSuperblock.cursor = superblock + 1;
@@ -85,9 +82,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
         superblock = sCursor;
     } else {
         // look in the freelists
-        int target = MathUtils_Log2Ceil((size_t)size);
-        int minNonEmptyIndex = blockAllocator->minNonEmptyIndex;
-        int index = (minNonEmptyIndex > target) ? minNonEmptyIndex : target;
+        int index = MathUtils_Log2Ceil((size_t)size);
         superblock = BlockAllocator_pollSuperblock(blockAllocator, &index);
         uint32_t receivedSize = 1 << index;
 
@@ -126,12 +121,6 @@ static inline void
 BlockAllocator_addSuperblockToBlockLists(BlockAllocator *blockAllocator,
                                          BlockMeta *superblock, uint32_t count) {
     int i = BlockAllocator_sizeToLinkedListIndex(count);
-    if (i < blockAllocator->minNonEmptyIndex) {
-        blockAllocator->minNonEmptyIndex = i;
-    }
-    if (i > blockAllocator->maxNonEmptyIndex) {
-        blockAllocator->maxNonEmptyIndex = i;
-    }
     BlockList_Push(&blockAllocator->freeSuperblocks[i], superblock);
 }
 
@@ -197,6 +186,4 @@ void BlockAllocator_Clear(BlockAllocator *blockAllocator) {
     blockAllocator->smallestSuperblock.cursor = NULL;
     blockAllocator->smallestSuperblock.limit = NULL;
     BlockRange_Clear(&blockAllocator->coalescingSuperblock);
-    blockAllocator->minNonEmptyIndex = SUPERBLOCK_LIST_SIZE;
-    blockAllocator->maxNonEmptyIndex = -1;
 }
