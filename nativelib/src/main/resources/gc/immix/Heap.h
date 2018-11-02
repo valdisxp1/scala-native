@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdatomic.h>
 #include <stdbool.h>
+#include <pthread.h>
 
 #define SWEEP_DONE ~((uint32_t)0)
 
@@ -25,6 +26,10 @@ typedef struct {
     size_t maxHeapSize;
     uint32_t blockCount;
     uint32_t maxBlockCount;
+    struct {
+        pthread_mutex_t startMutex;
+        pthread_cond_t start;
+    } gcThreads;
     struct {
         atomic_uint_fast32_t cursor;
         atomic_uint_fast32_t limit;
@@ -69,6 +74,7 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize);
 void Heap_Collect(Heap *heap, Stack *stack);
 
 void Heap_Recycle(Heap *heap);
+void Heap_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone, uint32_t maxCount);
 void Heap_Grow(Heap *heap, uint32_t increment);
 
 #endif // IMMIX_HEAP_H

@@ -10,6 +10,7 @@
 #include "StackTrace.h"
 #include "Settings.h"
 #include "Memory.h"
+#include "GCThread.h"
 #include <memory.h>
 #include <time.h>
 #include <inttypes.h>
@@ -22,7 +23,6 @@
 #define HEAP_MEM_FD -1
 #define HEAP_MEM_FD_OFFSET 0
 
-void Heap_sweep(Heap *heap, uint32_t maxCount);
 void Heap_sweepDone(Heap *heap);
 Object *Heap_lazySweep(Heap *heap, uint32_t size);
 Object *Heap_lazySweepLarge(Heap *heap, uint32_t size);
@@ -152,6 +152,16 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
 
     LargeAllocator_Init(&largeAllocator, &blockAllocator, bytemap,
                         blockMetaStart, heapStart);
+
+    // Init all GCThreads
+    pthread_mutex_init(&heap->gcThreads.startMutex, NULL);
+    pthread_cond_init(&heap->gcThreads.start, NULL);
+
+    gcThreads = (GCThread *) malloc(sizeof(GCThread) * 3);
+    for (int i = 0; i < 3; i++) {
+        GCThread_Init(&gcThreads[i], i, heap);
+    }
+
     char *statsFile = Settings_StatsFileName();
     if (statsFile != NULL) {
         heap->stats = malloc(sizeof(Stats));
@@ -167,7 +177,7 @@ Object *Heap_lazySweepLarge(Heap *heap, uint32_t size) {
         fflush(stdout);
     #endif
     while (object == NULL && !Heap_IsSweepDone(heap)) {
-        Heap_sweep(heap, LAZY_SWEEP_MIN_BATCH);
+        Heap_Sweep(heap, &heap->sweep.cursorDone, LAZY_SWEEP_MIN_BATCH);
         object = LargeAllocator_GetBlock(&largeAllocator, size);
     }
     if (Heap_IsSweepDone(heap) && !heap->postSweepDone) {
@@ -383,7 +393,7 @@ bool Heap_shouldGrow(Heap *heap) {
            4 * unavailableBlockCount > blockCount;
 }
 
-void Heap_sweep(Heap *heap, uint32_t maxCount) {
+void Heap_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone, uint32_t maxCount) {
     uint64_t start_ns, end_ns;
     Stats *stats = heap->stats;
     if (stats != NULL) {
@@ -494,7 +504,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     // block_coalesce_me marks should be visible
     atomic_thread_fence(memory_order_seq_cst);
 
-    heap->sweep.cursorDone = limitIdx;
+    *cursorDone = limitIdx;
 
     Heap_lazyCoalesce(heap);
 
@@ -505,17 +515,28 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
 
 }
 
+uint_fast32_t Heap_minSweepCursor(Heap *heap) {
+    uint_fast32_t min = heap->sweep.cursorDone;
+    for (int i = 0; i < 3; i++) {
+        uint_fast32_t cursorDone = gcThreads[i].sweep.cursorDone;
+        if (cursorDone < min) {
+            min = cursorDone;
+        }
+    }
+    return min;
+}
+
 void Heap_lazyCoalesce(Heap *heap) {
     // the previous coalesce is done and there is work
     uint_fast32_t startIdx = heap->coalesce.cursor;
     uint_fast32_t coalesceDoneIdx = heap->coalesce.cursorDone;
-    uint_fast32_t limitIdx = heap->sweep.cursorDone;
+    uint_fast32_t limitIdx = Heap_minSweepCursor(heap);
     assert(coalesceDoneIdx <= startIdx);
     while (startIdx == coalesceDoneIdx && startIdx < limitIdx) {
         if (!atomic_compare_exchange_strong(&heap->coalesce.cursor, &startIdx, limitIdx)) {
             // startIdx is updated by atomic_compare_exchange_strong
             coalesceDoneIdx = heap->coalesce.cursorDone;
-            limitIdx = heap->sweep.cursorDone;
+            limitIdx = Heap_minSweepCursor(heap);
             assert(coalesceDoneIdx <= startIdx);
             continue;
         }
@@ -604,6 +625,14 @@ void Heap_Recycle(Heap *heap) {
     heap->coalesce.cursor = 0;
     heap->coalesce.cursorDone = 0;
     heap->postSweepDone = false;
+
+    pthread_mutex_t *startMutex = &heap->gcThreads.startMutex;
+    pthread_cond_t *start = &heap->gcThreads.start;
+
+    // wake all the GC threads
+    pthread_mutex_lock(startMutex);
+    pthread_cond_broadcast(start);
+    pthread_mutex_unlock(startMutex);
 }
 
 void Heap_sweepDone(Heap *heap) {
