@@ -11,6 +11,8 @@ void *GCThread_loop(void *arg) {
         pthread_cond_wait(start, startMutex);
         pthread_mutex_unlock(startMutex);
 
+        thread->sweep.cursorDone = 0;
+
         while (!Heap_IsSweepDone(heap)) {
             Heap_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
         }
