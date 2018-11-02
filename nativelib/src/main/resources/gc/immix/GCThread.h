@@ -17,7 +17,6 @@ typedef struct {
     } sweep;
 } GCThread;
 
-void GCThread_Init(GCThread *thread, int id, Heap *heap,
-                   pthread_mutex_t startMutex, pthread_cond_t start);
+void GCThread_Init(GCThread *thread, int id, Heap *heap);
 
 #endif // IMMIX_GCTHREAD_H

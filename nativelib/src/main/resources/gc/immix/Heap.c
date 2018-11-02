@@ -480,9 +480,9 @@ void Heap_Recycle(Heap *heap) {
     pthread_cond_t *start = &heap->gcThreads.start;
 
     // wake all the GC threads
-    pthead_mutex_lock(startMutex);
+    pthread_mutex_lock(startMutex);
     pthread_cond_broadcast(start);
-    pthead_mutex_unlock(startMutex);
+    pthread_mutex_unlock(startMutex);
 }
 
 void Heap_sweepDone(Heap *heap) {
