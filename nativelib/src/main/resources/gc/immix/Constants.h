@@ -52,4 +52,6 @@
 
 #define STATS_MEASUREMENTS 100
 
+#define SWEEP_BATCH_SIZE 16
+
 #endif // IMMIX_CONSTANTS_H

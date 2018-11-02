@@ -25,6 +25,10 @@ typedef struct {
     uint32_t blockCount;
     uint32_t maxBlockCount;
     struct {
+        pthread_mutex_t startMutex;
+        pthread_cond_t start;
+    } gcThreads;
+    struct {
         atomic_uint_fast32_t cursor;
         // making cursorDone atomic so it keeps sequential consistency with the other atomics
         atomic_uint_fast32_t cursorDone;
@@ -66,6 +70,7 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize);
 void Heap_Collect(Heap *heap, Stack *stack);
 
 void Heap_Recycle(Heap *heap);
+void Heap_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone, uint32_t maxCount);
 void Heap_Grow(Heap *heap, uint32_t increment);
 
 #endif // IMMIX_HEAP_H
