@@ -18,17 +18,18 @@ BlockMeta *BlockList_getNextBlock(word_t *blockMetaStart,
 
 void BlockList_Init(BlockList *blockList, word_t *blockMetaStart) {
     blockList->blockMetaStart = blockMetaStart;
-    blockList->head = NULL;
+    blockList->head = (word_t) NULL;
 }
 
 BlockMeta *BlockList_Pop(BlockList *blockList) {
     BlockMeta *block = (BlockMeta *) blockList->head;
+    word_t newValue;
     do {
         // block will be replaced with actual value if atomic_compare_exchange_strong fails
         if (block == NULL) {
             return NULL;
         }
-        word_t newValue = (word_t) BlockList_getNextBlock(blockList->blockMetaStart, block);
+        newValue = (word_t) BlockList_getNextBlock(blockList->blockMetaStart, block);
     } while (!atomic_compare_exchange_strong(&blockList->head, (word_t *) &block, newValue));
     return block;
 }
@@ -48,5 +49,5 @@ void BlockList_Push(BlockList *blockList, BlockMeta *blockMeta) {
 }
 
 void BlockList_Clear(BlockList *blockList) {
-    blockList->head = NULL;
+    blockList->head = (word_t) NULL;
 }

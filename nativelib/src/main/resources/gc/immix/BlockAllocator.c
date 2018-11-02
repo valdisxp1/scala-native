@@ -24,11 +24,12 @@ inline static int BlockAllocator_sizeToLinkedListIndex(uint32_t size) {
 }
 
 inline static BlockMeta *
-BlockAllocator_pollSuperblock(BlockAllocator *blockAllocator, int* i) {
-    for (; i < SUPERBLOCK_LIST_SIZE; i++) {
+BlockAllocator_pollSuperblock(BlockAllocator *blockAllocator, int* index) {
+    for (int i = *index; i < SUPERBLOCK_LIST_SIZE; i++) {
         BlockMeta *superblock =
             BlockList_Pop(&blockAllocator->freeSuperblocks[i]);
         if (superblock != NULL) {
+            *index = i;
             return superblock;
         }
     }

@@ -33,9 +33,9 @@ static inline bool BlockRange_IsEmpty(BlockRangeVal blockRange) {
 
 static inline bool BlockRange_AppendLast(BlockRange *blockRange, uint32_t first, uint32_t count) {
     BlockRangeVal old = *blockRange;
+    BlockRangeVal newValue;
     do {
         // old will be replaced with actual value if atomic_compare_exchange_strong fails
-        BlockRangeVal newValue;
         if (BlockRange_IsEmpty(old)) {
             newValue = BlockRange_Pack(first, first + count);
         } else if (BlockRange_Limit(old) == first) {
@@ -61,6 +61,7 @@ static inline BlockRangeVal BlockRange_Replace(BlockRange *blockRange, uint32_t 
 static inline uint32_t BlockRange_PollFirst(BlockRange *blockRange, uint32_t count) {
     BlockRangeVal old = *blockRange;
     uint32_t first;
+    BlockRangeVal newValue;
     do {
         // old will be replaced with actual value if atomic_compare_exchange_strong fails
         first = BlockRange_First(old);
@@ -68,7 +69,7 @@ static inline uint32_t BlockRange_PollFirst(BlockRange *blockRange, uint32_t cou
         if (BlockRange_IsEmpty(old) || BlockRange_Size(old) < count){
             return NO_BLOCK_INDEX;
         }
-        BlockRangeVal newValue = BlockRange_Pack(first + count, limit);
+        newValue = BlockRange_Pack(first + count, limit);
     } while(!atomic_compare_exchange_strong(blockRange, (BlockRangeVal *)&old, newValue));
     return first;
 }
