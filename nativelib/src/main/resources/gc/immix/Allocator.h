@@ -5,6 +5,8 @@
 #include <stddef.h>
 #include "datastructures/BlockList.h"
 #include "datastructures/Bytemap.h"
+#include "metadata/BlockMeta.h"
+#include "metadata/ObjectMeta.h"
 #include "BlockAllocator.h"
 
 typedef struct {
@@ -30,5 +32,7 @@ void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator,
 bool Allocator_CanInitCursors(Allocator *allocator);
 void Allocator_Clear(Allocator *allocator);
 word_t *Allocator_Alloc(Allocator *allocator, size_t size);
+uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *block, word_t *blockStart,
+                    LineMeta *lineMetas);
 
 #endif // IMMIX_ALLOCATOR_H

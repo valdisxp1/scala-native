@@ -9,6 +9,7 @@
 #include "metadata/LineMeta.h"
 #include "Stats.h"
 #include <stdio.h>
+#include <stdatomic.h>
 
 #define SWEEP_DONE ~((uint32_t)0)
 
@@ -24,9 +25,15 @@ typedef struct {
     uint32_t blockCount;
     uint32_t maxBlockCount;
     struct {
-        uint32_t cursor;
-        uint32_t cursorDone;
+        atomic_uint_fast32_t cursor;
+        // making cursorDone atomic so it keeps sequential consistency with the other atomics
+        atomic_uint_fast32_t cursorDone;
     } sweep;
+    struct {
+        atomic_uint_fast32_t cursor;
+        // making cursorDone atomic so it keeps sequential consistency with the other atomics
+        atomic_uint_fast32_t cursorDone;
+    } coalesce;
     Bytemap *bytemap;
     Stats *stats;
 } Heap;
@@ -48,7 +55,7 @@ static inline LineMeta *Heap_LineMetaForWord(Heap *heap, word_t *word) {
 }
 
 static inline bool Heap_IsSweepDone(Heap *heap) {
-    return heap->sweep.cursorDone >= heap->blockCount;
+    return heap->coalesce.cursorDone >= heap->blockCount;
 }
 
 void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize);
