@@ -44,7 +44,7 @@ BlockAllocator_getFreeBlockSlow(BlockAllocator *blockAllocator) {
         blockAllocator->smallestSuperblock.cursor = superblock + 1;
         uint32_t size = 1 << index;
         blockAllocator->smallestSuperblock.limit = superblock + size;
-        assert(BlockMeta_IsFree(first));
+        assert(BlockMeta_IsFree(superblock));
         BlockMeta_SetFlag(superblock, block_simple);
         return superblock;
     } else {
@@ -53,7 +53,7 @@ BlockAllocator_getFreeBlockSlow(BlockAllocator *blockAllocator) {
         BlockMeta *block = NULL;
         if (blockIdx != NO_BLOCK_INDEX) {
             block = BlockMeta_GetFromIndex(blockAllocator->blockMetaStart, blockIdx);
-            assert(BlockMeta_IsFree(first));
+            assert(BlockMeta_IsFree(block));
             BlockMeta_SetFlag(block, block_simple);
         }
         return block;
