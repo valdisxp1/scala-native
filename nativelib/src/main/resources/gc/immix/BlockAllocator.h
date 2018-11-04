@@ -16,7 +16,7 @@ typedef struct {
         BlockMeta *cursor;
         BlockMeta *limit;
     } smallestSuperblock;
-    uint32_t freeBlockCount;
+    atomic_uint_fast32_t freeBlockCount;
     BlockRange coalescingSuperblock;
     word_t *blockMetaStart;
     BlockList freeSuperblocks[SUPERBLOCK_LIST_SIZE];

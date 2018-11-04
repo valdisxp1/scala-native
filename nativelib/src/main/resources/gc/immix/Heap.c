@@ -300,9 +300,9 @@ void Heap_Collect(Heap *heap, Stack *stack) {
 }
 
 bool Heap_shouldGrow(Heap *heap) {
-    uint32_t freeBlockCount = blockAllocator.freeBlockCount;
+    uint32_t freeBlockCount = (uint32_t) blockAllocator.freeBlockCount;
     uint32_t blockCount = heap->blockCount;
-    uint32_t recycledBlockCount = allocator.recycledBlockCount;
+    uint32_t recycledBlockCount = (uint32_t) allocator.recycledBlockCount;
     uint32_t unavailableBlockCount =
         blockCount - (freeBlockCount + recycledBlockCount);
 

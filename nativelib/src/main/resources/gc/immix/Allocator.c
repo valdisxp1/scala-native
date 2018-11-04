@@ -37,7 +37,7 @@ void Allocator_Init(Allocator *allocator, BlockAllocator *blockAllocator,
  * otherwise.
  */
 bool Allocator_CanInitCursors(Allocator *allocator) {
-    uint64_t freeBlockCount = allocator->blockAllocator->freeBlockCount;
+    uint32_t freeBlockCount = (uint32_t) allocator->blockAllocator->freeBlockCount;
     return freeBlockCount >= 2 ||
            (freeBlockCount == 1 && allocator->recycledBlockCount > 0);
 }
