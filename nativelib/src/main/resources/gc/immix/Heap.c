@@ -145,6 +145,7 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     heap->sweep.cursorDone = SWEEP_DONE;
     heap->coalesce.cursor = SWEEP_DONE;
     heap->coalesce.cursorDone = SWEEP_DONE;
+    heap->postSweepDone = true;
     Bytemap_Init(bytemap, heapStart, maxHeapSize);
     Allocator_Init(&allocator, &blockAllocator, bytemap, blockMetaStart,
                    heapStart);
@@ -164,6 +165,9 @@ Object *Heap_lazySweepLarge(Heap *heap, uint32_t size) {
     while (object == NULL && !Heap_IsSweepDone(heap)) {
         Heap_sweep(heap, increment);
         object = LargeAllocator_GetBlock(&largeAllocator, size);
+    }
+    if (Heap_IsSweepDone(heap) && !heap->postSweepDone) {
+        Heap_sweepDone(heap);
     }
     return object;
 }
@@ -211,6 +215,9 @@ Object *Heap_lazySweep(Heap *heap, uint32_t size) {
     while (object == NULL && !Heap_IsSweepDone(heap)) {
         Heap_sweep(heap, 1);
         object = (Object *)Allocator_Alloc(&allocator, size);
+    }
+    if (Heap_IsSweepDone(heap) && !heap->postSweepDone) {
+        Heap_sweepDone(heap);
     }
     return object;
 }
@@ -395,9 +402,6 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         Stats_RecordEvent(stats, event_sweep, start_ns, end_ns);
     }
 
-    if (Heap_IsSweepDone(heap)) {
-        Heap_sweepDone(heap);
-    }
 }
 
 void Heap_lazyCoalesce(Heap *heap) {
@@ -454,6 +458,7 @@ void Heap_Recycle(Heap *heap) {
     heap->sweep.cursorDone = 0;
     heap->coalesce.cursor = 0;
     heap->coalesce.cursorDone = 0;
+    heap->postSweepDone = false;
 }
 
 void Heap_sweepDone(Heap *heap) {
@@ -477,6 +482,7 @@ void Heap_sweepDone(Heap *heap) {
     if (!Allocator_CanInitCursors(&allocator)) {
         Heap_exitWithOutOfMemory();
     }
+    heap->postSweepDone = true;
     heap->sweep.cursor = SWEEP_DONE;
     heap->sweep.cursorDone = SWEEP_DONE;
     heap->coalesce.cursor = SWEEP_DONE;

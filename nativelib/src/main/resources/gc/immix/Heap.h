@@ -10,6 +10,7 @@
 #include "Stats.h"
 #include <stdio.h>
 #include <stdatomic.h>
+#include <stdbool.h>
 
 #define SWEEP_DONE ~((uint32_t)0)
 
@@ -34,6 +35,7 @@ typedef struct {
         // making cursorDone atomic so it keeps sequential consistency with the other atomics
         atomic_uint_fast32_t cursorDone;
     } coalesce;
+    bool postSweepDone;
     Bytemap *bytemap;
     Stats *stats;
 } Heap;
