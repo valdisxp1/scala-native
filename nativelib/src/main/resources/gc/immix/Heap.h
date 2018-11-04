@@ -30,6 +30,7 @@ typedef struct {
         pthread_mutex_t startMutex;
         pthread_cond_t start;
     } gcThreads;
+    int gcThreadCount;
     struct {
         atomic_uint_fast32_t cursor;
         atomic_uint_fast32_t limit;

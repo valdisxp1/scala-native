@@ -157,8 +157,10 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     pthread_mutex_init(&heap->gcThreads.startMutex, NULL);
     pthread_cond_init(&heap->gcThreads.start, NULL);
 
-    gcThreads = (GCThread *) malloc(sizeof(GCThread) * 3);
-    for (int i = 0; i < 3; i++) {
+    int gcThreadCount = Settings_GCThreadCount();
+    heap->gcThreadCount = gcThreadCount;
+    gcThreads = (GCThread *) malloc(sizeof(GCThread) * gcThreadCount);
+    for (int i = 0; i < gcThreadCount; i++) {
         GCThread_Init(&gcThreads[i], i, heap);
     }
 
@@ -227,7 +229,7 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
 Object *Heap_lazySweep(Heap *heap, uint32_t size) {
     Object *object = (Object *)Allocator_Alloc(&allocator, size);
     while (object == NULL && !Heap_IsSweepDone(heap)) {
-        Heap_sweep(heap, LAZY_SWEEP_MIN_BATCH);
+        Heap_Sweep(heap, &heap->sweep.cursorDone, LAZY_SWEEP_MIN_BATCH);
         object = (Object *)Allocator_Alloc(&allocator, size);
     }
     if (Heap_IsSweepDone(heap) && !heap->postSweepDone) {
@@ -517,7 +519,8 @@ void Heap_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone, uint32_t maxCount)
 
 uint_fast32_t Heap_minSweepCursor(Heap *heap) {
     uint_fast32_t min = heap->sweep.cursorDone;
-    for (int i = 0; i < 3; i++) {
+    int gcThreadCount = heap->gcThreadCount;
+    for (int i = 0; i < gcThreadCount; i++) {
         uint_fast32_t cursorDone = gcThreads[i].sweep.cursorDone;
         if (cursorDone < min) {
             min = cursorDone;

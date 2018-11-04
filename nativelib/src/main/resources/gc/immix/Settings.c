@@ -63,3 +63,17 @@ size_t Settings_MaxHeapSize() {
 char *Settings_StatsFileName() {
     return getenv(STATS_FILE_SETTING);
 }
+
+int Settings_GCThreadCount() {
+    char *str = getenv("SCALANATIVE_GC_THREADS");
+    if (str == NULL) {
+        return 3;
+    } else {
+        int count;
+        sscanf(str, "%d", &count);
+        if (count < 0) {
+            count = 0;
+        }
+        return count;
+    }
+}
