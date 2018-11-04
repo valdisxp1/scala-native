@@ -392,7 +392,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
 
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
-        Stats_RecordLazySweep(stats, start_ns, end_ns);
+        Stats_RecordEvent(stats, event_sweep, start_ns, end_ns);
     }
 
     if (Heap_IsSweepDone(heap)) {

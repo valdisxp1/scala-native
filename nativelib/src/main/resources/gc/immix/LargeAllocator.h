@@ -11,8 +11,7 @@
     ((1UL << (BLOCK_SIZE_BITS - LARGE_OBJECT_MIN_SIZE_BITS)) - 1)
 
 typedef struct {
-    Chunk *first;
-    Chunk *last;
+    atomic_uintptr_t head;
 } FreeList;
 
 typedef struct {

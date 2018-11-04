@@ -19,30 +19,29 @@ Chunk *LargeAllocator_chunkAddOffset(Chunk *chunk, size_t words) {
     return (Chunk *)((ubyte_t *)chunk + words);
 }
 
-void LargeAllocator_freeListAddBlockLast(FreeList *freeList, Chunk *chunk) {
-    if (freeList->first == NULL) {
-        freeList->first = chunk;
-    }
-    freeList->last = chunk;
-    chunk->next = NULL;
+void LargeAllocator_freeListPush(FreeList *freeList, Chunk *chunk) {
+    Chunk *head = (Chunk *) freeList->head;
+    do {
+        // head will be replaced with actual value if atomic_compare_exchange_strong fails
+        chunk->next = head;
+    } while(!atomic_compare_exchange_strong(&freeList->head, (word_t *) &head, (word_t) chunk));
 }
 
-Chunk *LargeAllocator_freeListRemoveFirstBlock(FreeList *freeList) {
-    if (freeList->first == NULL) {
-        return NULL;
-    }
-    Chunk *chunk = freeList->first;
-    if (freeList->first == freeList->last) {
-        freeList->last = NULL;
-    }
-
-    freeList->first = chunk->next;
-    return chunk;
+Chunk *LargeAllocator_freeListPop(FreeList *freeList) {
+    Chunk *head = (Chunk *) freeList->head;
+    word_t newValue;
+    do {
+        // head will be replaced with actual value if atomic_compare_exchange_strong fails
+        if (head == NULL) {
+            return NULL;
+        }
+        newValue = (word_t) head->next;
+    } while (!atomic_compare_exchange_strong(&freeList->head, (word_t *) &head, newValue));
+    return head;
 }
 
 void LargeAllocator_freeListInit(FreeList *freeList) {
-    freeList->first = NULL;
-    freeList->last = NULL;
+    freeList->head = (word_t) NULL;
 }
 
 void LargeAllocator_Init(LargeAllocator *allocator,
@@ -70,8 +69,7 @@ void LargeAllocator_AddChunk(LargeAllocator *allocator, Chunk *chunk,
     ObjectMeta *chunkMeta = Bytemap_Get(allocator->bytemap, (word_t *)chunk);
     ObjectMeta_SetPlaceholder(chunkMeta);
 
-    LargeAllocator_freeListAddBlockLast(&allocator->freeLists[listIndex],
-                                        chunk);
+    LargeAllocator_freeListPush(&allocator->freeLists[listIndex], chunk);
 }
 
 static inline Chunk *LargeAllocator_getChunkForSize(LargeAllocator *allocator,
@@ -79,10 +77,8 @@ static inline Chunk *LargeAllocator_getChunkForSize(LargeAllocator *allocator,
     for (int listIndex =
              LargeAllocator_sizeToLinkedListIndex(requiredChunkSize);
          listIndex < FREE_LIST_COUNT; listIndex++) {
-        Chunk *chunk = allocator->freeLists[listIndex].first;
+        Chunk *chunk = LargeAllocator_freeListPop(&allocator->freeLists[listIndex]);
         if (chunk != NULL) {
-            LargeAllocator_freeListRemoveFirstBlock(
-                &allocator->freeLists[listIndex]);
             return chunk;
         }
     }
@@ -137,8 +133,7 @@ Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
 
 void LargeAllocator_Clear(LargeAllocator *allocator) {
     for (int i = 0; i < FREE_LIST_COUNT; i++) {
-        allocator->freeLists[i].first = NULL;
-        allocator->freeLists[i].last = NULL;
+        LargeAllocator_freeListInit(&allocator->freeLists[i]);
     }
 }
 
