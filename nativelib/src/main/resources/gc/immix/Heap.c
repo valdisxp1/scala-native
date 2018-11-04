@@ -331,7 +331,6 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     if (stats != NULL) {
         start_ns = scalanative_nano_time();
     }
-    //TODO fix
     uint32_t startIdx = (uint32_t) atomic_fetch_add(&heap->sweep.cursor, maxCount);
     uint32_t limitIdx = startIdx + maxCount;
     uint32_t blockCount = heap->blockCount;
