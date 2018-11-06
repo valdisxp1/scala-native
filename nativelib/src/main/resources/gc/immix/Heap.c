@@ -407,10 +407,12 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
 void Heap_lazyCoalesce(Heap *heap) {
     // the previous coalesce is done and there is work
     uint_fast32_t startIdx = heap->coalesce.cursor;
+    uint_fast32_t coalesceDoneIdx = heap->coalesce.cursorDone;
     uint_fast32_t limitIdx = heap->sweep.cursorDone;
-    while (startIdx == limitIdx && startIdx < limitIdx) {
+    while (startIdx == coalesceDoneIdx && startIdx < limitIdx) {
         if (!atomic_compare_exchange_strong(&heap->coalesce.cursor, &startIdx, limitIdx)) {
             // startIdx is updated by atomic_compare_exchange_strong
+            coalesceDoneIdx = heap->coalesce.cursorDone;
             limitIdx = heap->sweep.cursorDone;
             continue;
         }
