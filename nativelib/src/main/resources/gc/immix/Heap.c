@@ -406,8 +406,8 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
                 } else {
                     assert(totalSize > 0);
                     BlockAllocator_AddFreeSuperblock(&blockAllocator, lastFreeBlockStart, totalSize);
-                    lastFreeBlockStart = NULL;
                 }
+                lastFreeBlockStart = NULL;
             }
         }
 
@@ -464,8 +464,8 @@ void Heap_lazyCoalesce(Heap *heap) {
                     BlockMeta *freeLimit = current;
                     uint32_t totalSize = (uint32_t) (freeLimit - lastFreeBlockStart);
                     BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
-                    lastFreeBlockStart = NULL;
                 }
+                lastFreeBlockStart = NULL;
             }
 
             current += size;
