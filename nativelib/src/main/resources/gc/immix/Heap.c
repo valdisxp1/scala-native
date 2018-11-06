@@ -353,11 +353,13 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
             freeCount = Allocator_Sweep(&allocator, current, currentBlockStart, lineMetas);
         } else if (BlockMeta_IsSuperblockStart(current)) {
             size = BlockMeta_SuperblockSize(current);
+            assert(size > 0);
             freeCount = LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart);
         } else if (BlockMeta_IsFree(current)) {
             freeCount = 1;
         }
         // ignore superblock middle blocks, that superblock will be swept by someone else
+        assert(size > 0);
         assert(freeCount <= size);
         if (lastFreeBlockStart == NULL) {
             if (freeCount > 0) {
@@ -379,7 +381,6 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
             }
         }
 
-        assert(size > 0);
         current += size;
         currentBlockStart += WORDS_IN_BLOCK * size;
         lineMetas += LINE_COUNT * size;

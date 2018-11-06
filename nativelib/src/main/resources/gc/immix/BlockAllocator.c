@@ -114,6 +114,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
 
     assert(BlockMeta_IsFree(superblock));
     BlockMeta_SetFlag(superblock, block_superblock_start);
+    BlockMeta_SetSuperblockSize(superblock, size);
     BlockMeta *limit = superblock + size;
     for (BlockMeta *current = superblock + 1; current < limit; current++) {
         assert(BlockMeta_IsFree(current));
