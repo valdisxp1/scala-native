@@ -71,6 +71,11 @@ INLINE BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
     blockAllocator->smallestSuperblock.cursor++;
 
     // not decrementing freeBlockCount, because it is only used after sweep
+    #ifdef DEBUG_PRINT
+        printf("BlockAllocator_GetFreeBlock = %p %" PRIu32 "\n",
+               block, (uint32_t)(block - (BlockMeta *) blockAllocator->blockMetaStart));
+        fflush(stdout);
+    #endif
     return block;
 }
 
@@ -121,6 +126,11 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
         BlockMeta_SetFlag(current, block_superblock_middle);
     }
     // not decrementing freeBlockCount, because it is only used after sweep
+    #ifdef DEBUG_PRINT
+        printf("BlockAllocator_GetFreeSuperblock(%" PRIu32 ") = %p %" PRIu32 "\n",
+               size, superblock, (uint32_t)(superblock - (BlockMeta *) blockAllocator->blockMetaStart));
+        fflush(stdout);
+    #endif
     return superblock;
 }
 

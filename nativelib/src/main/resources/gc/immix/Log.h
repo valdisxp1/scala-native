@@ -3,6 +3,7 @@
 
 #define NDEBUG
 #include <assert.h>
+#include <inttypes.h>
 
 //#define PRINT_STACK_OVERFLOW
 //#define DEBUG_PRINT

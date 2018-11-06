@@ -161,7 +161,11 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
 
 Object *Heap_lazySweepLarge(Heap *heap, uint32_t size) {
     Object *object = LargeAllocator_GetBlock(&largeAllocator, size);
-    size_t increment = MathUtils_DivAndRoundUp(size, BLOCK_TOTAL_SIZE);
+    uint32_t increment = (uint32_t) MathUtils_DivAndRoundUp(size, BLOCK_TOTAL_SIZE);
+    #ifdef DEBUG_PRINT
+        printf("Heap_lazySweepLarge (%" PRIu32 ") => %" PRIu32 "\n", size, increment);
+        fflush(stdout);
+    #endif
     while (object == NULL && !Heap_IsSweepDone(heap)) {
         Heap_sweep(heap, increment);
         object = LargeAllocator_GetBlock(&largeAllocator, size);
@@ -212,6 +216,10 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
 
 Object *Heap_lazySweep(Heap *heap, uint32_t size) {
     Object *object = (Object *)Allocator_Alloc(&allocator, size);
+    #ifdef DEBUG_PRINT
+        printf("Heap_lazySweep\n");
+        fflush(stdout);
+    #endif
     while (object == NULL && !Heap_IsSweepDone(heap)) {
         Heap_sweep(heap, 1);
         object = (Object *)Allocator_Alloc(&allocator, size);
@@ -351,12 +359,34 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         assert(!BlockMeta_IsCoalesceMe(current));
         if (BlockMeta_IsSimpleBlock(current)) {
             freeCount = Allocator_Sweep(&allocator, current, currentBlockStart, lineMetas);
+            #ifdef DEBUG_PRINT
+                printf("Heap_sweep SimpleBlock %p %" PRIu32 "\n",
+                       current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
+                fflush(stdout);
+            #endif
         } else if (BlockMeta_IsSuperblockStart(current)) {
             size = BlockMeta_SuperblockSize(current);
             assert(size > 0);
             freeCount = LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart);
+            #ifdef DEBUG_PRINT
+                printf("Heap_sweep Superblock(%" PRIu32 ") %p %" PRIu32 "\n",
+                       size, current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
+                fflush(stdout);
+            #endif
         } else if (BlockMeta_IsFree(current)) {
             freeCount = 1;
+            #ifdef DEBUG_PRINT
+                printf("Heap_sweep FreeBlock %p %" PRIu32 "\n",
+                       current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
+                fflush(stdout);
+            #endif
+        } else {
+            assert(BlockMeta_IsSuperblockMiddle(current));
+            #ifdef DEBUG_PRINT
+                printf("Heap_sweep SuperblockMiddle %p %" PRIu32 "\n",
+                       current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
+                fflush(stdout);
+            #endif
         }
         // ignore superblock middle blocks, that superblock will be swept by someone else
         assert(size > 0);

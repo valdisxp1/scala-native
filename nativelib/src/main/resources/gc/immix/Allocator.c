@@ -174,6 +174,11 @@ bool Allocator_newBlock(Allocator *allocator) {
         assert(allocator->limit <= Block_GetBlockEnd(blockStart));
     } else {
         block = BlockAllocator_GetFreeBlock(allocator->blockAllocator);
+        #ifdef DEBUG_PRINT
+            printf("Allocator_newBlock %p %" PRIu32 "\n",
+                   block, (uint32_t)(block - (BlockMeta *) allocator->blockMetaStart));
+            fflush(stdout);
+        #endif
         if (block == NULL) {
             return false;
         }
@@ -270,6 +275,11 @@ uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
             assert(BlockMeta_FirstFreeLine(blockMeta) >= 0);
             assert(BlockMeta_FirstFreeLine(blockMeta) < LINE_COUNT);
             allocator->recycledBlockCount++;
+            #ifdef DEBUG_PRINT
+                printf("Allocator_Sweep %p %" PRIu32 " => RECYCLED\n",
+                       blockMeta, (uint32_t)(blockMeta - (BlockMeta *) allocator->blockMetaStart));
+                fflush(stdout);
+            #endif
         }
         return 0;
     }
