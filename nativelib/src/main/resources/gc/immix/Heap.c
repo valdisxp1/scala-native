@@ -349,14 +349,27 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     BlockMeta *lastFreeBlockStart = NULL;
 
     BlockMeta *first = BlockMeta_GetFromIndex(heap->blockMetaStart, startIdx);
-    BlockMeta *current = first;
     BlockMeta *limit = BlockMeta_GetFromIndex(heap->blockMetaStart, limitIdx);
+
+    // skip superblock_middle these are handled by the previous batch
+    while (BlockMeta_IsSuperblockMiddle(first) && first < limit) {
+        #ifdef DEBUG_PRINT
+            printf("Heap_sweep SuperblockMiddle %p %" PRIu32 "\n",
+                   first, (uint32_t)(first - (BlockMeta *) heap->blockMetaStart));
+            fflush(stdout);
+        #endif
+        startIdx += 1;
+        first += 1;
+    }
+
+    BlockMeta *current = first;
     word_t *currentBlockStart = Block_GetStartFromIndex(heap->heapStart, startIdx);
     LineMeta *lineMetas = Line_getFromBlockIndex(heap->lineMetaStart, startIdx);
     while (current < limit) {
         int size = 1;
         uint32_t freeCount = 0;
         assert(!BlockMeta_IsCoalesceMe(current));
+        assert(!BlockMeta_IsSuperblockMiddle(current));
         if (BlockMeta_IsSimpleBlock(current)) {
             freeCount = Allocator_Sweep(&allocator, current, currentBlockStart, lineMetas);
             #ifdef DEBUG_PRINT
@@ -373,17 +386,11 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
                        size, current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
                 fflush(stdout);
             #endif
-        } else if (BlockMeta_IsFree(current)) {
+        } else {
+            assert(BlockMeta_IsFree(current));
             freeCount = 1;
             #ifdef DEBUG_PRINT
                 printf("Heap_sweep FreeBlock %p %" PRIu32 "\n",
-                       current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
-                fflush(stdout);
-            #endif
-        } else {
-            assert(BlockMeta_IsSuperblockMiddle(current));
-            #ifdef DEBUG_PRINT
-                printf("Heap_sweep SuperblockMiddle %p %" PRIu32 "\n",
                        current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
                 fflush(stdout);
             #endif
