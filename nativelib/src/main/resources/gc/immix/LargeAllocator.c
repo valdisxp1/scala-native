@@ -138,7 +138,7 @@ void LargeAllocator_Clear(LargeAllocator *allocator) {
 }
 
 uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
-                          word_t *blockStart) {
+                          word_t *blockStart, BlockMeta* batchLimit) {
     // Objects that are larger than a block
     // are always allocated at the begining the smallest possible superblock.
     // Any gaps at the end can be filled with large objects, that are smaller
@@ -155,9 +155,6 @@ uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
     if (superblockSize > 1 && !ObjectMeta_IsMarked(firstObject)) {
         // release free superblock starting from the first object
         freeCount = superblockSize - 1;
-
-        BlockMeta_SetFlag(lastBlock, block_superblock_start);
-        BlockMeta_SetSuperblockSize(lastBlock, 1);
     }
 
     word_t *lastBlockStart = blockEnd - WORDS_IN_BLOCK;
@@ -195,6 +192,17 @@ uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
         // free chunk covers the entire last block, released it
         freeCount += 1;
     } else if (chunkStart != NULL) {
+        if (ObjectMeta_IsFree(firstObject)) {
+            // the last block is its own superblock
+            if (lastBlock < batchLimit) {
+                // If we cross the current batch, then it is not to mark a block_superblock_middle to block_superblock_start.
+                // The other sweeper threads could be in the middle of skipping block_superblock_middle s.
+                // Then creating the superblock will be done by Heap_lazyCoalesce
+                BlockMeta_SetFlag(lastBlock, block_superblock_start);
+                BlockMeta_SetSuperblockSize(lastBlock, 1);
+            }
+            ObjectMeta_SetPlaceholder(lastBlockStart);
+        }
         size_t currentSize = (current - chunkStart) * WORD_SIZE;
         LargeAllocator_AddChunk(allocator, (Chunk *)chunkStart, currentSize);
     }

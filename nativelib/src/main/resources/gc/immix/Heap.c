@@ -367,7 +367,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         } else if (BlockMeta_IsSuperblockStart(current)) {
             size = BlockMeta_SuperblockSize(current);
             assert(size > 0);
-            freeCount = LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart);
+            freeCount = LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart, limit);
             #ifdef DEBUG_PRINT
                 printf("Heap_sweep Superblock(%" PRIu32 ") %p %" PRIu32 "\n",
                        size, current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
