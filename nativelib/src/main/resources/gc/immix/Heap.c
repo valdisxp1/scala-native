@@ -460,6 +460,7 @@ void Heap_lazyCoalesce(Heap *heap) {
         }
 
         BlockMeta *lastFreeBlockStart = NULL;
+        BlockMeta *lastCoalesceMe = NULL;
         BlockMeta *first = BlockMeta_GetFromIndex(heap->blockMetaStart, (uint32_t) startIdx);
         BlockMeta *current = first;
         BlockMeta *limit = BlockMeta_GetFromIndex(heap->blockMetaStart, (uint32_t) limitIdx);
@@ -469,22 +470,48 @@ void Heap_lazyCoalesce(Heap *heap) {
             if (lastFreeBlockStart == NULL) {
                 if (BlockMeta_IsCoalesceMe(current)) {
                     lastFreeBlockStart = current;
+                    lastCoalesceMe = current;
                     size = BlockMeta_SuperblockSize(current);
+                } else {
+                    lastFreeBlockStart = NULL;
                 }
             } else {
                 if (!BlockMeta_IsCoalesceMe(current)) {
                     BlockMeta *freeLimit = current;
                     uint32_t totalSize = (uint32_t) (freeLimit - lastFreeBlockStart);
                     BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
+                    lastFreeBlockStart = NULL;
+                } else {
+                    lastCoalesceMe = current;
                 }
-                lastFreeBlockStart = NULL;
             }
 
             current += size;
         }
         if (lastFreeBlockStart != NULL) {
-            uint32_t totalSize = (uint32_t) (limit - lastFreeBlockStart);
-            BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
+            assert(current <= (BlockMeta *) heap->blockMetaEnd);
+            assert(current >= limit);
+            if (current == limit) {
+                uint32_t totalSize = (uint32_t) (limit - lastFreeBlockStart);
+                BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
+            } else {
+                // the last superblock crossed the limit
+                // other sweepers still need to sweep it
+                // add the part that is fully swept
+                uint32_t totalSize = (uint32_t) (lastCoalesceMe - lastFreeBlockStart);
+                BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
+                // try to advance the sweep cursor past the superblock
+                uint_fast32_t advanceTo = BlockMeta_GetBlockIndex(heap->blockMetaStart, current);
+                uint_fast32_t sweepCursor = heap->sweep.cursor;
+                while (sweepCursor < advanceTo) {
+                    atomic_compare_exchange_strong(&heap->sweep.cursor, &sweepCursor, advanceTo);
+                    // sweepCursor is updated by atomic_compare_exchange_strong
+                }
+                // retreat the coalesce cursor
+                uint_fast32_t retreatTo = BlockMeta_GetBlockIndex(heap->blockMetaStart, lastCoalesceMe);
+                heap->coalesce.cursor = retreatTo;
+                break;
+            }
         }
 
         heap->coalesce.cursorDone = limitIdx;
