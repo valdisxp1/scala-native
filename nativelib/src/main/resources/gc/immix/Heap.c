@@ -422,8 +422,9 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         currentBlockStart += WORDS_IN_BLOCK * size;
         lineMetas += LINE_COUNT * size;
     }
+    BlockMeta *doneUntil = current;
     if (lastFreeBlockStart != NULL) {
-        uint32_t totalSize = (uint32_t) (limit - lastFreeBlockStart);
+        uint32_t totalSize = (uint32_t) (doneUntil - lastFreeBlockStart);
         assert(totalSize > 0);
         // There may be some free blocks after this batch that needs to be coalesced with this block.
         BlockMeta_SetFlag(lastFreeBlockStart, block_coalesce_me);
@@ -434,7 +435,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     // block_coalesce_me marks should be visible
     atomic_thread_fence(memory_order_seq_cst);
 
-    heap->sweep.cursorDone = limitIdx;
+    heap->sweep.cursorDone = BlockMeta_GetBlockIndex(heap->blockMetaStart, doneUntil);
 
     Heap_lazyCoalesce(heap);
 
