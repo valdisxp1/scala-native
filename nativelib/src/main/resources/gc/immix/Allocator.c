@@ -270,11 +270,14 @@ uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
         // If there is no recyclable line, the block is unavailable
         if (lastRecyclable != NULL) {
             lastRecyclable->next = LAST_HOLE;
-            BlockList_Push(&allocator->recycledBlocks, blockMeta);
 
             assert(BlockMeta_FirstFreeLine(blockMeta) >= 0);
             assert(BlockMeta_FirstFreeLine(blockMeta) < LINE_COUNT);
             allocator->recycledBlockCount++;
+
+            // the allocator thread must see the sweeping changes in recycled blocks
+            atomic_thread_fence(memory_order_seq_cst);
+            BlockList_Push(&allocator->recycledBlocks, blockMeta);
             #ifdef DEBUG_PRINT
                 printf("Allocator_Sweep %p %" PRIu32 " => RECYCLED\n",
                        blockMeta, (uint32_t)(blockMeta - (BlockMeta *) allocator->blockMetaStart));
