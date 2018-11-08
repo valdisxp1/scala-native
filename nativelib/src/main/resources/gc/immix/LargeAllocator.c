@@ -201,7 +201,7 @@ uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
                 BlockMeta_SetFlag(lastBlock, block_superblock_start);
                 BlockMeta_SetSuperblockSize(lastBlock, 1);
             }
-            ObjectMeta_SetPlaceholder(lastBlockStart);
+            ObjectMeta_SetPlaceholder(Bytemap_Get(allocator->bytemap, lastBlockStart));
         }
         size_t currentSize = (current - chunkStart) * WORD_SIZE;
         LargeAllocator_AddChunk(allocator, (Chunk *)chunkStart, currentSize);

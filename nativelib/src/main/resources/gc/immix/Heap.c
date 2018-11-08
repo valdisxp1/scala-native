@@ -472,8 +472,6 @@ void Heap_lazyCoalesce(Heap *heap) {
                     lastFreeBlockStart = current;
                     lastCoalesceMe = current;
                     size = BlockMeta_SuperblockSize(current);
-                } else {
-                    lastFreeBlockStart = NULL;
                 }
             } else {
                 if (!BlockMeta_IsCoalesceMe(current)) {
@@ -481,6 +479,11 @@ void Heap_lazyCoalesce(Heap *heap) {
                     uint32_t totalSize = (uint32_t) (freeLimit - lastFreeBlockStart);
                     BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
                     lastFreeBlockStart = NULL;
+                    if (BlockMeta_IsSuperblockMiddle(current)) {
+                        // finish the LargeAllocator_Sweep in the case when the last block is not free
+                        BlockMeta_SetFlag(current, block_superblock_start);
+                        BlockMeta_SetSuperblockSize(current, 1);
+                    }
                 } else {
                     lastCoalesceMe = current;
                 }
@@ -499,7 +502,9 @@ void Heap_lazyCoalesce(Heap *heap) {
                 // other sweepers still need to sweep it
                 // add the part that is fully swept
                 uint32_t totalSize = (uint32_t) (lastCoalesceMe - lastFreeBlockStart);
-                BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
+                if (totalSize > 0) {
+                    BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
+                }
                 // try to advance the sweep cursor past the superblock
                 uint_fast32_t advanceTo = BlockMeta_GetBlockIndex(heap->blockMetaStart, current);
                 uint_fast32_t sweepCursor = heap->sweep.cursor;
@@ -510,7 +515,9 @@ void Heap_lazyCoalesce(Heap *heap) {
                 // retreat the coalesce cursor
                 uint_fast32_t retreatTo = BlockMeta_GetBlockIndex(heap->blockMetaStart, lastCoalesceMe);
                 heap->coalesce.cursor = retreatTo;
-                break;
+                heap->coalesce.cursorDone = retreatTo;
+                // do no more to avoid infinite loops
+                return;
             }
         }
 
