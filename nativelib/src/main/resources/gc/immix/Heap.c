@@ -341,9 +341,9 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     }
     uint32_t startIdx = (uint32_t) atomic_fetch_add(&heap->sweep.cursor, maxCount);
     uint32_t limitIdx = startIdx + maxCount;
-    uint32_t blockCount = heap->blockCount;
-    if (limitIdx > blockCount) {
-        limitIdx = blockCount;
+    uint32_t sweepLimit = heap->sweep.limit;
+    if (limitIdx > sweepLimit) {
+        limitIdx = sweepLimit;
     }
 
     BlockMeta *lastFreeBlockStart = NULL;
@@ -533,6 +533,7 @@ void Heap_Recycle(Heap *heap) {
     // all the marking changes should be visible to all threads by now
     atomic_thread_fence(memory_order_seq_cst);
     heap->sweep.cursor = 0;
+    heap->sweep.limit = heap->blockCount;
     heap->sweep.cursorDone = 0;
     heap->coalesce.cursor = 0;
     heap->coalesce.cursorDone = 0;

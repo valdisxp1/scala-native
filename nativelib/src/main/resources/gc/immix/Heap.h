@@ -27,6 +27,7 @@ typedef struct {
     uint32_t maxBlockCount;
     struct {
         atomic_uint_fast32_t cursor;
+        atomic_uint_fast32_t limit;
         // making cursorDone atomic so it keeps sequential consistency with the other atomics
         atomic_uint_fast32_t cursorDone;
     } sweep;
