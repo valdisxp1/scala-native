@@ -291,8 +291,45 @@ word_t *Heap_Alloc(Heap *heap, uint32_t objectSize) {
     }
 }
 
+#ifdef DEBUG_ASSERT
+void Heap_assertIsConsistent(Heap *heap) {
+    BlockMeta *current = (BlockMeta *) heap->blockMetaStart;
+    LineMeta *lineMetas = (LineMeta *) heap->lineMetaStart;
+    BlockMeta *limit = (BlockMeta *) heap->blockMetaEnd;
+    ObjectMeta *currentBlockStart = Bytemap_Get(heap->bytemap, heap->heapStart);
+    while (current < limit) {
+        assert(!BlockMeta_IsCoalesceMe(current));
+        assert(!BlockMeta_IsSuperblockMiddle(current));
+        assert(!BlockMeta_IsMarked(current));
+
+        int size = 1;
+        if (BlockMeta_IsSuperblockStart(current)) {
+            size = BlockMeta_SuperblockSize(current);
+        }
+        BlockMeta *next = current + size;
+        LineMeta *nextLineMetas = lineMetas + LINE_COUNT * size;
+        ObjectMeta *nextBlockStart = currentBlockStart + (WORDS_IN_BLOCK / ALLOCATION_ALIGNMENT_WORDS) * size;
+
+        for (LineMeta *line = lineMetas; line < nextLineMetas; line++) {
+            assert(!Line_IsMarked(line));
+        }
+        for (ObjectMeta *object = currentBlockStart; object < nextBlockStart; object++) {
+            assert(!ObjectMeta_IsMarked(object));
+        }
+
+        current = next;
+        lineMetas = nextLineMetas;
+        currentBlockStart = nextBlockStart;
+    }
+    assert(current == limit);
+}
+#endif
+
 void Heap_Collect(Heap *heap, Stack *stack) {
     assert(Heap_IsSweepDone(heap));
+#ifdef DEBUG_ASSERT
+    Heap_assertIsConsistent(heap);
+#endif
     uint64_t start_ns, end_ns;
     Stats *stats = heap->stats;
 #ifdef DEBUG_PRINT
