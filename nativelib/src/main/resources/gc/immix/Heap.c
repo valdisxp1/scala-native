@@ -299,6 +299,7 @@ void Heap_assertIsConsistent(Heap *heap) {
     ObjectMeta *currentBlockStart = Bytemap_Get(heap->bytemap, heap->heapStart);
     while (current < limit) {
         assert(!BlockMeta_IsCoalesceMe(current));
+        assert(!BlockMeta_IsSuperblockStartMe(current));
         assert(!BlockMeta_IsSuperblockMiddle(current));
         assert(!BlockMeta_IsMarked(current));
 
@@ -389,7 +390,8 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     BlockMeta *limit = BlockMeta_GetFromIndex(heap->blockMetaStart, limitIdx);
 
     // skip superblock_middle these are handled by the previous batch
-    while (BlockMeta_IsSuperblockMiddle(first) && first < limit) {
+    // (BlockMeta_IsSuperblockStartMe(first) || BlockMeta_IsSuperblockMiddle(first)) && first < limit
+    while (((first->block.simple.flags & 0x3) == 0x3) && first < limit) {
         #ifdef DEBUG_PRINT
             printf("Heap_sweep SuperblockMiddle %p %" PRIu32 "\n",
                    first, (uint32_t)(first - (BlockMeta *) heap->blockMetaStart));
@@ -407,6 +409,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         uint32_t freeCount = 0;
         assert(!BlockMeta_IsCoalesceMe(current));
         assert(!BlockMeta_IsSuperblockMiddle(current));
+        assert(!BlockMeta_IsSuperblockStartMe(current));
         if (BlockMeta_IsSimpleBlock(current)) {
             freeCount = Allocator_Sweep(&allocator, current, currentBlockStart, lineMetas);
             #ifdef DEBUG_PRINT
@@ -503,12 +506,10 @@ void Heap_lazyCoalesce(Heap *heap) {
         BlockMeta *limit = BlockMeta_GetFromIndex(heap->blockMetaStart, (uint32_t) limitIdx);
 
         while (current < limit) {
-            int size = 1;
+            // updates lastFreeBlockStart and adds blocks
             if (lastFreeBlockStart == NULL) {
                 if (BlockMeta_IsCoalesceMe(current)) {
                     lastFreeBlockStart = current;
-                    lastCoalesceMe = current;
-                    size = BlockMeta_SuperblockSize(current);
                 }
             } else {
                 if (!BlockMeta_IsCoalesceMe(current)) {
@@ -516,14 +517,20 @@ void Heap_lazyCoalesce(Heap *heap) {
                     uint32_t totalSize = (uint32_t) (freeLimit - lastFreeBlockStart);
                     BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
                     lastFreeBlockStart = NULL;
-                    if (BlockMeta_IsSuperblockMiddle(current)) {
-                        // finish the LargeAllocator_Sweep in the case when the last block is not free
-                        BlockMeta_SetFlag(current, block_superblock_start);
-                        BlockMeta_SetSuperblockSize(current, 1);
-                    }
-                } else {
-                    lastCoalesceMe = current;
                 }
+            }
+
+            // controls movement forward
+            int size = 1;
+            if (BlockMeta_IsCoalesceMe(current)) {
+                lastCoalesceMe = current;
+                size = BlockMeta_SuperblockSize(current);
+            } else if (BlockMeta_IsSuperblockStart(current)) {
+                size = BlockMeta_SuperblockSize(current);
+            } else if (BlockMeta_IsSuperblockStartMe(current)) {
+                // finish the LargeAllocator_Sweep in the case when the last block is not free
+                BlockMeta_SetFlag(current, block_superblock_start);
+                BlockMeta_SetSuperblockSize(current, 1);
             }
 
             current += size;
