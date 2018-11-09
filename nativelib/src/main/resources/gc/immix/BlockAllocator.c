@@ -175,6 +175,11 @@ void BlockAllocator_AddFreeSuperblock(BlockAllocator *blockAllocator,
 
 void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
                                   BlockMeta *superblock, uint32_t count) {
+    #ifdef DEBUG_PRINT
+        printf("BlockAllocator_AddFreeBlocks %p %" PRIu32 " count = %" PRIu32  "\n",
+               superblock, (uint32_t)(superblock - (BlockMeta *) blockAllocator->blockMetaStart), count);
+        fflush(stdout);
+    #endif
     assert(count > 0);
     BlockMeta *limit = superblock + count;
     for (BlockMeta *current = superblock; current < limit; current++) {

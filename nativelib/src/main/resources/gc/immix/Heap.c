@@ -435,7 +435,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     // block_coalesce_me marks should be visible
     atomic_thread_fence(memory_order_seq_cst);
 
-    heap->sweep.cursorDone = BlockMeta_GetBlockIndex(heap->blockMetaStart, doneUntil);
+    heap->sweep.cursorDone = limitIdx;
 
     Heap_lazyCoalesce(heap);
 
