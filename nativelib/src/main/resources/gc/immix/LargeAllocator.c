@@ -192,20 +192,21 @@ uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
         // free chunk covers the entire last block, released it
         freeCount += 1;
     } else {
-        // the last block is its own superblock
-        if (lastBlock < batchLimit) {
-            // The block is within current batch, just create the superblock yourself
-            BlockMeta_SetFlag(lastBlock, block_superblock_start);
-            BlockMeta_SetSuperblockSize(lastBlock, 1);
-        } else {
-            // If we cross the current batch, then it is not to mark a block_superblock_middle to block_superblock_start.
-            // The other sweeper threads could be in the middle of skipping block_superblock_middle s.
-            // Then creating the superblock will be done by Heap_lazyCoalesce
-            BlockMeta_SetFlag(lastBlock, block_superblock_start_me);
-        }
-        // the end of first object may become a placeholder
-        if (ObjectMeta_IsFree(firstObject)) {
+        if (freeCount > 0) {
+            // the first object was free
+            // the end of first object becomes a placeholder
             ObjectMeta_SetPlaceholder(Bytemap_Get(allocator->bytemap, lastBlockStart));
+            // the last block is its own superblock
+            if (lastBlock < batchLimit) {
+                // The block is within current batch, just create the superblock yourself
+                BlockMeta_SetFlag(lastBlock, block_superblock_start);
+                BlockMeta_SetSuperblockSize(lastBlock, 1);
+            } else {
+                // If we cross the current batch, then it is not to mark a block_superblock_middle to block_superblock_start.
+                // The other sweeper threads could be in the middle of skipping block_superblock_middle s.
+                // Then creating the superblock will be done by Heap_lazyCoalesce
+                BlockMeta_SetFlag(lastBlock, block_superblock_start_me);
+            }
         }
         // handle the last chunk if any
         if (chunkStart != NULL) {
