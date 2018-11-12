@@ -191,22 +191,27 @@ uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
     if (chunkStart == lastBlockStart) {
         // free chunk covers the entire last block, released it
         freeCount += 1;
-    } else if (chunkStart != NULL) {
+    } else {
+        // the last block is its own superblock
+        if (lastBlock < batchLimit) {
+            // The block is within current batch, just create the superblock yourself
+            BlockMeta_SetFlag(lastBlock, block_superblock_start);
+            BlockMeta_SetSuperblockSize(lastBlock, 1);
+        } else {
+            // If we cross the current batch, then it is not to mark a block_superblock_middle to block_superblock_start.
+            // The other sweeper threads could be in the middle of skipping block_superblock_middle s.
+            // Then creating the superblock will be done by Heap_lazyCoalesce
+            BlockMeta_SetFlag(lastBlock, block_superblock_start_me);
+        }
+        // the end of first object may become a placeholder
         if (ObjectMeta_IsFree(firstObject)) {
-            // the last block is its own superblock
-            if (lastBlock < batchLimit) {
-                // If we cross the current batch, then it is not to mark a block_superblock_middle to block_superblock_start.
-                // The other sweeper threads could be in the middle of skipping block_superblock_middle s.
-                BlockMeta_SetFlag(lastBlock, block_superblock_start);
-                BlockMeta_SetSuperblockSize(lastBlock, 1);
-            } else {
-                // Then creating the superblock will be done by Heap_lazyCoalesce
-                BlockMeta_SetFlag(lastBlock, block_superblock_start_me);
-            }
             ObjectMeta_SetPlaceholder(Bytemap_Get(allocator->bytemap, lastBlockStart));
         }
-        size_t currentSize = (current - chunkStart) * WORD_SIZE;
-        LargeAllocator_AddChunk(allocator, (Chunk *)chunkStart, currentSize);
+        // handle the last chunk if any
+        if (chunkStart != NULL) {
+            size_t currentSize = (current - chunkStart) * WORD_SIZE;
+            LargeAllocator_AddChunk(allocator, (Chunk *)chunkStart, currentSize);
+        }
     }
     return freeCount;
 }
