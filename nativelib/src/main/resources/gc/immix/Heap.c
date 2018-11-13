@@ -303,6 +303,10 @@ void Heap_assertIsConsistent(Heap *heap) {
         assert(!BlockMeta_IsSuperblockMiddle(current));
         assert(!BlockMeta_IsMarked(current));
 
+        if (BlockMeta_IsSwept(current)) {
+            BlockMeta_SetFlag(current, block_free);
+        }
+
         int size = 1;
         if (BlockMeta_IsSuperblockStart(current)) {
             size = BlockMeta_SuperblockSize(current);

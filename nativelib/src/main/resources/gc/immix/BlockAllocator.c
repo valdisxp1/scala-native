@@ -165,7 +165,10 @@ void BlockAllocator_AddFreeSuperblock(BlockAllocator *blockAllocator,
 
     BlockMeta *limit = superblock + count;
     for (BlockMeta *current = superblock; current < limit; current++) {
+        // check for double sweeping
+        assert(!BlockMeta_IsSwept(current));
         BlockMeta_Clear(current);
+        BlockMeta_SetFlag(current, block_swept);
     }
     // all the sweeping changes should be visible to all threads by now
     atomic_thread_fence(memory_order_seq_cst);
@@ -183,7 +186,10 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
     assert(count > 0);
     BlockMeta *limit = superblock + count;
     for (BlockMeta *current = superblock; current < limit; current++) {
+        // check for double sweeping
+        assert(!BlockMeta_IsSwept(current));
         BlockMeta_Clear(current);
+        BlockMeta_SetFlag(current, block_swept);
     }
     // all the sweeping changes should be visible to all threads by now
     atomic_thread_fence(memory_order_seq_cst);

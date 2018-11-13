@@ -17,7 +17,8 @@ typedef enum {
     block_superblock_middle = 0x3,
     block_marked = 0x5, // 0x4 | block_simple
     block_coalesce_me = 0x8,
-    block_superblock_start_me = 0xb // block_superblock_middle | block_coalesce_me
+    block_superblock_start_me = 0xb, // block_superblock_middle | block_coalesce_me
+    block_swept = 0x10 //only for debug
 } BlockFlag;
 
 typedef struct {
@@ -52,6 +53,9 @@ static inline bool BlockMeta_IsCoalesceMe(BlockMeta *blockMeta) {
 }
 static inline bool BlockMeta_IsSuperblockStartMe(BlockMeta *blockMeta) {
     return blockMeta->block.simple.flags == block_superblock_start_me;
+}
+static inline bool BlockMeta_IsSwept(BlockMeta *blockMeta) {
+    return blockMeta->block.simple.flags == block_swept;
 }
 
 
