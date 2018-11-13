@@ -3,6 +3,10 @@
 #include "utils/MathUtils.h"
 #include <stdio.h>
 
+void BlockAllocator_splitAndAdd(BlockAllocator *blockAllocator,
+                                BlockMeta *superblock,
+                                uint32_t count);
+
 void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart,
                          uint32_t blockCount) {
     for (int i = 0; i < SUPERBLOCK_LIST_SIZE; i++) {
@@ -98,7 +102,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
         if (superblock != NULL) {
             if (receivedSize > size) {
                 BlockMeta *leftover = superblock + size;
-                BlockAllocator_AddFreeSuperblock(
+                BlockAllocator_splitAndAdd(
                     blockAllocator, leftover,
                     receivedSize - size);
             }
