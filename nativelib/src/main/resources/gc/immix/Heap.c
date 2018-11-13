@@ -446,11 +446,13 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
             if (freeCount < size) {
                 BlockMeta *freeLimit = current + freeCount;
                 uint32_t totalSize = (uint32_t) (freeLimit - lastFreeBlockStart);
-                if (lastFreeBlockStart == first) {
+                if (lastFreeBlockStart == first || freeLimit > limit) {
+                    // Free blocks in the start or the end
                     // There may be some free blocks before this batch that needs to be coalesced with this block.
                     BlockMeta_SetFlag(first, block_coalesce_me);
                     BlockMeta_SetSuperblockSize(first, totalSize);
                 } else {
+                    // Free blocks in the middle
                     assert(totalSize > 0);
                     BlockAllocator_AddFreeSuperblock(&blockAllocator, lastFreeBlockStart, totalSize);
                 }
@@ -464,6 +466,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     }
     BlockMeta *doneUntil = current;
     if (lastFreeBlockStart != NULL) {
+        // Free blocks in the end or the entire batch is free
         uint32_t totalSize = (uint32_t) (doneUntil - lastFreeBlockStart);
         assert(totalSize > 0);
         // There may be some free blocks after this batch that needs to be coalesced with this block.
