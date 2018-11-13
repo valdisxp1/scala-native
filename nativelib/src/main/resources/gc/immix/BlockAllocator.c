@@ -44,7 +44,7 @@ BlockAllocator_getFreeBlockSlow(BlockAllocator *blockAllocator) {
         blockAllocator->smallestSuperblock.cursor = superblock + 1;
         uint32_t size = 1 << index;
         blockAllocator->smallestSuperblock.limit = superblock + size;
-        assert(BlockMeta_IsFree(superblock));
+        assert(BlockMeta_IsSwept(superblock) || BlockMeta_IsFree(superblock));
         BlockMeta_SetFlag(superblock, block_simple);
         return superblock;
     } else {
@@ -53,7 +53,7 @@ BlockAllocator_getFreeBlockSlow(BlockAllocator *blockAllocator) {
         BlockMeta *block = NULL;
         if (blockIdx != NO_BLOCK_INDEX) {
             block = BlockMeta_GetFromIndex(blockAllocator->blockMetaStart, blockIdx);
-            assert(BlockMeta_IsFree(block));
+            assert(BlockMeta_IsSwept(block) || BlockMeta_IsFree(block));
             BlockMeta_SetFlag(block, block_simple);
         }
         return block;
@@ -66,7 +66,7 @@ INLINE BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
         return BlockAllocator_getFreeBlockSlow(blockAllocator);
     }
     BlockMeta *block = blockAllocator->smallestSuperblock.cursor;
-    assert(BlockMeta_IsFree(block));
+    assert(BlockMeta_IsSwept(block) || BlockMeta_IsFree(block));
     BlockMeta_SetFlag(block, block_simple);
     blockAllocator->smallestSuperblock.cursor++;
 
@@ -117,12 +117,12 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
 
     assert(superblock != NULL);
 
-    assert(BlockMeta_IsFree(superblock));
+    assert(BlockMeta_IsSwept(superblock) || BlockMeta_IsFree(superblock));
     BlockMeta_SetFlag(superblock, block_superblock_start);
     BlockMeta_SetSuperblockSize(superblock, size);
     BlockMeta *limit = superblock + size;
     for (BlockMeta *current = superblock + 1; current < limit; current++) {
-        assert(BlockMeta_IsFree(current));
+        assert(BlockMeta_IsSwept(current) || BlockMeta_IsFree(current));
         BlockMeta_SetFlag(current, block_superblock_middle);
     }
     // not decrementing freeBlockCount, because it is only used after sweep
