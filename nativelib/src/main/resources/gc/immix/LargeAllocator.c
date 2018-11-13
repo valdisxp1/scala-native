@@ -192,10 +192,12 @@ uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
         // free chunk covers the entire last block, released it
         freeCount += 1;
     } else {
-        if (freeCount > 0) {
+        if (ObjectMeta_IsFree(firstObject)) {
             // the first object was free
             // the end of first object becomes a placeholder
             ObjectMeta_SetPlaceholder(Bytemap_Get(allocator->bytemap, lastBlockStart));
+        }
+        if (freeCount > 0) {
             // the last block is its own superblock
             if (lastBlock < batchLimit) {
                 // The block is within current batch, just create the superblock yourself
