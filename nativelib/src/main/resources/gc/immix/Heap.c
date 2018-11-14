@@ -389,6 +389,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     }
     uint32_t startIdx = (uint32_t) atomic_fetch_add(&heap->sweep.cursor, maxCount);
     uint32_t limitIdx = startIdx + maxCount;
+    assert(heap->sweep.cursorDone <= startIdx);
     uint32_t sweepLimit = heap->sweep.limit;
     if (limitIdx > sweepLimit) {
         limitIdx = sweepLimit;
@@ -460,7 +461,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
             if (freeCount < size) {
                 BlockMeta *freeLimit = current + freeCount;
                 uint32_t totalSize = (uint32_t) (freeLimit - lastFreeBlockStart);
-                if (lastFreeBlockStart == first || freeLimit > limit) {
+                if (lastFreeBlockStart == first || freeLimit >= limit) {
                     // Free blocks in the start or the end
                     // There may be some free blocks before this batch that needs to be coalesced with this block.
                     BlockMeta_SetFlag(first, block_coalesce_me);
@@ -508,11 +509,13 @@ void Heap_lazyCoalesce(Heap *heap) {
     uint_fast32_t startIdx = heap->coalesce.cursor;
     uint_fast32_t coalesceDoneIdx = heap->coalesce.cursorDone;
     uint_fast32_t limitIdx = heap->sweep.cursorDone;
+    assert(coalesceDoneIdx <= startIdx);
     while (startIdx == coalesceDoneIdx && startIdx < limitIdx) {
         if (!atomic_compare_exchange_strong(&heap->coalesce.cursor, &startIdx, limitIdx)) {
             // startIdx is updated by atomic_compare_exchange_strong
             coalesceDoneIdx = heap->coalesce.cursorDone;
             limitIdx = heap->sweep.cursorDone;
+            assert(coalesceDoneIdx <= startIdx);
             continue;
         }
 
@@ -563,6 +566,7 @@ void Heap_lazyCoalesce(Heap *heap) {
                 // other sweepers still need to sweep it
                 // add the part that is fully swept
                 uint32_t totalSize = (uint32_t) (lastCoalesceMe - lastFreeBlockStart);
+                assert(lastFreeBlockStart + totalSize <= limit);
                 if (totalSize > 0) {
                     BlockAllocator_AddFreeBlocks(&blockAllocator, lastFreeBlockStart, totalSize);
                 }
