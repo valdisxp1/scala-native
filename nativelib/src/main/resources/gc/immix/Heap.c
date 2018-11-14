@@ -291,6 +291,15 @@ word_t *Heap_Alloc(Heap *heap, uint32_t objectSize) {
     }
 }
 
+void Heap_clearIsSwept(Heap *heap) {
+    BlockMeta *current = (BlockMeta *) heap->blockMetaStart;
+    BlockMeta *limit = (BlockMeta *) heap->blockMetaEnd;
+    while (current < limit) {
+        current->swept = 0;
+        current++;
+    }
+}
+
 #ifdef DEBUG_ASSERT
 void Heap_assertIsConsistent(Heap *heap) {
     BlockMeta *current = (BlockMeta *) heap->blockMetaStart;
@@ -302,8 +311,6 @@ void Heap_assertIsConsistent(Heap *heap) {
         assert(!BlockMeta_IsSuperblockStartMe(current));
         assert(!BlockMeta_IsSuperblockMiddle(current));
         assert(!BlockMeta_IsMarked(current));
-
-        current->swept = 0;
 
         int size = 1;
         if (BlockMeta_IsSuperblockStart(current)) {
@@ -330,6 +337,7 @@ void Heap_assertIsConsistent(Heap *heap) {
 
 void Heap_Collect(Heap *heap, Stack *stack) {
     assert(Heap_IsSweepDone(heap));
+    Heap_clearIsSwept(heap);
 #ifdef DEBUG_ASSERT
     Heap_assertIsConsistent(heap);
 #endif
