@@ -459,22 +459,21 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
             if (freeCount > 0) {
                 lastFreeBlockStart = current;
             }
-        } else {
-            if (freeCount < size) {
-                BlockMeta *freeLimit = current + freeCount;
-                uint32_t totalSize = (uint32_t) (freeLimit - lastFreeBlockStart);
-                if (lastFreeBlockStart == first || freeLimit >= limit) {
-                    // Free blocks in the start or the end
-                    // There may be some free blocks before this batch that needs to be coalesced with this block.
-                    BlockMeta_SetFlag(lastFreeBlockStart, block_coalesce_me);
-                    BlockMeta_SetSuperblockSize(lastFreeBlockStart, totalSize);
-                } else {
-                    // Free blocks in the middle
-                    assert(totalSize > 0);
-                    BlockAllocator_AddFreeSuperblock(&blockAllocator, lastFreeBlockStart, totalSize);
-                }
-                lastFreeBlockStart = NULL;
+        }
+        if (lastFreeBlockStart != NULL && freeCount < size) {
+            BlockMeta *freeLimit = current + freeCount;
+            uint32_t totalSize = (uint32_t) (freeLimit - lastFreeBlockStart);
+            if (lastFreeBlockStart == first || freeLimit >= limit) {
+                // Free blocks in the start or the end
+                // There may be some free blocks before this batch that needs to be coalesced with this block.
+                BlockMeta_SetFlag(lastFreeBlockStart, block_coalesce_me);
+                BlockMeta_SetSuperblockSize(lastFreeBlockStart, totalSize);
+            } else {
+                // Free blocks in the middle
+                assert(totalSize > 0);
+                BlockAllocator_AddFreeSuperblock(&blockAllocator, lastFreeBlockStart, totalSize);
             }
+            lastFreeBlockStart = NULL;
         }
 
         current += size;
