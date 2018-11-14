@@ -200,10 +200,12 @@ uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
                     word_t *blockStart, LineMeta *lineMetas) {
 
     // If the block is not marked, it means that it's completely free
+    assert(blockMeta->swept == 0);
     if (!BlockMeta_IsMarked(blockMeta)) {
         memset(blockMeta, 0, sizeof(BlockMeta));
         // does not unmark in LineMetas because those are ignored by the allocator
         ObjectMeta_ClearBlockAt(Bytemap_Get(allocator->bytemap, blockStart));
+        blockMeta->swept = 1;
         return 1;
     } else {
         // If the block is marked, we need to recycle line by line
@@ -284,6 +286,7 @@ uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
                 fflush(stdout);
             #endif
         }
+        blockMeta->swept = 1;
         return 0;
     }
 }

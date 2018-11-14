@@ -439,6 +439,8 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         } else {
             assert(BlockMeta_IsFree(current));
             freeCount = 1;
+            assert(current->swept == 0);
+            current->swept = 1;
             #ifdef DEBUG_PRINT
                 printf("Heap_sweep FreeBlock %p %" PRIu32 "\n",
                        current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
@@ -645,6 +647,11 @@ void Heap_Grow(Heap *heap, uint32_t incrementInBlocks) {
         (word_t *)(((BlockMeta *)heap->blockMetaEnd) + incrementInBlocks);
     heap->lineMetaEnd +=
         incrementInBlocks * LINE_COUNT * LINE_METADATA_SIZE / WORD_SIZE;
+
+    BlockMeta *end = (BlockMeta *)blockMetaEnd;
+    for (BlockMeta *block = end; block < end + incrementInBlocks; block++) {
+        block->swept = 1;
+    }
 
     BlockAllocator_AddFreeBlocks(&blockAllocator, (BlockMeta *)blockMetaEnd,
                                  incrementInBlocks);
