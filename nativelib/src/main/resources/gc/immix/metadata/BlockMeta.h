@@ -17,8 +17,7 @@ typedef enum {
     block_superblock_middle = 0x3,
     block_marked = 0x5, // 0x4 | block_simple
     block_coalesce_me = 0x8,
-    block_superblock_start_me = 0xb, // block_superblock_middle | block_coalesce_me
-    block_swept = 0x10 //only for debug
+    block_superblock_start_me = 0xb // block_superblock_middle | block_coalesce_me
 } BlockFlag;
 
 typedef struct {
@@ -32,7 +31,8 @@ typedef struct {
             int32_t size : BLOCK_COUNT_BITS;
         } superblock;
     } block;
-    int32_t nextBlock;
+    int32_t nextBlock : BLOCK_COUNT_BITS;
+    uint8_t swept; //only for debugging
 } BlockMeta;
 
 static inline bool BlockMeta_IsFree(BlockMeta *blockMeta) {
@@ -54,10 +54,6 @@ static inline bool BlockMeta_IsCoalesceMe(BlockMeta *blockMeta) {
 static inline bool BlockMeta_IsSuperblockStartMe(BlockMeta *blockMeta) {
     return blockMeta->block.simple.flags == block_superblock_start_me;
 }
-static inline bool BlockMeta_IsSwept(BlockMeta *blockMeta) {
-    return blockMeta->block.simple.flags == block_swept;
-}
-
 
 static inline uint32_t BlockMeta_SuperblockSize(BlockMeta *blockMeta) {
     return blockMeta->block.superblock.size;
