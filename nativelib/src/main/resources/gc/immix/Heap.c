@@ -168,7 +168,7 @@ Object *Heap_lazySweepLarge(Heap *heap, uint32_t size) {
     #endif
     while (object == NULL && !Heap_IsSweepDone(heap)) {
         Heap_sweep(heap, increment);
-        object = LargeAllocator_GetBlock(&largeAllocator, size);
+        object = LargeAllocator_GetBlock(&largeAllocator, LAZY_SWEEP_MIN_BATCH);
     }
     if (Heap_IsSweepDone(heap) && !heap->postSweepDone) {
         Heap_sweepDone(heap);
@@ -221,7 +221,7 @@ Object *Heap_lazySweep(Heap *heap, uint32_t size) {
         fflush(stdout);
     #endif
     while (object == NULL && !Heap_IsSweepDone(heap)) {
-        Heap_sweep(heap, 1);
+        Heap_sweep(heap, LAZY_SWEEP_MIN_BATCH);
         object = (Object *)Allocator_Alloc(&allocator, size);
     }
     if (Heap_IsSweepDone(heap) && !heap->postSweepDone) {
