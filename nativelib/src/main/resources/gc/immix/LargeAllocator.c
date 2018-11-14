@@ -125,6 +125,7 @@ Object *LargeAllocator_GetBlock(LargeAllocator *allocator,
     }
 
     ObjectMeta *objectMeta = Bytemap_Get(allocator->bytemap, (word_t *)chunk);
+    assert(ObjectMeta_IsFree(objectMeta) || ObjectMeta_IsPlaceholder(objectMeta));
     ObjectMeta_SetAllocated(objectMeta);
     Object *object = (Object *)chunk;
     memset(object, 0, actualBlockSize);
