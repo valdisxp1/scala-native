@@ -158,6 +158,10 @@ bool Allocator_newBlock(Allocator *allocator) {
     word_t *blockStart;
 
     if (block != NULL) {
+        assert(block->debugFlag == dbg_available);
+        #ifdef DEBUG_ASSERT
+            block->debugFlag = dbg_in_use;
+        #endif
         blockStart = BlockMeta_GetBlockStart(allocator->blockMetaStart,
                                              allocator->heapStart, block);
 
@@ -200,13 +204,13 @@ uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
                     word_t *blockStart, LineMeta *lineMetas) {
 
     // If the block is not marked, it means that it's completely free
-    assert(blockMeta->swept == 0);
+    assert(blockMeta->debugFlag == dbg_must_sweep);
     if (!BlockMeta_IsMarked(blockMeta)) {
         memset(blockMeta, 0, sizeof(BlockMeta));
         // does not unmark in LineMetas because those are ignored by the allocator
         ObjectMeta_ClearBlockAt(Bytemap_Get(allocator->bytemap, blockStart));
 #ifdef DEBUG_ASSERT
-        blockMeta->swept = 1;
+        blockMeta->debugFlag = dbg_swept;
 #endif
         return 1;
     } else {
@@ -289,7 +293,7 @@ uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
             #endif
         }
 #ifdef DEBUG_ASSERT
-        blockMeta->swept = 1;
+        blockMeta->debugFlag = dbg_available;
 #endif
         return 0;
     }

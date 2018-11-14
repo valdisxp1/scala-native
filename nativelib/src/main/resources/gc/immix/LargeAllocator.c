@@ -152,8 +152,8 @@ uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
 #ifdef DEBUG_ASSERT
     //check double sweeping: mark all as swept
     for (BlockMeta *block = blockMeta; block < blockMeta + superblockSize; block++) {
-        assert(block->swept == 0);
-        block->swept = 1;
+        assert(block->debugFlag == dbg_must_sweep);
+        block->debugFlag = dbg_swept;
     }
 #endif
 

@@ -33,11 +33,20 @@ typedef struct {
     } block;
 #ifdef DEBUG_ASSERT
     int32_t nextBlock : BLOCK_COUNT_BITS;
-    uint8_t swept; //only for debugging
+    uint8_t debugFlag; //only for debugging
 #else
     int32_t nextBlock;
 #endif
 } BlockMeta;
+
+#ifdef DEBUG_ASSERT
+typedef enum {
+    dbg_must_sweep = 0x0,
+    dbg_swept = 0x1,
+    dbg_available = 0x2,
+    dbg_in_use = 0x3
+} DebugFlag;
+#endif
 
 static inline bool BlockMeta_IsFree(BlockMeta *blockMeta) {
     return blockMeta->block.simple.flags == block_free;

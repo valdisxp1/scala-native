@@ -298,7 +298,7 @@ void Heap_clearIsSwept(Heap *heap) {
     BlockMeta *current = (BlockMeta *) heap->blockMetaStart;
     BlockMeta *limit = (BlockMeta *) heap->blockMetaEnd;
     while (current < limit) {
-        current->swept = 0;
+        current->debugFlag = dbg_must_sweep;
         current++;
     }
 }
@@ -442,9 +442,9 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
         } else {
             assert(BlockMeta_IsFree(current));
             freeCount = 1;
-            assert(current->swept == 0);
+            assert(current->debugFlag == dbg_must_sweep);
             #ifdef DEBUG_ASSERT
-                current->swept = 1;
+                current->debugFlag = dbg_swept;
             #endif
             #ifdef DEBUG_PRINT
                 printf("Heap_sweep FreeBlock %p %" PRIu32 "\n",
@@ -658,7 +658,7 @@ void Heap_Grow(Heap *heap, uint32_t incrementInBlocks) {
 #ifdef DEBUG_ASSERT
     BlockMeta *end = (BlockMeta *)blockMetaEnd;
     for (BlockMeta *block = end; block < end + incrementInBlocks; block++) {
-        block->swept = 1;
+        block->debugFlag = dbg_swept;
     }
 #endif
 
