@@ -464,8 +464,8 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
                 if (lastFreeBlockStart == first || freeLimit >= limit) {
                     // Free blocks in the start or the end
                     // There may be some free blocks before this batch that needs to be coalesced with this block.
-                    BlockMeta_SetFlag(first, block_coalesce_me);
-                    BlockMeta_SetSuperblockSize(first, totalSize);
+                    BlockMeta_SetFlag(lastFreeBlockStart, block_coalesce_me);
+                    BlockMeta_SetSuperblockSize(lastFreeBlockStart, totalSize);
                 } else {
                     // Free blocks in the middle
                     assert(totalSize > 0);
