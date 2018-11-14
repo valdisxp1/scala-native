@@ -172,7 +172,9 @@ void BlockAllocator_AddFreeSuperblock(BlockAllocator *blockAllocator,
         // check for double sweeping
         assert(current->swept == 1);
         BlockMeta_Clear(current);
-        current->swept = 2;
+        #ifdef DEBUG_ASSERT
+            current->swept = 2;
+        #endif
     }
     // all the sweeping changes should be visible to all threads by now
     atomic_thread_fence(memory_order_seq_cst);
@@ -193,7 +195,9 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
         // check for double sweeping
         assert(current->swept == 1);
         BlockMeta_Clear(current);
-        current->swept = 2;
+        #ifdef DEBUG_ASSERT
+            current->swept = 2;
+        #endif
     }
     // all the sweeping changes should be visible to all threads by now
     atomic_thread_fence(memory_order_seq_cst);

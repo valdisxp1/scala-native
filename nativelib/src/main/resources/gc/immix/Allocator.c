@@ -205,7 +205,9 @@ uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
         memset(blockMeta, 0, sizeof(BlockMeta));
         // does not unmark in LineMetas because those are ignored by the allocator
         ObjectMeta_ClearBlockAt(Bytemap_Get(allocator->bytemap, blockStart));
+#ifdef DEBUG_ASSERT
         blockMeta->swept = 1;
+#endif
         return 1;
     } else {
         // If the block is marked, we need to recycle line by line
@@ -286,7 +288,9 @@ uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
                 fflush(stdout);
             #endif
         }
+#ifdef DEBUG_ASSERT
         blockMeta->swept = 1;
+#endif
         return 0;
     }
 }

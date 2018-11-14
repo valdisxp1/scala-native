@@ -291,6 +291,7 @@ word_t *Heap_Alloc(Heap *heap, uint32_t objectSize) {
     }
 }
 
+#ifdef DEBUG_ASSERT
 void Heap_clearIsSwept(Heap *heap) {
     BlockMeta *current = (BlockMeta *) heap->blockMetaStart;
     BlockMeta *limit = (BlockMeta *) heap->blockMetaEnd;
@@ -300,7 +301,6 @@ void Heap_clearIsSwept(Heap *heap) {
     }
 }
 
-#ifdef DEBUG_ASSERT
 void Heap_assertIsConsistent(Heap *heap) {
     BlockMeta *current = (BlockMeta *) heap->blockMetaStart;
     LineMeta *lineMetas = (LineMeta *) heap->lineMetaStart;
@@ -337,8 +337,8 @@ void Heap_assertIsConsistent(Heap *heap) {
 
 void Heap_Collect(Heap *heap, Stack *stack) {
     assert(Heap_IsSweepDone(heap));
-    Heap_clearIsSwept(heap);
 #ifdef DEBUG_ASSERT
+    Heap_clearIsSwept(heap);
     Heap_assertIsConsistent(heap);
 #endif
     uint64_t start_ns, end_ns;
@@ -440,7 +440,9 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
             assert(BlockMeta_IsFree(current));
             freeCount = 1;
             assert(current->swept == 0);
-            current->swept = 1;
+            #ifdef DEBUG_ASSERT
+                current->swept = 1;
+            #endif
             #ifdef DEBUG_PRINT
                 printf("Heap_sweep FreeBlock %p %" PRIu32 "\n",
                        current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
@@ -648,10 +650,12 @@ void Heap_Grow(Heap *heap, uint32_t incrementInBlocks) {
     heap->lineMetaEnd +=
         incrementInBlocks * LINE_COUNT * LINE_METADATA_SIZE / WORD_SIZE;
 
+#ifdef DEBUG_ASSERT
     BlockMeta *end = (BlockMeta *)blockMetaEnd;
     for (BlockMeta *block = end; block < end + incrementInBlocks; block++) {
         block->swept = 1;
     }
+#endif
 
     BlockAllocator_AddFreeBlocks(&blockAllocator, (BlockMeta *)blockMetaEnd,
                                  incrementInBlocks);

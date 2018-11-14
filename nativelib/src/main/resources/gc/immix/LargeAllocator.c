@@ -148,12 +148,13 @@ uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
     uint32_t superblockSize = BlockMeta_SuperblockSize(blockMeta);
     word_t *blockEnd = blockStart + WORDS_IN_BLOCK * superblockSize;
 
+#ifdef DEBUG_ASSERT
     //check double sweeping: mark all as swept
-
     for (BlockMeta *block = blockMeta; block < blockMeta + superblockSize; block++) {
         assert(block->swept == 0);
         block->swept = 1;
     }
+#endif
 
     ObjectMeta *firstObject = Bytemap_Get(allocator->bytemap, blockStart);
     assert(!ObjectMeta_IsFree(firstObject));

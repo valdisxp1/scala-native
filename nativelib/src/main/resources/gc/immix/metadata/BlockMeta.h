@@ -31,8 +31,12 @@ typedef struct {
             int32_t size : BLOCK_COUNT_BITS;
         } superblock;
     } block;
+#ifdef DEBUG_ASSERT
     int32_t nextBlock : BLOCK_COUNT_BITS;
     uint8_t swept; //only for debugging
+#else
+    int32_t nextBlock;
+#endif
 } BlockMeta;
 
 static inline bool BlockMeta_IsFree(BlockMeta *blockMeta) {
