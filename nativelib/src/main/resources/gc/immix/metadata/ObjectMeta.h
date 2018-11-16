@@ -86,4 +86,13 @@ static inline void ObjectMeta_Sweep(ObjectMeta *cursor) {
     *cursor = (*cursor & 0x04) >> 1;
 }
 
+#ifdef DEBUG_ASSERT
+static inline void ObjectMeta_AssertIsValidAllocation(ObjectMeta *start, size_t size) {
+    ObjectMeta *limit = start + (size / ALLOCATION_ALIGNMENT);
+    for (ObjectMeta *current = start; current < limit; current++) {
+        assert(ObjectMeta_IsFree(current) || ObjectMeta_IsPlaceholder(current));
+    }
+}
+#endif
+
 #endif // IMMIX_OBJECTMETA_H

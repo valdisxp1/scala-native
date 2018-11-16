@@ -251,7 +251,9 @@ done:
     assert(Heap_IsWordInHeap(heap, (word_t *)object));
     assert(object != NULL);
     ObjectMeta *objectMeta = Bytemap_Get(allocator.bytemap, (word_t *)object);
-    assert(ObjectMeta_IsFree(objectMeta) || ObjectMeta_IsPlaceholder(objectMeta));
+    #ifdef DEBUG_ASSERT
+        ObjectMeta_AssertIsValidAllocation(objectMeta, size);
+    #endif
     ObjectMeta_SetAllocated(objectMeta);
     return (word_t *)object;
 }
@@ -274,7 +276,9 @@ INLINE word_t *Heap_AllocSmall(Heap *heap, uint32_t size) {
 
     Object *object = (Object *)start;
     ObjectMeta *objectMeta = Bytemap_Get(allocator.bytemap, (word_t *)object);
-    assert(ObjectMeta_IsFree(objectMeta) || ObjectMeta_IsPlaceholder(objectMeta));
+    #ifdef DEBUG_ASSERT
+        ObjectMeta_AssertIsValidAllocation(objectMeta, size);
+    #endif
     ObjectMeta_SetAllocated(objectMeta);
 
     __builtin_prefetch(object + 36, 0, 3);
