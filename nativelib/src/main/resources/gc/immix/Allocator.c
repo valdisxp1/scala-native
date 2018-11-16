@@ -158,6 +158,11 @@ bool Allocator_newBlock(Allocator *allocator) {
     word_t *blockStart;
 
     if (block != NULL) {
+        #ifdef DEBUG_PRINT
+            printf("Allocator_newBlock RECYCLED %p %" PRIu32 "\n",
+                   block, (uint32_t)(block - (BlockMeta *) allocator->blockMetaStart));
+            fflush(stdout);
+        #endif
         assert(block->debugFlag == dbg_partial_free);
         #ifdef DEBUG_ASSERT
             block->debugFlag = dbg_in_use;

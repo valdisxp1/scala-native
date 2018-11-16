@@ -216,10 +216,6 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
 
 Object *Heap_lazySweep(Heap *heap, uint32_t size) {
     Object *object = (Object *)Allocator_Alloc(&allocator, size);
-    #ifdef DEBUG_PRINT
-        printf("Heap_lazySweep\n");
-        fflush(stdout);
-    #endif
     while (object == NULL && !Heap_IsSweepDone(heap)) {
         Heap_sweep(heap, LAZY_SWEEP_MIN_BATCH);
         object = (Object *)Allocator_Alloc(&allocator, size);
