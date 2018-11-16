@@ -288,7 +288,7 @@ uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
             BlockList_Push(&allocator->recycledBlocks, blockMeta);
             #ifdef DEBUG_PRINT
                 printf("Allocator_Sweep %p %" PRIu32 " => RECYCLED\n",
-                       blockMeta, (uint32_t)(blockMeta - (BlockMeta *) allocator->blockMetaStart));
+                       blockMeta, BlockMeta_GetBlockIndex(allocator->blockMetaStart, blockMeta));
                 fflush(stdout);
             #endif
         }

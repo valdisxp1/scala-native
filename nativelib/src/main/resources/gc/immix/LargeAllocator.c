@@ -225,5 +225,11 @@ uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
             LargeAllocator_AddChunk(allocator, (Chunk *)chunkStart, currentSize);
         }
     }
+    #ifdef DEBUG_PRINT
+        printf("LargeAllocator_Sweep %p %" PRIu32 " => FREE %" PRIu32 "/ %" PRIu32 "\n",
+               blockMeta, BlockMeta_GetBlockIndex(allocator->blockMetaStart, blockMeta),
+               freeCount, superblockSize);
+        fflush(stdout);
+    #endif
     return freeCount;
 }

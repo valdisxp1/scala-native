@@ -407,7 +407,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
     while (((first->block.simple.flags & 0x3) == 0x3) && first < limit) {
         #ifdef DEBUG_PRINT
             printf("Heap_sweep SuperblockMiddle %p %" PRIu32 "\n",
-                   first, (uint32_t)(first - (BlockMeta *) heap->blockMetaStart));
+                   first, BlockMeta_GetBlockIndex(heap->blockMetaStart, first));
             fflush(stdout);
         #endif
         startIdx += 1;
@@ -427,7 +427,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
             freeCount = Allocator_Sweep(&allocator, current, currentBlockStart, lineMetas);
             #ifdef DEBUG_PRINT
                 printf("Heap_sweep SimpleBlock %p %" PRIu32 "\n",
-                       current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
+                       current, BlockMeta_GetBlockIndex(heap->blockMetaStart, current));
                 fflush(stdout);
             #endif
         } else if (BlockMeta_IsSuperblockStart(current)) {
@@ -436,7 +436,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
             freeCount = LargeAllocator_Sweep(&largeAllocator, current, currentBlockStart, limit);
             #ifdef DEBUG_PRINT
                 printf("Heap_sweep Superblock(%" PRIu32 ") %p %" PRIu32 "\n",
-                       size, current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
+                       size, current, BlockMeta_GetBlockIndex(heap->blockMetaStart, current));
                 fflush(stdout);
             #endif
         } else {
@@ -448,7 +448,7 @@ void Heap_sweep(Heap *heap, uint32_t maxCount) {
             #endif
             #ifdef DEBUG_PRINT
                 printf("Heap_sweep FreeBlock %p %" PRIu32 "\n",
-                       current, (uint32_t)(current - (BlockMeta *) heap->blockMetaStart));
+                       current, BlockMeta_GetBlockIndex(heap->blockMetaStart, current));
                 fflush(stdout);
             #endif
         }

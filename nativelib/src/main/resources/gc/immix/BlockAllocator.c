@@ -96,7 +96,7 @@ INLINE BlockMeta *BlockAllocator_GetFreeBlock(BlockAllocator *blockAllocator) {
     // not decrementing freeBlockCount, because it is only used after sweep
     #ifdef DEBUG_PRINT
         printf("BlockAllocator_GetFreeBlock = %p %" PRIu32 "\n",
-               block, (uint32_t)(block - (BlockMeta *) blockAllocator->blockMetaStart));
+               block, BlockMeta_GetBlockIndex(blockAllocator->blockMetaStart, block));
         fflush(stdout);
     #endif
     return block;
@@ -159,7 +159,7 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
     // not decrementing freeBlockCount, because it is only used after sweep
     #ifdef DEBUG_PRINT
         printf("BlockAllocator_GetFreeSuperblock(%" PRIu32 ") = %p %" PRIu32 "\n",
-               size, superblock, (uint32_t)(superblock - (BlockMeta *) blockAllocator->blockMetaStart));
+               size, superblock, BlockMeta_GetBlockIndex(blockAllocator->blockMetaStart, superblock));
         fflush(stdout);
     #endif
     return superblock;
@@ -194,6 +194,11 @@ void BlockAllocator_AddFreeSuperblock(BlockAllocator *blockAllocator,
                                       BlockMeta *superblock,
                                       uint32_t count) {
 
+    #ifdef DEBUG_PRINT
+        printf("BlockAllocator_AddFreeSuperblock %p %" PRIu32 " count = %" PRIu32  "\n",
+               superblock, BlockMeta_GetBlockIndex(blockAllocator->blockMetaStart, superblock), count);
+        fflush(stdout);
+    #endif
     BlockMeta *limit = superblock + count;
     for (BlockMeta *current = superblock; current < limit; current++) {
         // check for double sweeping
@@ -213,7 +218,7 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
                                   BlockMeta *superblock, uint32_t count) {
     #ifdef DEBUG_PRINT
         printf("BlockAllocator_AddFreeBlocks %p %" PRIu32 " count = %" PRIu32  "\n",
-               superblock, (uint32_t)(superblock - (BlockMeta *) blockAllocator->blockMetaStart), count);
+               superblock, BlockMeta_GetBlockIndex(blockAllocator->blockMetaStart, superblock), count);
         fflush(stdout);
     #endif
     assert(count > 0);
