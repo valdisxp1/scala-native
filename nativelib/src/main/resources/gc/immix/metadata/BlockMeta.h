@@ -42,9 +42,14 @@ typedef struct {
 #ifdef DEBUG_ASSERT
 typedef enum {
     dbg_must_sweep = 0x0,
-    dbg_swept = 0x1,
-    dbg_available = 0x2,
-    dbg_in_use = 0x3
+
+    dbg_free = 0x1,
+    dbg_partial_free = 0x2,
+    dbg_not_free = 0x3,
+
+    dbg_free_in_collection = 0x4,
+
+    dbg_in_use = 0x5
 } DebugFlag;
 #endif
 

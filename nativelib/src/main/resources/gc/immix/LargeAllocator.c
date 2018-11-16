@@ -152,10 +152,8 @@ uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
     word_t *blockEnd = blockStart + WORDS_IN_BLOCK * superblockSize;
 
 #ifdef DEBUG_ASSERT
-    //check double sweeping: mark all as swept
     for (BlockMeta *block = blockMeta; block < blockMeta + superblockSize; block++) {
         assert(block->debugFlag == dbg_must_sweep);
-        block->debugFlag = dbg_swept;
     }
 #endif
 
@@ -166,6 +164,17 @@ uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
     if (superblockSize > 1 && !ObjectMeta_IsMarked(firstObject)) {
         // release free superblock starting from the first object
         freeCount = superblockSize - 1;
+#ifdef DEBUG_ASSERT
+        for (BlockMeta *block = blockMeta; block < blockMeta + freeCount; block++) {
+            block->debugFlag = dbg_free;
+        }
+#endif
+    } else {
+#ifdef DEBUG_ASSERT
+     for (BlockMeta *block = blockMeta; block < blockMeta + superblockSize - 1; block++) {
+         block->debugFlag = dbg_not_free;
+     }
+#endif
     }
 
     word_t *lastBlockStart = blockEnd - WORDS_IN_BLOCK;
@@ -202,7 +211,13 @@ uint32_t LargeAllocator_Sweep(LargeAllocator *allocator, BlockMeta *blockMeta,
     if (chunkStart == lastBlockStart) {
         // free chunk covers the entire last block, released it
         freeCount += 1;
+#ifdef DEBUG_ASSERT
+        lastBlock->debugFlag = dbg_free;
+#endif
     } else {
+#ifdef DEBUG_ASSERT
+        lastBlock->debugFlag = dbg_not_free;
+#endif
         if (ObjectMeta_IsFree(firstObject)) {
             // the first object was free
             // the end of first object becomes a placeholder
