@@ -401,10 +401,15 @@ void Heap_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone, uint32_t maxCount)
     if (stats != NULL) {
         start_ns = scalanative_nano_time();
     }
-    uint32_t startIdx = (uint32_t) atomic_fetch_add(&heap->sweep.cursor, maxCount);
-    uint32_t limitIdx = startIdx + maxCount;
-    assert(heap->sweep.cursorDone <= startIdx);
+    uint32_t cursor = heap->sweep.cursor;
     uint32_t sweepLimit = heap->sweep.limit;
+    // protect against sweep.cursor overflow
+    uint32_t startIdx = sweepLimit;
+    if (cursor < sweepLimit) {
+        startIdx = (uint32_t) atomic_fetch_add(&heap->sweep.cursor, maxCount);
+    }
+    uint32_t limitIdx = startIdx + maxCount;
+    assert(cursorDone <= startIdx); // TODO this fails
     if (limitIdx > sweepLimit) {
         limitIdx = sweepLimit;
     }
@@ -534,13 +539,13 @@ void Heap_lazyCoalesce(Heap *heap) {
     uint_fast32_t startIdx = heap->coalesce.cursor;
     uint_fast32_t coalesceDoneIdx = heap->coalesce.cursorDone;
     uint_fast32_t limitIdx = Heap_minSweepCursor(heap);
-    assert(coalesceDoneIdx <= startIdx);
+    assert(coalesceDoneIdx <= startIdx); // TODO this fails
     while (startIdx == coalesceDoneIdx && startIdx < limitIdx) {
         if (!atomic_compare_exchange_strong(&heap->coalesce.cursor, &startIdx, limitIdx)) {
             // startIdx is updated by atomic_compare_exchange_strong
             coalesceDoneIdx = heap->coalesce.cursorDone;
             limitIdx = Heap_minSweepCursor(heap);
-            assert(coalesceDoneIdx <= startIdx);
+            assert(coalesceDoneIdx <= startIdx); // TODO this fails
             continue;
         }
 
