@@ -288,6 +288,9 @@ uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
             assert(BlockMeta_FirstFreeLine(blockMeta) < LINE_COUNT);
             allocator->recycledBlockCount++;
 
+#ifdef DEBUG_ASSERT
+        blockMeta->debugFlag = dbg_partial_free;
+#endif
             // the allocator thread must see the sweeping changes in recycled blocks
             atomic_thread_fence(memory_order_seq_cst);
             BlockList_Push(&allocator->recycledBlocks, blockMeta);
@@ -296,11 +299,9 @@ uint32_t Allocator_Sweep(Allocator *allocator, BlockMeta *blockMeta,
                        blockMeta, BlockMeta_GetBlockIndex(allocator->blockMetaStart, blockMeta));
                 fflush(stdout);
             #endif
-#ifdef DEBUG_ASSERT
-        blockMeta->debugFlag = dbg_partial_free;
-#endif
         } else {
 #ifdef DEBUG_ASSERT
+        atomic_thread_fence(memory_order_seq_cst);
         blockMeta->debugFlag = dbg_not_free;
 #endif
         }
