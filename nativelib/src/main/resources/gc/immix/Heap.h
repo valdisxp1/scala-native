@@ -42,7 +42,7 @@ typedef struct {
         // making cursorDone atomic so it keeps sequential consistency with the other atomics
         atomic_uint_fast32_t cursorDone;
     } coalesce;
-    bool postSweepDone;
+    atomic_bool postSweepDone;
     Bytemap *bytemap;
     Stats *stats;
 } Heap;
