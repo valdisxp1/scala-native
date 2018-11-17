@@ -404,12 +404,12 @@ void Heap_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone, uint32_t maxCount)
     uint32_t cursor = heap->sweep.cursor;
     uint32_t sweepLimit = heap->sweep.limit;
     // protect against sweep.cursor overflow
-    uint32_t startIdx = sweepLimit;
+    uint32_t startIdx = *cursorDone;
     if (cursor < sweepLimit) {
         startIdx = (uint32_t) atomic_fetch_add(&heap->sweep.cursor, maxCount);
     }
     uint32_t limitIdx = startIdx + maxCount;
-    assert(cursorDone <= startIdx); // TODO this fails
+    assert(*cursorDone <= startIdx);
     if (limitIdx > sweepLimit) {
         limitIdx = sweepLimit;
     }
