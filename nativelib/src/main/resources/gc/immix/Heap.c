@@ -419,6 +419,12 @@ void Heap_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone, uint32_t maxCount)
     BlockMeta *first = BlockMeta_GetFromIndex(heap->blockMetaStart, startIdx);
     BlockMeta *limit = BlockMeta_GetFromIndex(heap->blockMetaStart, limitIdx);
 
+    #ifdef DEBUG_PRINT
+        printf("Heap_sweep(%p %" PRIu32 ",%p %" PRIu32 "\n",
+               first, startIdx, limit, limitIdx);
+        fflush(stdout);
+    #endif
+
     // skip superblock_middle these are handled by the previous batch
     // (BlockMeta_IsSuperblockStartMe(first) || BlockMeta_IsSuperblockMiddle(first)) && first < limit
     while (((first->block.simple.flags & 0x3) == 0x3) && first < limit) {
