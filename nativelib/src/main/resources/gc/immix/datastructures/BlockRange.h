@@ -49,8 +49,11 @@ static inline bool BlockRange_AppendLast(BlockRange *blockRange, uint32_t first,
 }
 
 static inline uint32_t BlockRange_Size(BlockRange blockRange) {
-    assert(!BlockRange_IsEmpty(blockRange));
-    return BlockRange_Limit(blockRange) - BlockRange_First(blockRange);
+    if (BlockRange_IsEmpty(blockRange)) {
+        return 0;
+    } else {
+        return BlockRange_Limit(blockRange) - BlockRange_First(blockRange);
+    }
 }
 
 static inline BlockRangeVal BlockRange_Replace(BlockRange *blockRange, uint32_t first, uint32_t count) {
@@ -66,7 +69,7 @@ static inline uint32_t BlockRange_PollFirst(BlockRange *blockRange, uint32_t cou
         // old will be replaced with actual value if atomic_compare_exchange_strong fails
         first = BlockRange_First(old);
         uint32_t limit = BlockRange_Limit(old);
-        if (BlockRange_IsEmpty(old) || BlockRange_Size(old) < count){
+        if (BlockRange_Size(old) < count){
             return NO_BLOCK_INDEX;
         }
         newValue = BlockRange_Pack(first + count, limit);

@@ -240,9 +240,11 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
         uint32_t superblockIdx = BlockMeta_GetBlockIndex(blockAllocator->blockMetaStart, superblock);
         BlockRangeVal oldRange = BlockRange_Replace(&blockAllocator->coalescingSuperblock, superblockIdx, count);
         uint32_t size = BlockRange_Size(oldRange);
-        BlockMeta *replaced = BlockMeta_GetFromIndex(blockAllocator->blockMetaStart, BlockRange_First(oldRange));
+        if (size > 0) {
+            BlockMeta *replaced = BlockMeta_GetFromIndex(blockAllocator->blockMetaStart, BlockRange_First(oldRange));
 
-        BlockAllocator_splitAndAdd(blockAllocator, replaced, size);
+            BlockAllocator_splitAndAdd(blockAllocator, replaced, size);
+        }
     }
     blockAllocator->freeBlockCount += count;
 }
