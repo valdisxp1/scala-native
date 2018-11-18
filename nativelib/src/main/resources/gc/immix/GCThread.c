@@ -7,9 +7,11 @@ void *GCThread_loop(void *arg) {
     pthread_mutex_t *startMutex = &heap->gcThreads.startMutex;
     pthread_cond_t *start = &heap->gcThreads.start;
     while (true) {
+        thread->active = false;
         pthread_mutex_lock(startMutex);
         pthread_cond_wait(start, startMutex);
         pthread_mutex_unlock(startMutex);
+        thread->active = true;
 
         thread->sweep.cursorDone = 0;
 
@@ -23,6 +25,7 @@ void *GCThread_loop(void *arg) {
 void GCThread_Init(GCThread *thread, int id, Heap *heap) {
    thread->id = id;
    thread->heap = heap;
+   thread->active = false;
 
    pthread_create(&thread->self, NULL, GCThread_loop, (void *) thread);
 }

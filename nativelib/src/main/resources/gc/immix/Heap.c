@@ -14,6 +14,7 @@
 #include <memory.h>
 #include <time.h>
 #include <inttypes.h>
+#include <sched.h>
 
 // Allow read and write
 #define HEAP_MEM_PROT (PROT_READ | PROT_WRITE)
@@ -542,12 +543,12 @@ uint_fast32_t Heap_minSweepCursor(Heap *heap) {
 
 void Heap_lazyCoalesce(Heap *heap) {
     // the previous coalesce is done and there is work
-    BlockRange coalesce = heap->coalesce;
+    BlockRangeVal coalesce = heap->coalesce;
     uint_fast32_t startIdx = BlockRange_Limit(coalesce);
     uint_fast32_t coalesceDoneIdx = BlockRange_First(coalesce);
     uint_fast32_t limitIdx = Heap_minSweepCursor(heap);
     assert(coalesceDoneIdx <= startIdx);
-    BlockRange newValue = BlockRange_Pack(coalesceDoneIdx, limitIdx);
+    BlockRangeVal newValue = BlockRange_Pack(coalesceDoneIdx, limitIdx);
     while (startIdx == coalesceDoneIdx && startIdx < limitIdx) {
         if (!atomic_compare_exchange_strong(&heap->coalesce, &coalesce, newValue)) {
             // coalesce is updated by atomic_compare_exchange_strong
@@ -629,6 +630,30 @@ void Heap_lazyCoalesce(Heap *heap) {
     }
 }
 
+NOINLINE void Heap_waitForGCThreadsSlow(int gcThreadCount) {
+    // extremely unlikely to enter here
+    // unless very many threads running
+    bool anyActive = true;
+    while (anyActive) {
+        sched_yield();
+        anyActive = false;
+        for (int i = 0; i < gcThreadCount; i++) {
+            anyActive |= gcThreads[i].active;
+       }
+    }
+}
+
+INLINE void Heap_waitForGCThreads(Heap *heap) {
+    int gcThreadCount = heap->gcThreadCount;
+    bool anyActive = false;
+    for (int i = 0; i < gcThreadCount; i++) {
+        anyActive |= gcThreads[i].active;
+    }
+    if (anyActive) {
+        Heap_waitForGCThreadsSlow(gcThreadCount);
+    }
+}
+
 void Heap_Recycle(Heap *heap) {
     Allocator_Clear(&allocator);
     LargeAllocator_Clear(&largeAllocator);
@@ -636,6 +661,10 @@ void Heap_Recycle(Heap *heap) {
 
     // all the marking changes should be visible to all threads by now
     atomic_thread_fence(memory_order_seq_cst);
+
+    // before changing the cursor and limit values, makes sure no gc threads are running
+    Heap_waitForGCThreads(heap);
+
     heap->sweep.cursor = 0;
     heap->sweep.limit = heap->blockCount;
     heap->sweep.cursorDone = 0;

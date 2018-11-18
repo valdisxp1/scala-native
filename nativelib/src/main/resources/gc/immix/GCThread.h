@@ -4,11 +4,13 @@
 #include "Heap.h"
 #include <stdatomic.h>
 #include <pthread.h>
+#include <stdbool.h>
 
 typedef struct {
     int id;
     pthread_t self;
     Heap *heap;
+    atomic_bool active;
     pthread_mutex_t *startMutex;
     pthread_cond_t *start;
     struct {

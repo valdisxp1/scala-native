@@ -14,8 +14,6 @@
 #include <stdbool.h>
 #include <pthread.h>
 
-#define SWEEP_DONE ~((uint32_t)0)
-
 typedef struct {
     word_t *blockMetaStart;
     word_t *blockMetaEnd;
