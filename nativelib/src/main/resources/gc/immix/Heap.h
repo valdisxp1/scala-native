@@ -6,6 +6,7 @@
 #include "LargeAllocator.h"
 #include "datastructures/Stack.h"
 #include "datastructures/Bytemap.h"
+#include "datastructures/BlockRange.h"
 #include "metadata/LineMeta.h"
 #include "Stats.h"
 #include <stdio.h>
@@ -37,11 +38,7 @@ typedef struct {
         // making cursorDone atomic so it keeps sequential consistency with the other atomics
         atomic_uint_fast32_t cursorDone;
     } sweep;
-    struct {
-        atomic_uint_fast32_t cursor;
-        // making cursorDone atomic so it keeps sequential consistency with the other atomics
-        atomic_uint_fast32_t cursorDone;
-    } coalesce;
+    BlockRange coalesce; // _First = cursorDone, _Limit = cursor
     atomic_bool postSweepDone;
     Bytemap *bytemap;
     Stats *stats;
@@ -64,7 +61,7 @@ static inline LineMeta *Heap_LineMetaForWord(Heap *heap, word_t *word) {
 }
 
 static inline bool Heap_IsSweepDone(Heap *heap) {
-    return heap->coalesce.cursorDone >= heap->blockCount;
+    return BlockRange_First(heap->coalesce) >= heap->sweep.limit;
 }
 
 void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize);

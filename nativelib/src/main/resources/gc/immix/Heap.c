@@ -141,10 +141,10 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     heap->heapSize = minHeapSize;
     heap->heapStart = heapStart;
     heap->heapEnd = heapStart + minHeapSize / WORD_SIZE;
-    heap->sweep.cursor = SWEEP_DONE;
-    heap->sweep.cursorDone = SWEEP_DONE;
-    heap->coalesce.cursor = SWEEP_DONE;
-    heap->coalesce.cursorDone = SWEEP_DONE;
+    heap->sweep.cursor = initialBlockCount;
+    heap->sweep.cursorDone = initialBlockCount;
+    heap->sweep.limit = initialBlockCount;
+    heap->coalesce = BlockRange_Pack(initialBlockCount, initialBlockCount);
     heap->postSweepDone = true;
     Bytemap_Init(bytemap, heapStart, maxHeapSize);
     Allocator_Init(&allocator, &blockAllocator, bytemap, blockMetaStart,
@@ -542,16 +542,20 @@ uint_fast32_t Heap_minSweepCursor(Heap *heap) {
 
 void Heap_lazyCoalesce(Heap *heap) {
     // the previous coalesce is done and there is work
-    uint_fast32_t startIdx = heap->coalesce.cursor;
-    uint_fast32_t coalesceDoneIdx = heap->coalesce.cursorDone;
+    BlockRange coalesce = heap->coalesce;
+    uint_fast32_t startIdx = BlockRange_Limit(coalesce);
+    uint_fast32_t coalesceDoneIdx = BlockRange_First(coalesce);
     uint_fast32_t limitIdx = Heap_minSweepCursor(heap);
-    assert(coalesceDoneIdx <= startIdx); // TODO this fails
+    assert(coalesceDoneIdx <= startIdx);
+    BlockRange newValue = BlockRange_Pack(coalesceDoneIdx, limitIdx);
     while (startIdx == coalesceDoneIdx && startIdx < limitIdx) {
-        if (!atomic_compare_exchange_strong(&heap->coalesce.cursor, &startIdx, limitIdx)) {
-            // startIdx is updated by atomic_compare_exchange_strong
-            coalesceDoneIdx = heap->coalesce.cursorDone;
+        if (!atomic_compare_exchange_strong(&heap->coalesce, &coalesce, newValue)) {
+            // coalesce is updated by atomic_compare_exchange_strong
+            startIdx = BlockRange_Limit(coalesce);
+            coalesceDoneIdx = BlockRange_First(coalesce);
             limitIdx = Heap_minSweepCursor(heap);
-            assert(coalesceDoneIdx <= startIdx); // TODO this fails
+            newValue = BlockRange_Pack(coalesceDoneIdx, limitIdx);
+            assert(coalesceDoneIdx <= startIdx);
             continue;
         }
 
@@ -615,14 +619,13 @@ void Heap_lazyCoalesce(Heap *heap) {
                 }
                 // retreat the coalesce cursor
                 uint_fast32_t retreatTo = BlockMeta_GetBlockIndex(heap->blockMetaStart, lastCoalesceMe);
-                heap->coalesce.cursor = retreatTo;
-                heap->coalesce.cursorDone = retreatTo;
+                heap->coalesce = BlockRange_Pack(retreatTo, retreatTo);
                 // do no more to avoid infinite loops
                 return;
             }
         }
 
-        heap->coalesce.cursorDone = limitIdx;
+        heap->coalesce = BlockRange_Pack(limitIdx, limitIdx);
     }
 }
 
@@ -636,8 +639,7 @@ void Heap_Recycle(Heap *heap) {
     heap->sweep.cursor = 0;
     heap->sweep.limit = heap->blockCount;
     heap->sweep.cursorDone = 0;
-    heap->coalesce.cursor = 0;
-    heap->coalesce.cursorDone = 0;
+    heap->coalesce = BlockRange_Pack(0, 0);
     heap->postSweepDone = false;
 
     pthread_mutex_t *startMutex = &heap->gcThreads.startMutex;
@@ -671,10 +673,6 @@ void Heap_sweepDone(Heap *heap) {
         Heap_exitWithOutOfMemory();
     }
     heap->postSweepDone = true;
-    heap->sweep.cursor = SWEEP_DONE;
-    heap->sweep.cursorDone = SWEEP_DONE;
-    heap->coalesce.cursor = SWEEP_DONE;
-    heap->coalesce.cursorDone = SWEEP_DONE;
 }
 
 void Heap_Grow(Heap *heap, uint32_t incrementInBlocks) {
