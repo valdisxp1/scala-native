@@ -171,6 +171,12 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     }
 }
 
+static inline void Heap_advanceLazyCursor(Heap *heap) {
+    atomic_uint_fast32_t cursor = heap->sweep.cursor;
+    atomic_uint_fast32_t sweepLimit = heap->sweep.limit;
+    heap->sweep.cursorDone = (cursor <= sweepLimit) ? cursor : sweepLimit ;
+}
+
 Object *Heap_lazySweepLarge(Heap *heap, uint32_t size) {
     Object *object = LargeAllocator_GetBlock(&largeAllocator, size);
     uint32_t increment = (uint32_t) MathUtils_DivAndRoundUp(size, BLOCK_TOTAL_SIZE);
@@ -178,6 +184,8 @@ Object *Heap_lazySweepLarge(Heap *heap, uint32_t size) {
         printf("Heap_lazySweepLarge (%" PRIu32 ") => %" PRIu32 "\n", size, increment);
         fflush(stdout);
     #endif
+    // advance the cursor so other threads can coalesce
+    Heap_advanceLazyCursor(heap);
     while (object == NULL && !Heap_IsSweepDone(heap)) {
         Heap_Sweep(heap, &heap->sweep.cursorDone, LAZY_SWEEP_MIN_BATCH);
         object = LargeAllocator_GetBlock(&largeAllocator, size);
@@ -228,6 +236,8 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
 
 Object *Heap_lazySweep(Heap *heap, uint32_t size) {
     Object *object = (Object *)Allocator_Alloc(&allocator, size);
+    // advance the cursor so other threads can coalesce
+    Heap_advanceLazyCursor(heap);
     while (object == NULL && !Heap_IsSweepDone(heap)) {
         Heap_Sweep(heap, &heap->sweep.cursorDone, LAZY_SWEEP_MIN_BATCH);
         object = (Object *)Allocator_Alloc(&allocator, size);
