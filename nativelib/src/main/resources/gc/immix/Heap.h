@@ -13,6 +13,7 @@
 #include <stdatomic.h>
 #include <stdbool.h>
 #include <pthread.h>
+#include <semaphore.h>
 
 typedef struct {
     word_t *blockMetaStart;
@@ -26,8 +27,7 @@ typedef struct {
     uint32_t blockCount;
     uint32_t maxBlockCount;
     struct {
-        pthread_mutex_t startMutex;
-        pthread_cond_t start;
+        sem_t start;
     } gcThreads;
     int gcThreadCount;
     struct {

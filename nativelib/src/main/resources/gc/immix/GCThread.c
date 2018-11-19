@@ -1,16 +1,14 @@
 #include "GCThread.h"
 #include "Constants.h"
+#include <semaphore.h>
 
 void *GCThread_loop(void *arg) {
     GCThread *thread = (GCThread *) arg;
     Heap *heap = thread->heap;
-    pthread_mutex_t *startMutex = &heap->gcThreads.startMutex;
-    pthread_cond_t *start = &heap->gcThreads.start;
+    sem_t *start = &heap->gcThreads.start;
     while (true) {
         thread->active = false;
-        pthread_mutex_lock(startMutex);
-        pthread_cond_wait(start, startMutex);
-        pthread_mutex_unlock(startMutex);
+        sem_wait(start);
         thread->active = true;
 
         thread->sweep.cursorDone = 0;

@@ -155,8 +155,7 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
                         blockMetaStart, heapStart);
 
     // Init all GCThreads
-    pthread_mutex_init(&heap->gcThreads.startMutex, NULL);
-    pthread_cond_init(&heap->gcThreads.start, NULL);
+    sem_init(&heap->gcThreads.start, 0, 0);
 
     int gcThreadCount = Settings_GCThreadCount();
     heap->gcThreadCount = gcThreadCount;
@@ -671,13 +670,13 @@ void Heap_Recycle(Heap *heap) {
     heap->coalesce = BlockRange_Pack(0, 0);
     heap->postSweepDone = false;
 
-    pthread_mutex_t *startMutex = &heap->gcThreads.startMutex;
-    pthread_cond_t *start = &heap->gcThreads.start;
+    sem_t *start = &heap->gcThreads.start;
 
     // wake all the GC threads
-    pthread_mutex_lock(startMutex);
-    pthread_cond_broadcast(start);
-    pthread_mutex_unlock(startMutex);
+    int gcThreadCount = heap->gcThreadCount;
+    for (int i = 0; i < gcThreadCount; i++) {
+        sem_post(start);
+    }
 }
 
 void Heap_sweepDone(Heap *heap) {
