@@ -534,7 +534,7 @@ uint_fast32_t Heap_minSweepCursor(Heap *heap) {
     int gcThreadCount = heap->gcThreadCount;
     for (int i = 0; i < gcThreadCount; i++) {
         uint_fast32_t cursorDone = gcThreads[i].sweep.cursorDone;
-        if (cursorDone < min) {
+        if (gcThreads[i].active && cursorDone < min) {
             min = cursorDone;
         }
     }
