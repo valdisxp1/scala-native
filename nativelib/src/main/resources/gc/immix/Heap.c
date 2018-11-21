@@ -27,7 +27,6 @@
 void Heap_sweepDone(Heap *heap);
 Object *Heap_lazySweep(Heap *heap, uint32_t size);
 Object *Heap_lazySweepLarge(Heap *heap, uint32_t size);
-void Heap_lazyCoalesce(Heap *heap);
 
 void Heap_exitWithOutOfMemory() {
     printf("Out of heap space\n");
@@ -179,16 +178,33 @@ static inline void Heap_advanceLazyCursor(Heap *heap) {
 
 Object *Heap_lazySweepLarge(Heap *heap, uint32_t size) {
     Object *object = LargeAllocator_GetBlock(&largeAllocator, size);
-    uint32_t increment = (uint32_t) MathUtils_DivAndRoundUp(size, BLOCK_TOTAL_SIZE);
     #ifdef DEBUG_PRINT
+        uint32_t increment = (uint32_t) MathUtils_DivAndRoundUp(size, BLOCK_TOTAL_SIZE);
         printf("Heap_lazySweepLarge (%" PRIu32 ") => %" PRIu32 "\n", size, increment);
         fflush(stdout);
     #endif
-    // advance the cursor so other threads can coalesce
-    Heap_advanceLazyCursor(heap);
-    while (object == NULL && !Heap_IsSweepDone(heap)) {
-        Heap_Sweep(heap, &heap->sweep.cursorDone, LAZY_SWEEP_MIN_BATCH);
-        object = LargeAllocator_GetBlock(&largeAllocator, size);
+    if (object != NULL) {
+        // advance the cursor so other threads can coalesce
+        Heap_advanceLazyCursor(heap);
+    } else {
+        // lazy sweep will happen
+        uint64_t start_ns, end_ns;
+        Stats *stats = heap->stats;
+        if (stats != NULL) {
+            start_ns = scalanative_nano_time();
+        }
+        while (object == NULL && !Heap_IsSweepDone(heap)) {
+            Heap_Sweep(heap, &heap->sweep.cursorDone, LAZY_SWEEP_MIN_BATCH);
+            object = LargeAllocator_GetBlock(&largeAllocator, size);
+        }
+        if (heap->gcThreadCount == 0) {
+            // if there are no threads the mutator must do coalescing on its own
+            Heap_LazyCoalesce(heap);
+        }
+        if (stats != NULL) {
+            end_ns = scalanative_nano_time();
+            Stats_RecordEvent(stats, event_sweep, start_ns, end_ns);
+        }
     }
     if (Heap_IsSweepDone(heap) && !heap->postSweepDone) {
         Heap_sweepDone(heap);
@@ -236,11 +252,28 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
 
 Object *Heap_lazySweep(Heap *heap, uint32_t size) {
     Object *object = (Object *)Allocator_Alloc(&allocator, size);
-    // advance the cursor so other threads can coalesce
-    Heap_advanceLazyCursor(heap);
-    while (object == NULL && !Heap_IsSweepDone(heap)) {
-        Heap_Sweep(heap, &heap->sweep.cursorDone, LAZY_SWEEP_MIN_BATCH);
-        object = (Object *)Allocator_Alloc(&allocator, size);
+    if (object != NULL) {
+        // advance the cursor so other threads can coalesce
+        Heap_advanceLazyCursor(heap);
+    } else {
+        // lazy sweep will happen
+        uint64_t start_ns, end_ns;
+        Stats *stats = heap->stats;
+        if (stats != NULL) {
+            start_ns = scalanative_nano_time();
+        }
+        while (object == NULL && !Heap_IsSweepDone(heap)) {
+            Heap_Sweep(heap, &heap->sweep.cursorDone, LAZY_SWEEP_MIN_BATCH);
+            object = (Object *)Allocator_Alloc(&allocator, size);
+        }
+        if (heap->gcThreadCount == 0) {
+            // if there are no threads the mutator must do coalescing on its own
+            Heap_LazyCoalesce(heap);
+        }
+        if (stats != NULL) {
+            end_ns = scalanative_nano_time();
+            Stats_RecordEvent(stats, event_sweep, start_ns, end_ns);
+        }
     }
     if (Heap_IsSweepDone(heap) && !heap->postSweepDone) {
         Heap_sweepDone(heap);
@@ -406,11 +439,6 @@ bool Heap_shouldGrow(Heap *heap) {
 }
 
 void Heap_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone, uint32_t maxCount) {
-    uint64_t start_ns, end_ns;
-    Stats *stats = heap->stats;
-    if (stats != NULL) {
-        start_ns = scalanative_nano_time();
-    }
     uint32_t cursor = heap->sweep.cursor;
     uint32_t sweepLimit = heap->sweep.limit;
     // protect against sweep.cursor overflow
@@ -528,14 +556,6 @@ void Heap_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone, uint32_t maxCount)
     atomic_thread_fence(memory_order_seq_cst);
 
     *cursorDone = limitIdx;
-
-    Heap_lazyCoalesce(heap);
-
-    if (stats != NULL) {
-        end_ns = scalanative_nano_time();
-        Stats_RecordEvent(stats, event_sweep, start_ns, end_ns);
-    }
-
 }
 
 uint_fast32_t Heap_minSweepCursor(Heap *heap) {
@@ -550,7 +570,7 @@ uint_fast32_t Heap_minSweepCursor(Heap *heap) {
     return min;
 }
 
-void Heap_lazyCoalesce(Heap *heap) {
+void Heap_LazyCoalesce(Heap *heap) {
     // the previous coalesce is done and there is work
     BlockRangeVal coalesce = heap->coalesce;
     uint_fast32_t startIdx = BlockRange_Limit(coalesce);

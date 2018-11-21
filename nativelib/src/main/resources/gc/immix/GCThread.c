@@ -15,6 +15,7 @@ void *GCThread_loop(void *arg) {
 
         while (!Heap_IsSweepDone(heap)) {
             Heap_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
+            Heap_LazyCoalesce(heap);
         }
     }
     return NULL;

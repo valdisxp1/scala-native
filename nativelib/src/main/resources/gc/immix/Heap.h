@@ -71,6 +71,7 @@ void Heap_Collect(Heap *heap, Stack *stack);
 
 void Heap_Recycle(Heap *heap);
 void Heap_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone, uint32_t maxCount);
+void Heap_LazyCoalesce(Heap *heap);
 void Heap_Grow(Heap *heap, uint32_t increment);
 
 #endif // IMMIX_HEAP_H
