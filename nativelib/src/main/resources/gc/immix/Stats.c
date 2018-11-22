@@ -8,12 +8,13 @@ void Stats_writeToFile(Stats *stats);
 
 void Stats_Init(Stats *stats, const char *statsFile) {
     stats->outFile = fopen(statsFile, "w");
-    fprintf(stats->outFile, "event_type,time_ns\n");
+    fprintf(stats->outFile, "event_type,timestamp_ns,time_ns\n");
     stats->events = 0;
 }
 
 void Stats_RecordEvent(Stats *stats, eventType eType, uint64_t start_ns, uint64_t end_ns) {
     uint64_t index = stats->events % STATS_MEASUREMENTS;
+    stats->timestamp_ns[index] = start_ns;
     stats->time_ns[index] = end_ns - start_ns;
     stats->event_types[index] = eType;
     stats->events += 1;
@@ -30,7 +31,7 @@ void Stats_writeToFile(Stats *stats) {
     }
     FILE *outFile = stats->outFile;
     for (uint64_t i = 0; i < remainder; i++) {
-        fprintf(outFile, "%s,%" PRIu64 "\n", Stats_eventNames[stats->event_types[i]], stats->time_ns[i]);
+        fprintf(outFile, "%s,%" PRIu64 ",%" PRIu64 "\n", Stats_eventNames[stats->event_types[i]], stats->timestamp_ns[i] , stats->time_ns[i]);
     }
     fflush(outFile);
 }

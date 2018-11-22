@@ -15,6 +15,7 @@ typedef struct {
     FILE *outFile;
     uint64_t events;
     uint8_t event_types[STATS_MEASUREMENTS];
+    uint64_t timestamp_ns[STATS_MEASUREMENTS];
     uint64_t time_ns[STATS_MEASUREMENTS];
 } Stats;
 
