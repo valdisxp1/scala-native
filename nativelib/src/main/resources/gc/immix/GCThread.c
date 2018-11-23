@@ -6,16 +6,24 @@ void *GCThread_loop(void *arg) {
     GCThread *thread = (GCThread *) arg;
     Heap *heap = thread->heap;
     sem_t *start = &heap->gcThreads.start;
+    Stats *stats = heap->stats;
     while (true) {
         thread->active = false;
         sem_wait(start);
         thread->active = true;
 
         thread->sweep.cursorDone = 0;
-
+        uint64_t start_ns, end_ns;
+        if (stats != NULL) {
+            start_ns = scalanative_nano_time();
+        }
         while (!Heap_IsSweepDone(heap)) {
             Heap_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
             Heap_LazyCoalesce(heap);
+        }
+        if (stats != NULL) {
+            end_ns = scalanative_nano_time();
+            Stats_RecordEvent(stats, event_concurrent_sweep, thread->id, start_ns, end_ns);
         }
     }
     return NULL;

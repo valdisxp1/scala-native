@@ -153,6 +153,14 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     LargeAllocator_Init(&largeAllocator, &blockAllocator, bytemap,
                         blockMetaStart, heapStart);
 
+    // Init stats if enabled.
+    // This must done before initializing other threads.
+    char *statsFile = Settings_StatsFileName();
+    if (statsFile != NULL) {
+        heap->stats = malloc(sizeof(Stats));
+        Stats_Init(heap->stats, statsFile);
+    }
+
     // Init all GCThreads
     sem_init(&heap->gcThreads.start, 0, 0);
 
@@ -161,12 +169,6 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     gcThreads = (GCThread *) malloc(sizeof(GCThread) * gcThreadCount);
     for (int i = 0; i < gcThreadCount; i++) {
         GCThread_Init(&gcThreads[i], i, heap);
-    }
-
-    char *statsFile = Settings_StatsFileName();
-    if (statsFile != NULL) {
-        heap->stats = malloc(sizeof(Stats));
-        Stats_Init(heap->stats, statsFile);
     }
 }
 
@@ -203,7 +205,7 @@ Object *Heap_lazySweepLarge(Heap *heap, uint32_t size) {
         }
         if (stats != NULL) {
             end_ns = scalanative_nano_time();
-            Stats_RecordEvent(stats, event_sweep, start_ns, end_ns);
+            Stats_RecordEvent(stats, event_sweep, MUTATOR_THREAD_ID, start_ns, end_ns);
         }
     }
     if (Heap_IsSweepDone(heap) && !heap->postSweepDone) {
@@ -272,7 +274,7 @@ Object *Heap_lazySweep(Heap *heap, uint32_t size) {
         }
         if (stats != NULL) {
             end_ns = scalanative_nano_time();
-            Stats_RecordEvent(stats, event_sweep, start_ns, end_ns);
+            Stats_RecordEvent(stats, event_sweep, MUTATOR_THREAD_ID, start_ns, end_ns);
         }
     }
     if (Heap_IsSweepDone(heap) && !heap->postSweepDone) {
@@ -410,7 +412,7 @@ void Heap_Collect(Heap *heap, Stack *stack) {
     Marker_MarkRoots(heap, stack);
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
-        Stats_RecordEvent(stats, event_mark, start_ns, end_ns);
+        Stats_RecordEvent(stats, event_mark, MUTATOR_THREAD_ID, start_ns, end_ns);
     }
     Heap_Recycle(heap);
 #ifdef DEBUG_PRINT
