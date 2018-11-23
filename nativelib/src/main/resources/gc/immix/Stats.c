@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-const char* const Stats_eventNames[] = { "mark", "sweep" , "concmark", "concsweep"};
+const char* const Stats_eventNames[] = { "mark", "sweep" , "concmark", "concsweep", "collection"};
 
 void Stats_writeToFile(Stats *stats);
 

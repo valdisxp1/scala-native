@@ -13,7 +13,8 @@ typedef enum {
     event_mark = 0x0,
     event_sweep = 0x1,
     event_concurrent_mark = 0x2,
-    event_concurrent_sweep = 0x3
+    event_concurrent_sweep = 0x3,
+    event_collection = 0x4
 } eventType;
 
 typedef struct {
@@ -24,6 +25,8 @@ typedef struct {
     int8_t gc_threads[STATS_MEASUREMENTS];
     uint64_t start_ns[STATS_MEASUREMENTS];
     uint64_t time_ns[STATS_MEASUREMENTS];
+
+    uint64_t collection_start_ns;
 } Stats;
 
 void Stats_Init(Stats *stats, const char *statsFile);

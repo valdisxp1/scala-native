@@ -395,17 +395,16 @@ void Heap_assertIsConsistent(Heap *heap) {
 #endif
 
 void Heap_Collect(Heap *heap, Stack *stack) {
+    Stats *stats = heap->stats;
+    if (stats != NULL) {
+        stats->collection_start_ns = scalanative_nano_time();
+    }
     assert(Heap_IsSweepDone(heap));
 #ifdef DEBUG_ASSERT
     Heap_clearIsSwept(heap);
     Heap_assertIsConsistent(heap);
 #endif
     uint64_t start_ns, end_ns;
-    Stats *stats = heap->stats;
-#ifdef DEBUG_PRINT
-    printf("\nCollect\n");
-    fflush(stdout);
-#endif
     if (stats != NULL) {
         start_ns = scalanative_nano_time();
     }
@@ -415,10 +414,6 @@ void Heap_Collect(Heap *heap, Stack *stack) {
         Stats_RecordEvent(stats, event_mark, MUTATOR_THREAD_ID, start_ns, end_ns);
     }
     Heap_Recycle(heap);
-#ifdef DEBUG_PRINT
-    printf("End collect\n");
-    fflush(stdout);
-#endif
 }
 
 bool Heap_shouldGrow(Heap *heap) {
@@ -733,6 +728,11 @@ void Heap_sweepDone(Heap *heap) {
         Heap_exitWithOutOfMemory();
     }
     heap->postSweepDone = true;
+    Stats *stats = heap->stats;
+    if (stats != NULL) {
+        uint64_t end_ns = scalanative_nano_time();
+        Stats_RecordEvent(stats, event_collection, MUTATOR_THREAD_ID, stats->collection_start_ns, end_ns);
+    }
 }
 
 void Heap_Grow(Heap *heap, uint32_t incrementInBlocks) {
