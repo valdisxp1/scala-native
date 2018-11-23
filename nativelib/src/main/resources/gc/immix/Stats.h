@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <time.h>
+#include <pthread.h>
 
 typedef enum {
     event_mark = 0x0,
@@ -13,6 +14,7 @@ typedef enum {
 
 typedef struct {
     FILE *outFile;
+    pthread_mutex_t mutex;
     uint64_t events;
     uint8_t event_types[STATS_MEASUREMENTS];
     uint64_t timestamp_ns[STATS_MEASUREMENTS];
