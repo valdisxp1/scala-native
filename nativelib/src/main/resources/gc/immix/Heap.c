@@ -198,10 +198,10 @@ Object *Heap_lazySweepLarge(Heap *heap, uint32_t size) {
         while (object == NULL && !Heap_IsSweepDone(heap)) {
             Heap_Sweep(heap, &heap->sweep.cursorDone, LAZY_SWEEP_MIN_BATCH);
             object = LargeAllocator_GetBlock(&largeAllocator, size);
-        }
-        if (heap->gcThreadCount == 0) {
-            // if there are no threads the mutator must do coalescing on its own
-            Heap_LazyCoalesce(heap);
+            if (heap->gcThreadCount == 0) {
+                // if there are no threads the mutator must do coalescing on its own
+                Heap_LazyCoalesce(heap);
+            }
         }
         if (stats != NULL) {
             end_ns = scalanative_nano_time();
@@ -267,10 +267,10 @@ Object *Heap_lazySweep(Heap *heap, uint32_t size) {
         while (object == NULL && !Heap_IsSweepDone(heap)) {
             Heap_Sweep(heap, &heap->sweep.cursorDone, LAZY_SWEEP_MIN_BATCH);
             object = (Object *)Allocator_Alloc(&allocator, size);
-        }
-        if (heap->gcThreadCount == 0) {
-            // if there are no threads the mutator must do coalescing on its own
-            Heap_LazyCoalesce(heap);
+            if (heap->gcThreadCount == 0) {
+                // if there are no threads the mutator must do coalescing on its own
+                Heap_LazyCoalesce(heap);
+            }
         }
         if (stats != NULL) {
             end_ns = scalanative_nano_time();
