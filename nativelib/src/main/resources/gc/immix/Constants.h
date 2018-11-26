@@ -54,6 +54,6 @@
 
 #define SWEEP_BATCH_SIZE 16
 
-#define LAZY_SWEEP_MIN_BATCH 8
+#define LAZY_SWEEP_MIN_BATCH 4
 
 #endif // IMMIX_CONSTANTS_H
