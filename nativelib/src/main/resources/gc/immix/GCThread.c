@@ -1,5 +1,6 @@
 #include "GCThread.h"
 #include "Constants.h"
+#include "Sweeper.h"
 #include <semaphore.h>
 
 void *GCThread_loop(void *arg) {
@@ -17,9 +18,9 @@ void *GCThread_loop(void *arg) {
         if (stats != NULL) {
             start_ns = scalanative_nano_time();
         }
-        while (!Heap_IsSweepDone(heap)) {
-            Heap_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
-            Heap_LazyCoalesce(heap);
+        while (!Sweeper_IsSweepDone(heap)) {
+            Sweeper_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
+            Sweeper_LazyCoalesce(heap);
         }
         if (stats != NULL) {
             end_ns = scalanative_nano_time();

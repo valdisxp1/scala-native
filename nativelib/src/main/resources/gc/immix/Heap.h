@@ -58,20 +58,14 @@ static inline LineMeta *Heap_LineMetaForWord(Heap *heap, word_t *word) {
     return lineMeta;
 }
 
-static inline bool Heap_IsSweepDone(Heap *heap) {
-    return BlockRange_First(heap->coalesce) >= heap->sweep.limit;
-}
-
 void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize);
 word_t *Heap_Alloc(Heap *heap, uint32_t objectSize);
 word_t *Heap_AllocSmall(Heap *heap, uint32_t objectSize);
 word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize);
 
 void Heap_Collect(Heap *heap, Stack *stack);
-
 void Heap_Recycle(Heap *heap);
-void Heap_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone, uint32_t maxCount);
-void Heap_LazyCoalesce(Heap *heap);
+void Heap_GrowIfNeeded(Heap *heap);
 void Heap_Grow(Heap *heap, uint32_t increment);
 
 #endif // IMMIX_HEAP_H
