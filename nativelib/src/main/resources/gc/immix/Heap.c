@@ -163,6 +163,7 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
 
     int gcThreadCount = Settings_GCThreadCount();
     heap->gcThreads.count = gcThreadCount;
+    heap->gcThreads.phase = gc_idle;
     GCThread *gcThreads = (GCThread *)malloc(sizeof(GCThread) * gcThreadCount);
     heap->gcThreads.all = (void *)gcThreads;
     for (int i = 0; i < gcThreadCount; i++) {
@@ -337,6 +338,8 @@ void Heap_Collect(Heap *heap, Stack *stack) {
         start_ns = scalanative_nano_time();
     }
     Marker_MarkRoots(heap, stack);
+    heap->gcThreads.phase = gc_mark;
+    Marker_Mark(heap, stack);
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
         Stats_RecordEvent(stats, event_mark, MUTATOR_THREAD_ID, start_ns,
@@ -408,6 +411,7 @@ void Heap_Recycle(Heap *heap) {
     heap->sweep.postSweepDone = false;
 
     sem_t *start = &heap->gcThreads.start;
+    heap->gcThreads.phase = gc_sweep;
 
     // wake all the GC threads
     int gcThreadCount = heap->gcThreads.count;

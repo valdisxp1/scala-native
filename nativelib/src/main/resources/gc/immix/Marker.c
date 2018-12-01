@@ -111,10 +111,6 @@ void Marker_markModules(Heap *heap, Stack *stack) {
 }
 
 void Marker_MarkRoots(Heap *heap, Stack *stack) {
-
     Marker_markProgramStack(heap, stack);
-
     Marker_markModules(heap, stack);
-
-    Marker_Mark(heap, stack);
 }

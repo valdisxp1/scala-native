@@ -3,6 +3,27 @@
 #include "Sweeper.h"
 #include <semaphore.h>
 
+static inline void GCThread_mark(GCThread *thread, Heap *heap, Stats *stats) {
+
+}
+
+static inline void GCThread_sweep(GCThread *thread, Heap *heap, Stats *stats) {
+    thread->sweep.cursorDone = 0;
+    uint64_t start_ns, end_ns;
+    if (stats != NULL) {
+        start_ns = scalanative_nano_time();
+    }
+    while (!Sweeper_IsSweepDone(heap)) {
+        Sweeper_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
+        Sweeper_LazyCoalesce(heap);
+    }
+    if (stats != NULL) {
+        end_ns = scalanative_nano_time();
+        Stats_RecordEvent(stats, event_concurrent_sweep, thread->id,
+                          start_ns, end_ns);
+    }
+}
+
 void *GCThread_loop(void *arg) {
     GCThread *thread = (GCThread *)arg;
     Heap *heap = thread->heap;
@@ -13,19 +34,16 @@ void *GCThread_loop(void *arg) {
         sem_wait(start);
         thread->active = true;
 
-        thread->sweep.cursorDone = 0;
-        uint64_t start_ns, end_ns;
-        if (stats != NULL) {
-            start_ns = scalanative_nano_time();
-        }
-        while (!Sweeper_IsSweepDone(heap)) {
-            Sweeper_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
-            Sweeper_LazyCoalesce(heap);
-        }
-        if (stats != NULL) {
-            end_ns = scalanative_nano_time();
-            Stats_RecordEvent(stats, event_concurrent_sweep, thread->id,
-                              start_ns, end_ns);
+        uint8_t phase = heap->gcThreads.phase;
+        switch (phase) {
+            case gc_idle:
+                break;
+            case gc_mark:
+                GCThread_mark(thread, heap, stats);
+                break;
+            case gc_sweep:
+                GCThread_sweep(thread, heap, stats);
+                break;
         }
     }
     return NULL;
