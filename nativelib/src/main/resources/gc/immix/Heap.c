@@ -126,6 +126,8 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     word_t *heapStart = Heap_mapAndAlign(maxHeapSize, BLOCK_TOTAL_SIZE);
 
     BlockAllocator_Init(&blockAllocator, blockMetaStart, initialBlockCount);
+    Stack_Init(&heap->mark.globalStack, INITIAL_STACK_SIZE);
+    Stack_Init(&heap->lazyMark.stack, INITIAL_STACK_SIZE);
 
     // reserve space for bytemap
     Bytemap *bytemap = (Bytemap *)Heap_mapAndAlign(
@@ -337,9 +339,9 @@ void Heap_Collect(Heap *heap, Stack *stack) {
     if (stats != NULL) {
         start_ns = scalanative_nano_time();
     }
-    Marker_MarkRoots(heap, stack);
+    Marker_MarkRoots(heap, globalStack);
     heap->gcThreads.phase = gc_mark;
-    Marker_Mark(heap, stack);
+    Marker_Mark(heap, &heap->lazyMark.stack);
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
         Stats_RecordEvent(stats, event_mark, MUTATOR_THREAD_ID, start_ns,

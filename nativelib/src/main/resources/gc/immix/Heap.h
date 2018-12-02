@@ -49,6 +49,12 @@ typedef struct {
         // other atomics
         atomic_uint_fast32_t cursorDone;
     } lazySweep;
+    struct {
+        Stack globalStack;
+    } mark;
+    struct {
+        Stack stack;
+    } lazyMark;
     Bytemap *bytemap;
     Stats *stats;
 } Heap;

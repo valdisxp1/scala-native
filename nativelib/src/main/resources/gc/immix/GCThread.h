@@ -2,6 +2,7 @@
 #define IMMIX_GCTHREAD_H
 
 #include "Heap.h"
+#include "datastructures/Stack.h"
 #include <stdatomic.h>
 #include <pthread.h>
 #include <stdbool.h>
@@ -11,6 +12,9 @@ typedef struct {
     Heap *heap;
     atomic_bool active;
     struct {
+        Stack stack;
+    } mark;
+    struct {
         // making cursorDone atomic so it keeps sequential consistency with the
         // other atomics
         atomic_uint_fast32_t cursorDone;
@@ -18,5 +22,6 @@ typedef struct {
 } GCThread;
 
 void GCThread_Init(GCThread *thread, int id, Heap *heap);
+bool GCThread_AnyActive(Heap *heap);
 
 #endif // IMMIX_GCTHREAD_H

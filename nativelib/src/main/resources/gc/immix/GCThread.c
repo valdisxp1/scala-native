@@ -1,10 +1,21 @@
 #include "GCThread.h"
 #include "Constants.h"
 #include "Sweeper.h"
+#include "Marker.h"
 #include <semaphore.h>
 
 static inline void GCThread_mark(GCThread *thread, Heap *heap, Stats *stats) {
-
+    if (stats != NULL) {
+        start_ns = scalanative_nano_time();
+    }
+    while (!Marker_IsMarkDone()) {
+        Marker_Mark(heap, &thread->mark.stack);
+    }
+    if (stats != NULL) {
+        end_ns = scalanative_nano_time();
+        Stats_RecordEvent(stats, event_concurrent_mark, thread->id,
+                          start_ns, end_ns);
+    }
 }
 
 static inline void GCThread_sweep(GCThread *thread, Heap *heap, Stats *stats) {
@@ -55,6 +66,19 @@ void GCThread_Init(GCThread *thread, int id, Heap *heap) {
     thread->active = false;
     // we do not use the pthread value
     pthread_t self;
+    Stack_Init(&thread->stack, INITIAL_STACK_SIZE);
 
     pthread_create(&self, NULL, GCThread_loop, (void *)thread);
+}
+
+bool GCThread_AnyActive(Heap *heap) {
+    int gcThreadCount = heap->gcThreads.count;
+    GCThread *gcThreads = (GCThread *) heap->gcThreads.all;
+    bool anyActive = false;
+    for (int i = 0; i < gcThreadCount; i++) {
+        if (gcThreads[i].active) {
+            return true;
+        }
+    }
+    return false;
 }

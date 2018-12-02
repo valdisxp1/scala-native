@@ -114,3 +114,7 @@ void Marker_MarkRoots(Heap *heap, Stack *stack) {
     Marker_markProgramStack(heap, stack);
     Marker_markModules(heap, stack);
 }
+
+bool Marker_IsMarkDone(Heap *heap) {
+    return heap->gcThreads.phase != gc_mark || (Stack_IsEmpty(&heap->sweep.globalStack) && !GCThread_AnyActive(heap));
+}
