@@ -7,6 +7,7 @@
 #include "datastructures/Stack.h"
 #include "datastructures/Bytemap.h"
 #include "datastructures/BlockRange.h"
+#include "datastructures/GreyPacket.h"
 #include "metadata/LineMeta.h"
 #include "Stats.h"
 #include <stdio.h>
@@ -50,11 +51,10 @@ typedef struct {
         atomic_uint_fast32_t cursorDone;
     } lazySweep;
     struct {
-        Stack globalStack;
+        atomic_uint_fast32_t total;
+        GreyList empty;
+        GreyList full;
     } mark;
-    struct {
-        Stack stack;
-    } lazyMark;
     Bytemap *bytemap;
     Stats *stats;
 } Heap;

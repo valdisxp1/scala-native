@@ -15,8 +15,8 @@ typedef struct {
 #define GREYLIST_LAST ((void *)1)
 
 typedef struct {
-    atomic_uintptr_t head;
     atomic_uint_fast32_t size;
+    atomic_uintptr_t head;
 } GreyList;
 
 void GreyPacket_Init(GreyPacket *packet);

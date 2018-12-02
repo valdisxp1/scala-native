@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "State.h"
 #include "datastructures/Stack.h"
+#include "datastructures/GreyPacket.h"
 #include "headers/ObjectHeader.h"
 
 extern word_t *__modules;
@@ -116,5 +117,5 @@ void Marker_MarkRoots(Heap *heap, Stack *stack) {
 }
 
 bool Marker_IsMarkDone(Heap *heap) {
-    return heap->gcThreads.phase != gc_mark || (Stack_IsEmpty(&heap->sweep.globalStack) && !GCThread_AnyActive(heap));
+    return heap->mark.empty.size == heap->mark.total;
 }

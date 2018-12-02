@@ -126,8 +126,11 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     word_t *heapStart = Heap_mapAndAlign(maxHeapSize, BLOCK_TOTAL_SIZE);
 
     BlockAllocator_Init(&blockAllocator, blockMetaStart, initialBlockCount);
-    Stack_Init(&heap->mark.globalStack, INITIAL_STACK_SIZE);
-    Stack_Init(&heap->lazyMark.stack, INITIAL_STACK_SIZE);
+    GreyList_Init(&heap->mark.empty);
+    GreyList_Init(&heap->mark.full);
+    heap->mark.total = GREY_PACKET_COUNT;
+    word_t* greyPacketsStart = Heap_mapAndAlign(GREY_PACKET_COUNT * sizeof(GreyPacket), WORD_SIZE);
+    GreyList_PushAll(&heap->mark.empty, (GreyPacket *) greyPacketsStart, GREY_PACKET_COUNT);
 
     // reserve space for bytemap
     Bytemap *bytemap = (Bytemap *)Heap_mapAndAlign(
