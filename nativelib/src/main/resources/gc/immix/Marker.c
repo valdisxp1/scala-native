@@ -4,8 +4,6 @@
 #include "Object.h"
 #include "Log.h"
 #include "State.h"
-#include "datastructures/Stack.h"
-#include "datastructures/GreyPacket.h"
 #include "headers/ObjectHeader.h"
 
 extern word_t *__modules;
@@ -14,16 +12,24 @@ extern word_t **__stack_bottom;
 
 #define LAST_FIELD_OFFSET -1
 
-void Marker_markObject(Heap *heap, Stack *stack, Bytemap *bytemap,
+void Marker_markObject(Heap *heap, GreyPacket **outHolder, Bytemap *bytemap,
                        Object *object, ObjectMeta *objectMeta) {
     assert(ObjectMeta_IsAllocated(objectMeta));
 
     assert(Object_Size(object) != 0);
     Object_Mark(heap, object, objectMeta);
-    Stack_Push(stack, object);
+
+    GreyPacket *out = *outHolder;
+    if (!GreyPacket_Push(out, object)) {
+        GreyList_Push(&heap->mark.full, out);
+        *outHolder = out = GreyList_Pop(&heap->mark.empty);
+        // TODO handle oom for GreyList
+        assert(out != NULL);
+        GreyPacket_Push(out, object);
+    }
 }
 
-void Marker_markConservative(Heap *heap, Stack *stack, word_t *address) {
+void Marker_markConservative(Heap *heap, GreyPacket **outHolder, word_t *address) {
     assert(Heap_IsWordInHeap(heap, address));
     Object *object = Object_GetUnmarkedObject(heap, address);
     Bytemap *bytemap = heap->bytemap;
@@ -31,15 +37,18 @@ void Marker_markConservative(Heap *heap, Stack *stack, word_t *address) {
         ObjectMeta *objectMeta = Bytemap_Get(bytemap, (word_t *)object);
         assert(ObjectMeta_IsAllocated(objectMeta));
         if (ObjectMeta_IsAllocated(objectMeta)) {
-            Marker_markObject(heap, stack, bytemap, object, objectMeta);
+            Marker_markObject(heap, outHolder, bytemap, object, objectMeta);
         }
     }
 }
 
-void Marker_Mark(Heap *heap, Stack *stack) {
+void Marker_MarkPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
     Bytemap *bytemap = heap->bytemap;
-    while (!Stack_IsEmpty(stack)) {
-        Object *object = Stack_Pop(stack);
+    if (*outHolder == NULL) {
+        *outHolder = GreyList_Pop(&heap->mark.empty);
+    }
+    while (!GreyPacket_IsEmpty(in)) {
+        Object *object = GreyPacket_Pop(in);
 
         if (Object_IsArray(object)) {
             if (object->rtti->rt.id == __object_array_id) {
@@ -51,7 +60,7 @@ void Marker_Mark(Heap *heap, Stack *stack) {
                     if (Heap_IsWordInHeap(heap, field)) {
                         ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
                         if (ObjectMeta_IsAllocated(fieldMeta)) {
-                            Marker_markObject(heap, stack, bytemap,
+                            Marker_markObject(heap, outHolder, bytemap,
                                               (Object *)field, fieldMeta);
                         }
                     }
@@ -66,7 +75,7 @@ void Marker_Mark(Heap *heap, Stack *stack) {
                 if (Heap_IsWordInHeap(heap, field)) {
                     ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
                     if (ObjectMeta_IsAllocated(fieldMeta)) {
-                        Marker_markObject(heap, stack, bytemap, (Object *)field,
+                        Marker_markObject(heap, outHolder, bytemap, (Object *)field,
                                           fieldMeta);
                     }
                 }
@@ -76,7 +85,24 @@ void Marker_Mark(Heap *heap, Stack *stack) {
     }
 }
 
-void Marker_markProgramStack(Heap *heap, Stack *stack) {
+void Marker_Mark(Heap *heap) {
+    GreyPacket* in = GreyList_Pop(&heap->mark.full);
+    GreyPacket *out = NULL;
+    while (in != NULL) {
+        Marker_Mark(heap, in, &out);
+        GreyPacket *next = GreyList_Pop(&heap->mark.full);
+        if (next == NULL && !GreyPacket_IsEmpty(out)) {
+            GreyPacket *tmp = out;
+            out = in;
+            in = tmp;
+        } else {
+            in = next;
+            GreyList_Push(&heap->mark.empty, in);
+        }
+    }
+}
+
+void Marker_markProgramStack(Heap *heap, GreyPacket **outHolder) {
     // Dumps registers into 'regs' which is on stack
     jmp_buf regs;
     setjmp(regs);
@@ -89,13 +115,13 @@ void Marker_markProgramStack(Heap *heap, Stack *stack) {
 
         word_t *stackObject = *current;
         if (Heap_IsWordInHeap(heap, stackObject)) {
-            Marker_markConservative(heap, stack, stackObject);
+            Marker_markConservative(heap, outHolder, stackObject);
         }
         current += 1;
     }
 }
 
-void Marker_markModules(Heap *heap, Stack *stack) {
+void Marker_markModules(Heap *heap, GreyPacket **outHolder) {
     word_t **modules = &__modules;
     int nb_modules = __modules_size;
     Bytemap *bytemap = heap->bytemap;
@@ -105,15 +131,17 @@ void Marker_markModules(Heap *heap, Stack *stack) {
             // is within heap
             ObjectMeta *objectMeta = Bytemap_Get(bytemap, (word_t *)object);
             if (ObjectMeta_IsAllocated(objectMeta)) {
-                Marker_markObject(heap, stack, bytemap, object, objectMeta);
+                Marker_markObject(heap, outHolder, bytemap, object, objectMeta);
             }
         }
     }
 }
 
-void Marker_MarkRoots(Heap *heap, Stack *stack) {
-    Marker_markProgramStack(heap, stack);
-    Marker_markModules(heap, stack);
+void Marker_MarkRoots(Heap *heap) {
+    GreyPacket *out = GreyList_Pop(&heap->mark.empty);
+    Marker_markProgramStack(heap, &out);
+    Marker_markModules(heap, &out);
+    GreyList_Push(&heap->mark.full, out);
 }
 
 bool Marker_IsMarkDone(Heap *heap) {

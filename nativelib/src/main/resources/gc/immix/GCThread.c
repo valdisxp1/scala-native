@@ -9,7 +9,7 @@ static inline void GCThread_mark(GCThread *thread, Heap *heap, Stats *stats) {
         start_ns = scalanative_nano_time();
     }
     while (!Marker_IsMarkDone()) {
-        Marker_Mark(heap, &thread->mark.stack);
+        Marker_Mark(heap);
     }
     if (stats != NULL) {
         end_ns = scalanative_nano_time();

@@ -342,9 +342,10 @@ void Heap_Collect(Heap *heap, Stack *stack) {
     if (stats != NULL) {
         start_ns = scalanative_nano_time();
     }
-    Marker_MarkRoots(heap, globalStack);
+    Marker_MarkRoots(heap);
     heap->gcThreads.phase = gc_mark;
-    Marker_Mark(heap, &heap->lazyMark.stack);
+    //TODO start threads
+    Marker_Mark(heap);
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
         Stats_RecordEvent(stats, event_mark, MUTATOR_THREAD_ID, start_ns,

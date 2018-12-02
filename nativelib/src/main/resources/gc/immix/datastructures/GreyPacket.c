@@ -20,8 +20,12 @@ Stack_Type GreyPacket_Pop(GreyPacket *packet) {
     return packet->items[--packet->size];
 }
 
-bool GreyPacket_IsEmpty(GreyPacket *packet){
+bool GreyPacket_IsEmpty(GreyPacket *packet) {
    return packet->size == 0;
+}
+
+bool GreyPacket_IsFull(GreyPacket *packet) {
+   return packet->size == GREY_PACKET_ITEMS;
 }
 
 void GreyList_Init(GreyList *list) {
