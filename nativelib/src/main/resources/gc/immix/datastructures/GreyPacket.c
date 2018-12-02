@@ -65,6 +65,8 @@ GreyPacket *GreyList_next(GreyPacket *packet) {
     void *next = packet->next;
     if (next == GREYLIST_LAST) {
         return NULL;
+    } else if (next == NULL) {
+        return packet + 1;
     } else {
         return (GreyPacket*) next;
     }
@@ -81,5 +83,6 @@ GreyPacket *GreyList_Pop(GreyList *list) {
         }
         newValue = (word_t) GreyList_next(head);
     } while(!atomic_compare_exchange_strong(&list->head, (word_t *)&head, newValue));
+    list->size -= 1;
     return head;
 }

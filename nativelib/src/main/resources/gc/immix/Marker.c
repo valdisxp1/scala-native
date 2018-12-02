@@ -45,7 +45,9 @@ void Marker_markConservative(Heap *heap, GreyPacket **outHolder, word_t *address
 void Marker_MarkPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
     Bytemap *bytemap = heap->bytemap;
     if (*outHolder == NULL) {
-        *outHolder = GreyList_Pop(&heap->mark.empty);
+        GreyPacket *fresh = GreyList_Pop(&heap->mark.empty);
+        assert(fresh != NULL);
+        *outHolder = fresh;
     }
     while (!GreyPacket_IsEmpty(in)) {
         Object *object = GreyPacket_Pop(in);
@@ -96,8 +98,8 @@ void Marker_Mark(Heap *heap) {
             out = in;
             in = tmp;
         } else {
-            in = next;
             GreyList_Push(&heap->mark.empty, in);
+            in = next;
         }
     }
 }
