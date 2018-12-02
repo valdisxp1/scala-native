@@ -3,7 +3,6 @@
 #include <memory.h>
 #include "GCTypes.h"
 #include "Heap.h"
-#include "datastructures/Stack.h"
 #include "Marker.h"
 #include "Log.h"
 #include "Object.h"

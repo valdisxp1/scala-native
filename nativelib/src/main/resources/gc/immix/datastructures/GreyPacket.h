@@ -3,9 +3,10 @@
 
 #include <stdatomic.h>
 #include <stdbool.h>
-#include "Stack.h"
 #include "../Constants.h"
 #include "../GCTypes.h"
+
+typedef Object *Stack_Type;
 
 typedef struct {
     void *next;
