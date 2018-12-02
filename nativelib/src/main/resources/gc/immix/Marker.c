@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "State.h"
 #include "headers/ObjectHeader.h"
+#include "datastructures/GreyPacket.h"
 
 extern word_t *__modules;
 extern int __modules_size;
@@ -42,10 +43,11 @@ void Marker_markConservative(Heap *heap, GreyPacket **outHolder, word_t *address
     }
 }
 
-void Marker_MarkPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
+void Marker_markPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
     Bytemap *bytemap = heap->bytemap;
     if (*outHolder == NULL) {
         GreyPacket *fresh = GreyList_Pop(&heap->mark.empty);
+        // TODO handle oom for GreyList
         assert(fresh != NULL);
         *outHolder = fresh;
     }
@@ -91,7 +93,7 @@ void Marker_Mark(Heap *heap) {
     GreyPacket* in = GreyList_Pop(&heap->mark.full);
     GreyPacket *out = NULL;
     while (in != NULL) {
-        Marker_MarkPacket(heap, in, &out);
+        Marker_markPacket(heap, in, &out);
         GreyPacket *next = GreyList_Pop(&heap->mark.full);
         if (next == NULL && !GreyPacket_IsEmpty(out)) {
             GreyPacket *tmp = out;

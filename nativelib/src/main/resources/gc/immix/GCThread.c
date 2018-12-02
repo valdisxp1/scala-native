@@ -82,3 +82,36 @@ bool GCThread_AnyActive(Heap *heap) {
     }
     return false;
 }
+
+NOINLINE void GCThread_joinAllSlow(GCThread *gcThreads, int gcThreadCount) {
+    // extremely unlikely to enter here
+    // unless very many threads running
+    bool anyActive = true;
+    while (anyActive) {
+        sched_yield();
+        anyActive = false;
+        for (int i = 0; i < gcThreadCount; i++) {
+            anyActive |= gcThreads[i].active;
+        }
+    }
+}
+
+INLINE void GCThread_JoinAll(Heap *heap) {
+    int gcThreadCount = heap->gcThreads.count;
+    GCThread *gcThreads = (GCThread *) heap->gcThreads.all;
+    bool anyActive = false;
+    for (int i = 0; i < gcThreadCount; i++) {
+        anyActive |= gcThreads[i].active;
+    }
+    if (anyActive) {
+        GCThread_joinAllSlow(gcThreads, gcThreadCount);
+    }
+}
+
+void GCThread_WakeAll(Heap *heap) {
+    sem_t *start = &heap->gcThreads.start;
+    int gcThreadCount = heap->gcThreads.count;
+    for (int i = 0; i < gcThreadCount; i++) {
+        sem_post(start);
+    }
+}

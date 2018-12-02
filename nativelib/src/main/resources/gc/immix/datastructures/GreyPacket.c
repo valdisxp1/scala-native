@@ -1,3 +1,4 @@
+#include "../Object.h"
 #include "GreyPacket.h"
 #include "../Log.h"
 
