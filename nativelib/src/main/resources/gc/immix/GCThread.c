@@ -5,10 +5,11 @@
 #include <semaphore.h>
 
 static inline void GCThread_mark(GCThread *thread, Heap *heap, Stats *stats) {
+    uint64_t start_ns, end_ns;
     if (stats != NULL) {
         start_ns = scalanative_nano_time();
     }
-    while (!Marker_IsMarkDone()) {
+    while (!Marker_IsMarkDone(heap)) {
         Marker_Mark(heap);
     }
     if (stats != NULL) {
@@ -66,7 +67,6 @@ void GCThread_Init(GCThread *thread, int id, Heap *heap) {
     thread->active = false;
     // we do not use the pthread value
     pthread_t self;
-    Stack_Init(&thread->stack, INITIAL_STACK_SIZE);
 
     pthread_create(&self, NULL, GCThread_loop, (void *)thread);
 }

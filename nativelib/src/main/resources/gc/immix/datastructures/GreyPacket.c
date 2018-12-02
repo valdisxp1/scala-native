@@ -46,7 +46,7 @@ void GreyList_Push(GreyList *list, GreyPacket *packet) {
     list->size += 1;
 }
 
-void GreyList_PushAll(GreyList *list, GreyPacket *first, atomic_uint_fast32_t size) {
+void GreyList_PushAll(GreyList *list, GreyPacket *first, uint_fast32_t size) {
     GreyPacket *last = first + (size - 1);
     GreyPacket *head = (GreyPacket *) list->head;
     do {

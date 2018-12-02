@@ -1,9 +1,10 @@
 #ifndef IMMIX_GREYPACKET_H
 #define IMMIX_GREYPACKET_H
 
+#include <stdatomic.h>
 #include <stdbool.h>
 #include "Stack.h"
-#include "Constants.h"
+#include "../Constants.h"
 #include "../GCTypes.h"
 
 typedef struct {
@@ -27,7 +28,7 @@ bool GreyPacket_IsFull(GreyPacket *packet);
 
 void GreyList_Init(GreyList *list);
 void GreyList_Push(GreyList *list, GreyPacket *packet);
-void GreyList_PushAll(GreyList *list, GreyPacket *first, GreyPacket *last);
+void GreyList_PushAll(GreyList *list, GreyPacket *first, uint_fast32_t size);
 GreyPacket *GreyList_Pop(GreyList *list);
 
 

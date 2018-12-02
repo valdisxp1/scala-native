@@ -4,7 +4,6 @@
 #include "GCTypes.h"
 #include "Allocator.h"
 #include "LargeAllocator.h"
-#include "datastructures/Stack.h"
 #include "datastructures/Bytemap.h"
 #include "datastructures/BlockRange.h"
 #include "datastructures/GreyPacket.h"
@@ -80,7 +79,7 @@ word_t *Heap_Alloc(Heap *heap, uint32_t objectSize);
 word_t *Heap_AllocSmall(Heap *heap, uint32_t objectSize);
 word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize);
 
-void Heap_Collect(Heap *heap, Stack *stack);
+void Heap_Collect(Heap *heap);
 void Heap_Recycle(Heap *heap);
 void Heap_GrowIfNeeded(Heap *heap);
 void Heap_Grow(Heap *heap, uint32_t increment);

@@ -89,7 +89,7 @@ void Marker_Mark(Heap *heap) {
     GreyPacket* in = GreyList_Pop(&heap->mark.full);
     GreyPacket *out = NULL;
     while (in != NULL) {
-        Marker_Mark(heap, in, &out);
+        Marker_MarkPacket(heap, in, &out);
         GreyPacket *next = GreyList_Pop(&heap->mark.full);
         if (next == NULL && !GreyPacket_IsEmpty(out)) {
             GreyPacket *tmp = out;

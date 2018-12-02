@@ -193,7 +193,7 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
         return (word_t *)object;
     } else {
         // Otherwise collect
-        Heap_Collect(heap, &stack);
+        Heap_Collect(heap);
 
         // After collection, try to alloc again, if it fails, grow the heap by
         // at least the size of the object we want to alloc
@@ -220,7 +220,7 @@ NOINLINE word_t *Heap_allocSmallSlow(Heap *heap, uint32_t size) {
     if (object != NULL)
         goto done;
 
-    Heap_Collect(heap, &stack);
+    Heap_Collect(heap);
     object = Sweeper_LazySweep(heap, size);
 
     if (object != NULL)
@@ -328,7 +328,7 @@ void Heap_assertIsConsistent(Heap *heap) {
 }
 #endif
 
-void Heap_Collect(Heap *heap, Stack *stack) {
+void Heap_Collect(Heap *heap) {
     Stats *stats = heap->stats;
     if (stats != NULL) {
         stats->collection_start_ns = scalanative_nano_time();

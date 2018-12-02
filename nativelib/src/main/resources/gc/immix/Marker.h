@@ -7,5 +7,6 @@
 void Marker_MarkRoots(Heap *heap);
 void Marker_Mark(Heap *heap);
 void Marker_MarkPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder);
+bool Marker_IsMarkDone(Heap *heap);
 
 #endif // IMMIX_MARKER_H
