@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <sys/mman.h>
 #include <stdio.h>
 #include "Heap.h"
 #include "Log.h"
@@ -7,23 +6,15 @@
 #include "Marker.h"
 #include "State.h"
 #include "utils/MathUtils.h"
+#include "utils/MemoryUtils.h"
 #include "StackTrace.h"
 #include "Settings.h"
 #include "Memory.h"
 #include "GCThread.h"
 #include "Sweeper.h"
-#include <memory.h>
 #include <time.h>
 #include <inttypes.h>
 #include <sched.h>
-
-// Allow read and write
-#define HEAP_MEM_PROT (PROT_READ | PROT_WRITE)
-// Map private anonymous memory, and prevent from reserving swap
-#define HEAP_MEM_FLAGS (MAP_NORESERVE | MAP_PRIVATE | MAP_ANONYMOUS)
-// Map anonymous memory (not a file)
-#define HEAP_MEM_FD -1
-#define HEAP_MEM_FD_OFFSET 0
 
 void Heap_exitWithOutOfMemory() {
     printf("Out of heap space\n");
@@ -42,24 +33,6 @@ size_t Heap_getMemoryLimit() {
     } else {
         return memorySize;
     }
-}
-
-/**
- * Maps `MAX_SIZE` of memory and returns the first address aligned on
- * `alignement` mask
- */
-word_t *Heap_mapAndAlign(size_t memoryLimit, size_t alignmentSize) {
-    assert(alignmentSize % WORD_SIZE == 0);
-    word_t *heapStart = mmap(NULL, memoryLimit, HEAP_MEM_PROT, HEAP_MEM_FLAGS,
-                             HEAP_MEM_FD, HEAP_MEM_FD_OFFSET);
-
-    size_t alignmentMask = ~(alignmentSize - 1);
-    // Heap start not aligned on
-    if (((word_t)heapStart & alignmentMask) != (word_t)heapStart) {
-        word_t *previousBlock = (word_t *)((word_t)heapStart & alignmentMask);
-        heapStart = previousBlock + alignmentSize / WORD_SIZE;
-    }
-    return heapStart;
 }
 
 /**
@@ -108,7 +81,7 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
 
     // reserve space for block headers
     size_t blockMetaSpaceSize = maxNumberOfBlocks * sizeof(BlockMeta);
-    word_t *blockMetaStart = Heap_mapAndAlign(blockMetaSpaceSize, WORD_SIZE);
+    word_t *blockMetaStart = Memory_MapAndAlign(blockMetaSpaceSize, WORD_SIZE);
     heap->blockMetaStart = blockMetaStart;
     heap->blockMetaEnd =
         blockMetaStart + initialBlockCount * sizeof(BlockMeta) / WORD_SIZE;
@@ -116,24 +89,21 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     // reserve space for line headers
     size_t lineMetaSpaceSize =
         (size_t)maxNumberOfBlocks * LINE_COUNT * LINE_METADATA_SIZE;
-    word_t *lineMetaStart = Heap_mapAndAlign(lineMetaSpaceSize, WORD_SIZE);
+    word_t *lineMetaStart = Memory_MapAndAlign(lineMetaSpaceSize, WORD_SIZE);
     heap->lineMetaStart = lineMetaStart;
     assert(LINE_COUNT * LINE_SIZE == BLOCK_TOTAL_SIZE);
     assert(LINE_COUNT * LINE_METADATA_SIZE % WORD_SIZE == 0);
     heap->lineMetaEnd = lineMetaStart + initialBlockCount * LINE_COUNT *
                                             LINE_METADATA_SIZE / WORD_SIZE;
 
-    word_t *heapStart = Heap_mapAndAlign(maxHeapSize, BLOCK_TOTAL_SIZE);
+    word_t *heapStart = Memory_MapAndAlign(maxHeapSize, BLOCK_TOTAL_SIZE);
 
     BlockAllocator_Init(&blockAllocator, blockMetaStart, initialBlockCount);
-    GreyList_Init(&heap->mark.empty);
-    GreyList_Init(&heap->mark.full);
-    heap->mark.total = GREY_PACKET_COUNT;
-    word_t* greyPacketsStart = Heap_mapAndAlign(GREY_PACKET_COUNT * sizeof(GreyPacket), WORD_SIZE);
-    GreyList_PushAll(&heap->mark.empty, (GreyPacket *) greyPacketsStart, GREY_PACKET_COUNT);
+    Marker_Init(heap);
+    Marker_GrowGreyArea(heap, GREY_PACKET_COUNT);
 
     // reserve space for bytemap
-    Bytemap *bytemap = (Bytemap *)Heap_mapAndAlign(
+    Bytemap *bytemap = (Bytemap *)Memory_MapAndAlign(
         maxHeapSize / ALLOCATION_ALIGNMENT + sizeof(Bytemap),
         ALLOCATION_ALIGNMENT);
     heap->bytemap = bytemap;

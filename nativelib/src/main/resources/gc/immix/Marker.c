@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Log.h"
 #include "State.h"
+#include "utils/MemoryUtils.h"
 #include "headers/ObjectHeader.h"
 #include "datastructures/GreyPacket.h"
 
@@ -13,16 +14,45 @@ extern word_t **__stack_bottom;
 
 #define LAST_FIELD_OFFSET -1
 
+void Marker_Init(Heap *heap) {
+    GreyList_Init(&heap->mark.empty);
+    GreyList_Init(&heap->mark.full);
+    heap->mark.total = 0;
+    pthread_mutex_init(&heap->mark.growMutex, NULL);
+}
+
+void Marker_GrowGreyArea(Heap *heap, int packetCount) {
+    word_t* greyPacketsStart = Memory_MapAndAlign(packetCount * sizeof(GreyPacket), WORD_SIZE);
+    GreyList_PushAll(&heap->mark.empty, (GreyPacket *) greyPacketsStart, packetCount);
+    heap->mark.total += packetCount;
+}
+
+NOINLINE
+GreyPacket *Marker_takeEmptyPacketSlow(Heap *heap) {
+    GreyPacket *packet = NULL;
+    while (packet == NULL) {
+        packet = GreyList_Pop(&heap->mark.empty);
+        int didNotLock = pthread_mutex_trylock(&heap->mark.growMutex);
+        if (!didNotLock) {
+            Marker_GrowGreyArea(heap, heap->mark.total);
+            packet = GreyList_Pop(&heap->mark.empty);
+            pthread_mutex_unlock(&heap->mark.growMutex);
+        }
+    }
+    return packet;
+}
+
 static inline GreyPacket *Marker_takeEmptyPacket(Heap *heap) {
     GreyPacket *packet = GreyList_Pop(&heap->mark.empty);
     if (packet != NULL) {
         // Another thread setting size = 0 might not arrived, just write it now.
         // Avoiding a memfence.
         packet->size = 0;
+        return packet;
+    } else {
+        return Marker_takeEmptyPacketSlow(heap);
     }
-    // TODO handle out of empty packets
-    assert(packet != NULL);
-    return packet;
+
 }
 
 static inline GreyPacket *Marker_takeFullPacket(Heap *heap) {

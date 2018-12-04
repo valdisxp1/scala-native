@@ -53,6 +53,7 @@ typedef struct {
         atomic_uint_fast32_t total;
         GreyList empty;
         GreyList full;
+        pthread_mutex_t growMutex;
     } mark;
     Bytemap *bytemap;
     Stats *stats;
