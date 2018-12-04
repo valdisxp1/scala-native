@@ -22,9 +22,9 @@ void Marker_Init(Heap *heap) {
 }
 
 void Marker_GrowGreyArea(Heap *heap, int packetCount) {
+    heap->mark.total += packetCount;
     word_t* greyPacketsStart = Memory_MapAndAlign(packetCount * sizeof(GreyPacket), WORD_SIZE);
     GreyList_PushAll(&heap->mark.empty, (GreyPacket *) greyPacketsStart, packetCount);
-    heap->mark.total += packetCount;
 }
 
 NOINLINE
@@ -35,9 +35,9 @@ GreyPacket *Marker_takeEmptyPacketSlow(Heap *heap) {
         int didNotLock = pthread_mutex_trylock(&heap->mark.growMutex);
         if (!didNotLock) {
             Marker_GrowGreyArea(heap, heap->mark.total);
-            packet = GreyList_Pop(&heap->mark.empty);
             pthread_mutex_unlock(&heap->mark.growMutex);
         }
+        packet = GreyList_Pop(&heap->mark.empty);
     }
     return packet;
 }
