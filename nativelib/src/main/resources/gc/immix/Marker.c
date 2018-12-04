@@ -13,6 +13,37 @@ extern word_t **__stack_bottom;
 
 #define LAST_FIELD_OFFSET -1
 
+static inline GreyPacket *Marker_takeEmptyPacket(Heap *heap) {
+    GreyPacket *packet = GreyList_Pop(&heap->mark.empty);
+    if (packet != NULL) {
+        // Another thread setting size = 0 might not arrived, just write it now.
+        // Avoiding a memfence.
+        packet->size = 0;
+    }
+    // TODO handle out of empty packets
+    assert(packet != NULL);
+    return packet;
+}
+
+static inline GreyPacket *Marker_takeFullPacket(Heap *heap) {
+    GreyPacket *packet = GreyList_Pop(&heap->mark.full);
+    assert(packet->size > 0);
+    return packet;
+}
+
+static inline void Marker_giveEmptyPacket(Heap *heap, GreyPacket *packet) {
+    assert(packet->size == 0);
+    // no memfence needed see Marker_takeEmptyPacket
+    GreyList_Push(&heap->mark.empty, packet);
+}
+
+static inline void Marker_giveFullPacket(Heap *heap, GreyPacket *packet) {
+    assert(packet->size > 0);
+    // make all the contents visible to other threads
+    atomic_thread_fence(memory_order_seq_cst);
+    GreyList_Push(&heap->mark.full, packet);
+}
+
 void Marker_markObject(Heap *heap, GreyPacket **outHolder, Bytemap *bytemap,
                        Object *object, ObjectMeta *objectMeta) {
     assert(ObjectMeta_IsAllocated(objectMeta));
@@ -22,10 +53,8 @@ void Marker_markObject(Heap *heap, GreyPacket **outHolder, Bytemap *bytemap,
 
     GreyPacket *out = *outHolder;
     if (!GreyPacket_Push(out, object)) {
-        GreyList_Push(&heap->mark.full, out);
-        *outHolder = out = GreyList_Pop(&heap->mark.empty);
-        // TODO handle oom for GreyList
-        assert(out != NULL);
+        Marker_giveFullPacket(heap, out);
+        *outHolder = out = Marker_takeEmptyPacket(heap);
         GreyPacket_Push(out, object);
     }
 }
@@ -46,8 +75,7 @@ void Marker_markConservative(Heap *heap, GreyPacket **outHolder, word_t *address
 void Marker_markPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
     Bytemap *bytemap = heap->bytemap;
     if (*outHolder == NULL) {
-        GreyPacket *fresh = GreyList_Pop(&heap->mark.empty);
-        // TODO handle oom for GreyList
+        GreyPacket *fresh = Marker_takeEmptyPacket(heap);
         assert(fresh != NULL);
         *outHolder = fresh;
     }
@@ -90,19 +118,23 @@ void Marker_markPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
 }
 
 void Marker_Mark(Heap *heap) {
-    GreyPacket* in = GreyList_Pop(&heap->mark.full);
+    GreyPacket* in = Marker_takeFullPacket(heap);
     GreyPacket *out = NULL;
     while (in != NULL) {
         Marker_markPacket(heap, in, &out);
-        GreyPacket *next = GreyList_Pop(&heap->mark.full);
+        GreyPacket *next = Marker_takeFullPacket(heap);
         if (next == NULL && !GreyPacket_IsEmpty(out)) {
             GreyPacket *tmp = out;
             out = in;
             in = tmp;
         } else {
-            GreyList_Push(&heap->mark.empty, in);
+            Marker_giveEmptyPacket(heap, in);
             in = next;
         }
+    }
+    assert(in == NULL);
+    if (out != NULL) {
+        Marker_giveFullPacket(heap, out);
     }
 }
 
@@ -142,10 +174,10 @@ void Marker_markModules(Heap *heap, GreyPacket **outHolder) {
 }
 
 void Marker_MarkRoots(Heap *heap) {
-    GreyPacket *out = GreyList_Pop(&heap->mark.empty);
+    GreyPacket *out = Marker_takeEmptyPacket(heap);
     Marker_markProgramStack(heap, &out);
     Marker_markModules(heap, &out);
-    GreyList_Push(&heap->mark.full, out);
+    Marker_giveFullPacket(heap, out);
 }
 
 bool Marker_IsMarkDone(Heap *heap) {

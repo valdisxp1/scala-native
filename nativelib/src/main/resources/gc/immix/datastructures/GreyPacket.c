@@ -2,7 +2,7 @@
 #include "GreyPacket.h"
 #include "../Log.h"
 
-void GreyPacket_Init(GreyPacket *packet){
+void GreyPacket_Init(GreyPacket *packet) {
     packet->size = 0;
     packet->next = GREYLIST_LAST;
 }
