@@ -27,7 +27,7 @@ static inline GreyPacket *Marker_takeEmptyPacket(Heap *heap) {
 
 static inline GreyPacket *Marker_takeFullPacket(Heap *heap) {
     GreyPacket *packet = GreyList_Pop(&heap->mark.full);
-    assert(packet->size > 0);
+    assert(packet == NULL || packet->size > 0);
     return packet;
 }
 
@@ -46,7 +46,7 @@ static inline void Marker_giveFullPacket(Heap *heap, GreyPacket *packet) {
 
 void Marker_markObject(Heap *heap, GreyPacket **outHolder, Bytemap *bytemap,
                        Object *object, ObjectMeta *objectMeta) {
-    assert(ObjectMeta_IsAllocated(objectMeta));
+    assert(ObjectMeta_IsAllocated(objectMeta) || ObjectMeta_IsMarked(objectMeta));
 
     assert(Object_Size(object) != 0);
     Object_Mark(heap, object, objectMeta);
@@ -134,7 +134,11 @@ void Marker_Mark(Heap *heap) {
     }
     assert(in == NULL);
     if (out != NULL) {
-        Marker_giveFullPacket(heap, out);
+        if (out->size > 0) {
+            Marker_giveFullPacket(heap, out);
+        } else {
+            Marker_giveEmptyPacket(heap, out);
+        }
     }
 }
 

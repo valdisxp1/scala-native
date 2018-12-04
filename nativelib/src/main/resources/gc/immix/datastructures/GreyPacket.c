@@ -75,7 +75,9 @@ GreyPacket *GreyList_next(GreyPacket *packet) {
 
 GreyPacket *GreyList_Pop(GreyList *list) {
     GreyPacket *head = (GreyPacket*) list->head;
-    word_t newValue;
+    // not allowing clang to pull this before the NULL check
+    // avoiding a SEGFAULT
+    volatile word_t newValue;
     do {
         // head will be replaced with actual value if
         // atomic_compare_exchange_strong fails
