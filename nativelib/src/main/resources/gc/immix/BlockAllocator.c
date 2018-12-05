@@ -35,6 +35,8 @@ inline static int BlockAllocator_sizeToLinkedListIndex(uint32_t size) {
 
 inline static BlockMeta *
 BlockAllocator_pollSuperblock(BlockAllocator *blockAllocator, int *index) {
+    // acquire all the changes done by sweeping
+    atomic_thread_fence(memory_order_acquire);
     word_t *blockMetaStart = blockAllocator->blockMetaStart;
     for (int i = *index; i < SUPERBLOCK_LIST_SIZE; i++) {
         BlockMeta *superblock =
@@ -214,9 +216,10 @@ void BlockAllocator_AddFreeSuperblock(BlockAllocator *blockAllocator,
 #endif
     }
     // all the sweeping changes should be visible to all threads by now
-    atomic_thread_fence(memory_order_seq_cst);
+    atomic_thread_fence(memory_order_release);
     BlockAllocator_splitAndAdd(blockAllocator, superblock, count);
-    blockAllocator->freeBlockCount += count;
+    // blockAllocator->freeBlockCount += count;
+    atomic_fetch_add_explicit(&blockAllocator->freeBlockCount, count, memory_order_relaxed);
 }
 
 void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
@@ -240,7 +243,7 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
 #endif
     }
     // all the sweeping changes should be visible to all threads by now
-    atomic_thread_fence(memory_order_seq_cst);
+    atomic_thread_fence(memory_order_release);
     uint32_t superblockIdx =
         BlockMeta_GetBlockIndex(blockAllocator->blockMetaStart, superblock);
     BlockRangeVal oldRange = BlockRange_AppendLastOrReplace(
@@ -251,7 +254,8 @@ void BlockAllocator_AddFreeBlocks(BlockAllocator *blockAllocator,
             blockAllocator->blockMetaStart, BlockRange_First(oldRange));
         BlockAllocator_splitAndAdd(blockAllocator, replaced, size);
     }
-    blockAllocator->freeBlockCount += count;
+    // blockAllocator->freeBlockCount += count;
+    atomic_fetch_add_explicit(&blockAllocator->freeBlockCount, count, memory_order_relaxed);
 }
 
 void BlockAllocator_Clear(BlockAllocator *blockAllocator) {
