@@ -14,6 +14,7 @@ void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart,
     BlockAllocator_Clear(blockAllocator);
 
     blockAllocator->blockMetaStart = blockMetaStart;
+    blockAllocator->blockCountLog2 = (uint32_t) MathUtils_Log2Floor(blockCount);
     BlockMeta *sCursor = (BlockMeta *)blockMetaStart;
     BlockMeta *sLimit = (BlockMeta *)blockMetaStart + blockCount;
     blockAllocator->smallestSuperblock.cursor = sCursor;
@@ -38,7 +39,8 @@ BlockAllocator_pollSuperblock(BlockAllocator *blockAllocator, int *index) {
     // acquire all the changes done by sweeping
     atomic_thread_fence(memory_order_acquire);
     word_t *blockMetaStart = blockAllocator->blockMetaStart;
-    for (int i = *index; i < SUPERBLOCK_LIST_SIZE; i++) {
+    int last = blockAllocator->blockCountLog2;
+    for (int i = *index; i <= last; i++) {
         BlockMeta *superblock =
             BlockList_Pop(&blockAllocator->freeSuperblocks[i], blockMetaStart);
         if (superblock != NULL) {

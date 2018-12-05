@@ -19,6 +19,7 @@ typedef struct {
     atomic_uint_fast32_t freeBlockCount;
     BlockRange coalescingSuperblock;
     word_t *blockMetaStart;
+    uint32_t blockCountLog2;
     BlockList freeSuperblocks[SUPERBLOCK_LIST_SIZE];
 } BlockAllocator;
 

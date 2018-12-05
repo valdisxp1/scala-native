@@ -473,4 +473,5 @@ void Heap_Grow(Heap *heap, uint32_t incrementInBlocks) {
                                  incrementInBlocks);
 
     heap->blockCount += incrementInBlocks;
+    blockAllocator.blockCountLog2 = (uint32_t) MathUtils_Log2Floor(heap->blockCount);
 }
