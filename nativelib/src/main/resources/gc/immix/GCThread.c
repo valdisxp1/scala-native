@@ -18,10 +18,13 @@ void *GCThread_loop(void *arg) {
         if (stats != NULL) {
             start_ns = scalanative_nano_time();
         }
-        while (!Sweeper_IsSweepDone(heap)) {
+        while (heap->sweep.cursor < heap->sweep.limit) {
             Sweeper_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
             Sweeper_LazyCoalesce(heap);
         }
+        thread->sweep.cursorDone = heap->sweep.limit;
+        // this would also be the only thing run if mutator triggers a
+        Sweeper_LazyCoalesce(heap);
         if (stats != NULL) {
             end_ns = scalanative_nano_time();
             Stats_RecordEvent(stats, event_concurrent_sweep, thread->id,
