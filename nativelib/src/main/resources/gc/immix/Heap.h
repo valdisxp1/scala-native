@@ -36,6 +36,7 @@ typedef struct {
         atomic_uint_fast32_t limit;
         BlockRange coalesce; // _First = cursorDone, _Limit = cursor
         atomic_bool postSweepDone;
+        sem_t postSweepReady;
     } sweep;
     struct {
         // making cursorDone atomic so it keeps sequential consistency with the

@@ -113,19 +113,24 @@ Object *Sweeper_LazySweep(Heap *heap, uint32_t size) {
         }
         if (oldDoneValue < heap->sweep.limit && heap->sweep.cursor >= heap->sweep.limit) {
             heap->lazySweep.cursorDone = heap->sweep.limit;
-            // let some other thread do the coalesce
-            sem_post(&heap->gcThreads.start);
-
+            // might as well try to coalesce there nothing better to do
+            Sweeper_LazyCoalesce(heap);
+            if (object == NULL) {
+                object = (Object *)Allocator_Alloc(&allocator, size);
+            }
+        }
+        if (object == NULL && !heap->sweep.postSweepDone) {
+            // wait for the last threads to finish up
+            sem_wait(&heap->sweep.postSweepReady);
+            assert(Sweeper_IsSweepDone(heap));
+            Sweeper_sweepDone(heap);
+            object = (Object *)Allocator_Alloc(&allocator, size);
         }
         if (stats != NULL) {
             end_ns = scalanative_nano_time();
             Stats_RecordEvent(stats, event_sweep, MUTATOR_THREAD_ID, start_ns,
                               end_ns);
         }
-    }
-    // do not wait, we can still do post sweep actions on the future allocations
-    if (Sweeper_IsSweepDone(heap) && !heap->sweep.postSweepDone) {
-        Sweeper_sweepDone(heap);
     }
     return object;
 }
@@ -162,19 +167,24 @@ Object *Sweeper_LazySweepLarge(Heap *heap, uint32_t size) {
         }
         if (oldDoneValue < heap->sweep.limit && heap->sweep.cursor >= heap->sweep.limit) {
             heap->lazySweep.cursorDone = heap->sweep.limit;
-            // let some other thread do the coalesce
-            sem_post(&heap->gcThreads.start);
-
+            // might as well try to coalesce there nothing better to do
+            Sweeper_LazyCoalesce(heap);
+            if (object == NULL) {
+                object = (Object *)Allocator_Alloc(&allocator, size);
+            }
+        }
+        if (object == NULL && !heap->sweep.postSweepDone) {
+            // wait for the last threads to finish up
+            sem_wait(&heap->sweep.postSweepReady);
+            assert(Sweeper_IsSweepDone(heap));
+            Sweeper_sweepDone(heap);
+            object = (Object *)Allocator_Alloc(&allocator, size);
         }
         if (stats != NULL) {
             end_ns = scalanative_nano_time();
             Stats_RecordEvent(stats, event_sweep, MUTATOR_THREAD_ID, start_ns,
                               end_ns);
         }
-    }
-    // do not wait, we can still do post sweep actions on the future allocations
-    if (Sweeper_IsSweepDone(heap) && !heap->sweep.postSweepDone) {
-        Sweeper_sweepDone(heap);
     }
     return object;
 }
@@ -418,8 +428,10 @@ void Sweeper_LazyCoalesce(Heap *heap) {
                 return;
             }
         }
-
         heap->sweep.coalesce = BlockRange_Pack(limitIdx, limitIdx);
+        if (limitIdx == heap->sweep.limit) {
+            sem_post(&heap->sweep.postSweepReady);
+        }
     }
 }
 
