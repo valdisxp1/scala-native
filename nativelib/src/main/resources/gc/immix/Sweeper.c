@@ -107,6 +107,7 @@ Object *Sweeper_LazySweep(Heap *heap, uint32_t size) {
                 Sweeper_LazyCoalesce(heap);
             }
         }
+        heap->lazySweep.cursorDone = heap->sweep.limit;
         while (object == NULL && !Sweeper_IsSweepDone(heap)) {
             Sweeper_LazyCoalesce(heap);
             object = (Object *)Allocator_Alloc(&allocator, size);
@@ -156,6 +157,7 @@ Object *Sweeper_LazySweepLarge(Heap *heap, uint32_t size) {
                 Sweeper_LazyCoalesce(heap);
             }
         }
+        heap->lazySweep.cursorDone = heap->sweep.limit;
         while (object == NULL && !Sweeper_IsSweepDone(heap)) {
             Sweeper_LazyCoalesce(heap);
             object = (Object *)Allocator_Alloc(&allocator, size);
