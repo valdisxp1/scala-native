@@ -2,6 +2,7 @@
 #include "Stats.h"
 #include "State.h"
 #include "GCThread.h"
+#include <sched.h>
 
 /*
 
@@ -95,7 +96,8 @@ Object *Sweeper_LazySweep(Heap *heap, uint32_t size) {
         if (stats != NULL) {
             start_ns = scalanative_nano_time();
         }
-        while (object == NULL && !Sweeper_IsSweepDone(heap)) {
+        uint_fast32_t oldDoneValue = heap->lazySweep.cursorDone;
+        while (object == NULL && heap->sweep.cursor < heap->sweep.limit) {
             Sweeper_Sweep(heap, &heap->lazySweep.cursorDone,
                           LAZY_SWEEP_MIN_BATCH);
             object = (Object *)Allocator_Alloc(&allocator, size);
@@ -103,6 +105,13 @@ Object *Sweeper_LazySweep(Heap *heap, uint32_t size) {
                 // if there are no threads the mutator must do coalescing on its
                 // own
                 Sweeper_LazyCoalesce(heap);
+            }
+        }
+        while (object == NULL && !Sweeper_IsSweepDone(heap)) {
+            Sweeper_LazyCoalesce(heap);
+            object = (Object *)Allocator_Alloc(&allocator, size);
+            if (object == NULL) {
+                sched_yield();
             }
         }
         if (stats != NULL) {
@@ -136,7 +145,8 @@ Object *Sweeper_LazySweepLarge(Heap *heap, uint32_t size) {
         if (stats != NULL) {
             start_ns = scalanative_nano_time();
         }
-        while (object == NULL && !Sweeper_IsSweepDone(heap)) {
+        uint_fast32_t oldDoneValue = heap->lazySweep.cursorDone;
+        while (object == NULL && heap->sweep.cursor < heap->sweep.limit) {
             Sweeper_Sweep(heap, &heap->lazySweep.cursorDone,
                           LAZY_SWEEP_MIN_BATCH);
             object = LargeAllocator_GetBlock(&largeAllocator, size);
@@ -144,6 +154,13 @@ Object *Sweeper_LazySweepLarge(Heap *heap, uint32_t size) {
                 // if there are no threads the mutator must do coalescing on its
                 // own
                 Sweeper_LazyCoalesce(heap);
+            }
+        }
+        while (object == NULL && !Sweeper_IsSweepDone(heap)) {
+            Sweeper_LazyCoalesce(heap);
+            object = (Object *)Allocator_Alloc(&allocator, size);
+            if (object == NULL) {
+                sched_yield();
             }
         }
         if (stats != NULL) {
