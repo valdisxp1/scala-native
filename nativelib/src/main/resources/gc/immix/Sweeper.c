@@ -96,7 +96,6 @@ Object *Sweeper_LazySweep(Heap *heap, uint32_t size) {
         if (stats != NULL) {
             start_ns = scalanative_nano_time();
         }
-        uint_fast32_t oldDoneValue = heap->lazySweep.cursorDone;
         while (object == NULL && heap->sweep.cursor < heap->sweep.limit) {
             Sweeper_Sweep(heap, &heap->lazySweep.cursorDone,
                           LAZY_SWEEP_MIN_BATCH);
@@ -146,7 +145,6 @@ Object *Sweeper_LazySweepLarge(Heap *heap, uint32_t size) {
         if (stats != NULL) {
             start_ns = scalanative_nano_time();
         }
-        uint_fast32_t oldDoneValue = heap->lazySweep.cursorDone;
         while (object == NULL && heap->sweep.cursor < heap->sweep.limit) {
             Sweeper_Sweep(heap, &heap->lazySweep.cursorDone,
                           LAZY_SWEEP_MIN_BATCH);
