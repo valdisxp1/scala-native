@@ -387,15 +387,15 @@ void Sweeper_LazyCoalesce(Heap *heap) {
         if (lastFreeBlockStart != NULL) {
             assert(current <= (BlockMeta *)heap->blockMetaEnd);
             assert(current >= limit);
+            uint32_t totalSize = (uint32_t)(limit - lastFreeBlockStart);
+            assert(totalSize > 0);
             if (current == limit) {
-                uint32_t totalSize = (uint32_t)(limit - lastFreeBlockStart);
                 BlockAllocator_AddFreeBlocks(&blockAllocator,
                                              lastFreeBlockStart, totalSize);
             } else {
                 // the last superblock crossed the limit
                 // other sweepers still need to sweep it
                 // add the part that is fully swept
-                uint32_t totalSize = (uint32_t)(limit - lastFreeBlockStart);
                 uint32_t remainingSize = (uint32_t)(current - limit);
                 assert(remainingSize > 0);
                 // mark the block in the next batch with the remaining size
@@ -403,10 +403,8 @@ void Sweeper_LazyCoalesce(Heap *heap) {
                 BlockMeta_SetSuperblockSize(limit, remainingSize);
                 // other threads need to see this
                 atomic_thread_fence(memory_order_seq_cst);
-                if (totalSize > 0) {
-                    BlockAllocator_AddFreeBlocks(&blockAllocator,
-                                                 lastFreeBlockStart, totalSize);
-                }
+                BlockAllocator_AddFreeBlocks(&blockAllocator,
+                                             lastFreeBlockStart, totalSize);
                 // try to advance the sweep cursor past the superblock
                 uint_fast32_t advanceTo =
                     BlockMeta_GetBlockIndex(heap->blockMetaStart, current);
