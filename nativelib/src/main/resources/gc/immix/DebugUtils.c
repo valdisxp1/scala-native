@@ -9,9 +9,9 @@ uint32_t Debug_BlockIdForWord(word_t *p) {
     return Block_GetBlockIndexForWord(heap.heapStart, p);
 }
 uint32_t Debug_BlockRangeFirst(BlockRangeVal blockRange){
-    BlockRange_First(blockRange);
+    return BlockRange_First(blockRange);
 }
 uint32_t Debug_BlockRangeLimit(BlockRangeVal blockRange){
-    BlockRange_Limit(blockRange);
+    return BlockRange_Limit(blockRange);
 }
 #endif
