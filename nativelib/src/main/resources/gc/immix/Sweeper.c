@@ -308,10 +308,6 @@ uint_fast32_t Sweeper_minSweepCursor(Heap *heap) {
 }
 
 void Sweeper_LazyCoalesce(Heap *heap, Stats *stats) {
-    uint64_t start_ns, end_ns;
-    if (stats != NULL) {
-        start_ns = scalanative_nano_time();
-    }
     // the previous coalesce is done and there is work
     BlockRangeVal coalesce = heap->sweep.coalesce;
     uint_fast32_t startIdx = BlockRange_Limit(coalesce);
@@ -329,6 +325,10 @@ void Sweeper_LazyCoalesce(Heap *heap, Stats *stats) {
             newValue = BlockRange_Pack(coalesceDoneIdx, limitIdx);
             assert(coalesceDoneIdx <= startIdx);
             continue;
+        }
+        uint64_t start_ns, end_ns;
+        if (stats != NULL) {
+            start_ns = scalanative_nano_time();
         }
 
         BlockMeta *lastFreeBlockStart = NULL;
@@ -409,10 +409,10 @@ void Sweeper_LazyCoalesce(Heap *heap, Stats *stats) {
         }
 
         heap->sweep.coalesce = BlockRange_Pack(limitIdx, limitIdx);
-    }
-    if (stats != NULL) {
-        end_ns = scalanative_nano_time();
-        Stats_RecordEvent(stats, event_coalesce_batch, start_ns, end_ns);
+        if (stats != NULL) {
+            end_ns = scalanative_nano_time();
+            Stats_RecordEvent(stats, event_coalesce_batch, start_ns, end_ns);
+        }
     }
 }
 
