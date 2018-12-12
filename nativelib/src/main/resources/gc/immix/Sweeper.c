@@ -107,8 +107,7 @@ Object *Sweeper_LazySweep(Heap *heap, uint32_t size) {
         }
         if (stats != NULL) {
             end_ns = scalanative_nano_time();
-            Stats_RecordEvent(stats, event_sweep, MUTATOR_THREAD_ID, start_ns,
-                              end_ns);
+            Stats_RecordEvent(stats, event_sweep, start_ns, end_ns);
         }
     }
     if (Sweeper_IsSweepDone(heap) && !heap->sweep.postSweepDone) {
@@ -148,8 +147,7 @@ Object *Sweeper_LazySweepLarge(Heap *heap, uint32_t size) {
         }
         if (stats != NULL) {
             end_ns = scalanative_nano_time();
-            Stats_RecordEvent(stats, event_sweep, MUTATOR_THREAD_ID, start_ns,
-                              end_ns);
+            Stats_RecordEvent(stats, event_sweep, start_ns, end_ns);
         }
     }
     if (Sweeper_IsSweepDone(heap) && !heap->sweep.postSweepDone) {
@@ -408,7 +406,6 @@ void Sweeper_sweepDone(Heap *heap) {
     Stats *stats = heap->stats;
     if (stats != NULL) {
         uint64_t end_ns = scalanative_nano_time();
-        Stats_RecordEvent(stats, event_collection, MUTATOR_THREAD_ID,
-                          stats->collection_start_ns, end_ns);
+        Stats_RecordEvent(stats, event_collection, stats->collection_start_ns, end_ns);
     }
 }

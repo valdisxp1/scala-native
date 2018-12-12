@@ -155,7 +155,7 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     char *statsFile = Settings_StatsFileName();
     if (statsFile != NULL) {
         heap->stats = malloc(sizeof(Stats));
-        Stats_Init(heap->stats, statsFile);
+        Stats_Init(heap->stats, statsFile, MUTATOR_THREAD_ID);
     }
 
     // Init all GCThreads
@@ -172,7 +172,7 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
             char *threadSpecificFile = (char *) malloc(len);
             snprintf(threadSpecificFile, len, "%s.t%d", statsFile, i);
             stats = malloc(sizeof(Stats));
-            Stats_Init(stats, threadSpecificFile);
+            Stats_Init(stats, threadSpecificFile, (uint8_t)i);
         } else {
             stats = NULL;
         }
@@ -349,7 +349,7 @@ void Heap_Collect(Heap *heap, Stack *stack) {
     Marker_MarkRoots(heap, stack);
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
-        Stats_RecordEvent(stats, event_mark, MUTATOR_THREAD_ID, start_ns,
+        Stats_RecordEvent(stats, event_mark, start_ns,
                           end_ns);
     }
     Heap_Recycle(heap);

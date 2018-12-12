@@ -24,7 +24,7 @@ void *GCThread_loop(void *arg) {
         }
         if (stats != NULL) {
             end_ns = scalanative_nano_time();
-            Stats_RecordEvent(stats, event_concurrent_sweep, thread->id,
+            Stats_RecordEvent(stats, event_concurrent_sweep,
                               start_ns, end_ns);
         }
     }
