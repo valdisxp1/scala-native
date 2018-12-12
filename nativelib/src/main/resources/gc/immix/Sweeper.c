@@ -324,6 +324,8 @@ uint_fast32_t Sweeper_minSweepCursor(Heap *heap) {
 }
 
 void Sweeper_LazyCoalesce(Heap *heap) {
+    // sync all sweeping results
+    atomic_thread_fence(memory_order_seq_cst);
     // the previous coalesce is done and there is work
     BlockRangeVal coalesce = heap->sweep.coalesce;
     uint_fast32_t startIdx = BlockRange_Limit(coalesce);
@@ -422,6 +424,8 @@ void Sweeper_LazyCoalesce(Heap *heap) {
 }
 
 void Sweeper_sweepDone(Heap *heap) {
+    // sync all sweeping results
+    atomic_thread_fence(memory_order_seq_cst);
     Heap_GrowIfNeeded(heap);
     heap->sweep.postSweepDone = true;
     Stats *stats = heap->stats;
