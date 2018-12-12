@@ -5,7 +5,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <time.h>
-#include <pthread.h>
 
 #define MUTATOR_THREAD_ID -1
 
@@ -19,7 +18,6 @@ typedef enum {
 
 typedef struct {
     FILE *outFile;
-    pthread_mutex_t mutex;
     uint64_t events;
     uint8_t event_types[STATS_MEASUREMENTS];
     int8_t gc_threads[STATS_MEASUREMENTS];

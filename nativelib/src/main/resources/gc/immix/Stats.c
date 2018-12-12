@@ -11,12 +11,10 @@ void Stats_Init(Stats *stats, const char *statsFile) {
     stats->outFile = fopen(statsFile, "w");
     fprintf(stats->outFile, "event_type,gc_thread,start_ns,time_ns\n");
     stats->events = 0;
-    pthread_mutex_init(&stats->mutex, NULL);
 }
 
 void Stats_RecordEvent(Stats *stats, eventType eType, int8_t gc_thread,
                        uint64_t start_ns, uint64_t end_ns) {
-    pthread_mutex_lock(&stats->mutex);
     uint64_t index = stats->events % STATS_MEASUREMENTS;
     stats->start_ns[index] = start_ns;
     stats->time_ns[index] = end_ns - start_ns;
@@ -26,7 +24,6 @@ void Stats_RecordEvent(Stats *stats, eventType eType, int8_t gc_thread,
     if (stats->events % STATS_MEASUREMENTS == 0) {
         Stats_writeToFile(stats);
     }
-    pthread_mutex_unlock(&stats->mutex);
 }
 
 void Stats_writeToFile(Stats *stats) {

@@ -166,7 +166,17 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     GCThread *gcThreads = (GCThread *)malloc(sizeof(GCThread) * gcThreadCount);
     heap->gcThreads.all = (void *)gcThreads;
     for (int i = 0; i < gcThreadCount; i++) {
-        GCThread_Init(&gcThreads[i], i, heap);
+        Stats *stats;
+        if (statsFile != NULL) {
+            int len = strlen(statsFile) + 5;
+            char *threadSpecificFile = (char *) malloc(len);
+            snprintf(threadSpecificFile, len, "%s.t%d", statsFile, i);
+            stats = malloc(sizeof(Stats));
+            Stats_Init(stats, threadSpecificFile);
+        } else {
+            stats = NULL;
+        }
+        GCThread_Init(&gcThreads[i], i, heap, stats);
     }
 }
 

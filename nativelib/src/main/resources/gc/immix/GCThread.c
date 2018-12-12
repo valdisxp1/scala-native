@@ -7,7 +7,7 @@ void *GCThread_loop(void *arg) {
     GCThread *thread = (GCThread *)arg;
     Heap *heap = thread->heap;
     sem_t *start = &heap->gcThreads.start;
-    Stats *stats = heap->stats;
+    Stats *stats = thread->stats;
     while (true) {
         thread->active = false;
         sem_wait(start);
@@ -31,9 +31,10 @@ void *GCThread_loop(void *arg) {
     return NULL;
 }
 
-void GCThread_Init(GCThread *thread, int id, Heap *heap) {
+void GCThread_Init(GCThread *thread, int id, Heap *heap, Stats *stats) {
     thread->id = id;
     thread->heap = heap;
+    thread->stats = stats;
     thread->active = false;
     // we do not use the pthread value
     pthread_t self;
