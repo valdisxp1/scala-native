@@ -13,7 +13,10 @@ typedef enum {
     event_sweep = 0x1,
     event_concurrent_mark = 0x2,
     event_concurrent_sweep = 0x3,
-    event_collection = 0x4
+    event_collection = 0x4,
+    event_mark_batch = 0x5,
+    event_sweep_batch = 0x6,
+    event_coalesce_batch = 0x7
 } eventType;
 
 typedef struct {

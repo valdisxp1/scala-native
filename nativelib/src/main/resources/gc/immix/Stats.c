@@ -1,9 +1,11 @@
 #include "Stats.h"
+#include "GCTypes.h"
 #include <stdio.h>
 #include <inttypes.h>
 
 const char *const Stats_eventNames[] = {"mark", "sweep", "concmark",
-                                        "concsweep", "collection"};
+                                        "concsweep", "collection",
+                                        "mark_batch", "sweep_batch", "coalesce_batch"};
 
 void Stats_writeToFile(Stats *stats);
 
@@ -14,6 +16,7 @@ void Stats_Init(Stats *stats, const char *statsFile, int8_t gc_thread) {
     stats->events = 0;
 }
 
+NOINLINE
 void Stats_RecordEvent(Stats *stats, eventType eType,
                        uint64_t start_ns, uint64_t end_ns) {
     uint64_t index = stats->events % STATS_MEASUREMENTS;

@@ -19,8 +19,8 @@ void *GCThread_loop(void *arg) {
             start_ns = scalanative_nano_time();
         }
         while (!Sweeper_IsSweepDone(heap)) {
-            Sweeper_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
-            Sweeper_LazyCoalesce(heap);
+            Sweeper_Sweep(heap, stats, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
+            Sweeper_LazyCoalesce(heap, stats);
         }
         if (stats != NULL) {
             end_ns = scalanative_nano_time();

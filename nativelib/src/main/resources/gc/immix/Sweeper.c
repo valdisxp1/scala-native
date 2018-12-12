@@ -96,13 +96,13 @@ Object *Sweeper_LazySweep(Heap *heap, uint32_t size) {
             start_ns = scalanative_nano_time();
         }
         while (object == NULL && !Sweeper_IsSweepDone(heap)) {
-            Sweeper_Sweep(heap, &heap->lazySweep.cursorDone,
+            Sweeper_Sweep(heap, heap->stats, &heap->lazySweep.cursorDone,
                           LAZY_SWEEP_MIN_BATCH);
             object = (Object *)Allocator_Alloc(&allocator, size);
             if (heap->gcThreads.count == 0) {
                 // if there are no threads the mutator must do coalescing on its
                 // own
-                Sweeper_LazyCoalesce(heap);
+                Sweeper_LazyCoalesce(heap, heap->stats);
             }
         }
         if (stats != NULL) {
@@ -136,13 +136,13 @@ Object *Sweeper_LazySweepLarge(Heap *heap, uint32_t size) {
             start_ns = scalanative_nano_time();
         }
         while (object == NULL && !Sweeper_IsSweepDone(heap)) {
-            Sweeper_Sweep(heap, &heap->lazySweep.cursorDone,
+            Sweeper_Sweep(heap, heap->stats, &heap->lazySweep.cursorDone,
                           LAZY_SWEEP_MIN_BATCH);
             object = LargeAllocator_GetBlock(&largeAllocator, size);
             if (heap->gcThreads.count == 0) {
                 // if there are no threads the mutator must do coalescing on its
                 // own
-                Sweeper_LazyCoalesce(heap);
+                Sweeper_LazyCoalesce(heap, heap->stats);
             }
         }
         if (stats != NULL) {
@@ -156,8 +156,12 @@ Object *Sweeper_LazySweepLarge(Heap *heap, uint32_t size) {
     return object;
 }
 
-void Sweeper_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone,
+void Sweeper_Sweep(Heap *heap, Stats *stats, atomic_uint_fast32_t *cursorDone,
                    uint32_t maxCount) {
+    uint64_t start_ns, end_ns;
+    if (stats != NULL) {
+        start_ns = scalanative_nano_time();
+    }
     uint32_t cursor = heap->sweep.cursor;
     uint32_t sweepLimit = heap->sweep.limit;
     // protect against sweep.cursor overflow
@@ -284,6 +288,10 @@ void Sweeper_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone,
     atomic_thread_fence(memory_order_seq_cst); // the most expensive
 
     *cursorDone = limitIdx; // the most expensive
+    if (stats != NULL) {
+        end_ns = scalanative_nano_time();
+        Stats_RecordEvent(stats, event_sweep_batch, start_ns, end_ns);
+    }
 }
 
 uint_fast32_t Sweeper_minSweepCursor(Heap *heap) {
@@ -299,7 +307,11 @@ uint_fast32_t Sweeper_minSweepCursor(Heap *heap) {
     return min;
 }
 
-void Sweeper_LazyCoalesce(Heap *heap) {
+void Sweeper_LazyCoalesce(Heap *heap, Stats *stats) {
+    uint64_t start_ns, end_ns;
+    if (stats != NULL) {
+        start_ns = scalanative_nano_time();
+    }
     // the previous coalesce is done and there is work
     BlockRangeVal coalesce = heap->sweep.coalesce;
     uint_fast32_t startIdx = BlockRange_Limit(coalesce);
@@ -397,6 +409,10 @@ void Sweeper_LazyCoalesce(Heap *heap) {
         }
 
         heap->sweep.coalesce = BlockRange_Pack(limitIdx, limitIdx);
+    }
+    if (stats != NULL) {
+        end_ns = scalanative_nano_time();
+        Stats_RecordEvent(stats, event_coalesce_batch, start_ns, end_ns);
     }
 }
 
