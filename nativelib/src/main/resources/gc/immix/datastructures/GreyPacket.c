@@ -34,6 +34,7 @@ void GreyList_Init(GreyList *list) {
 }
 
 void GreyList_Push(GreyList *list, GreyPacket *packet) {
+    assert(packet->next == GREYLIST_LAST);
     GreyPacket *head = (GreyPacket *) list->head;
     do {
         // head will be replaced with actual value if
@@ -87,5 +88,8 @@ GreyPacket *GreyList_Pop(GreyList *list) {
         newValue = (word_t) GreyList_next(head);
     } while(!atomic_compare_exchange_strong(&list->head, (word_t *)&head, newValue));
     list->size -= 1;
+#ifdef DEBUG_ASSERT
+    head->next = GREYLIST_LAST;
+#endif
     return head;
 }
