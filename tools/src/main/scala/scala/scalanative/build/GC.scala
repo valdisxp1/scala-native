@@ -22,6 +22,7 @@ object GC {
   private[scalanative] final case object None  extends GC("none", Seq())
   private[scalanative] final case object Boehm extends GC("boehm", Seq("gc"))
   private[scalanative] final case object Immix extends GC("immix", Seq())
+  private[scalanative] final case object Commix extends GC("commix", Seq())
 
   /** Non-freeing garbage collector.*/
   def none: GC = None
@@ -43,8 +44,10 @@ object GC {
       GC.Boehm
     case "immix" =>
       GC.Immix
+    case "commix" =>
+      GC.Commix
     case value =>
       throw new IllegalArgumentException(
-        "nativeGC can be either \"none\", \"boehm\" or \"immix\", not: " + value)
+        "nativeGC can be either \"none\", \"boehm\", \"immix\" or \"commix\", not: " + value)
   }
 }

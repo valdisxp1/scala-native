@@ -16,10 +16,12 @@ typedef struct {
 
 void Stack_Init(Stack *stack, size_t size);
 
-void Stack_Push(Stack *stack, Stack_Type word);
+bool Stack_Push(Stack *stack, Stack_Type word);
 
 Stack_Type Stack_Pop(Stack *stack);
 
 bool Stack_IsEmpty(Stack *stack);
+
+void Stack_DoubleSize(Stack *stack);
 
 #endif // IMMIX_STACK_H
