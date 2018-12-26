@@ -419,15 +419,6 @@ void Sweeper_LazyCoalesce(Heap *heap, Stats *stats) {
                     BlockAllocator_AddFreeBlocks(&blockAllocator,
                                                  lastFreeBlockStart, totalSize);
                 }
-                // try to advance the sweep cursor past the superblock
-                uint_fast32_t advanceTo =
-                    BlockMeta_GetBlockIndex(heap->blockMetaStart, current);
-                uint_fast32_t sweepCursor = heap->sweep.cursor;
-                while (sweepCursor < advanceTo) {
-                    atomic_compare_exchange_strong(&heap->sweep.cursor,
-                                                   &sweepCursor, advanceTo);
-                    // sweepCursor is updated by atomic_compare_exchange_strong
-                }
             }
         }
 
