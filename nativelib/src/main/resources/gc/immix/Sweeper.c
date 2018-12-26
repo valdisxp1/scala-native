@@ -87,7 +87,7 @@ Object *Sweeper_LazySweep(Heap *heap, uint32_t size) {
     Object *object = (Object *)Allocator_Alloc(&allocator, size);
     if (object != NULL) {
         // advance the cursor so other threads can coalesce
-        Sweeper_advanceLazyCursor(heap);
+//        Sweeper_advanceLazyCursor(heap);
     } else {
         // lazy sweep will happen
         uint64_t start_ns, end_ns;
@@ -134,7 +134,7 @@ Object *Sweeper_LazySweepLarge(Heap *heap, uint32_t size) {
 #endif
     if (object != NULL) {
         // advance the cursor so other threads can coalesce
-        Sweeper_advanceLazyCursor(heap);
+//        Sweeper_advanceLazyCursor(heap);
     } else {
         // lazy sweep will happen
         uint64_t start_ns, end_ns;
