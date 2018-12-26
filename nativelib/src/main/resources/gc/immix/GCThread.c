@@ -10,13 +10,12 @@ static inline void GCThread_sweep(GCThread *thread, Heap *heap, Stats *stats) {
         start_ns = scalanative_nano_time();
     }
     while (heap->sweep.cursor < heap->sweep.limit) {
-        Sweeper_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
+        Sweeper_Sweep(heap, stats, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
     }
     thread->sweep.cursorDone = heap->sweep.limit;
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
-        Stats_RecordEvent(stats, event_concurrent_sweep, thread->id,
-                          start_ns, end_ns);
+        Stats_RecordEvent(stats, event_concurrent_sweep, start_ns, end_ns);
     }
 }
 
@@ -27,17 +26,16 @@ static inline void GCThread_sweep0(GCThread *thread, Heap *heap, Stats *stats) {
         start_ns = scalanative_nano_time();
     }
     while (heap->sweep.cursor < heap->sweep.limit) {
-        Sweeper_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
-        Sweeper_LazyCoalesce(heap);
+        Sweeper_Sweep(heap, stats, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
+        Sweeper_LazyCoalesce(heap, stats);
     }
     thread->sweep.cursorDone = heap->sweep.limit;
     while (!Sweeper_IsSweepDone(heap)) {
-        Sweeper_LazyCoalesce(heap);
+        Sweeper_LazyCoalesce(heap, stats);
     }
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
-        Stats_RecordEvent(stats, event_concurrent_sweep, thread->id,
-                          start_ns, end_ns);
+        Stats_RecordEvent(stats, event_concurrent_sweep, start_ns, end_ns);
     }
 }
 
@@ -45,7 +43,7 @@ void *GCThread_loop(void *arg) {
     GCThread *thread = (GCThread *)arg;
     Heap *heap = thread->heap;
     sem_t *start = &heap->gcThreads.start;
-    Stats *stats = heap->stats;
+    Stats *stats = thread->stats;
     while (true) {
         thread->active = false;
         sem_wait(start);
@@ -71,7 +69,7 @@ void *GCThread_loop0(void *arg) {
     GCThread *thread = (GCThread *)arg;
     Heap *heap = thread->heap;
     sem_t *start0 = &heap->gcThreads.start0;
-    Stats *stats = heap->stats;
+    Stats *stats = thread->stats;
     while (true) {
         thread->active = false;
         sem_wait(start0);
@@ -93,9 +91,10 @@ void *GCThread_loop0(void *arg) {
     return NULL;
 }
 
-void GCThread_Init(GCThread *thread, int id, Heap *heap) {
+void GCThread_Init(GCThread *thread, int id, Heap *heap, Stats *stats) {
     thread->id = id;
     thread->heap = heap;
+    thread->stats = stats;
     thread->active = false;
     // we do not use the pthread value
     pthread_t self;
