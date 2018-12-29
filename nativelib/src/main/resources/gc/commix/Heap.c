@@ -131,7 +131,8 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     uint32_t greyPacketCount = (uint32_t)(maxHeapSize * GREY_PACKET_RATIO / GREY_PACKET_SIZE);
     heap->mark.total = greyPacketCount;
     word_t* greyPacketsStart = Heap_mapAndAlign(greyPacketCount * sizeof(GreyPacket), WORD_SIZE);
-    GreyList_PushAll(&heap->mark.empty, (GreyPacket *) greyPacketsStart, greyPacketCount);
+    heap->greyPacketsStart = greyPacketsStart;
+    GreyList_PushAll(&heap->mark.empty, greyPacketsStart, (GreyPacket *) greyPacketsStart, greyPacketCount);
 
     // reserve space for bytemap
     Bytemap *bytemap = (Bytemap *)Heap_mapAndAlign(

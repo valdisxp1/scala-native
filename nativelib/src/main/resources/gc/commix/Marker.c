@@ -14,19 +14,18 @@ extern word_t **__stack_bottom;
 #define LAST_FIELD_OFFSET -1
 
 static inline GreyPacket *Marker_takeEmptyPacket(Heap *heap) {
-    GreyPacket *packet = GreyList_Pop(&heap->mark.empty);
+    GreyPacket *packet = GreyList_Pop(&heap->mark.empty, heap->greyPacketsStart);
     if (packet != NULL) {
         // Another thread setting size = 0 might not arrived, just write it now.
         // Avoiding a memfence.
         packet->size = 0;
     }
-    // TODO handle out of empty packets
     assert(packet != NULL);
     return packet;
 }
 
 static inline GreyPacket *Marker_takeFullPacket(Heap *heap) {
-    GreyPacket *packet = GreyList_Pop(&heap->mark.full);
+    GreyPacket *packet = GreyList_Pop(&heap->mark.full, heap->greyPacketsStart);
     assert(packet == NULL || packet->size > 0);
     return packet;
 }
@@ -34,14 +33,15 @@ static inline GreyPacket *Marker_takeFullPacket(Heap *heap) {
 static inline void Marker_giveEmptyPacket(Heap *heap, GreyPacket *packet) {
     assert(packet->size == 0);
     // no memfence needed see Marker_takeEmptyPacket
-    GreyList_Push(&heap->mark.empty, packet);
+    GreyList_Push(&heap->mark.empty, heap->greyPacketsStart, packet);
 }
 
 static inline void Marker_giveFullPacket(Heap *heap, GreyPacket *packet) {
     assert(packet->size > 0);
     // make all the contents visible to other threads
     atomic_thread_fence(memory_order_seq_cst);
-    GreyList_Push(&heap->mark.full, packet);
+    assert(heap->mark.full.size <= heap->mark.total);
+    GreyList_Push(&heap->mark.full, heap->greyPacketsStart, packet);
 }
 
 void Marker_markObject(Heap *heap, GreyPacket **outHolder, Bytemap *bytemap,

@@ -2,11 +2,6 @@
 #include "GreyPacket.h"
 #include "../Log.h"
 
-void GreyPacket_Init(GreyPacket *packet) {
-    packet->size = 0;
-    packet->next = GREYLIST_LAST;
-}
-
 bool GreyPacket_Push(GreyPacket *packet, Stack_Type value) {
     assert(value != NULL);
     if (packet->size >= GREY_PACKET_ITEMS) {
@@ -30,62 +25,62 @@ bool GreyPacket_IsFull(GreyPacket *packet) {
 }
 
 void GreyList_Init(GreyList *list) {
-    list->head = (word_t) NULL;
+    list->head = BlockRange_Pack(GREYLIST_LAST, 0);
 }
 
-void GreyList_Push(GreyList *list, GreyPacket *packet) {
-    GreyPacket *head = (GreyPacket *) list->head;
+void GreyList_Push(GreyList *list, word_t *greyPacketsStart, GreyPacket *packet) {
+    uint32_t packetIdx = GreyPacket_IndexOf(greyPacketsStart, packet);
+    BlockRangeVal newHead = BlockRange_Pack(packetIdx, packet->timesPoped);
+    BlockRangeVal head = list->head;
     do {
         // head will be replaced with actual value if
         // atomic_compare_exchange_strong fails
-        if (head == NULL) {
-            packet->next = GREYLIST_LAST;
+        uint32_t nextIdx = BlockRange_First(head);
+        if (nextIdx == GREYLIST_LAST) {
+            packet->next = BlockRange_Pack(GREYLIST_LAST, 0);
         } else {
             packet->next = head;
         }
-    } while (!atomic_compare_exchange_strong(&list->head, (word_t *)&head, (word_t)packet));
+    } while (!atomic_compare_exchange_strong(&list->head, &head, newHead));
     list->size += 1;
 }
 
-void GreyList_PushAll(GreyList *list, GreyPacket *first, uint_fast32_t size) {
+void GreyList_PushAll(GreyList *list, word_t *greyPacketsStart, GreyPacket *first, uint_fast32_t size) {
+    uint32_t packetIdx = GreyPacket_IndexOf(greyPacketsStart, first);
+    BlockRangeVal newHead = BlockRange_Pack(packetIdx, first->timesPoped);
     GreyPacket *last = first + (size - 1);
-    GreyPacket *head = (GreyPacket *) list->head;
+    BlockRangeVal head = list->head;
     do {
         // head will be replaced with actual value if
         // atomic_compare_exchange_strong fails
-        if (head == NULL) {
-            last->next = GREYLIST_LAST;
+        uint32_t nextIdx = BlockRange_First(head);
+        if (nextIdx == GREYLIST_LAST) {
+            last->next = BlockRange_Pack(GREYLIST_LAST, 0);
         } else {
             last->next = head;
         }
-    } while (!atomic_compare_exchange_strong(&list->head, (word_t *)&head, (word_t)first));
+    } while (!atomic_compare_exchange_strong(&list->head, &head, newHead));
     list->size += size;
 }
 
-GreyPacket *GreyList_next(GreyPacket *packet) {
-    void *next = packet->next;
-    if (next == GREYLIST_LAST) {
-        return NULL;
-    } else if (next == NULL) {
-        return packet + 1;
-    } else {
-        return (GreyPacket*) next;
-    }
-}
-
-GreyPacket *GreyList_Pop(GreyList *list) {
-    GreyPacket *head = (GreyPacket*) list->head;
-    // not allowing clang to pull this before the NULL check
-    // avoiding a SEGFAULT
-    volatile word_t newValue;
+GreyPacket *GreyList_Pop(GreyList *list, word_t *greyPacketsStart) {
+    BlockRangeVal head = list->head;
+    BlockRangeVal nextValue;
+    uint32_t headIdx;
+    GreyPacket *res;
     do {
         // head will be replaced with actual value if
         // atomic_compare_exchange_strong fails
-        if (head == NULL) {
+        headIdx = BlockRange_First(head);
+        assert(headIdx != GREYLIST_NEXT);
+        if (headIdx == GREYLIST_LAST) {
             return NULL;
         }
-        newValue = (word_t) GreyList_next(head);
-    } while(!atomic_compare_exchange_strong(&list->head, (word_t *)&head, newValue));
+        res = GreyPacket_FromIndex(greyPacketsStart, headIdx);
+        BlockRangeVal next = res->next;
+        nextValue = (next != 0L)? next : BlockRange_Pack(headIdx + 1, 0);
+    } while(!atomic_compare_exchange_strong(&list->head, &head, nextValue));
     list->size -= 1;
-    return head;
+    res->timesPoped += 1;
+    return res;
 }
