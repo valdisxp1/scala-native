@@ -126,6 +126,11 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     word_t *heapStart = Heap_mapAndAlign(maxHeapSize, BLOCK_TOTAL_SIZE);
 
     BlockAllocator_Init(&blockAllocator, blockMetaStart, initialBlockCount);
+    GreyList_Init(&heap->mark.empty);
+    GreyList_Init(&heap->mark.full);
+    heap->mark.total = GREY_PACKET_COUNT;
+    word_t* greyPacketsStart = Heap_mapAndAlign(GREY_PACKET_COUNT * sizeof(GreyPacket), WORD_SIZE);
+    GreyList_PushAll(&heap->mark.empty, (GreyPacket *) greyPacketsStart, GREY_PACKET_COUNT);
 
     // reserve space for bytemap
     Bytemap *bytemap = (Bytemap *)Heap_mapAndAlign(
@@ -163,6 +168,7 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
 
     int gcThreadCount = Settings_GCThreadCount();
     heap->gcThreads.count = gcThreadCount;
+    heap->gcThreads.phase = gc_idle;
     GCThread *gcThreads = (GCThread *)malloc(sizeof(GCThread) * gcThreadCount);
     heap->gcThreads.all = (void *)gcThreads;
     for (int i = 0; i < gcThreadCount; i++) {
@@ -187,7 +193,7 @@ word_t *Heap_AllocLarge(Heap *heap, uint32_t size) {
         return (word_t *)object;
     } else {
         // Otherwise collect
-        Heap_Collect(heap, &stack);
+        Heap_Collect(heap);
 
         // After collection, try to alloc again, if it fails, grow the heap by
         // at least the size of the object we want to alloc
@@ -214,7 +220,7 @@ NOINLINE word_t *Heap_allocSmallSlow(Heap *heap, uint32_t size) {
     if (object != NULL)
         goto done;
 
-    Heap_Collect(heap, &stack);
+    Heap_Collect(heap);
     object = Sweeper_LazySweep(heap, size);
 
     if (object != NULL)
@@ -322,7 +328,7 @@ void Heap_assertIsConsistent(Heap *heap) {
 }
 #endif
 
-void Heap_Collect(Heap *heap, Stack *stack) {
+void Heap_Collect(Heap *heap) {
     Stats *stats = heap->stats;
     if (stats != NULL) {
         stats->collection_start_ns = scalanative_nano_time();
@@ -336,7 +342,11 @@ void Heap_Collect(Heap *heap, Stack *stack) {
     if (stats != NULL) {
         start_ns = scalanative_nano_time();
     }
-    Marker_MarkRoots(heap, stack);
+    Marker_MarkRoots(heap);
+    heap->gcThreads.phase = gc_mark;
+    GCThread_WakeAll(heap);
+    Marker_Mark(heap);
+    heap->gcThreads.phase = gc_idle;
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
         Stats_RecordEvent(stats, event_mark, MUTATOR_THREAD_ID, start_ns,
@@ -364,31 +374,6 @@ bool Heap_shouldGrow(Heap *heap) {
            4 * unavailableBlockCount > blockCount;
 }
 
-NOINLINE void Heap_waitForGCThreadsSlow(GCThread *gcThreads, int gcThreadCount) {
-    // extremely unlikely to enter here
-    // unless very many threads running
-    bool anyActive = true;
-    while (anyActive) {
-        sched_yield();
-        anyActive = false;
-        for (int i = 0; i < gcThreadCount; i++) {
-            anyActive |= gcThreads[i].active;
-        }
-    }
-}
-
-INLINE void Heap_waitForGCThreads(Heap *heap) {
-    int gcThreadCount = heap->gcThreads.count;
-    GCThread *gcThreads = (GCThread *) heap->gcThreads.all;
-    bool anyActive = false;
-    for (int i = 0; i < gcThreadCount; i++) {
-        anyActive |= gcThreads[i].active;
-    }
-    if (anyActive) {
-        Heap_waitForGCThreadsSlow(gcThreads, gcThreadCount);
-    }
-}
-
 void Heap_Recycle(Heap *heap) {
     Allocator_Clear(&allocator);
     LargeAllocator_Clear(&largeAllocator);
@@ -399,7 +384,7 @@ void Heap_Recycle(Heap *heap) {
 
     // before changing the cursor and limit values, makes sure no gc threads are
     // running
-    Heap_waitForGCThreads(heap);
+    GCThread_JoinAll(heap);
 
     heap->sweep.cursor = 0;
     heap->sweep.limit = heap->blockCount;
@@ -407,13 +392,8 @@ void Heap_Recycle(Heap *heap) {
     heap->sweep.coalesce = BlockRange_Pack(0, 0);
     heap->sweep.postSweepDone = false;
 
-    sem_t *start = &heap->gcThreads.start;
-
-    // wake all the GC threads
-    int gcThreadCount = heap->gcThreads.count;
-    for (int i = 0; i < gcThreadCount; i++) {
-        sem_post(start);
-    }
+    heap->gcThreads.phase = gc_sweep;
+    GCThread_WakeAll(heap);
 }
 
 void Heap_GrowIfNeeded(Heap *heap) {

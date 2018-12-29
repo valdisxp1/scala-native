@@ -4,8 +4,8 @@
 #include "Object.h"
 #include "Log.h"
 #include "State.h"
-#include "datastructures/Stack.h"
 #include "headers/ObjectHeader.h"
+#include "datastructures/GreyPacket.h"
 
 extern word_t *__modules;
 extern int __modules_size;
@@ -13,16 +13,53 @@ extern word_t **__stack_bottom;
 
 #define LAST_FIELD_OFFSET -1
 
-void Marker_markObject(Heap *heap, Stack *stack, Bytemap *bytemap,
+static inline GreyPacket *Marker_takeEmptyPacket(Heap *heap) {
+    GreyPacket *packet = GreyList_Pop(&heap->mark.empty);
+    if (packet != NULL) {
+        // Another thread setting size = 0 might not arrived, just write it now.
+        // Avoiding a memfence.
+        packet->size = 0;
+    }
+    // TODO handle out of empty packets
+    assert(packet != NULL);
+    return packet;
+}
+
+static inline GreyPacket *Marker_takeFullPacket(Heap *heap) {
+    GreyPacket *packet = GreyList_Pop(&heap->mark.full);
+    assert(packet == NULL || packet->size > 0);
+    return packet;
+}
+
+static inline void Marker_giveEmptyPacket(Heap *heap, GreyPacket *packet) {
+    assert(packet->size == 0);
+    // no memfence needed see Marker_takeEmptyPacket
+    GreyList_Push(&heap->mark.empty, packet);
+}
+
+static inline void Marker_giveFullPacket(Heap *heap, GreyPacket *packet) {
+    assert(packet->size > 0);
+    // make all the contents visible to other threads
+    atomic_thread_fence(memory_order_seq_cst);
+    GreyList_Push(&heap->mark.full, packet);
+}
+
+void Marker_markObject(Heap *heap, GreyPacket **outHolder, Bytemap *bytemap,
                        Object *object, ObjectMeta *objectMeta) {
-    assert(ObjectMeta_IsAllocated(objectMeta));
+    assert(ObjectMeta_IsAllocated(objectMeta) || ObjectMeta_IsMarked(objectMeta));
 
     assert(Object_Size(object) != 0);
     Object_Mark(heap, object, objectMeta);
-    Stack_Push(stack, object);
+
+    GreyPacket *out = *outHolder;
+    if (!GreyPacket_Push(out, object)) {
+        Marker_giveFullPacket(heap, out);
+        *outHolder = out = Marker_takeEmptyPacket(heap);
+        GreyPacket_Push(out, object);
+    }
 }
 
-void Marker_markConservative(Heap *heap, Stack *stack, word_t *address) {
+void Marker_markConservative(Heap *heap, GreyPacket **outHolder, word_t *address) {
     assert(Heap_IsWordInHeap(heap, address));
     Object *object = Object_GetUnmarkedObject(heap, address);
     Bytemap *bytemap = heap->bytemap;
@@ -30,15 +67,20 @@ void Marker_markConservative(Heap *heap, Stack *stack, word_t *address) {
         ObjectMeta *objectMeta = Bytemap_Get(bytemap, (word_t *)object);
         assert(ObjectMeta_IsAllocated(objectMeta));
         if (ObjectMeta_IsAllocated(objectMeta)) {
-            Marker_markObject(heap, stack, bytemap, object, objectMeta);
+            Marker_markObject(heap, outHolder, bytemap, object, objectMeta);
         }
     }
 }
 
-void Marker_Mark(Heap *heap, Stack *stack) {
+void Marker_markPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
     Bytemap *bytemap = heap->bytemap;
-    while (!Stack_IsEmpty(stack)) {
-        Object *object = Stack_Pop(stack);
+    if (*outHolder == NULL) {
+        GreyPacket *fresh = Marker_takeEmptyPacket(heap);
+        assert(fresh != NULL);
+        *outHolder = fresh;
+    }
+    while (!GreyPacket_IsEmpty(in)) {
+        Object *object = GreyPacket_Pop(in);
 
         if (Object_IsArray(object)) {
             if (object->rtti->rt.id == __object_array_id) {
@@ -50,7 +92,7 @@ void Marker_Mark(Heap *heap, Stack *stack) {
                     if (Heap_IsWordInHeap(heap, field)) {
                         ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
                         if (ObjectMeta_IsAllocated(fieldMeta)) {
-                            Marker_markObject(heap, stack, bytemap,
+                            Marker_markObject(heap, outHolder, bytemap,
                                               (Object *)field, fieldMeta);
                         }
                     }
@@ -65,7 +107,7 @@ void Marker_Mark(Heap *heap, Stack *stack) {
                 if (Heap_IsWordInHeap(heap, field)) {
                     ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
                     if (ObjectMeta_IsAllocated(fieldMeta)) {
-                        Marker_markObject(heap, stack, bytemap, (Object *)field,
+                        Marker_markObject(heap, outHolder, bytemap, (Object *)field,
                                           fieldMeta);
                     }
                 }
@@ -75,7 +117,32 @@ void Marker_Mark(Heap *heap, Stack *stack) {
     }
 }
 
-void Marker_markProgramStack(Heap *heap, Stack *stack) {
+void Marker_Mark(Heap *heap) {
+    GreyPacket* in = Marker_takeFullPacket(heap);
+    GreyPacket *out = NULL;
+    while (in != NULL) {
+        Marker_markPacket(heap, in, &out);
+        GreyPacket *next = Marker_takeFullPacket(heap);
+        if (next == NULL && !GreyPacket_IsEmpty(out)) {
+            GreyPacket *tmp = out;
+            out = in;
+            in = tmp;
+        } else {
+            Marker_giveEmptyPacket(heap, in);
+            in = next;
+        }
+    }
+    assert(in == NULL);
+    if (out != NULL) {
+        if (out->size > 0) {
+            Marker_giveFullPacket(heap, out);
+        } else {
+            Marker_giveEmptyPacket(heap, out);
+        }
+    }
+}
+
+void Marker_markProgramStack(Heap *heap, GreyPacket **outHolder) {
     // Dumps registers into 'regs' which is on stack
     jmp_buf regs;
     setjmp(regs);
@@ -88,13 +155,13 @@ void Marker_markProgramStack(Heap *heap, Stack *stack) {
 
         word_t *stackObject = *current;
         if (Heap_IsWordInHeap(heap, stackObject)) {
-            Marker_markConservative(heap, stack, stackObject);
+            Marker_markConservative(heap, outHolder, stackObject);
         }
         current += 1;
     }
 }
 
-void Marker_markModules(Heap *heap, Stack *stack) {
+void Marker_markModules(Heap *heap, GreyPacket **outHolder) {
     word_t **modules = &__modules;
     int nb_modules = __modules_size;
     Bytemap *bytemap = heap->bytemap;
@@ -104,17 +171,19 @@ void Marker_markModules(Heap *heap, Stack *stack) {
             // is within heap
             ObjectMeta *objectMeta = Bytemap_Get(bytemap, (word_t *)object);
             if (ObjectMeta_IsAllocated(objectMeta)) {
-                Marker_markObject(heap, stack, bytemap, object, objectMeta);
+                Marker_markObject(heap, outHolder, bytemap, object, objectMeta);
             }
         }
     }
 }
 
-void Marker_MarkRoots(Heap *heap, Stack *stack) {
+void Marker_MarkRoots(Heap *heap) {
+    GreyPacket *out = Marker_takeEmptyPacket(heap);
+    Marker_markProgramStack(heap, &out);
+    Marker_markModules(heap, &out);
+    Marker_giveFullPacket(heap, out);
+}
 
-    Marker_markProgramStack(heap, stack);
-
-    Marker_markModules(heap, stack);
-
-    Marker_Mark(heap, stack);
+bool Marker_IsMarkDone(Heap *heap) {
+    return heap->mark.empty.size == heap->mark.total;
 }

@@ -4,9 +4,9 @@
 #include "GCTypes.h"
 #include "Allocator.h"
 #include "LargeAllocator.h"
-#include "datastructures/Stack.h"
 #include "datastructures/Bytemap.h"
 #include "datastructures/BlockRange.h"
+#include "datastructures/GreyPacket.h"
 #include "metadata/LineMeta.h"
 #include "Stats.h"
 #include <stdio.h>
@@ -14,6 +14,12 @@
 #include <stdbool.h>
 #include <pthread.h>
 #include <semaphore.h>
+
+typedef enum {
+    gc_idle = 0x0,
+    gc_mark = 0x1,
+    gc_sweep = 0x2
+} GCThreadPhase;
 
 typedef struct {
     word_t *blockMetaStart;
@@ -28,6 +34,7 @@ typedef struct {
     uint32_t maxBlockCount;
     struct {
         sem_t start;
+        atomic_uint_fast8_t phase;
         int count;
         void *all;
     } gcThreads;
@@ -42,6 +49,11 @@ typedef struct {
         // other atomics
         atomic_uint_fast32_t cursorDone;
     } lazySweep;
+    struct {
+        atomic_uint_fast32_t total;
+        GreyList empty;
+        GreyList full;
+    } mark;
     Bytemap *bytemap;
     Stats *stats;
 } Heap;
@@ -67,7 +79,7 @@ word_t *Heap_Alloc(Heap *heap, uint32_t objectSize);
 word_t *Heap_AllocSmall(Heap *heap, uint32_t objectSize);
 word_t *Heap_AllocLarge(Heap *heap, uint32_t objectSize);
 
-void Heap_Collect(Heap *heap, Stack *stack);
+void Heap_Collect(Heap *heap);
 void Heap_Recycle(Heap *heap);
 void Heap_GrowIfNeeded(Heap *heap);
 void Heap_Grow(Heap *heap, uint32_t increment);
