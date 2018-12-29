@@ -47,7 +47,8 @@ typedef struct {
     struct {
         // making cursorDone atomic so it keeps sequential consistency with the
         // other atomics
-        atomic_uint_fast32_t cursorDone;
+        // _Limit indicates if lazy sweeping is active
+        BlockRange cursorDone;
     } lazySweep;
     Bytemap *bytemap;
     Stats *stats;

@@ -138,7 +138,7 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     heap->heapStart = heapStart;
     heap->heapEnd = heapStart + minHeapSize / WORD_SIZE;
     heap->sweep.cursor = initialBlockCount;
-    heap->lazySweep.cursorDone = initialBlockCount;
+    heap->lazySweep.cursorDone = 0L;
     heap->sweep.limit = initialBlockCount;
     heap->sweep.coalesceDone = initialBlockCount;
     heap->sweep.postSweepDone = true;
@@ -379,7 +379,7 @@ void Heap_Recycle(Heap *heap) {
 
     heap->sweep.cursor = 0;
     heap->sweep.limit = heap->blockCount;
-    heap->lazySweep.cursorDone = 0;
+    heap->lazySweep.cursorDone = 0L;
     heap->sweep.coalesceDone = 0;
     heap->sweep.postSweepDone = false;
 

@@ -73,22 +73,10 @@ See also `block_superblock_start_me` and `LargeAllocator_Sweep`.
 
 void Sweeper_sweepDone(Heap *heap);
 
-static inline void Sweeper_advanceLazyCursor(Heap *heap) {
-    // It is safe to advance the cursorDone independently from anything else.
-    // An older values can only be lower which will not break correctness,
-    // maybe just delay coalescing for a tiny bit.
-    uint_fast32_t cursor = atomic_load_explicit(&heap->sweep.cursor, memory_order_relaxed);
-    uint_fast32_t sweepLimit = atomic_load_explicit(&heap->sweep.limit, memory_order_relaxed);
-    uint_fast32_t doneValue = (cursor <= sweepLimit) ? cursor : sweepLimit;
-    atomic_store_explicit(&heap->lazySweep.cursorDone, doneValue, memory_order_relaxed);
-}
-
 Object *Sweeper_LazySweep(Heap *heap, uint32_t size) {
     Object *object = (Object *)Allocator_Alloc(&allocator, size);
-    if (object != NULL) {
-        // advance the cursor so other threads can coalesce
-        Sweeper_advanceLazyCursor(heap);
-    } else {
+    if (object == NULL) {
+        heap->lazySweep.cursorDone = BlockRange_Pack(heap->sweep.cursor, 1);
         // lazy sweep will happen
         uint64_t start_ns, end_ns;
         Stats *stats = heap->stats;
@@ -105,8 +93,8 @@ Object *Sweeper_LazySweep(Heap *heap, uint32_t size) {
                 Sweeper_LazyCoalesce(heap);
             }
         }
+        heap->lazySweep.cursorDone = 0L;
         while (object == NULL && !Sweeper_IsSweepDone(heap)) {
-            Sweeper_advanceLazyCursor(heap);
             object = (Object *)Allocator_Alloc(&allocator, size);
             if (object == NULL) {
                 sched_yield();
@@ -133,10 +121,8 @@ Object *Sweeper_LazySweepLarge(Heap *heap, uint32_t size) {
            increment);
     fflush(stdout);
 #endif
-    if (object != NULL) {
-        // advance the cursor so other threads can coalesce
-        Sweeper_advanceLazyCursor(heap);
-    } else {
+    if (object == NULL) {
+        heap->lazySweep.cursorDone = BlockRange_Pack(heap->sweep.cursor, 1);
         // lazy sweep will happen
         uint64_t start_ns, end_ns;
         Stats *stats = heap->stats;
@@ -153,9 +139,9 @@ Object *Sweeper_LazySweepLarge(Heap *heap, uint32_t size) {
                 Sweeper_LazyCoalesce(heap);
             }
         }
+        heap->lazySweep.cursorDone = 0L;
         while (object == NULL && !Sweeper_IsSweepDone(heap)) {
-            Sweeper_advanceLazyCursor(heap);
-            object = (Object *)Allocator_Alloc(&allocator, size);
+            object = (Object *)LargeAllocator_GetBlock(&allocator, size);
             if (object == NULL) {
                 sched_yield();
             }
@@ -190,7 +176,7 @@ void Sweep_applyResult(SweepResult *result, Allocator *allocator, BlockAllocator
     SweepResult_clear(result);
 }
 
-void Sweeper_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone,
+void Sweeper_Sweep(Heap *heap, BlockRange *cursorDone,
                    uint32_t maxCount) {
     SweepResult sweepResult;
     SweepResult_Init(&sweepResult);
@@ -202,7 +188,7 @@ void Sweeper_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone,
         startIdx = (uint32_t)atomic_fetch_add(&heap->sweep.cursor, maxCount);
     }
     uint32_t limitIdx = startIdx + maxCount;
-    assert(*cursorDone <= startIdx);
+    assert(BlockRange_First(*cursorDone) <= startIdx);
     if (limitIdx > sweepLimit) {
         limitIdx = sweepLimit;
     }
@@ -323,17 +309,27 @@ void Sweeper_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone,
     // coalescing might be done by another thread
     // block_coalesce_me marks should be visible
     atomic_thread_fence(memory_order_release);
-    atomic_store_explicit(cursorDone, limitIdx, memory_order_release);
+    atomic_store_explicit(cursorDone, BlockRange_Pack(limitIdx, 1), memory_order_release);
 }
 
 uint_fast32_t Sweeper_minSweepCursor(Heap *heap) {
-    uint_fast32_t min = heap->lazySweep.cursorDone;
+    uint_fast32_t min;
+    BlockRangeVal lazyCursor = heap->lazySweep.cursorDone;
+    // if(isActive)
+    if (BlockRange_Limit(lazyCursor)) {
+        uint_fast32_t cursor = BlockRange_First(lazyCursor);
+        min = cursor;
+    } else {
+        min = heap->sweep.limit;
+    }
     int gcThreadCount = heap->gcThreads.count;
     GCThread *gcThreads = (GCThread *) heap->gcThreads.all;
     for (int i = 0; i < gcThreadCount; i++) {
-        uint_fast32_t cursorDone = atomic_load_explicit(&gcThreads[i].sweep.cursorDone, memory_order_acquire);
-        if (gcThreads[i].active && cursorDone < min) {
-            min = cursorDone;
+        BlockRangeVal threadCursor = atomic_load_explicit(&gcThreads[i].sweep.cursorDone, memory_order_acquire);
+        uint_fast32_t cursor = BlockRange_First(threadCursor);
+        // BlockRange_Limit(cursor) == isActive
+        if (BlockRange_Limit(cursor) && cursor < min) {
+            min = cursor;
         }
     }
     return min;

@@ -4,7 +4,7 @@
 #include <semaphore.h>
 
 static inline void GCThread_sweep(GCThread *thread, Heap *heap, Stats *stats) {
-    thread->sweep.cursorDone = 0;
+    thread->sweep.cursorDone = BlockRange_Pack(heap->sweep.cursor, 1);
     uint64_t start_ns, end_ns;
     if (stats != NULL) {
         start_ns = scalanative_nano_time();
@@ -12,7 +12,7 @@ static inline void GCThread_sweep(GCThread *thread, Heap *heap, Stats *stats) {
     while (heap->sweep.cursor < heap->sweep.limit) {
         Sweeper_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
     }
-    thread->sweep.cursorDone = heap->sweep.limit;
+    thread->sweep.cursorDone = 0L;
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
         Stats_RecordEvent(stats, event_concurrent_sweep, thread->id,
@@ -21,7 +21,7 @@ static inline void GCThread_sweep(GCThread *thread, Heap *heap, Stats *stats) {
 }
 
 static inline void GCThread_sweep0(GCThread *thread, Heap *heap, Stats *stats) {
-    thread->sweep.cursorDone = 0;
+    thread->sweep.cursorDone = BlockRange_Pack(heap->sweep.cursor, 1);
     uint64_t start_ns, end_ns;
     if (stats != NULL) {
         start_ns = scalanative_nano_time();
@@ -30,7 +30,7 @@ static inline void GCThread_sweep0(GCThread *thread, Heap *heap, Stats *stats) {
         Sweeper_Sweep(heap, &thread->sweep.cursorDone, SWEEP_BATCH_SIZE);
         Sweeper_LazyCoalesce(heap);
     }
-    thread->sweep.cursorDone = heap->sweep.limit;
+    thread->sweep.cursorDone = 0L;
     while (!Sweeper_IsSweepDone(heap)) {
         Sweeper_LazyCoalesce(heap);
     }

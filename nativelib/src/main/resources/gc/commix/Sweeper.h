@@ -5,7 +5,7 @@
 #include "datastructures/BlockRange.h"
 #include "SweepResult.h"
 
-void Sweeper_Sweep(Heap *heap, atomic_uint_fast32_t *cursorDone,
+void Sweeper_Sweep(Heap *heap, BlockRange *cursorDone,
                    uint32_t maxCount);
 void Sweeper_LazyCoalesce(Heap *heap);
 Object *Sweeper_LazySweep(Heap *heap, uint32_t size);
