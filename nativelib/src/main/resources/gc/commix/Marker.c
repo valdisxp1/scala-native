@@ -40,7 +40,7 @@ static inline void Marker_giveFullPacket(Heap *heap, GreyPacket *packet) {
     assert(packet->size > 0);
     // make all the contents visible to other threads
     atomic_thread_fence(memory_order_seq_cst);
-    assert(heap->mark.full.size <= heap->mark.total);
+    assert(GreyList_Size(&heap->mark.full) <= heap->mark.total);
     GreyList_Push(&heap->mark.full, heap->greyPacketsStart, packet);
 }
 
@@ -185,5 +185,5 @@ void Marker_MarkRoots(Heap *heap) {
 }
 
 bool Marker_IsMarkDone(Heap *heap) {
-    return heap->mark.empty.size == heap->mark.total;
+    return GreyList_Size(&heap->mark.empty) == heap->mark.total;
 }

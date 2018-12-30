@@ -25,62 +25,81 @@ bool GreyPacket_IsFull(GreyPacket *packet) {
 }
 
 void GreyList_Init(GreyList *list) {
-    list->head = BlockRange_Pack(GREYLIST_LAST, 0);
+    assert(sizeof(GreyPacketRef) == sizeof(uint64_t));
+    list->head.atom = GreyPacketRef_Empty();
+}
+
+uint32_t GreyList_Size(GreyList *list) {
+    GreyPacketRef head;
+    head.atom = list->head.atom;
+    return head.sep.size;
 }
 
 void GreyList_Push(GreyList *list, word_t *greyPacketsStart, GreyPacket *packet) {
     uint32_t packetIdx = GreyPacket_IndexOf(greyPacketsStart, packet);
-    BlockRangeVal newHead = BlockRange_Pack(packetIdx, packet->timesPoped);
-    BlockRangeVal head = list->head;
+    GreyPacketRef newHead;
+    newHead.sep.idx = packetIdx;
+    newHead.sep.timesPoped = (uint16_t) packet->timesPoped;
+    GreyPacketRef head;
+    head.atom = list->head.atom;
     do {
         // head will be replaced with actual value if
         // atomic_compare_exchange_strong fails
-        uint32_t nextIdx = BlockRange_First(head);
+        newHead.sep.size = head.sep.size + 1;
+        uint32_t nextIdx = head.sep.idx;
         if (nextIdx == GREYLIST_LAST) {
-            packet->next = BlockRange_Pack(GREYLIST_LAST, 0);
+            packet->next.atom = GreyPacketRef_Empty();
         } else {
-            packet->next = head;
+            packet->next.atom = head.atom;
         }
-    } while (!atomic_compare_exchange_strong(&list->head, &head, newHead));
-    list->size += 1;
+    } while (!atomic_compare_exchange_strong(&list->head.atom, &head.atom, newHead.atom));
 }
 
 void GreyList_PushAll(GreyList *list, word_t *greyPacketsStart, GreyPacket *first, uint_fast32_t size) {
     uint32_t packetIdx = GreyPacket_IndexOf(greyPacketsStart, first);
-    BlockRangeVal newHead = BlockRange_Pack(packetIdx, first->timesPoped);
+    GreyPacketRef newHead;
+    newHead.sep.idx = packetIdx;
+    newHead.sep.timesPoped = (uint16_t) first->timesPoped;
     GreyPacket *last = first + (size - 1);
-    BlockRangeVal head = list->head;
+    GreyPacketRef head;
+    head.atom = list->head.atom;
     do {
         // head will be replaced with actual value if
         // atomic_compare_exchange_strong fails
-        uint32_t nextIdx = BlockRange_First(head);
+        newHead.sep.size = head.sep.size + size;
+        uint32_t nextIdx = head.sep.idx;
         if (nextIdx == GREYLIST_LAST) {
-            last->next = BlockRange_Pack(GREYLIST_LAST, 0);
+            last->next.atom = GreyPacketRef_Empty();
         } else {
-            last->next = head;
+            last->next.atom = head.atom;
         }
-    } while (!atomic_compare_exchange_strong(&list->head, &head, newHead));
-    list->size += size;
+    } while (!atomic_compare_exchange_strong(&list->head.atom, &head.atom, newHead.atom));
 }
 
 GreyPacket *GreyList_Pop(GreyList *list, word_t *greyPacketsStart) {
-    BlockRangeVal head = list->head;
-    BlockRangeVal nextValue;
+    GreyPacketRef head;
+    head.atom = list->head.atom;
+    GreyPacketRef nextValue;
     uint32_t headIdx;
     GreyPacket *res;
     do {
         // head will be replaced with actual value if
         // atomic_compare_exchange_strong fails
-        headIdx = BlockRange_First(head);
+        headIdx = head.sep.idx;
         assert(headIdx != GREYLIST_NEXT);
         if (headIdx == GREYLIST_LAST) {
             return NULL;
         }
         res = GreyPacket_FromIndex(greyPacketsStart, headIdx);
-        BlockRangeVal next = res->next;
-        nextValue = (next != 0L)? next : BlockRange_Pack(headIdx + 1, 0);
-    } while(!atomic_compare_exchange_strong(&list->head, &head, nextValue));
-    list->size -= 1;
+        GreyPacketRef next;
+        next.atom = res->next.atom;
+        if (next.atom != 0) {
+            nextValue.atom = next.atom;
+        } else {
+            nextValue.sep.idx = headIdx + 1;
+            nextValue.sep.size = head.sep.size - 1;
+        }
+    } while(!atomic_compare_exchange_strong(&list->head.atom, &head.atom, nextValue.atom));
     res->timesPoped += 1;
     return res;
 }

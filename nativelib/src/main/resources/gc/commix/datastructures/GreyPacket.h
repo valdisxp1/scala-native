@@ -11,8 +11,17 @@
 
 typedef Object *Stack_Type;
 
+typedef union {
+    struct {
+        uint32_t idx: BLOCK_COUNT_BITS;
+        uint32_t size: BLOCK_COUNT_BITS;
+        uint16_t timesPoped; // used to avoid ABA problems when popping
+    } sep;
+    atomic_uint_least64_t atom;
+} GreyPacketRef;
+
 typedef struct {
-    BlockRange next;// _First index _Limit timesPoped
+    GreyPacketRef next;
     atomic_uint_least32_t timesPoped; // used to avoid ABA problems when popping
     uint32_t size;
     Stack_Type items[GREY_PACKET_ITEMS];
@@ -22,8 +31,7 @@ typedef struct {
 #define GREYLIST_LAST ((uint32_t)1)
 
 typedef struct {
-    atomic_uint_fast32_t size;
-    BlockRange head; // _First index _Limit timesPoped
+    GreyPacketRef head;
 } GreyList;
 
 bool GreyPacket_Push(GreyPacket *packet, Stack_Type value);
@@ -32,6 +40,7 @@ bool GreyPacket_IsEmpty(GreyPacket *packet);
 bool GreyPacket_IsFull(GreyPacket *packet);
 
 void GreyList_Init(GreyList *list);
+uint32_t GreyList_Size(GreyList *list);
 void GreyList_Push(GreyList *list, word_t *greyPacketsStart, GreyPacket *packet);
 void GreyList_PushAll(GreyList *list, word_t *greyPacketsStart, GreyPacket *first, uint_fast32_t size);
 GreyPacket *GreyList_Pop(GreyList *list, word_t *greyPacketsStart);
@@ -45,6 +54,14 @@ static inline uint32_t GreyPacket_IndexOf(word_t *greyPacketsStart, GreyPacket *
 static inline GreyPacket *GreyPacket_FromIndex(word_t *greyPacketsStart, uint32_t idx) {
     assert(idx >= 2);
     return (GreyPacket *) greyPacketsStart + (idx - 2);
+}
+
+static inline uint64_t GreyPacketRef_Empty() {
+    GreyPacketRef initial;
+    initial.sep.idx = GREYLIST_LAST;
+    initial.sep.size = 0;
+    initial.sep.timesPoped = 0;
+    return initial.atom;
 }
 
 #endif // IMMIX_GREYPACKET_H
