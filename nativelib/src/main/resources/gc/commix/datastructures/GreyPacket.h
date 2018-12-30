@@ -12,7 +12,7 @@
 typedef Object *Stack_Type;
 
 typedef union {
-    struct {
+    struct __attribute__((packed)) {
         uint32_t idx: BLOCK_COUNT_BITS;
         uint32_t size: BLOCK_COUNT_BITS;
         uint16_t timesPoped; // used to avoid ABA problems when popping
