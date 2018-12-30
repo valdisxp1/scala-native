@@ -25,7 +25,6 @@ static inline GreyPacket *Marker_takeEmptyPacket(Heap *heap) {
 }
 
 static inline GreyPacket *Marker_takeFullPacket(Heap *heap) {
-    sem_wait(&heap->mark.hasWork);
     GreyPacket *packet = GreyList_Pop(&heap->mark.full, heap->greyPacketsStart);
     assert(packet == NULL || packet->size > 0);
     return packet;
@@ -120,10 +119,12 @@ void Marker_markPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
 }
 
 void Marker_Mark(Heap *heap) {
+    sem_wait(&heap->mark.hasWork);
     GreyPacket* in = Marker_takeFullPacket(heap);
     GreyPacket *out = NULL;
     while (in != NULL) {
         Marker_markPacket(heap, in, &out);
+        sem_trywait(&heap->mark.hasWork);
         GreyPacket *next = Marker_takeFullPacket(heap);
         if (next == NULL && !GreyPacket_IsEmpty(out)) {
             GreyPacket *tmp = out;
