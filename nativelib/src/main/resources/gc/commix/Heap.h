@@ -55,6 +55,7 @@ typedef struct {
         atomic_uint_fast32_t total;
         GreyList empty;
         GreyList full;
+        sem_t hasWork;
     } mark;
     Bytemap *bytemap;
     Stats *stats;

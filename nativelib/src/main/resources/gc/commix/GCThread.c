@@ -12,6 +12,8 @@ static inline void GCThread_mark(GCThread *thread, Heap *heap, Stats *stats) {
     while (!Marker_IsMarkDone(heap)) {
         Marker_Mark(heap);
     }
+    // wake another thread so all eventually finish
+    sem_post(&heap->mark.hasWork);
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
         Stats_RecordEvent(stats, event_concurrent_mark, thread->id,
