@@ -357,7 +357,7 @@ void Heap_Collect(Heap *heap) {
     Marker_MarkRoots(heap);
     heap->gcThreads.phase = gc_mark;
     GCThread_WakeAll(heap);
-    Marker_Mark(heap);
+    Marker_Mark(heap, stats);
     heap->gcThreads.phase = gc_idle;
     if (stats != NULL) {
         end_ns = scalanative_nano_time();

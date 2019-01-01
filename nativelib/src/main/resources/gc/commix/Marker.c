@@ -117,11 +117,19 @@ void Marker_markPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
     }
 }
 
-void Marker_Mark(Heap *heap) {
+void Marker_Mark(Heap *heap, Stats *stats) {
     GreyPacket* in = Marker_takeFullPacket(heap);
     GreyPacket *out = NULL;
     while (in != NULL) {
+        uint64_t start_ns, end_ns;
+        if (stats != NULL) {
+            start_ns = scalanative_nano_time();
+        }
         Marker_markPacket(heap, in, &out);
+        if (stats != NULL) {
+            end_ns = scalanative_nano_time();
+            Stats_RecordEvent(stats, event_mark_batch, start_ns, end_ns);
+        }
         GreyPacket *next = Marker_takeFullPacket(heap);
         if (next == NULL && !GreyPacket_IsEmpty(out)) {
             GreyPacket *tmp = out;
