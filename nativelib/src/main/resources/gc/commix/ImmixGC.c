@@ -10,6 +10,7 @@
 #include "utils/MathUtils.h"
 #include "Constants.h"
 #include "Settings.h"
+#include "GCThread.h"
 
 void scalanative_collect();
 
