@@ -3,6 +3,7 @@
 #include <memory.h>
 #include "GCTypes.h"
 #include "Heap.h"
+#include "GCThread.h"
 #include "datastructures/Stack.h"
 #include "Marker.h"
 #include "Log.h"
@@ -16,6 +17,12 @@ void scalanative_collect();
 
 void scalanative_afterexit() {
     Stats_OnExit(heap.stats);
+
+    int gcThreadCount = heap.gcThreads.count;
+    GCThread *gcThreads = (GCThread *) heap.gcThreads.all;
+    for (int i = 0; i < gcThreadCount; i++) {
+        Stats_OnExit(gcThreads[i].stats);
+    }
 }
 
 NOINLINE void scalanative_init() {
