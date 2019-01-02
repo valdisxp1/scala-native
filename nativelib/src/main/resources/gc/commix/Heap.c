@@ -170,12 +170,15 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
 
     int gcThreadCount = Settings_GCThreadCount();
     heap->gcThreads.count = gcThreadCount;
-    heap->gcThreads.phase = gc_idle;
+    heap->gcThreads.phase = gc_init;
     GCThread *gcThreads = (GCThread *)malloc(sizeof(GCThread) * gcThreadCount);
     heap->gcThreads.all = (void *)gcThreads;
     for (int i = 0; i < gcThreadCount; i++) {
         GCThread_Init(&gcThreads[i], i, heap);
     }
+
+    //async init/warm up
+    sem_post(&heap->gcThreads.start0);
 }
 
 /**

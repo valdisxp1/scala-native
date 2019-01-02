@@ -17,8 +17,9 @@
 
 typedef enum {
     gc_idle = 0x0,
-    gc_mark = 0x1,
-    gc_sweep = 0x2
+    gc_init = 0x1,
+    gc_mark = 0x2,
+    gc_sweep = 0x3
 } GCThreadPhase;
 
 typedef struct {

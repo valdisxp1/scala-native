@@ -4,6 +4,41 @@
 #include "Marker.h"
 #include <semaphore.h>
 
+void GCThread_initPages(word_t *start, word_t *end) {
+    for (word_t *current = start; current < end; current += PAGE_SIZE / WORD_SIZE) {
+       volatile word_t ignored = *current;
+    }
+}
+
+static inline void GCThread_init(GCThread *thread, Heap *heap) {
+    // warm up the pages by reading a word from each
+    // heap
+    uint34_t blockCount = heap->blockCount;
+    {
+        word_t *start = heap->heapStart;
+        word_t *end = start + blockCount * WORDS_IN_BLOCK;
+        GCThread_initPages(start, end);
+    }
+    // bytemap
+    {
+        word_t *start = heap->bytemap->data;
+        word_t *end = start + blockCount * WORDS_IN_BLOCK / ALLOCATION_ALIGNMENT_WORDS / WORD_SIZE;
+        GCThread_initPages(start, end);
+    }
+    // block metas
+    {
+        word_t *start = heap->blockMetaStart;
+        word_t *end = start + blockCount * sizeof(BlockMeta) / WORD_SIZE;
+        GCThread_initPages(start, end);
+    }
+    // line metas
+    {
+        word_t *start = heap->lineMetaStart;
+        word_t *end = start + blockCount * LINE_COUNT * LINE_METADATA_SIZE / WORD_SIZE;
+        GCThread_initPages(start, end);
+    }
+}
+
 static inline void GCThread_mark(GCThread *thread, Heap *heap, Stats *stats) {
     uint64_t start_ns, end_ns;
     if (stats != NULL) {
@@ -101,6 +136,9 @@ void *GCThread_loop0(void *arg) {
         uint8_t phase = heap->gcThreads.phase;
         switch (phase) {
             case gc_idle:
+                break;
+            case gc_init:
+                GCThread_init(thread, heap);
                 break;
             case gc_mark:
                 GCThread_mark(thread, heap, stats);
