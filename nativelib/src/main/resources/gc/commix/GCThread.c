@@ -13,7 +13,7 @@ void GCThread_initPages(word_t *start, word_t *end) {
 static inline void GCThread_init(GCThread *thread, Heap *heap) {
     // warm up the pages by reading a word from each
     // heap
-    uint34_t blockCount = heap->blockCount;
+    uint32_t blockCount = heap->blockCount;
     {
         word_t *start = heap->heapStart;
         word_t *end = start + blockCount * WORDS_IN_BLOCK;
