@@ -21,7 +21,7 @@ static inline void GCThread_init(GCThread *thread, Heap *heap) {
     }
     // bytemap
     {
-        word_t *start = heap->bytemap->data;
+        word_t *start = (word_t *) heap->bytemap->data;
         word_t *end = start + blockCount * WORDS_IN_BLOCK / ALLOCATION_ALIGNMENT_WORDS / WORD_SIZE;
         GCThread_initPages(start, end);
     }
