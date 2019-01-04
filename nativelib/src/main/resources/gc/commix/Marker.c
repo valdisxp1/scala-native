@@ -19,6 +19,7 @@ static inline GreyPacket *Marker_takeEmptyPacket(Heap *heap) {
         // Another thread setting size = 0 might not arrived, just write it now.
         // Avoiding a memfence.
         packet->size = 0;
+        packet->type = grey_packet_reflist;
     }
     assert(packet != NULL);
     return packet;
@@ -72,6 +73,20 @@ void Marker_markConservative(Heap *heap, GreyPacket **outHolder, word_t *address
     }
 }
 
+void Marker_markRange(Heap *heap, GreyPacket* in, GreyPacket **outHolder, Bytemap *bytemap,
+                      word_t **fields, size_t length) {
+    for (int i = 0; i < length; i++) {
+        word_t *field = fields[i];
+        if (Heap_IsWordInHeap(heap, field)) {
+            ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
+            if (ObjectMeta_IsAllocated(fieldMeta)) {
+                Marker_markObject(heap, outHolder, bytemap,
+                                  (Object *)field, fieldMeta);
+            }
+        }
+    }
+}
+
 void Marker_markPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
     Bytemap *bytemap = heap->bytemap;
     if (*outHolder == NULL) {
@@ -87,15 +102,24 @@ void Marker_markPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
                 ArrayHeader *arrayHeader = (ArrayHeader *)object;
                 size_t length = arrayHeader->length;
                 word_t **fields = (word_t **)(arrayHeader + 1);
-                for (int i = 0; i < length; i++) {
-                    word_t *field = fields[i];
-                    if (Heap_IsWordInHeap(heap, field)) {
-                        ObjectMeta *fieldMeta = Bytemap_Get(bytemap, field);
-                        if (ObjectMeta_IsAllocated(fieldMeta)) {
-                            Marker_markObject(heap, outHolder, bytemap,
-                                              (Object *)field, fieldMeta);
-                        }
+                if (length <= ARRAY_SPLIT_THRESHOLD) {
+                    Marker_markRange(heap, in, outHolder, bytemap, fields, length);
+                } else {
+                    // leave the last batch for the current thread
+                    word_t **limit = fields + length - ARRAY_SPLIT_BATCH;
+                    word_t **batchFields = fields;
+                    while (batchFields < limit) {
+                        GreyPacket *slice = Marker_takeEmptyPacket(heap);
+                        assert(slice != NULL);
+                        slice->type = grey_packet_refrange;
+                        slice->items[0] = (Stack_Type) batchFields;
+                        // no point writing the size, because it is constant
+                        Marker_giveFullPacket(heap, slice);
+                        batchFields += ARRAY_SPLIT_BATCH;
                     }
+                    assert(batchFields < fields + length);
+                    assert(batchFields > fields);
+                    Marker_markRange(heap, in, outHolder, bytemap, batchFields, batchFields - fields);
                 }
             }
             // non-object arrays do not contain pointers
@@ -117,11 +141,29 @@ void Marker_markPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
     }
 }
 
+void Marker_markRangePacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
+    Bytemap *bytemap = heap->bytemap;
+    if (*outHolder == NULL) {
+        GreyPacket *fresh = Marker_takeEmptyPacket(heap);
+        assert(fresh != NULL);
+        *outHolder = fresh;
+    }
+    word_t **fields = (word_t **) in->items[0];
+    Marker_markRange(heap, in, outHolder, bytemap, fields, ARRAY_SPLIT_BATCH);
+}
+
 void Marker_Mark(Heap *heap) {
     GreyPacket* in = Marker_takeFullPacket(heap);
     GreyPacket *out = NULL;
     while (in != NULL) {
-        Marker_markPacket(heap, in, &out);
+        switch (in->type) {
+            case grey_packet_reflist:
+                Marker_markPacket(heap, in, &out);
+                break;
+            case grey_packet_refrange:
+                Marker_markRangePacket(heap, in, &out);
+                break;
+        }
         GreyPacket *next = Marker_takeFullPacket(heap);
         if (next == NULL && !GreyPacket_IsEmpty(out)) {
             GreyPacket *tmp = out;

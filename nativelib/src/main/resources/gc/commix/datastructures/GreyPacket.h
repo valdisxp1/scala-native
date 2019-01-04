@@ -20,10 +20,16 @@ typedef union {
     atomic_uint_least64_t atom;
 } GreyPacketRef;
 
+typedef enum {
+    grey_packet_reflist = 0x0,
+    grey_packet_refrange = 0x1
+} GreyPacketType;
+
 typedef struct {
     GreyPacketRef next;
     atomic_uint_least32_t timesPoped; // used to avoid ABA problems when popping
-    uint32_t size;
+    uint16_t size;
+    uint16_t type;
     Stack_Type items[GREY_PACKET_ITEMS];
 } GreyPacket;
 
