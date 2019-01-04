@@ -27,7 +27,7 @@ static inline GreyPacket *Marker_takeEmptyPacket(Heap *heap) {
 
 static inline GreyPacket *Marker_takeFullPacket(Heap *heap) {
     GreyPacket *packet = GreyList_Pop(&heap->mark.full, heap->greyPacketsStart);
-    assert(packet == NULL || packet->size > 0);
+    assert(packet == NULL || packet->type == grey_packet_refrange || packet->size > 0);
     return packet;
 }
 
