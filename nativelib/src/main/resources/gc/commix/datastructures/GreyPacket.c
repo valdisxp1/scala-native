@@ -52,7 +52,7 @@ void GreyList_Push(GreyList *list, word_t *greyPacketsStart, GreyPacket *packet)
         } else {
             packet->next.atom = head.atom;
         }
-    } while (!atomic_compare_exchange_strong(&list->head.atom, &head.atom, newHead.atom));
+    } while (!atomic_compare_exchange_strong(&list->head.atom, (uint64_t *) &head.atom, newHead.atom));
 }
 
 void GreyList_PushAll(GreyList *list, word_t *greyPacketsStart, GreyPacket *first, uint_fast32_t size) {
@@ -73,7 +73,7 @@ void GreyList_PushAll(GreyList *list, word_t *greyPacketsStart, GreyPacket *firs
         } else {
             last->next.atom = head.atom;
         }
-    } while (!atomic_compare_exchange_strong(&list->head.atom, &head.atom, newHead.atom));
+    } while (!atomic_compare_exchange_strong(&list->head.atom, (uint64_t *) &head.atom, newHead.atom));
 }
 
 GreyPacket *GreyList_Pop(GreyList *list, word_t *greyPacketsStart) {
@@ -99,7 +99,7 @@ GreyPacket *GreyList_Pop(GreyList *list, word_t *greyPacketsStart) {
             nextValue.sep.idx = headIdx + 1;
             nextValue.sep.size = head.sep.size - 1;
         }
-    } while(!atomic_compare_exchange_strong(&list->head.atom, &head.atom, nextValue.atom));
+    } while(!atomic_compare_exchange_strong(&list->head.atom, (uint64_t *) &head.atom, nextValue.atom));
     res->timesPoped += 1;
     return res;
 }
