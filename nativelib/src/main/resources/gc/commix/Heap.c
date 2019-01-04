@@ -161,7 +161,7 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     char *statsFile = Settings_StatsFileName();
     if (statsFile != NULL) {
         heap->stats = malloc(sizeof(Stats));
-        Stats_Init(heap->stats, statsFile);
+        Stats_Init(heap->stats, statsFile, MUTATOR_THREAD_ID);
     }
 
     // Init all GCThreads
@@ -174,7 +174,17 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
     GCThread *gcThreads = (GCThread *)malloc(sizeof(GCThread) * gcThreadCount);
     heap->gcThreads.all = (void *)gcThreads;
     for (int i = 0; i < gcThreadCount; i++) {
-        GCThread_Init(&gcThreads[i], i, heap);
+        Stats *stats;
+        if (statsFile != NULL) {
+            int len = strlen(statsFile) + 5;
+            char *threadSpecificFile = (char *) malloc(len);
+            snprintf(threadSpecificFile, len, "%s.t%d", statsFile, i);
+            stats = malloc(sizeof(Stats));
+            Stats_Init(stats, threadSpecificFile, (uint8_t)i);
+        } else {
+            stats = NULL;
+        }
+        GCThread_Init(&gcThreads[i], i, heap, stats);
     }
 }
 
@@ -347,11 +357,11 @@ void Heap_Collect(Heap *heap) {
     Marker_MarkRoots(heap);
     heap->gcThreads.phase = gc_mark;
     GCThread_WakeAll(heap);
-    Marker_Mark(heap);
+    Marker_Mark(heap, stats);
     heap->gcThreads.phase = gc_idle;
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
-        Stats_RecordEvent(stats, event_mark, MUTATOR_THREAD_ID, start_ns,
+        Stats_RecordEvent(stats, event_mark, start_ns,
                           end_ns);
     }
     Heap_Recycle(heap);
