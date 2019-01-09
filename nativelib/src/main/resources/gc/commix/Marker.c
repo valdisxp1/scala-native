@@ -107,7 +107,7 @@ void Marker_markPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
                 } else {
                     // leave the last batch for the current thread
                     word_t **limit = fields + length;
-                    word_t **lastBatch = (length / ARRAY_SPLIT_BATCH) * ARRAY_SPLIT_BATCH;
+                    word_t **lastBatch = fields + (length / ARRAY_SPLIT_BATCH) * ARRAY_SPLIT_BATCH;
 
                     assert(lastBatch <= limit);
                     for (word_t **batchFields = fields; batchFields < limit; batchFields += ARRAY_SPLIT_BATCH) {
