@@ -38,7 +38,7 @@ static inline void Marker_giveEmptyPacket(Heap *heap, GreyPacket *packet) {
 }
 
 static inline void Marker_giveFullPacket(Heap *heap, GreyPacket *packet) {
-    assert(packet->size > 0);
+    assert(packet->type == grey_packet_refrange || packet->size > 0);
     // make all the contents visible to other threads
     atomic_thread_fence(memory_order_seq_cst);
     assert(GreyList_Size(&heap->mark.full) <= heap->mark.total);
