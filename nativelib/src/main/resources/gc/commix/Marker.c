@@ -38,7 +38,7 @@ static inline void Marker_giveEmptyPacket(Heap *heap, GreyPacket *packet) {
 }
 
 static inline void Marker_giveFullPacket(Heap *heap, GreyPacket *packet) {
-    assert(packet->size > 0);
+    assert(packet->type == grey_packet_refrange || packet->size > 0);
     // make all the contents visible to other threads
     atomic_thread_fence(memory_order_seq_cst);
     assert(GreyList_Size(&heap->mark.full) <= heap->mark.total);
@@ -106,20 +106,23 @@ void Marker_markPacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) {
                     Marker_markRange(heap, in, outHolder, bytemap, fields, length);
                 } else {
                     // leave the last batch for the current thread
-                    word_t **limit = fields + length - ARRAY_SPLIT_BATCH;
-                    word_t **batchFields = fields;
-                    while (batchFields < limit) {
+                    word_t **limit = fields + length;
+                    word_t **lastBatch = fields + (length / ARRAY_SPLIT_BATCH) * ARRAY_SPLIT_BATCH;
+
+                    assert(lastBatch <= limit);
+                    for (word_t **batchFields = fields; batchFields < limit; batchFields += ARRAY_SPLIT_BATCH) {
                         GreyPacket *slice = Marker_takeEmptyPacket(heap);
                         assert(slice != NULL);
                         slice->type = grey_packet_refrange;
                         slice->items[0] = (Stack_Type) batchFields;
                         // no point writing the size, because it is constant
                         Marker_giveFullPacket(heap, slice);
-                        batchFields += ARRAY_SPLIT_BATCH;
                     }
-                    assert(batchFields < fields + length);
-                    assert(batchFields > fields);
-                    Marker_markRange(heap, in, outHolder, bytemap, batchFields, batchFields - fields);
+
+                    size_t lastBatchSize = limit - lastBatch;
+                    if (lastBatchSize > 0) {
+                        Marker_markRange(heap, in, outHolder, bytemap, lastBatch, lastBatchSize);
+                    }
                 }
             }
             // non-object arrays do not contain pointers
@@ -150,6 +153,8 @@ void Marker_markRangePacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) 
     }
     word_t **fields = (word_t **) in->items[0];
     Marker_markRange(heap, in, outHolder, bytemap, fields, ARRAY_SPLIT_BATCH);
+    in->type = grey_packet_reflist;
+    in->size = 0;
 }
 
 void Marker_Mark(Heap *heap, Stats *stats) {
