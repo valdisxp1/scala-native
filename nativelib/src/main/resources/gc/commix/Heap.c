@@ -359,7 +359,9 @@ void Heap_Collect(Heap *heap) {
     // make sure the gc phase is propagated
     atomic_thread_fence(memory_order_release);
     GCThread_WakeAll(heap);
-    Marker_Mark(heap, stats);
+    while (!Marker_IsMarkDone(heap)) {
+        Marker_Mark(heap, stats);
+    }
     heap->gcThreads.phase = gc_idle;
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
