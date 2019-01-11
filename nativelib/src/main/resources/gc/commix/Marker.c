@@ -153,6 +153,8 @@ void Marker_markRangePacket(Heap *heap, GreyPacket* in, GreyPacket **outHolder) 
     }
     word_t **fields = (word_t **) in->items[0];
     Marker_markRange(heap, in, outHolder, bytemap, fields, ARRAY_SPLIT_BATCH);
+    in->type = grey_packet_reflist;
+    in->size = 0;
 }
 
 void Marker_Mark(Heap *heap) {
