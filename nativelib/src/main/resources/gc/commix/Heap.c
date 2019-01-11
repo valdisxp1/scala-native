@@ -356,6 +356,8 @@ void Heap_Collect(Heap *heap) {
     }
     Marker_MarkRoots(heap);
     heap->gcThreads.phase = gc_mark;
+    // make sure the gc phase is propagated
+    atomic_thread_fence(memory_order_release);
     GCThread_WakeAll(heap);
     Marker_Mark(heap, stats);
     heap->gcThreads.phase = gc_idle;
