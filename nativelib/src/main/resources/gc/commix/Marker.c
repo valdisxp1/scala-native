@@ -27,6 +27,7 @@ static inline GreyPacket *Marker_takeEmptyPacket(Heap *heap) {
 
 static inline GreyPacket *Marker_takeFullPacket(Heap *heap) {
     GreyPacket *packet = GreyList_Pop(&heap->mark.full, heap->greyPacketsStart);
+    atomic_thread_fence(memory_order_release);
     assert(packet == NULL || packet->type == grey_packet_refrange || packet->size > 0);
     return packet;
 }
@@ -40,7 +41,7 @@ static inline void Marker_giveEmptyPacket(Heap *heap, GreyPacket *packet) {
 static inline void Marker_giveFullPacket(Heap *heap, GreyPacket *packet) {
     assert(packet->type == grey_packet_refrange || packet->size > 0);
     // make all the contents visible to other threads
-    atomic_thread_fence(memory_order_seq_cst);
+    atomic_thread_fence(memory_order_acquire);
     assert(GreyList_Size(&heap->mark.full) <= heap->mark.total);
     GreyList_Push(&heap->mark.full, heap->greyPacketsStart, packet);
 }
