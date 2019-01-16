@@ -52,6 +52,9 @@ typedef struct {
         atomic_uint_fast32_t cursorDone;
     } lazySweep;
     struct {
+        uint64_t lastEnd_ns;
+        uint64_t currentStart_ns;
+        uint64_t currentEnd_ns;
         atomic_uint_fast32_t total;
         GreyList empty;
         GreyList full;

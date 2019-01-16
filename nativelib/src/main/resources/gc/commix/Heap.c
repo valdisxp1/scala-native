@@ -186,6 +186,8 @@ void Heap_Init(Heap *heap, size_t minHeapSize, size_t maxHeapSize) {
         }
         GCThread_Init(&gcThreads[i], i, heap, stats);
     }
+
+    heap->mark.lastEnd_ns = scalanative_nano_time();
 }
 
 /**
@@ -350,10 +352,8 @@ void Heap_Collect(Heap *heap) {
     Heap_clearIsSwept(heap);
     Heap_assertIsConsistent(heap);
 #endif
-    uint64_t start_ns, end_ns;
-    if (stats != NULL) {
-        start_ns = scalanative_nano_time();
-    }
+    heap->mark.lastEnd_ns = heap->mark.currentEnd_ns;
+        heap->mark.currentStart_ns = scalanative_nano_time();
     Marker_MarkRoots(heap);
     heap->gcThreads.phase = gc_mark;
     // make sure the gc phase is propagated
@@ -363,10 +363,10 @@ void Heap_Collect(Heap *heap) {
         Marker_Mark(heap, stats);
     }
     heap->gcThreads.phase = gc_idle;
+    heap->mark.currentEnd_ns = scalanative_nano_time();
     if (stats != NULL) {
-        end_ns = scalanative_nano_time();
-        Stats_RecordEvent(stats, event_mark, start_ns,
-                          end_ns);
+        Stats_RecordEvent(stats, event_mark, heap->mark.currentStart_ns,
+                          heap->mark.currentEnd_ns);
     }
     Heap_Recycle(heap);
 }
@@ -386,7 +386,10 @@ bool Heap_shouldGrow(Heap *heap) {
     fflush(stdout);
 #endif
 
-    return freeBlockCount * 2 < blockCount ||
+    uint64_t timeInMark = heap->mark.currentEnd_ns - heap->mark.currentStart_ns;
+    uint64_t timeTotal = heap->mark.currentEnd_ns - heap->mark.lastEnd_ns;
+
+    return timeInMark >= GROWTH_MARK_FRACTION * timeTotal || freeBlockCount * 2 < blockCount ||
            4 * unavailableBlockCount > blockCount;
 }
 
