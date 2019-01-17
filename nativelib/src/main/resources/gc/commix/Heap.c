@@ -358,7 +358,8 @@ void Heap_Collect(Heap *heap) {
     heap->gcThreads.phase = gc_mark;
     // make sure the gc phase is propagated
     atomic_thread_fence(memory_order_release);
-    GCThread_WakeAll(heap);
+    int gcThreadCount = heap->gcThreads.count;
+    GCThread_Wake(heap, gcThreadCount);
     while (!Marker_IsMarkDone(heap)) {
         Marker_Mark(heap, stats);
     }
@@ -406,7 +407,8 @@ void Heap_Recycle(Heap *heap) {
     GCThread_JoinAll(heap);
 
     heap->sweep.cursor = 0;
-    heap->sweep.limit = heap->blockCount;
+    uint32_t blockCount = heap->blockCount;
+    heap->sweep.limit = blockCount;
     heap->lazySweep.cursorDone = 0;
     heap->sweep.coalesceDone = 0;
     heap->sweep.postSweepDone = false;
@@ -414,7 +416,19 @@ void Heap_Recycle(Heap *heap) {
     heap->gcThreads.phase = gc_sweep;
     // make sure all running parameters are propagated
     atomic_thread_fence(memory_order_release);
-    GCThread_WakeAll(heap);
+    // determine how many threads need to start
+    int gcThreadCount = heap->gcThreads.count;
+    if (blockCount > CONCURRENT_SWEEP_MIN_BLOCKS) {
+        int numberOfBatches = blockCount / SWEEP_BATCH_SIZE;
+        int threadsToStart = numberOfBatches / MIN_SWEEP_BATCHES_PER_THREAD;
+        if (threadsToStart > gcThreadCount){
+            threadsToStart = gcThreadCount;
+        }
+        GCThread_Wake(heap, gcThreadCount);
+    } else {
+        Sweeper_Sweep(heap, heap->stats, &heap->lazySweep.cursorDone, blockCount);
+        Sweeper_LazyCoalesce(heap, heap->stats);
+    }
 }
 
 void Heap_GrowIfNeeded(Heap *heap) {
