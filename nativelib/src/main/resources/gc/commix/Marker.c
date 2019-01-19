@@ -46,6 +46,7 @@ static inline GreyPacket *Marker_takeFullPacket(Heap *heap, Stats *stats) {
             stats->mark_waiting_start_ns = start_ns;
         } else if (packet != NULL && stats->mark_waiting_start_ns != 0) {
             Stats_RecordEvent(stats, mark_waiting, stats->mark_waiting_start_ns, end_ns);
+            stats->mark_waiting_start_ns = 0;
         }
     }
     atomic_thread_fence(memory_order_release);
