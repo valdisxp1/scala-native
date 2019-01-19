@@ -5,7 +5,8 @@
 
 const char *const Stats_eventNames[] = {"mark", "sweep", "concmark",
                                         "concsweep", "collection",
-                                        "mark_batch", "sweep_batch", "coalesce_batch"};
+                                        "mark_batch", "sweep_batch", "coalesce_batch",
+                                        "mark_no_in_full", "sync"};
 
 void Stats_Init(Stats *stats, const char *statsFile, int8_t gc_thread) {
     stats->outFile = fopen(statsFile, "w");

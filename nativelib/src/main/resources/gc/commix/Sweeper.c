@@ -171,7 +171,7 @@ void Sweep_applyResult(SweepResult *result, Allocator *allocator, BlockAllocator
 
 void Sweeper_Sweep(Heap *heap, Stats *stats, atomic_uint_fast32_t *cursorDone,
                    uint32_t maxCount) {
-    uint64_t start_ns, end_ns;
+    uint64_t start_ns, end_ns, presync_end_ns;
     if (stats != NULL) {
         start_ns = scalanative_nano_time();
     }
@@ -184,6 +184,12 @@ void Sweeper_Sweep(Heap *heap, Stats *stats, atomic_uint_fast32_t *cursorDone,
     if (cursor < sweepLimit) {
         startIdx = (uint32_t)atomic_fetch_add(&heap->sweep.cursor, maxCount);
     }
+
+    if (stats != NULL) {
+        presync_end_ns = scalanative_nano_time();
+        Stats_RecordEvent(stats, event_sync, start_ns, presync_end_ns);
+    }
+
     uint32_t limitIdx = startIdx + maxCount;
     assert(*cursorDone <= startIdx);
     if (limitIdx > sweepLimit) {
@@ -302,6 +308,10 @@ void Sweeper_Sweep(Heap *heap, Stats *stats, atomic_uint_fast32_t *cursorDone,
         BlockMeta_SetFlagAndSuperblockSize(lastFreeBlockStart, block_coalesce_me, totalSize);
     }
 
+    uint64_t postsync_start_ns;
+    if (stats != NULL) {
+        postsync_start_ns = scalanative_nano_time();
+    }
     Sweep_applyResult(&sweepResult, &allocator, &blockAllocator);
     // coalescing might be done by another thread
     // block_coalesce_me marks should be visible
@@ -309,6 +319,7 @@ void Sweeper_Sweep(Heap *heap, Stats *stats, atomic_uint_fast32_t *cursorDone,
     atomic_store_explicit(cursorDone, limitIdx, memory_order_release);
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
+        Stats_RecordEvent(stats, event_sync, postsync_start_ns, end_ns);
         Stats_RecordEvent(stats, event_sweep_batch, start_ns, end_ns);
     }
 }

@@ -16,7 +16,9 @@ typedef enum {
     event_collection = 0x4,
     event_mark_batch = 0x5,
     event_sweep_batch = 0x6,
-    event_coalesce_batch = 0x7
+    event_coalesce_batch = 0x7,
+    event_mark_no_in_full = 0x8,
+    event_sync = 0x9
 } eventType;
 
 typedef struct {
