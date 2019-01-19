@@ -439,5 +439,6 @@ void Sweeper_sweepDone(Heap *heap) {
     if (stats != NULL) {
         uint64_t end_ns = scalanative_nano_time();
         Stats_RecordEvent(stats, event_collection, stats->collection_start_ns, end_ns);
+        Stats_WriteToFile(stats);
     }
 }

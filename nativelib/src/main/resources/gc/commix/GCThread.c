@@ -76,6 +76,9 @@ void *GCThread_loop(void *arg) {
                 break;
             case gc_sweep:
                 GCThread_sweep(thread, heap, stats);
+                if (stats != NULL) {
+                    Stats_WriteToFile(stats);
+                }
                 break;
         }
         // hard fence before proceeding with the next phase
@@ -105,6 +108,9 @@ void *GCThread_loop0(void *arg) {
                 break;
             case gc_sweep:
                 GCThread_sweep0(thread, heap, stats);
+                if (stats != NULL) {
+                    Stats_WriteToFile(stats);
+                }
                 break;
         }
         // hard fence before proceeding with the next phase

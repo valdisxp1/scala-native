@@ -34,6 +34,7 @@ void Stats_Init(Stats *stats, const char *statsFile, int8_t gc_thread);
 void Stats_RecordEvent(Stats *stats, eventType eType,
                        uint64_t start_ns, uint64_t end_ns);
 void Stats_OnExit(Stats *stats);
+void Stats_WriteToFile(Stats *stats);
 
 extern long long scalanative_nano_time();
 

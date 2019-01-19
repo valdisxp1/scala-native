@@ -7,8 +7,6 @@ const char *const Stats_eventNames[] = {"mark", "sweep", "concmark",
                                         "concsweep", "collection",
                                         "mark_batch", "sweep_batch", "coalesce_batch"};
 
-void Stats_writeToFile(Stats *stats);
-
 void Stats_Init(Stats *stats, const char *statsFile, int8_t gc_thread) {
     stats->outFile = fopen(statsFile, "w");
     stats->gc_thread = gc_thread;
@@ -25,11 +23,11 @@ void Stats_RecordEvent(Stats *stats, eventType eType,
     stats->event_types[index] = eType;
     stats->events += 1;
     if (stats->events % STATS_MEASUREMENTS == 0) {
-        Stats_writeToFile(stats);
+        Stats_WriteToFile(stats);
     }
 }
 
-void Stats_writeToFile(Stats *stats) {
+void Stats_WriteToFile(Stats *stats) {
     uint64_t events = stats->events;
     uint64_t remainder = events % STATS_MEASUREMENTS;
     if (remainder == 0) {
@@ -49,7 +47,7 @@ void Stats_OnExit(Stats *stats) {
         uint64_t remainder = stats->events % STATS_MEASUREMENTS;
         if (remainder > 0) {
             // there were some measurements not written in the last full batch.
-            Stats_writeToFile(stats);
+            Stats_WriteToFile(stats);
         }
         fclose(stats->outFile);
     }
