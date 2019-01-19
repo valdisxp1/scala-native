@@ -17,7 +17,7 @@ typedef enum {
     event_mark_batch = 0x5,
     event_sweep_batch = 0x6,
     event_coalesce_batch = 0x7,
-    event_mark_no_in_full = 0x8,
+    mark_waiting = 0x8,
     event_sync = 0x9
 } eventType;
 
@@ -30,6 +30,7 @@ typedef struct {
     uint64_t time_ns[STATS_MEASUREMENTS];
 
     uint64_t collection_start_ns;
+    uint64_t mark_waiting_start_ns;
 } Stats;
 
 void Stats_Init(Stats *stats, const char *statsFile, int8_t gc_thread);

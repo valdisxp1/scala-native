@@ -354,7 +354,7 @@ void Heap_Collect(Heap *heap) {
 #endif
     heap->mark.lastEnd_ns = heap->mark.currentEnd_ns;
     heap->mark.currentStart_ns = scalanative_nano_time();
-    Marker_MarkRoots(heap);
+    Marker_MarkRoots(heap, stats);
     heap->gcThreads.phase = gc_mark;
     // make sure the gc phase is propagated
     atomic_thread_fence(memory_order_release);
