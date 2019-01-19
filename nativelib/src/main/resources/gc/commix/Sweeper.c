@@ -171,10 +171,6 @@ void Sweep_applyResult(SweepResult *result, Allocator *allocator, BlockAllocator
 
 void Sweeper_Sweep(Heap *heap, Stats *stats, atomic_uint_fast32_t *cursorDone,
                    uint32_t maxCount) {
-    uint64_t start_ns, end_ns;
-    if (stats != NULL) {
-        start_ns = scalanative_nano_time();
-    }
     SweepResult sweepResult;
     SweepResult_Init(&sweepResult);
     uint32_t cursor = heap->sweep.cursor;
@@ -183,6 +179,11 @@ void Sweeper_Sweep(Heap *heap, Stats *stats, atomic_uint_fast32_t *cursorDone,
     uint32_t startIdx = sweepLimit;
     if (cursor < sweepLimit) {
         startIdx = (uint32_t)atomic_fetch_add(&heap->sweep.cursor, maxCount);
+    }
+
+    uint64_t start_ns, end_ns;
+    if (stats != NULL) {
+        start_ns = scalanative_nano_time();
     }
     uint32_t limitIdx = startIdx + maxCount;
     assert(*cursorDone <= startIdx);
@@ -302,15 +303,15 @@ void Sweeper_Sweep(Heap *heap, Stats *stats, atomic_uint_fast32_t *cursorDone,
         BlockMeta_SetFlagAndSuperblockSize(lastFreeBlockStart, block_coalesce_me, totalSize);
     }
 
+    if (stats != NULL) {
+        end_ns = scalanative_nano_time();
+        Stats_RecordEvent(stats, event_sweep_batch, start_ns, end_ns);
+    }
     Sweep_applyResult(&sweepResult, &allocator, &blockAllocator);
     // coalescing might be done by another thread
     // block_coalesce_me marks should be visible
     atomic_thread_fence(memory_order_release);
     atomic_store_explicit(cursorDone, limitIdx, memory_order_release);
-    if (stats != NULL) {
-        end_ns = scalanative_nano_time();
-        Stats_RecordEvent(stats, event_sweep_batch, start_ns, end_ns);
-    }
 }
 
 uint_fast32_t Sweeper_minSweepCursor(Heap *heap) {
