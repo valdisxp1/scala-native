@@ -41,12 +41,17 @@ static inline GreyPacket *Marker_takeFullPacket(Heap *heap, Stats *stats) {
     GreyPacket *packet = GreyList_Pop(&heap->mark.full, heap->greyPacketsStart);
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
-        Stats_RecordEvent(stats, event_sync, start_ns, end_ns);
-        if (packet == NULL && stats->mark_waiting_start_ns == 0) {
-            stats->mark_waiting_start_ns = start_ns;
-        } else if (packet != NULL && stats->mark_waiting_start_ns != 0) {
-            Stats_RecordEvent(stats, mark_waiting, stats->mark_waiting_start_ns, end_ns);
-            stats->mark_waiting_start_ns = 0;
+
+        if (packet == NULL) {
+            if (stats->mark_waiting_start_ns == 0) {
+                stats->mark_waiting_start_ns = start_ns;
+            }
+        } else {
+            Stats_RecordEvent(stats, event_sync, start_ns, end_ns);
+            if (stats->mark_waiting_start_ns != 0) {
+                Stats_RecordEvent(stats, mark_waiting, stats->mark_waiting_start_ns, end_ns);
+                stats->mark_waiting_start_ns = 0;
+            }
         }
     }
     atomic_thread_fence(memory_order_release);
