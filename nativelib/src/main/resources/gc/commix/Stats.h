@@ -31,6 +31,7 @@ typedef struct {
 
     uint64_t collection_start_ns;
     uint64_t mark_waiting_start_ns;
+    uint64_t mark_waiting_end_ns;
 } Stats;
 
 void Stats_Init(Stats *stats, const char *statsFile, int8_t gc_thread);

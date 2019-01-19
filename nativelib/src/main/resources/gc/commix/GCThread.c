@@ -9,6 +9,7 @@ static inline void GCThread_mark(GCThread *thread, Heap *heap, Stats *stats) {
     if (stats != NULL) {
         start_ns = scalanative_nano_time();
         stats->mark_waiting_start_ns = 0;
+        stats->mark_waiting_end_ns = 0;
     }
     while (!Marker_IsMarkDone(heap)) {
         Marker_Mark(heap, stats);
@@ -18,7 +19,7 @@ static inline void GCThread_mark(GCThread *thread, Heap *heap, Stats *stats) {
         Stats_RecordEvent(stats, event_concurrent_mark,
                           start_ns, end_ns);
         if (stats->mark_waiting_start_ns != 0) {
-            Stats_RecordEvent(stats, mark_waiting, stats->mark_waiting_start_ns, end_ns);
+            Stats_RecordEvent(stats, mark_waiting, stats->mark_waiting_start_ns, stats->mark_waiting_end_ns);
         }
     }
 }

@@ -42,12 +42,13 @@ static inline GreyPacket *Marker_takeFullPacket(Heap *heap, Stats *stats) {
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
 
+        Stats_RecordEvent(stats, event_sync, start_ns, end_ns);
         if (packet == NULL) {
             if (stats->mark_waiting_start_ns == 0) {
                 stats->mark_waiting_start_ns = start_ns;
             }
+            stats->mark_waiting_end_ns = end_ns;
         } else {
-            Stats_RecordEvent(stats, event_sync, start_ns, end_ns);
             if (stats->mark_waiting_start_ns != 0) {
                 Stats_RecordEvent(stats, mark_waiting, stats->mark_waiting_start_ns, end_ns);
                 stats->mark_waiting_start_ns = 0;
