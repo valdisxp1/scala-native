@@ -6,6 +6,7 @@
 #include "State.h"
 #include "headers/ObjectHeader.h"
 #include "datastructures/GreyPacket.h"
+#include <sched.h>
 
 extern word_t *__modules;
 extern int __modules_size;
@@ -39,6 +40,12 @@ static inline GreyPacket *Marker_takeFullPacket(Heap *heap, Stats *stats) {
         start_ns = scalanative_nano_time();
     }
     GreyPacket *packet = GreyList_Pop(&heap->mark.full, heap->greyPacketsStart);
+    if (packet == NULL) {
+        // failed to get a full packet, back off
+        sched_yield();
+    } else {
+        atomic_thread_fence(memory_order_release);
+    }
     if (stats != NULL) {
         end_ns = scalanative_nano_time();
 
@@ -55,7 +62,6 @@ static inline GreyPacket *Marker_takeFullPacket(Heap *heap, Stats *stats) {
             }
         }
     }
-    atomic_thread_fence(memory_order_release);
     assert(packet == NULL || packet->type == grey_packet_refrange || packet->size > 0);
     return packet;
 }
