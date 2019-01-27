@@ -138,8 +138,9 @@ void Marker_markConservative(Heap *heap, Stats *stats, GreyPacket **outHolder, w
     }
 }
 
-void Marker_markRange(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder, Bytemap *bytemap,
+int Marker_markRange(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder, Bytemap *bytemap,
                       word_t **fields, size_t length) {
+    int objectsMarked = 0;
     for (int i = 0; i < length; i++) {
         word_t *field = fields[i];
         if (Heap_IsWordInHeap(heap, field)) {
@@ -147,6 +148,7 @@ void Marker_markRange(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **out
             if (ObjectMeta_IsAllocated(fieldMeta)) {
                 Marker_markObject(heap, stats, outHolder, bytemap,
                                   (Object *)field, fieldMeta);
+                objectsMarked += 1;
             }
         }
     }
@@ -154,6 +156,7 @@ void Marker_markRange(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **out
 
 void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder) {
     Bytemap *bytemap = heap->bytemap;
+    int objectsMarked = 0;
     if (*outHolder == NULL) {
         GreyPacket *fresh = Marker_takeEmptyPacket(heap, stats);
         assert(fresh != NULL);
@@ -168,7 +171,7 @@ void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **ou
                 size_t length = arrayHeader->length;
                 word_t **fields = (word_t **)(arrayHeader + 1);
                 if (length <= ARRAY_SPLIT_THRESHOLD) {
-                    Marker_markRange(heap, stats, in, outHolder, bytemap, fields, length);
+                    objectsMarked += Marker_markRange(heap, stats, in, outHolder, bytemap, fields, length);
                 } else {
                     if (GreyPacket_IsEmpty(in)) {
                         // last item - deal with it now
@@ -189,7 +192,7 @@ void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **ou
 
                         size_t lastBatchSize = limit - lastBatch;
                         if (lastBatchSize > 0) {
-                            Marker_markRange(heap, stats , in, outHolder, bytemap, lastBatch, lastBatchSize);
+                            objectsMarked += Marker_markRange(heap, stats , in, outHolder, bytemap, lastBatch, lastBatchSize);
                         }
                     } else {
                         // pass it on to someone else
@@ -211,10 +214,15 @@ void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **ou
                     if (ObjectMeta_IsAllocated(fieldMeta)) {
                         Marker_markObject(heap, stats, outHolder, bytemap, (Object *)field,
                                           fieldMeta);
+                        objectsMarked += 1;
                     }
                 }
                 ++i;
             }
+        }
+        // how about abandoning this packet?
+        if (objectsMarked > MARK_MAX_WORK_PER_PACKET) {
+            return;
         }
     }
 }
@@ -262,10 +270,17 @@ void Marker_Mark(Heap *heap, Stats *stats) {
         Marker_markBatch(heap, stats, in, &out);
 
         assert(out != NULL);
-        assert(GreyPacket_IsEmpty(in));
         GreyPacket *next = Marker_takeFullPacket(heap, stats);
         if (next != NULL) {
-            Marker_giveEmptyPacket(heap, stats, in);
+            if (GreyPacket_IsEmpty(in)) {
+                Marker_giveEmptyPacket(heap, stats, in);
+            } else {
+                // abandon the old in packet
+                Marker_giveFullPacket(heap, stats, in)
+            }
+        } else if (GreyPacket_IsEmpty(in)) {
+            // continue the abandoned packet, there is nothing else
+            next = in;
         } else {
             if (!GreyPacket_IsEmpty(out)) {
                 // use the out packet as source
@@ -288,10 +303,14 @@ void Marker_MarkAndScale(Heap *heap, Stats *stats) {
         Marker_markBatch(heap, stats, in, &out);
 
         assert(out != NULL);
-        assert(GreyPacket_IsEmpty(in));
         GreyPacket *next = Marker_takeFullPacket(heap, stats);
         if (next != NULL) {
-            Marker_giveEmptyPacket(heap, stats, in);
+            if (GreyPacket_IsEmpty(in)) {
+                Marker_giveEmptyPacket(heap, stats, in);
+            } else {
+                // abandon the old in packet
+                Marker_giveFullPacket(heap, stats, in)
+            }
             uint32_t remainingFullPackets = next->next.sep.size;
             if (remainingFullPackets > MARK_SPAWN_THREADS_MIN_PACKETS) {
                 int maxThreads = heap->gcThreads.count;
@@ -305,6 +324,9 @@ void Marker_MarkAndScale(Heap *heap, Stats *stats) {
                     GCThread_WakeWorkers(heap, toSpawn);
                 }
             }
+        } else if (GreyPacket_IsEmpty(in)) {
+            // continue the abandoned packet, there is nothing else
+            next = in;
         } else {
             if (!GreyPacket_IsEmpty(out)) {
                 // use the out packet as source
