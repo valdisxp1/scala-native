@@ -152,6 +152,7 @@ int Marker_markRange(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outH
             }
         }
     }
+    return objectsMarked;
 }
 
 void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder) {
@@ -276,7 +277,7 @@ void Marker_Mark(Heap *heap, Stats *stats) {
                 Marker_giveEmptyPacket(heap, stats, in);
             } else {
                 // abandon the old in packet
-                Marker_giveFullPacket(heap, stats, in)
+                Marker_giveFullPacket(heap, stats, in);
             }
         } else if (GreyPacket_IsEmpty(in)) {
             // continue the abandoned packet, there is nothing else
@@ -309,7 +310,7 @@ void Marker_MarkAndScale(Heap *heap, Stats *stats) {
                 Marker_giveEmptyPacket(heap, stats, in);
             } else {
                 // abandon the old in packet
-                Marker_giveFullPacket(heap, stats, in)
+                Marker_giveFullPacket(heap, stats, in);
             }
             uint32_t remainingFullPackets = next->next.sep.size;
             if (remainingFullPackets > MARK_SPAWN_THREADS_MIN_PACKETS) {
