@@ -279,7 +279,7 @@ void Marker_Mark(Heap *heap, Stats *stats) {
                 // abandon the old in packet
                 Marker_giveFullPacket(heap, stats, in);
             }
-        } else if (GreyPacket_IsEmpty(in)) {
+        } else if (!GreyPacket_IsEmpty(in)) {
             // continue the abandoned packet, there is nothing else
             next = in;
         } else {
@@ -325,7 +325,7 @@ void Marker_MarkAndScale(Heap *heap, Stats *stats) {
                     GCThread_WakeWorkers(heap, toSpawn);
                 }
             }
-        } else if (GreyPacket_IsEmpty(in)) {
+        } else if (!GreyPacket_IsEmpty(in)) {
             // continue the abandoned packet, there is nothing else
             next = in;
         } else {
