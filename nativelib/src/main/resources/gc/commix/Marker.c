@@ -223,12 +223,10 @@ void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **ou
         }
         // how about abandoning this packet?
 
-//        if (objectsTraced > MARK_MAX_WORK_PER_PACKET) {
-//            return;
-//        }
+        if (objectsTraced > MARK_MAX_WORK_PER_PACKET) {
+            return;
+        }
     }
-    printf("TRACED:%lu\n", objectsTraced);
-    fflush(stdout);
 }
 
 void Marker_markRangePacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder) {
