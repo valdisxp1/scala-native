@@ -157,7 +157,7 @@ int Marker_markRange(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outH
 
 void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder) {
     Bytemap *bytemap = heap->bytemap;
-    int objectsMarked = 0;
+    unsigned long objectsMarked = 0L;
     if (*outHolder == NULL) {
         GreyPacket *fresh = Marker_takeEmptyPacket(heap, stats);
         assert(fresh != NULL);
@@ -222,10 +222,13 @@ void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **ou
             }
         }
         // how about abandoning this packet?
-        if (objectsMarked > MARK_MAX_WORK_PER_PACKET) {
-            return;
-        }
+
+//        if (objectsMarked > MARK_MAX_WORK_PER_PACKET) {
+//            return;
+//        }
     }
+    printf("MARKED:%lu\n", objectsMarked);
+    fflush(stdout);
 }
 
 void Marker_markRangePacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder) {
