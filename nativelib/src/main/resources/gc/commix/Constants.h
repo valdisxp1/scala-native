@@ -87,4 +87,8 @@
 // one for current thread other for mutator thread
 #define MARK_SPAWN_THREADS_MIN_PACKETS (2 * MARK_MIN_PACKETS_PER_THREAD)
 
+#ifndef MARK_MAX_WORK_PER_PACKET
+#define MARK_MAX_WORK_PER_PACKET 2000
+#endif
+
 #endif // IMMIX_CONSTANTS_H

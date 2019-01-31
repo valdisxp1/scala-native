@@ -138,8 +138,9 @@ void Marker_markConservative(Heap *heap, Stats *stats, GreyPacket **outHolder, w
     }
 }
 
-void Marker_markRange(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder, Bytemap *bytemap,
+int Marker_markRange(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder, Bytemap *bytemap,
                       word_t **fields, size_t length) {
+    int objectsTraced = 0;
     for (int i = 0; i < length; i++) {
         word_t *field = fields[i];
         if (Heap_IsWordInHeap(heap, field)) {
@@ -148,12 +149,15 @@ void Marker_markRange(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **out
                 Marker_markObject(heap, stats, outHolder, bytemap,
                                   (Object *)field, fieldMeta);
             }
+            objectsTraced += 1;
         }
     }
+    return objectsTraced;
 }
 
 void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder) {
     Bytemap *bytemap = heap->bytemap;
+    unsigned long objectsTraced = 0L;
     if (*outHolder == NULL) {
         GreyPacket *fresh = Marker_takeEmptyPacket(heap, stats);
         assert(fresh != NULL);
@@ -168,7 +172,7 @@ void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **ou
                 size_t length = arrayHeader->length;
                 word_t **fields = (word_t **)(arrayHeader + 1);
                 if (length <= ARRAY_SPLIT_THRESHOLD) {
-                    Marker_markRange(heap, stats, in, outHolder, bytemap, fields, length);
+                    objectsTraced += Marker_markRange(heap, stats, in, outHolder, bytemap, fields, length);
                 } else {
                     if (GreyPacket_IsEmpty(in)) {
                         // last item - deal with it now
@@ -189,7 +193,7 @@ void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **ou
 
                         size_t lastBatchSize = limit - lastBatch;
                         if (lastBatchSize > 0) {
-                            Marker_markRange(heap, stats , in, outHolder, bytemap, lastBatch, lastBatchSize);
+                            objectsTraced += Marker_markRange(heap, stats , in, outHolder, bytemap, lastBatch, lastBatchSize);
                         }
                     } else {
                         // pass it on to someone else
@@ -212,9 +216,21 @@ void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **ou
                         Marker_markObject(heap, stats, outHolder, bytemap, (Object *)field,
                                           fieldMeta);
                     }
+                    objectsTraced += 1;
                 }
                 ++i;
             }
+        }
+        if (objectsTraced > MARK_MAX_WORK_PER_PACKET) {
+            // the packet has a lot of work split the remainder in two
+            int toMove = in->size / 2;
+            if (toMove > 0) {
+                GreyPacket *slice = Marker_takeEmptyPacket(heap, stats);
+                assert(slice != NULL);
+                GreyPacket_Move(in, slice, toMove);
+                Marker_giveFullPacket(heap, stats, slice);
+            }
+            objectsTraced = 0;
         }
     }
 }
