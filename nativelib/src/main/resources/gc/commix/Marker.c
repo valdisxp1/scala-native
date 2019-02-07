@@ -212,6 +212,7 @@ unsigned long Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPa
             // non-object arrays do not contain pointers
         } else {
             int64_t *ptr_map = object->rtti->refMapStruct;
+            unsigned long fieldCount = 0L;
             int i = 0;
             while (ptr_map[i] != LAST_FIELD_OFFSET) {
                 word_t *field = object->fields[ptr_map[i]];
@@ -221,10 +222,17 @@ unsigned long Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPa
                         Marker_markObject(heap, stats, outHolder, bytemap, (Object *)field,
                                           fieldMeta);
                     }
-                    objectsTraced += 1;
+                    fieldCount += 1;
                 }
                 ++i;
             }
+            #ifdef DEBUG_PRINT
+                if (fieldCount > 500) {
+                    printf("BigObject length: %lu %p\n", fieldCount, object);
+                    fflush(stdout);
+                }
+            #endif
+            objectsTraced += fieldCount;
         }
         if (objectsTraced > MARK_MAX_WORK_PER_PACKET) {
             // the packet has a lot of work split the remainder in two
