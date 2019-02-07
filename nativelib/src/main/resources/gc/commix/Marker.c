@@ -155,9 +155,10 @@ int Marker_markRange(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outH
     return objectsTraced;
 }
 
-void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder) {
+unsigned long Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder) {
     Bytemap *bytemap = heap->bytemap;
     unsigned long objectsTraced = 0L;
+    unsigned long objectsTracedTotal = 0L;
     if (*outHolder == NULL) {
         GreyPacket *fresh = Marker_takeEmptyPacket(heap, stats);
         assert(fresh != NULL);
@@ -171,6 +172,10 @@ void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **ou
                 ArrayHeader *arrayHeader = (ArrayHeader *)object;
                 size_t length = arrayHeader->length;
                 word_t **fields = (word_t **)(arrayHeader + 1);
+                #ifdef DEBUG_PRINT
+                    printf("Marker_markArray length: %zu\n", length);
+                    fflush(stdout);
+                #endif
                 if (length <= ARRAY_SPLIT_THRESHOLD) {
                     objectsTraced += Marker_markRange(heap, stats, in, outHolder, bytemap, fields, length);
                 } else {
@@ -230,12 +235,15 @@ void Marker_markPacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **ou
                 GreyPacket_Move(in, slice, toMove);
                 Marker_giveFullPacket(heap, stats, slice);
             }
+            objectsTracedTotal += objectsTraced;
             objectsTraced = 0;
         }
     }
+    return objectsTracedTotal + objectsTraced;
 }
 
-void Marker_markRangePacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder) {
+unsigned long  Marker_markRangePacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder) {
+    unsigned long objectsTracedTotal = 0L;
     Bytemap *bytemap = heap->bytemap;
     if (*outHolder == NULL) {
         GreyPacket *fresh = Marker_takeEmptyPacket(heap, stats);
@@ -243,29 +251,35 @@ void Marker_markRangePacket(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket
         *outHolder = fresh;
     }
     word_t **fields = (word_t **) in->items[0];
-    Marker_markRange(heap, stats, in, outHolder, bytemap, fields, ARRAY_SPLIT_BATCH);
+    objectsTracedTotal += Marker_markRange(heap, stats, in, outHolder, bytemap, fields, ARRAY_SPLIT_BATCH);
     in->type = grey_packet_reflist;
     in->size = 0;
+    return objectsTracedTotal;
 }
 
 static inline void Marker_markBatch(Heap *heap, Stats *stats, GreyPacket* in, GreyPacket **outHolder) {
-#ifdef ENABLE_GC_STATS_BATCHES
     uint64_t start_ns, end_ns;
-    if (stats != NULL) {
-        start_ns = scalanative_nano_time();
-    }
+    start_ns = scalanative_nano_time();
+    unsigned long objectsTraced = 0;
+#ifdef DEBUG_PRINT
+    uint16_t size = in->size;
+    uint16_t type = in->type;
 #endif
     switch (in->type) {
         case grey_packet_reflist:
-            Marker_markPacket(heap, stats, in, outHolder);
+            objectsTraced = Marker_markPacket(heap, stats, in, outHolder);
             break;
         case grey_packet_refrange:
-            Marker_markRangePacket(heap, stats, in, outHolder);
+            objectsTraced = Marker_markRangePacket(heap, stats, in, outHolder);
             break;
     }
+    end_ns = scalanative_nano_time();
+#ifdef DEBUG_PRINT
+    printf("Marker_markBatch %"PRIu16" %" PRIu64 "ns size:%"PRIu16" objectsTraced:%lu\n", type, (end_ns - start_ns),size, objectsTraced);
+    fflush(stdout);
+#endif
 #ifdef ENABLE_GC_STATS_BATCHES
     if (stats != NULL) {
-        end_ns = scalanative_nano_time();
         Stats_RecordEvent(stats, event_mark_batch, start_ns, end_ns);
     }
 #endif
