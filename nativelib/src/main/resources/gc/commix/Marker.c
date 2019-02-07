@@ -13,8 +13,6 @@ extern word_t *__modules;
 extern int __modules_size;
 extern word_t **__stack_bottom;
 
-#define LAST_FIELD_OFFSET -1
-
 static inline GreyPacket *Marker_takeEmptyPacket(Heap *heap, Stats *stats) {
 #ifdef ENABLE_GC_STATS_SYNC
     uint64_t start_ns, end_ns;
@@ -121,7 +119,10 @@ void Marker_markObject(Heap *heap, Stats *stats, GreyPacket **outHolder, Bytemap
     if (!GreyPacket_Push(out, object)) {
         Marker_giveFullPacket(heap, stats, out);
         *outHolder = out = Marker_takeEmptyPacket(heap, stats);
-        GreyPacket_Push(out, object);
+
+        if (Object_HasPointers(object)) {
+            GreyPacket_Push(out, object);
+        }
     }
 }
 

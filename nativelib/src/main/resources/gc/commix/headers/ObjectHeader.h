@@ -35,6 +35,8 @@ typedef struct {
     int64_t *refMapStruct;
 } Rtti;
 
+#define LAST_FIELD_OFFSET -1
+
 typedef word_t *Field_t;
 
 typedef struct {
@@ -59,6 +61,12 @@ struct Chunk {
 static inline bool Object_IsArray(Object *object) {
     int32_t id = object->rtti->rt.id;
     return __array_ids_min <= id && id <= __array_ids_max;
+}
+
+static inline bool Object_HasPointers(Object *object) {
+    Rtti *rtti = object->rtti;
+    int32_t id = rtti->rt.id;
+    return id == __object_array_id || (!(__array_ids_min <= id && id <= __array_ids_max) && rtti->refMapStruct[0] != LAST_FIELD_OFFSET);
 }
 
 static inline size_t Object_Size(Object *object) {
