@@ -17,7 +17,7 @@ Stack_Type GreyPacket_Pop(GreyPacket *packet) {
     return packet->items[--packet->size];
 }
 
-bool GreyPacket_Move(GreyPacket *src, GreyPacket *dst, int count) {
+void GreyPacket_Move(GreyPacket *src, GreyPacket *dst, int count) {
     assert(dst->size + count < GREY_PACKET_ITEMS);
     assert(src->size >= count);
     void *target = (void *) &dst->items[dst->size];
