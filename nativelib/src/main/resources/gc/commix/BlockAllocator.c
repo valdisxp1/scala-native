@@ -29,6 +29,7 @@ void BlockAllocator_Init(BlockAllocator *blockAllocator, word_t *blockMetaStart,
     blockAllocator->reservedSuperblock = (word_t)sLimit;
 
     blockAllocator->concurrent = false;
+    blockAllocator->minNonEmptyIndex = 0;
 
 #ifdef DEBUG_ASSERT
     BlockMeta *limit = sCursor + blockCount;
@@ -71,6 +72,8 @@ BlockAllocator_pollSuperblock_OnlyThread(BlockAllocator *blockAllocator,
         if (superblock != NULL) {
             *index = i;
             return superblock;
+        } else {
+            blockAllocator->minNonEmptyIndex = i + 1;
         }
     }
     return NULL;
@@ -174,6 +177,8 @@ BlockMeta *BlockAllocator_GetFreeSuperblock(BlockAllocator *blockAllocator,
         if (concurrent) {
             superblock = BlockAllocator_pollSuperblock(blockAllocator, &index);
         } else {
+            int minNonEmptyIndex = blockAllocator->minNonEmptyIndex;
+            int index = (minNonEmptyIndex > index) ? minNonEmptyIndex : index;
             superblock = BlockAllocator_pollSuperblock_OnlyThread(
                 blockAllocator, &index);
         }
@@ -368,6 +373,7 @@ void BlockAllocator_Clear(BlockAllocator *blockAllocator) {
     for (int i = 0; i < SUPERBLOCK_LIST_SIZE; i++) {
         BlockList_Clear(&blockAllocator->freeSuperblocks[i]);
     }
+    blockAllocator->minNonEmptyIndex = 0;
     // sweeping is about to start, use concurrent data structures
     blockAllocator->concurrent = true;
     blockAllocator->freeBlockCount = 0;

@@ -21,6 +21,7 @@ typedef struct {
     BlockRange coalescingSuperblock;
     word_t *blockMetaStart;
     atomic_bool concurrent;
+    int minNonEmptyIndex;
     BlockList freeSuperblocks[SUPERBLOCK_LIST_SIZE];
     atomic_uintptr_t reservedSuperblock;
 } BlockAllocator;
