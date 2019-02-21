@@ -10,22 +10,16 @@
 #include "State.h"
 #include "utils/MathUtils.h"
 #include "Constants.h"
-#include "Settings.h"
 
 void scalanative_collect();
 
-void scalanative_afterexit() {
-    Stats_OnExit(heap.stats);
-}
-
 NOINLINE void scalanative_init() {
-    Heap_Init(&heap, Settings_MinHeapSize(), Settings_MaxHeapSize());
+    Heap_Init(&heap, INITIAL_SMALL_HEAP_SIZE, INITIAL_LARGE_HEAP_SIZE);
     Stack_Init(&stack, INITIAL_STACK_SIZE);
-    atexit(scalanative_afterexit);
 }
 
 INLINE void *scalanative_alloc(void *info, size_t size) {
-    size = MathUtils_RoundToNextMultiple(size, ALLOCATION_ALIGNMENT);
+    size = MathUtils_RoundToNextMultiple(size, WORD_SIZE);
 
     void **alloc = (void **)Heap_Alloc(&heap, size);
     *alloc = info;
@@ -33,7 +27,7 @@ INLINE void *scalanative_alloc(void *info, size_t size) {
 }
 
 INLINE void *scalanative_alloc_small(void *info, size_t size) {
-    size = MathUtils_RoundToNextMultiple(size, ALLOCATION_ALIGNMENT);
+    size = MathUtils_RoundToNextMultiple(size, WORD_SIZE);
 
     void **alloc = (void **)Heap_AllocSmall(&heap, size);
     *alloc = info;
@@ -41,7 +35,7 @@ INLINE void *scalanative_alloc_small(void *info, size_t size) {
 }
 
 INLINE void *scalanative_alloc_large(void *info, size_t size) {
-    size = MathUtils_RoundToNextMultiple(size, ALLOCATION_ALIGNMENT);
+    size = MathUtils_RoundToNextMultiple(size, WORD_SIZE);
 
     void **alloc = (void **)Heap_AllocLarge(&heap, size);
     *alloc = info;
