@@ -21,15 +21,17 @@ void BlockList_Init(BlockList *blockList, word_t *blockMetaStart) {
     blockList->last = NULL;
 }
 
-BlockMeta *BlockList_Poll(BlockList *blockList) {
+inline bool BlockList_IsEmpty(BlockList *blockList) {
+    return blockList->first == NULL;
+}
+
+BlockMeta *BlockList_RemoveFirstBlock(BlockList *blockList) {
+    assert(blockList->first != NULL);
     BlockMeta *block = blockList->first;
-    if (block != NULL) {
-        if (block == blockList->last) {
-            blockList->first = NULL;
-        }
-        blockList->first =
-            BlockList_getNextBlock(blockList->blockMetaStart, block);
+    if (block == blockList->last) {
+        blockList->first = NULL;
     }
+    blockList->first = BlockList_getNextBlock(blockList->blockMetaStart, block);
     return block;
 }
 
