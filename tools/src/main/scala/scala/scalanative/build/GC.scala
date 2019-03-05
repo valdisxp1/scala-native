@@ -34,7 +34,7 @@ object GC {
   def immix: GC = Immix
 
   /** Mostly-precise mark-region garbage collector running concurrently. */
-  def commix: GC = Immix
+  def commix: GC = Commix
 
   /** The default garbage collector. */
   def default: GC = Immix
