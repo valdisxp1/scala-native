@@ -3,10 +3,22 @@
 #include "State.h"
 #include "Allocator.h"
 #include "BlockAllocator.h"
+#include <stdio.h>
+#include <unistd.h>
 
 void Phase_Init(Heap *heap, uint32_t initialBlockCount) {
-    sem_init(&heap->gcThreads.startWorkers, 0, 0);
-    sem_init(&heap->gcThreads.startMaster, 0, 0);
+//    sem_init(&heap->gcThreads.startWorkers, 0, 0);
+//    sem_init(&heap->gcThreads.startMaster, 0, 0);
+    pid_t pid = getpid();
+    char startWorkersName[];
+    char startMasterName[];
+    sprintf(startWorkersName, "scalanative_commix_startWorkers_%d", pid);
+    sprintf(startMasterName, "scalanative_commix_startMaster_%d", pid);
+    heap->gcThreads.startWorkers = sem_open("startWorkers", O_CREAT | O_EXCL, 0644, 0);
+    heap->gcThreads.startMaster = sem_open("startMaster", O_CREAT | O_EXCL, 0644, 0);
+    // clean up when process closes
+    sem_unlink("startWorkers");
+    sem_unlink("startMaster");
 
     heap->sweep.cursor = initialBlockCount;
     heap->lazySweep.cursorDone = initialBlockCount;
