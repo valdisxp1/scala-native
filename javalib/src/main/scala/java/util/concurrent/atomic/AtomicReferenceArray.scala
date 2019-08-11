@@ -1,7 +1,7 @@
 package java.util.concurrent.atomic
 
-import scala.scalanative.native.{CCast, CLong}
 import scala.scalanative.runtime.CAtomicLong
+import scala.scalanative.runtime.Intrinsics.{castObjectToRawPtr, castRawPtrToLong, castLongToRawPtr, castRawPtrToObject}
 
 class AtomicReferenceArray[E <: AnyRef](length: Int) extends Serializable {
 
@@ -41,8 +41,8 @@ class AtomicReferenceArray[E <: AnyRef](length: Int) extends Serializable {
   override def toString(): String =
     inner.mkString("[", ", ", "]")
 
-  private implicit def toLong(e: E): Long = e.asInstanceOf[AnyRef].cast[CLong]
-  private implicit def toRef(l: Long): E  = l.cast[AnyRef].asInstanceOf[E]
+  private implicit def toLong(e: E): Long = castRawPtrToLong(castObjectToRawPtr(e))
+  private implicit def toRef(l: Long): E  = castRawPtrToObject(castLongToRawPtr(l)).asInstanceOf
 }
 
 object AtomicReferenceArray {

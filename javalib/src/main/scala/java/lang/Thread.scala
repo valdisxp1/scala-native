@@ -440,7 +440,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   // called as Ptr[Thread] => Ptr[Void]
   private val callRunRoutine = new CFuncPtr1[Ptr[scala.Byte],Ptr[scala.Byte]]{
     def apply(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
-      val thread = castRawPtrToObject(toRawPtr(p)).asIntanceOf[Thread]
+      val thread = castRawPtrToObject(toRawPtr(p)).asInstanceOf[Thread]
       pthread_setspecific(myThreadKey, p)
       if (thread.underlying == 0L.asInstanceOf[ULong]) {
         // the parent hasn't set the underlying thread id yet

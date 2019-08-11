@@ -31,5 +31,5 @@ object Monitor {
   }
 
   //TODO magically insert the code from `PosixMonitor.unsafeCreate`
-  private def unsafeCreate(x: Object): Monitor = intrinsic
+  private def unsafeCreate(x: Object): Monitor = ???
 }

@@ -110,15 +110,6 @@ object System {
   def getenv(): Map[String, String] = envVars
   def getenv(key: String): String   = envVars.get(key)
 
-  def setIn(in: InputStream): Unit =
-    this.in = in
-
-  def setOut(out: PrintStream): Unit =
-    this.out = out
-
-  def setErr(err: PrintStream): Unit =
-    this.err = err
-
   def setIn(in: InputStream): Unit   = this.in = in
   def setOut(out: PrintStream): Unit = this.out = out
   def setErr(err: PrintStream): Unit = this.err = err

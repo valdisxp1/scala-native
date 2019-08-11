@@ -11,11 +11,11 @@ abstract class CAtomic {
 
 }
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 27)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 26)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 29)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 28)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 33)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 32)
 
 class CAtomicByte(default: Byte = 0.asInstanceOf[Byte]) extends CAtomic {
 
@@ -29,7 +29,7 @@ class CAtomicByte(default: Byte = 0.asInstanceOf[Byte]) extends CAtomic {
   def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: Byte, desired: Byte): (Boolean, Byte) = {
-    val expectedPtr = stackalloc[Byte]
+    val expectedPtr = fromRawPtr[Byte](Intrinsics.stackalloc(sizeof[Byte]))
     !expectedPtr = expected
 
     if (compare_and_swap_strong_byte(atm, expectedPtr, desired)) {
@@ -40,7 +40,7 @@ class CAtomicByte(default: Byte = 0.asInstanceOf[Byte]) extends CAtomic {
   }
 
   def compareAndSwapWeak(expected: Byte, desired: Byte): (Boolean, Byte) = {
-    val expectedPtr = stackalloc[Byte]
+    val expectedPtr = fromRawPtr[Byte](Intrinsics.stackalloc(sizeof[Byte]))
     !expectedPtr = expected
 
     if (compare_and_swap_weak_byte(atm, expectedPtr, desired)) {
@@ -103,9 +103,9 @@ object CAtomicByte extends CAtomic {
 
 }
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 29)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 28)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 33)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 32)
 
 class CAtomicShort(default: CShort = 0.asInstanceOf[CShort]) extends CAtomic {
 
@@ -119,7 +119,7 @@ class CAtomicShort(default: CShort = 0.asInstanceOf[CShort]) extends CAtomic {
   def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: CShort, desired: CShort): (Boolean, CShort) = {
-    val expectedPtr = stackalloc[CShort]
+    val expectedPtr = fromRawPtr[CShort](Intrinsics.stackalloc(sizeof[CShort]))
     !expectedPtr = expected
 
     if (compare_and_swap_strong_short(atm, expectedPtr, desired)) {
@@ -130,7 +130,7 @@ class CAtomicShort(default: CShort = 0.asInstanceOf[CShort]) extends CAtomic {
   }
 
   def compareAndSwapWeak(expected: CShort, desired: CShort): (Boolean, CShort) = {
-    val expectedPtr = stackalloc[CShort]
+    val expectedPtr = fromRawPtr[CShort](Intrinsics.stackalloc(sizeof[CShort]))
     !expectedPtr = expected
 
     if (compare_and_swap_weak_short(atm, expectedPtr, desired)) {
@@ -193,9 +193,9 @@ object CAtomicShort extends CAtomic {
 
 }
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 29)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 28)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 33)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 32)
 
 class CAtomicInt(default: CInt = 0) extends CAtomic {
 
@@ -209,7 +209,7 @@ class CAtomicInt(default: CInt = 0) extends CAtomic {
   def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: CInt, desired: CInt): (Boolean, CInt) = {
-    val expectedPtr = stackalloc[CInt]
+    val expectedPtr = fromRawPtr[CInt](Intrinsics.stackalloc(sizeof[CInt]))
     !expectedPtr = expected
 
     if (compare_and_swap_strong_int(atm, expectedPtr, desired)) {
@@ -220,7 +220,7 @@ class CAtomicInt(default: CInt = 0) extends CAtomic {
   }
 
   def compareAndSwapWeak(expected: CInt, desired: CInt): (Boolean, CInt) = {
-    val expectedPtr = stackalloc[CInt]
+    val expectedPtr = fromRawPtr[CInt](Intrinsics.stackalloc(sizeof[CInt]))
     !expectedPtr = expected
 
     if (compare_and_swap_weak_int(atm, expectedPtr, desired)) {
@@ -283,9 +283,9 @@ object CAtomicInt extends CAtomic {
 
 }
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 29)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 28)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 33)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 32)
 
 class CAtomicLong(default: CLong = 0.asInstanceOf[CLong]) extends CAtomic {
 
@@ -299,7 +299,7 @@ class CAtomicLong(default: CLong = 0.asInstanceOf[CLong]) extends CAtomic {
   def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: CLong, desired: CLong): (Boolean, CLong) = {
-    val expectedPtr = stackalloc[CLong]
+    val expectedPtr = fromRawPtr[CLong](Intrinsics.stackalloc(sizeof[CLong]))
     !expectedPtr = expected
 
     if (compare_and_swap_strong_long(atm, expectedPtr, desired)) {
@@ -310,7 +310,7 @@ class CAtomicLong(default: CLong = 0.asInstanceOf[CLong]) extends CAtomic {
   }
 
   def compareAndSwapWeak(expected: CLong, desired: CLong): (Boolean, CLong) = {
-    val expectedPtr = stackalloc[CLong]
+    val expectedPtr = fromRawPtr[CLong](Intrinsics.stackalloc(sizeof[CLong]))
     !expectedPtr = expected
 
     if (compare_and_swap_weak_long(atm, expectedPtr, desired)) {
@@ -373,9 +373,9 @@ object CAtomicLong extends CAtomic {
 
 }
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 29)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 28)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 33)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 32)
 
 class CAtomicUnsignedByte(default: Byte = 0.asInstanceOf[Byte]) extends CAtomic {
 
@@ -389,7 +389,7 @@ class CAtomicUnsignedByte(default: Byte = 0.asInstanceOf[Byte]) extends CAtomic 
   def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: Byte, desired: Byte): (Boolean, Byte) = {
-    val expectedPtr = stackalloc[Byte]
+    val expectedPtr = fromRawPtr[Byte](Intrinsics.stackalloc(sizeof[Byte]))
     !expectedPtr = expected
 
     if (compare_and_swap_strong_ubyte(atm, expectedPtr, desired)) {
@@ -400,7 +400,7 @@ class CAtomicUnsignedByte(default: Byte = 0.asInstanceOf[Byte]) extends CAtomic 
   }
 
   def compareAndSwapWeak(expected: Byte, desired: Byte): (Boolean, Byte) = {
-    val expectedPtr = stackalloc[Byte]
+    val expectedPtr = fromRawPtr[Byte](Intrinsics.stackalloc(sizeof[Byte]))
     !expectedPtr = expected
 
     if (compare_and_swap_weak_ubyte(atm, expectedPtr, desired)) {
@@ -463,9 +463,9 @@ object CAtomicUnsignedByte extends CAtomic {
 
 }
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 29)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 28)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 33)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 32)
 
 class CAtomicUnsignedShort(default: CUnsignedShort = 0.asInstanceOf[CUnsignedShort]) extends CAtomic {
 
@@ -479,7 +479,7 @@ class CAtomicUnsignedShort(default: CUnsignedShort = 0.asInstanceOf[CUnsignedSho
   def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: CUnsignedShort, desired: CUnsignedShort): (Boolean, CUnsignedShort) = {
-    val expectedPtr = stackalloc[CUnsignedShort]
+    val expectedPtr = fromRawPtr[CUnsignedShort](Intrinsics.stackalloc(sizeof[CUnsignedShort]))
     !expectedPtr = expected
 
     if (compare_and_swap_strong_ushort(atm, expectedPtr, desired)) {
@@ -490,7 +490,7 @@ class CAtomicUnsignedShort(default: CUnsignedShort = 0.asInstanceOf[CUnsignedSho
   }
 
   def compareAndSwapWeak(expected: CUnsignedShort, desired: CUnsignedShort): (Boolean, CUnsignedShort) = {
-    val expectedPtr = stackalloc[CUnsignedShort]
+    val expectedPtr = fromRawPtr[CUnsignedShort](Intrinsics.stackalloc(sizeof[CUnsignedShort]))
     !expectedPtr = expected
 
     if (compare_and_swap_weak_ushort(atm, expectedPtr, desired)) {
@@ -553,9 +553,9 @@ object CAtomicUnsignedShort extends CAtomic {
 
 }
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 29)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 28)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 33)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 32)
 
 class CAtomicUnsignedInt(default: CUnsignedInt = 0.asInstanceOf[CUnsignedInt]) extends CAtomic {
 
@@ -569,7 +569,7 @@ class CAtomicUnsignedInt(default: CUnsignedInt = 0.asInstanceOf[CUnsignedInt]) e
   def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: CUnsignedInt, desired: CUnsignedInt): (Boolean, CUnsignedInt) = {
-    val expectedPtr = stackalloc[CUnsignedInt]
+    val expectedPtr = fromRawPtr[CUnsignedInt](Intrinsics.stackalloc(sizeof[CUnsignedInt]))
     !expectedPtr = expected
 
     if (compare_and_swap_strong_uint(atm, expectedPtr, desired)) {
@@ -580,7 +580,7 @@ class CAtomicUnsignedInt(default: CUnsignedInt = 0.asInstanceOf[CUnsignedInt]) e
   }
 
   def compareAndSwapWeak(expected: CUnsignedInt, desired: CUnsignedInt): (Boolean, CUnsignedInt) = {
-    val expectedPtr = stackalloc[CUnsignedInt]
+    val expectedPtr = fromRawPtr[CUnsignedInt](Intrinsics.stackalloc(sizeof[CUnsignedInt]))
     !expectedPtr = expected
 
     if (compare_and_swap_weak_uint(atm, expectedPtr, desired)) {
@@ -643,9 +643,9 @@ object CAtomicUnsignedInt extends CAtomic {
 
 }
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 29)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 28)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 33)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 32)
 
 class CAtomicUnsignedLong(default: CUnsignedLong = 0.asInstanceOf[CUnsignedLong]) extends CAtomic {
 
@@ -659,7 +659,7 @@ class CAtomicUnsignedLong(default: CUnsignedLong = 0.asInstanceOf[CUnsignedLong]
   def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: CUnsignedLong, desired: CUnsignedLong): (Boolean, CUnsignedLong) = {
-    val expectedPtr = stackalloc[CUnsignedLong]
+    val expectedPtr = fromRawPtr[CUnsignedLong](Intrinsics.stackalloc(sizeof[CUnsignedLong]))
     !expectedPtr = expected
 
     if (compare_and_swap_strong_ulong(atm, expectedPtr, desired)) {
@@ -670,7 +670,7 @@ class CAtomicUnsignedLong(default: CUnsignedLong = 0.asInstanceOf[CUnsignedLong]
   }
 
   def compareAndSwapWeak(expected: CUnsignedLong, desired: CUnsignedLong): (Boolean, CUnsignedLong) = {
-    val expectedPtr = stackalloc[CUnsignedLong]
+    val expectedPtr = fromRawPtr[CUnsignedLong](Intrinsics.stackalloc(sizeof[CUnsignedLong]))
     !expectedPtr = expected
 
     if (compare_and_swap_weak_ulong(atm, expectedPtr, desired)) {
@@ -733,9 +733,9 @@ object CAtomicUnsignedLong extends CAtomic {
 
 }
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 29)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 28)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 33)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 32)
 
 class CAtomicChar(default: CChar = 'a'.asInstanceOf[CChar]) extends CAtomic {
 
@@ -749,7 +749,7 @@ class CAtomicChar(default: CChar = 'a'.asInstanceOf[CChar]) extends CAtomic {
   def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: CChar, desired: CChar): (Boolean, CChar) = {
-    val expectedPtr = stackalloc[CChar]
+    val expectedPtr = fromRawPtr[CChar](Intrinsics.stackalloc(sizeof[CChar]))
     !expectedPtr = expected
 
     if (compare_and_swap_strong_char(atm, expectedPtr, desired)) {
@@ -760,7 +760,7 @@ class CAtomicChar(default: CChar = 'a'.asInstanceOf[CChar]) extends CAtomic {
   }
 
   def compareAndSwapWeak(expected: CChar, desired: CChar): (Boolean, CChar) = {
-    val expectedPtr = stackalloc[CChar]
+    val expectedPtr = fromRawPtr[CChar](Intrinsics.stackalloc(sizeof[CChar]))
     !expectedPtr = expected
 
     if (compare_and_swap_weak_char(atm, expectedPtr, desired)) {
@@ -823,9 +823,9 @@ object CAtomicChar extends CAtomic {
 
 }
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 29)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 28)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 33)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 32)
 
 class CAtomicUnsignedChar(default: CUnsignedChar = 'a'.asInstanceOf[CUnsignedChar]) extends CAtomic {
 
@@ -839,7 +839,7 @@ class CAtomicUnsignedChar(default: CUnsignedChar = 'a'.asInstanceOf[CUnsignedCha
   def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: CUnsignedChar, desired: CUnsignedChar): (Boolean, CUnsignedChar) = {
-    val expectedPtr = stackalloc[CUnsignedChar]
+    val expectedPtr = fromRawPtr[CUnsignedChar](Intrinsics.stackalloc(sizeof[CUnsignedChar]))
     !expectedPtr = expected
 
     if (compare_and_swap_strong_uchar(atm, expectedPtr, desired)) {
@@ -850,7 +850,7 @@ class CAtomicUnsignedChar(default: CUnsignedChar = 'a'.asInstanceOf[CUnsignedCha
   }
 
   def compareAndSwapWeak(expected: CUnsignedChar, desired: CUnsignedChar): (Boolean, CUnsignedChar) = {
-    val expectedPtr = stackalloc[CUnsignedChar]
+    val expectedPtr = fromRawPtr[CUnsignedChar](Intrinsics.stackalloc(sizeof[CUnsignedChar]))
     !expectedPtr = expected
 
     if (compare_and_swap_weak_uchar(atm, expectedPtr, desired)) {
@@ -913,9 +913,9 @@ object CAtomicUnsignedChar extends CAtomic {
 
 }
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 29)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 28)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 33)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 32)
 
 class CAtomicCSize(default: CSize = 0.asInstanceOf[CSize]) extends CAtomic {
 
@@ -929,7 +929,7 @@ class CAtomicCSize(default: CSize = 0.asInstanceOf[CSize]) extends CAtomic {
   def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: CSize, desired: CSize): (Boolean, CSize) = {
-    val expectedPtr = stackalloc[CSize]
+    val expectedPtr = fromRawPtr[CSize](Intrinsics.stackalloc(sizeof[CSize]))
     !expectedPtr = expected
 
     if (compare_and_swap_strong_csize(atm, expectedPtr, desired)) {
@@ -940,7 +940,7 @@ class CAtomicCSize(default: CSize = 0.asInstanceOf[CSize]) extends CAtomic {
   }
 
   def compareAndSwapWeak(expected: CSize, desired: CSize): (Boolean, CSize) = {
-    val expectedPtr = stackalloc[CSize]
+    val expectedPtr = fromRawPtr[CSize](Intrinsics.stackalloc(sizeof[CSize]))
     !expectedPtr = expected
 
     if (compare_and_swap_weak_csize(atm, expectedPtr, desired)) {
@@ -1003,7 +1003,7 @@ object CAtomicCSize extends CAtomic {
 
 }
 
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 121)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 120)
 
 class CAtomicRef[T <: AnyRef](default: T = 0L.asInstanceOf[T]) extends CAtomicLong(default.asInstanceOf[Long]) {}
 
@@ -1022,29 +1022,29 @@ object CAtomicsImplicits {
   implicit def toRef[T <: AnyRef](l: CLong): T = l.asInstanceOf[T]
   implicit def underlying[T <: AnyRef](a: CAtomicRef[T]): T = a.load().asInstanceOf[T]
   implicit def cas[T](v: (Boolean, T)): Boolean = v._1
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 140)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 139)
   implicit def underlying(a: CAtomicByte): Byte = a.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 140)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 139)
   implicit def underlying(a: CAtomicShort): CShort = a.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 140)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 139)
   implicit def underlying(a: CAtomicInt): CInt = a.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 140)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 139)
   implicit def underlying(a: CAtomicLong): CLong = a.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 140)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 139)
   implicit def underlying(a: CAtomicUnsignedByte): Byte = a.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 140)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 139)
   implicit def underlying(a: CAtomicUnsignedShort): CUnsignedShort = a.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 140)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 139)
   implicit def underlying(a: CAtomicUnsignedInt): CUnsignedInt = a.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 140)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 139)
   implicit def underlying(a: CAtomicUnsignedLong): CUnsignedLong = a.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 140)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 139)
   implicit def underlying(a: CAtomicChar): CChar = a.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 140)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 139)
   implicit def underlying(a: CAtomicUnsignedChar): CUnsignedChar = a.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 140)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 139)
   implicit def underlying(a: CAtomicCSize): CSize = a.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 142)
+// ###sourceLocation(file: "/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/CAtomics.scala.gyb", line: 141)
 
 }
 

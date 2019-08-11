@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit
 
 import scala.scalanative.runtime.CAtomicsImplicits._
 import scala.scalanative.runtime.{CAtomicInt, CAtomicLong, CAtomicRef}
-import scala.scalanative.native.{CInt, CLong}
 
 abstract class AbstractQeueuedLongSynchronizer
     extends AbstractOwnableSynchronizer

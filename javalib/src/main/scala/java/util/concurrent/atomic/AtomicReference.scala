@@ -1,13 +1,14 @@
 package java.util.concurrent.atomic
 
-import scala.scalanative.native.{CCast, CLong}
 import scala.scalanative.runtime.CAtomicLong
+import scala.scalanative.runtime.Intrinsics.{castObjectToRawPtr, castRawPtrToLong, castLongToRawPtr, castRawPtrToObject}
 
 class AtomicReference[T <: AnyRef](private[this] var value: T)
     extends Serializable {
 
   def this() = this(null.asInstanceOf[T])
 
+  // XXX Immix and Commix will not mark this reference
   private[this] val inner = CAtomicLong(value)
 
   final def get(): T = inner.load()
@@ -31,8 +32,8 @@ class AtomicReference[T <: AnyRef](private[this] var value: T)
   override def toString(): String =
     String.valueOf(value)
 
-  private implicit def toLong(e: T): Long = e.asInstanceOf[AnyRef].cast[CLong]
-  private implicit def toRef(l: Long): T  = l.cast[AnyRef].asInstanceOf[T]
+  private implicit def toLong(e: T): Long = castRawPtrToLong(castObjectToRawPtr(e))
+  private implicit def toRef(l: Long): T  = castRawPtrToObject(castLongToRawPtr(l)).asInstanceOf
 }
 
 object AtomicReference {

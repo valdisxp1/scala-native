@@ -42,7 +42,7 @@ class CAtomic${C}(default: ${T} = ${default}) extends CAtomic {
   def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: ${T}, desired: ${T}): (Boolean, ${T}) = {
-    val expectedPtr = stackalloc[${T}]
+    val expectedPtr = fromRawPtr[${T}](Intrinsics.stackalloc(sizeof[${T}]))
     !expectedPtr = expected
 
     if (compare_and_swap_strong_${N}(atm, expectedPtr, desired)) {
@@ -53,7 +53,7 @@ class CAtomic${C}(default: ${T} = ${default}) extends CAtomic {
   }
 
   def compareAndSwapWeak(expected: ${T}, desired: ${T}): (Boolean, ${T}) = {
-    val expectedPtr = stackalloc[${T}]
+    val expectedPtr = fromRawPtr[${T}](Intrinsics.stackalloc(sizeof[${T}]))
     !expectedPtr = expected
 
     if (compare_and_swap_weak_${N}(atm, expectedPtr, desired)) {
