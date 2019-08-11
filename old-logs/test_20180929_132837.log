@@ -1,0 +1,2482 @@
+[info] Loading project definition from /home/valdis/scala-native/project
+[info] Resolving key references (12156 settings) ...
+[info] Set current project to scala-native (in build file:/home/valdis/scala-native/)
+[success] Total time: 3 s, completed Sep 29, 2018 1:28:46 PM
+[success] Total time: 0 s, completed Sep 29, 2018 1:28:46 PM
+[success] Total time: 0 s, completed Sep 29, 2018 1:28:46 PM
+[info] Fetching Scala source version 2.11.12 from /home/valdis/scala-2.11.11-only
+[info] Updating {file:/home/valdis/scala-native/}nscplugin...
+[info] Packaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:28:47 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/nscplugin/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/nscplugin/target/scala-2.11/api...
+[info] Compiling 45 Scala sources to /home/valdis/scala-native/nscplugin/target/scala-2.11/classes...
+[info] Checking out Scala source version 2.11.12
+model contains 266 documentable templates
+[warn] /home/valdis/scala-native/nir/src/main/scala/scala/scalanative/nir/Types.scala:24: match may not be exhaustive.
+[warn] It would fail on the following inputs: Byte, Int, Long, Short, UByte, UInt, ULong, UShort
+[warn]     def printType(ty: nir.Type): Unit = ty match {
+[warn]                                         ^
+[warn] /home/valdis/scala-native/nscplugin/src/main/scala/scala/scalanative/nscplugin/NirGenExpr.scala:1354: match may not be exhaustive.
+[warn] It would fail on the following inputs: (StructValue(_, _), Byte), (StructValue(_, _), Double), (StructValue(_, _), Ptr), (StructValue(_, _), Vararg)
+[warn]         val conv = (fromty, toty) match {
+[warn]                    ^
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[warn] there were two unchecked warnings; re-run with -unchecked for details
+[warn] three warnings found
+[info] Packaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/poms/nscplugin_2.11.12.pom
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/jars/nscplugin_2.11.12.jar
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/srcs/nscplugin_2.11.12-sources.jar
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/docs/nscplugin_2.11.12-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Updating {file:/home/valdis/scala-native/}nativelib...
+[info] Wrote /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Done packaging.
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:29:03 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/nativelib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 42 Scala sources to /home/valdis/scala-native/nativelib/target/scala-2.11/classes...
+[info] Main Scala API documentation to /home/valdis/scala-native/nativelib/target/scala-2.11/api...
+[warn] dropping dependency on node with no phase object: mixin
+[warn] there were 25 feature warnings; re-run with -feature for details
+model contains 200 documentable templates
+[warn] one warning found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[warn] there were 25 feature warnings; re-run with -feature for details
+[warn] one warning found
+[info] Because /home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/package.scala contains a macro definition, the following dependencies are invalidated unconditionally:
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/java/lang/Class.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/java/lang/Object.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/Ptr.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/Zone.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Arrays.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Boxes.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/DeleteOnExit.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/GC.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Intrinsics.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Platform.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Shutdown.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/libc.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/package.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/time.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/unwind.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/zlib.scala
+[info] Packaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/nativelib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/nativelib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/nativelib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/nativelib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/clib/target/scala-2.11/clib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Updating {file:/home/valdis/scala-native/}clib...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/clib/target/scala-2.11/clib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:29:09 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/clib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/clib/target/scala-2.11/api...
+[info] Compiling 9 Scala sources to /home/valdis/scala-native/clib/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 16 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/clib/target/scala-2.11/clib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/clib/target/scala-2.11/clib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published clib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/clib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published clib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/clib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published clib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/clib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published clib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/clib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/posixlib/target/scala-2.11/posixlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Updating {file:/home/valdis/scala-native/}posixlib...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/posixlib/target/scala-2.11/posixlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:29:10 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/posixlib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/posixlib/target/scala-2.11/api...
+[info] Compiling 31 Scala sources to /home/valdis/scala-native/posixlib/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 62 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/posixlib/target/scala-2.11/posixlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/posixlib/target/scala-2.11/posixlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published posixlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/posixlib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published posixlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/posixlib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published posixlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/posixlib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published posixlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/posixlib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Updating {file:/home/valdis/scala-native/}javalib...
+[info] Wrote /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Packaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Done packaging.
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:29:13 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/javalib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Packaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Compiling 382 Scala sources to /home/valdis/scala-native/javalib/target/scala-2.11/classes...
+[info] Packaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/javalib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/javalib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/javalib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/javalib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}auxlib...
+[info] Wrote /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:29:30 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/auxlib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/auxlib/target/scala-2.11/api...
+[info] Compiling 5 Scala sources to /home/valdis/scala-native/auxlib/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 46 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/auxlib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/auxlib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/auxlib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/auxlib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Updating {file:/home/valdis/scala-native/}scalalib...
+[info] Wrote /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Packaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Done packaging.
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:29:31 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/scalalib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 582 Scala sources to /home/valdis/scala-native/scalalib/target/scala-2.11/classes...
+[info] Main Scala API documentation to /home/valdis/scala-native/scalalib/target/scala-2.11/api...
+[warn] dropping dependency on node with no phase object: mixin
+[warn] there were two deprecation warnings; re-run with -deprecation for details
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenIterableLike.scala:101: Could not find the type $Coll points to while expanding it for the usecase signature of method zipWithIndex in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def zipWithIndex: $Coll[(A, Int)]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenIterableLike.scala:73: Could not find the type $Coll points to while expanding it for the usecase signature of method zip in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def zip[B](that: GenIterable[B]): $Coll[(A, B)]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:364: Could not find the type $Coll points to while expanding it for the usecase signature of method padTo in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def padTo(len: Int, elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:332: Could not find the type $Coll points to while expanding it for the usecase signature of method :+ in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def :+(elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:296: Could not find the type $Coll points to while expanding it for the usecase signature of method +: in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def +:(elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:280: Could not find the type $Coll points to while expanding it for the usecase signature of method updated in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def updated(index: Int, elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:262: Could not find the type $Coll points to while expanding it for the usecase signature of method patch in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def patch(from: Int, that: GenSeq[A], replaced: Int): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala:467: Could not find the type $Coll points to while expanding it for the usecase signature of method intersect in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def intersect(that: Seq[A]): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala:436: Could not find the type $Coll points to while expanding it for the usecase signature of method diff in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def diff(that: Seq[A]): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala:412: Could not find the type $Coll points to while expanding it for the usecase signature of method union in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def union(that: Seq[A]): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:212: Could not find the type $Coll points to while expanding it for the usecase signature of method reverseMap in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def reverseMap[B](f: A => B): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenIterableLike.scala:128: Could not find the type $Coll points to while expanding it for the usecase signature of method zipAll in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def zipAll[B](that: Iterable[B], thisElem: A, thatElem: B): $Coll[(A, B)]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:190: Could not find the type $Coll points to while expanding it for the usecase signature of method collect in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def collect[B](pf: PartialFunction[A, B]): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:211: Could not find the type $Coll points to while expanding it for the usecase signature of method flatMap in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def flatMap[B](f: A => GenTraversableOnce[B]): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:172: Could not find the type $Coll points to while expanding it for the usecase signature of method map in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def map[B](f: A => B): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/TraversableLike.scala:165: Could not find the type $Coll points to while expanding it for the usecase signature of method ++: in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def ++:[B](that: TraversableOnce[B]): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:253: Could not find the type $Coll points to while expanding it for the usecase signature of method ++ in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def ++[B](that: GenTraversableOnce[B]): $Coll[B]
+[warn]                ^
+model contains 1293 documentable templates
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:88: Could not find any member to link for "`java.lang.ExceptionInInitializerError`".
+[warn]   /** Returns the `Class` object associated with the class or interface with the given string name using the current `ClassLoader`.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:81: Could not find any member to link for "`java.lang.NullPointerException`".
+[warn]   /** Assigns the value of 0 to each element in the array.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:54: Could not find any member to link for "`java.lang.NullPointerException`".
+[warn]   /** Creates a new array of the specified type and given length.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:30: Could not find any member to link for "java.lang.NullPointerException".
+[warn]   /** Copies `length` elements of array `src` starting at position `srcPos` to the
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:722: Variable month undefined in comment for object Groups in object Regex
+[warn]    *  val day = date replaceAllIn(text, _ match { case Groups(_, month, day) => s"$month/$day" })
+[warn]                                                                                    ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:722: Variable day undefined in comment for object Groups in object Regex
+[warn]    *  val day = date replaceAllIn(text, _ match { case Groups(_, month, day) => s"$month/$day" })
+[warn]                                                                                           ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:61: Variable year undefined in comment for class Regex in class Regex
+[warn]  *    case date(year, month, day) => s"$year was a good year for PLs."
+[warn]                                         ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:80: Variable year undefined in comment for class Regex in class Regex
+[warn]  *    case date(year, _*) => s"$year was a good year for PLs."
+[warn]                                 ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:120: Variable s undefined in comment for class Regex in class Regex
+[warn]  *  val oldies = mi filter (_ => (mi group 1).toInt < 1960) map (s => s"$s: An oldie but goodie.")
+[warn]                                                                          ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:135: Variable c undefined in comment for class Regex in class Regex
+[warn]  *  val months      = (0 to 11) map { i => val c = Calendar.getInstance; c.set(2014, i, 1); f"$c%tb" }
+[warn]                                                                                                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:136: Variable months(m.toInt - 1) undefined in comment for class Regex in class Regex
+[warn]  *  val reformatted = date replaceAllIn (dates, _ match { case date(y,m,d) => f"${months(m.toInt - 1)} $d, $y" })
+[warn]                                                                                  ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:136: Variable d undefined in comment for class Regex in class Regex
+[warn]  *  val reformatted = date replaceAllIn (dates, _ match { case date(y,m,d) => f"${months(m.toInt - 1)} $d, $y" })
+[warn]                                                                                                         ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:136: Variable y undefined in comment for class Regex in class Regex
+[warn]  *  val reformatted = date replaceAllIn (dates, _ match { case date(y,m,d) => f"${months(m.toInt - 1)} $d, $y" })
+[warn]                                                                                                             ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:546: Variable year undefined in comment for method unanchored in class Regex
+[warn]    *    case date(year, month, day) => s"Copyright $year"                  // OK
+[warn]                                                     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:462: Variable m group "month" undefined in comment for method replaceAllIn in class Regex
+[warn]    * val repl = datePattern replaceAllIn (text, m => s"${m group "month"}/${m group "day"}")
+[warn]                                                         ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:462: Variable m group "day" undefined in comment for method replaceAllIn in class Regex
+[warn]    * val repl = datePattern replaceAllIn (text, m => s"${m group "month"}/${m group "day"}")
+[warn]                                                                            ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:348: Variable x undefined in comment for method findAllIn in class Regex
+[warn]    *    case madhatter(x,y) => s"$x$y"
+[warn]                                   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:348: Variable y undefined in comment for method findAllIn in class Regex
+[warn]    *    case madhatter(x,y) => s"$x$y"
+[warn]                                     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Queue.scala:51: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the `n`-th element of this queue.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala:22: Variable 1 undefined in comment for trait ClassTag in trait ClassTag
+[warn]  *   mkArray: [T](elems: T*)(implicit evidence$1: scala.reflect.ClassTag[T])Array[T]
+[warn]                                                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Range.scala:409: Tag '@pre' is not recognised
+[warn]   /** Counts the number of range elements.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Queue.scala:121: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns a tuple with the first element in the queue,
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/PriorityQueue.scala:137: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the element with the highest priority in the queue,
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/Queue.scala:58: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the first element in the queue, and removes this element
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/concurrent/duration/Duration.scala:693: Could not find any member to link for "ArithmeticException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:144: Variable name undefined in comment for macro method f in class StringContext
+[warn]    *    println(f"$name%s is $height%2.2f meters tall")  // James is 1.90 meters tall
+[warn]                    ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:144: Variable height undefined in comment for macro method f in class StringContext
+[warn]    *    println(f"$name%s is $height%2.2f meters tall")  // James is 1.90 meters tall
+[warn]                               ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:304: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /** Uses the underlying string as a pattern (in a fashion similar to
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:321: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /** Like `format(args*)` but takes an initial `Locale` parameter
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Queue.scala:140: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the first element in the queue, or throws an error if there
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Option.scala:109: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the option's value.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/Either.scala:276: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]     /**
+[warn]     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/Either.scala:441: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]     /**
+[warn]     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/ListSet.scala:129: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stream.scala:218: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Gives constant time access to the first element of this `Stream`.  Using
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/annotation/implicitNotFound.scala:15: Variable Xi undefined in comment for class implicitNotFound in class implicitNotFound
+[warn]  * result of replacing all occurrences of ${Xi} in the string msg with the
+[warn]                                            ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/ListSet.scala:112: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Creates a new iterator over all elements contained in this set.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:20: Variable name undefined in comment for class StringContext in class StringContext
+[warn]  *   println(s"Hello, $name")  // Hello, James
+[warn]                        ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:26: Variable name undefined in comment for class StringContext in class StringContext
+[warn]  *   s"Hello, $name"
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:44: Variable a undefined in comment for class StringContext in class StringContext
+[warn]  *    val x: JSONObject = json"{ a: $a }"
+[warn]                                      ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stack.scala:110: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Removes the top element from the stack.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/Stack.scala:139: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Removes the top element from the stack.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Console.scala:150: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /** Prints its arguments as a formatted string to the default output,
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/Source.scala:181: Variable Positioner undefined in comment for class Source in class Source
+[warn]  *  [[scala.io.Source$Positioner the positioner]].
+[warn]                       ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:76: Variable name undefined in comment for method s in class StringContext
+[warn]    *    println(s"Hello, $name")  // Hello, James
+[warn]                           ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:78: Variable name undefined in comment for method s in class StringContext
+[warn]    *  In this example, the expression $name is replaced with the `toString` of the
+[warn]                                        ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:83: Variable 1 + 1 undefined in comment for method s in class StringContext
+[warn]    *    println(s"1 + 1 = ${1 + 1}")
+[warn]                            ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/TraversableLike.scala:414: Could not find any member to link for "`UnsupportedOperationException`".
+[warn]   /** Selects all elements except the first.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/ListSet.scala:134: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:258: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:262: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:282: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:278: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:270: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:274: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:266: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stack.scala:100: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the top element of the stack. An error is signaled if
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/Stack.scala:129: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the top element of the stack. This method will not remove
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/unchecked.scala:11: Could not find any member to link for "java.lang.ClassCastException".
+[warn] /** An annotation to designate that the annotated entity
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Predef.scala:20: Could not find any member to link for "scala.LowPriorityImplicits".
+[warn] /** The `Predef` object provides definitions that are accessible in all Scala
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:35: Could not find any member to link for "java.util.regex".
+[warn] /** A regular expression is used to determine whether a string matches a pattern
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:729: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** A class to step through a sequence of regex matches.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:321: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Return all non-overlapping matches of this `Regex` in the given character 
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:193: Could not find any member to link for "java.lang.CharSequence".
+[warn]   /** Tries to match a [[java.lang.CharSequence]].
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/StringBuilder.scala:56: Could not find any member to link for "NegativeArraySizeException".
+[warn]   /** Constructs a string builder with no characters in it and an
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:166: Could not find any member to link for "java.lang.String#replaceAll".
+[warn]   /** Replace all literal occurrences of `literal` with the string `replacement`.
+[warn]   ^
+[warn] there were 114 deprecation warnings; re-run with -deprecation for details
+[warn] one warning found
+[info] Because /home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/package.scala contains a macro definition, the following dependencies are invalidated unconditionally:
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/Array.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/Predef.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/beans/ScalaBeanInfo.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/concurrent/TrieMap.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/PagedSeq.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/RedBlackTree.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/TrieIterator.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/AVLTree.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/ArrayOps.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/ArrayStack.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/StringBuilder.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/WrappedArray.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/package.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/ParIterableLike.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/immutable/ParHashMap.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/immutable/ParHashSet.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParArray.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParHashMap.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParHashSet.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParHashTable.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/UnrolledParArrayCombiner.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/package.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassManifestDeprecatedApis.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/Manifest.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/runtime/ScalaRunTime.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/sys/process/Process.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/MurmurHash.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/Sorting.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/control/Exception.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala
+[info] Because /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala contains a macro definition, the following dependencies are invalidated unconditionally:
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/Enumeration.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/Iterator.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/ListBuffer.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/concurrent/duration/Duration.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/runtime/ScalaRunTime.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/Properties.scala
+[info] Packaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stream.scala:19: Could not find any member to link for "collect".
+[warn] /** The class `Stream` implements lazy lists where elements
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/concurrent/duration/Duration.scala:659: Could not find any member to link for "ArithmeticException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/Source.scala:172: Could not find any member to link for "scala.io.Source@iter".
+[warn] /** An iterable representation of source data.
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:158: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads in some structured input (from the default input), specified by
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:143: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a double value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:128: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a float value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:113: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads an long value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:98: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads an int value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:83: Could not find any member to link for "java.lang.StringIndexOutOfBoundsException".
+[warn]   /** Reads a char value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:68: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a short value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:53: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a byte value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:33: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a boolean value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala:7: Could not find any member to link for "scala.reflect.api.TypeTags#TypeTag".
+[warn] /**
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Float.scala:215: Could not find any member to link for "java.lang.Float.MIN_VALUE".
+[warn]   /** The negative number with the greatest (finite) absolute value which is representable
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Double.scala:215: Could not find any member to link for "java.lang.Double.MIN_VALUE".
+[warn]   /** The negative number with the greatest (finite) absolute value which is representable
+[warn]   ^
+[warn] 99 warnings found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/scalalib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/scalalib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/scalalib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/scalalib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 100 s, completed Sep 29, 2018 1:30:26 PM
+[info] Packaging /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] Updating {file:/home/valdis/scala-native/}testingCompilerInterface...
+[info] Updating {file:/home/valdis/scala-native/}util...
+[info] Done packaging.
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] Updating {file:/home/valdis/scala-native/}nir...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] Updating {file:/home/valdis/scala-native/}tools...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#nir_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#testing-compiler-interface;0.3.9-SNAPSHOT ...
+[info] Resolving org.scalacheck#scalacheck_2.10;1.13.4 ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scalatest#scalatest_2.10;3.0.0 ...
+[info] Resolving org.scalactic#scalactic_2.10;3.0.0 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] Updating {file:/home/valdis/scala-native/}testRunner...
+[info] Wrote /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#tools_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nir_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-runner_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:30:26 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-runner/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 10 Scala sources to /home/valdis/scala-native/util/target/scala-2.10/classes...
+[info] Compiling 23 Scala sources to /home/valdis/scala-native/nir/target/scala-2.10/classes...
+[warn] /home/valdis/scala-native/nir/src/main/scala/scala/scalanative/nir/Types.scala:24: match may not be exhaustive.
+[warn] It would fail on the following inputs: Byte, Int, Long, Short, UByte, UInt, ULong, UShort
+[warn]     def printType(ty: nir.Type): Unit = ty match {
+[warn]                                         ^
+[warn] one warning found
+[info] Compiling 51 Scala sources to /home/valdis/scala-native/tools/target/scala-2.10/classes...
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:114: match may not be exhaustive.
+[warn] It would fail on the following inputs: Class(_, _, _, _), Module(_, _, _, _), Trait(_, _, _)
+[warn]           env(n) match {
+[warn]              ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:139: match may not be exhaustive.
+[warn] It would fail on the following inputs: Class(_, _, _, _), Module(_, _, _, _), Struct(_, _, _), Trait(_, _, _)
+[warn]         env(n) match {
+[warn]            ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:256: match may not be exhaustive.
+[warn] It would fail on the following inputs: If(_, _, _), Jump(_), Let(_, _, _), None, Ret(_), Switch(_, _, _), Throw(_, _), Unreachable
+[warn]         insts.head match {
+[warn]               ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/GlobalValueNumbering.scala:102: Cannot check match for unreachability.
+[warn] (The analysis required more space than allowed. Please try with scalac -Dscalac.patmat.analysisBudget=512 or -Dscalac.patmat.analysisBudget=off.)
+[warn]     op match {
+[warn]     ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/PartialEvaluation.scala:276: match may not be exhaustive.
+[warn] It would fail on the following inputs: Array(_), ArrayValue(_, _), Bool, Char, Class(_), Double, Float, Function(_, _), Module(_), None, Nothing, Ptr, StructValue(_, _), Trait(_), UByte, UInt, ULong, UShort, Unit, Var(_), Vararg, Void
+[warn]   private def minValue(ty: Type): Long = ty match {
+[warn]                                          ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/PartialEvaluation.scala:283: match may not be exhaustive.
+[warn] It would fail on the following inputs: Array(_), ArrayValue(_, _), Bool, Char, Class(_), Double, Float, Function(_, _), Module(_), None, Nothing, Ptr, StructValue(_, _), Trait(_), UByte, UInt, ULong, UShort, Unit, Var(_), Vararg, Void
+[warn]   private def maxValue(ty: Type): Long = ty match {
+[warn]                                          ^
+[warn] 6 warnings found
+[info] Main Scala API documentation to /home/valdis/scala-native/test-runner/target/scala-2.10/api...
+[info] Compiling 12 Scala sources to /home/valdis/scala-native/test-runner/target/scala-2.10/classes...
+model contains 40 documentable templates
+[info] Packaging /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/poms/test-runner_2.10.pom
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/jars/test-runner_2.10.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/srcs/test-runner_2.10-sources.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/docs/test-runner_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 31 s, completed Sep 29, 2018 1:30:57 PM
+[info] Packaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT.pom
+[info] :: delivering :: org.scala-native#util_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:30:57 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/util/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/util/target/scala-2.10/api...
+[info] Packaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT.pom
+[info] :: delivering :: org.scala-native#test-runner_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:30:57 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-runner/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/poms/test-runner_2.10.pom
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/jars/test-runner_2.10.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/srcs/test-runner_2.10-sources.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/docs/test-runner_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+model contains 18 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/poms/util_2.10.pom
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/jars/util_2.10.jar
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/srcs/util_2.10-sources.jar
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/docs/util_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] :: delivering :: org.scala-native#nir_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:30:58 CEST 2018
+[info] Packaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] 	delivering ivy file to /home/valdis/scala-native/nir/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/nir/target/scala-2.10/api...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT.pom
+[info] Packaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+model contains 214 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/poms/nir_2.10.pom
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/jars/nir_2.10.jar
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/srcs/nir_2.10-sources.jar
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/docs/nir_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] Wrote /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT.pom
+[info] :: delivering :: org.scala-native#tools_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:31:01 CEST 2018
+[info] Main Scala API documentation to /home/valdis/scala-native/tools/target/scala-2.10/api...
+[info] 	delivering ivy file to /home/valdis/scala-native/tools/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Packaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Done packaging.
+model contains 123 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/poms/tools_2.10.pom
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/jars/tools_2.10.jar
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/srcs/tools_2.10-sources.jar
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/docs/tools_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}sbtScalaNative...
+[info] Resolving org.scala-native#tools_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#nir_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-runner_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.portable-scala#sbt-platform-deps;1.0.0-M2 ...
+[info] Resolving org.scala-sbt#sbt;0.13.17 ...
+[info] Resolving org.scala-sbt#main;0.13.17 ...
+[info] Resolving org.scala-sbt#actions;0.13.17 ...
+[info] Resolving org.scala-sbt#classpath;0.13.17 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-sbt#interface;0.13.17 ...
+[info] Resolving org.scala-sbt#io;0.13.17 ...
+[info] Resolving org.scala-sbt#control;0.13.17 ...
+[info] Resolving org.scala-sbt#launcher-interface;1.0.1 ...
+[info] Resolving org.scala-sbt#completion;0.13.17 ...
+[info] Resolving org.scala-sbt#collections;0.13.17 ...
+[info] Resolving jline#jline;2.14.5 ...
+[info] Resolving org.scala-sbt#api;0.13.17 ...
+[info] Resolving org.scala-sbt#classfile;0.13.17 ...
+[info] Resolving org.scala-sbt#logging;0.13.17 ...
+[info] Resolving org.scala-sbt#process;0.13.17 ...
+[info] Resolving org.scala-sbt#compiler-integration;0.13.17 ...
+[info] Resolving org.scala-sbt#incremental-compiler;0.13.17 ...
+[info] Resolving org.scala-sbt#relation;0.13.17 ...
+[info] Resolving org.scala-sbt#compile;0.13.17 ...
+[info] Resolving org.scala-sbt#persist;0.13.17 ...
+[info] Resolving org.scala-tools.sbinary#sbinary_2.10;0.4.2 ...
+[info] Resolving org.scala-sbt#compiler-ivy-integration;0.13.17 ...
+[info] Resolving org.scala-sbt#ivy;0.13.17 ...
+[info] Resolving org.scala-sbt#cross;0.13.17 ...
+[info] Resolving org.scala-sbt.ivy#ivy;2.3.0-sbt-b18f59ea3bc914a297bb6f1a4f7fb0ace399e310 ...
+[info] Resolving com.jcraft#jsch;0.1.50 ...
+[info] Resolving org.scala-sbt#serialization_2.10;0.1.2 ...
+[info] Resolving org.scala-lang.modules#scala-pickling_2.10;0.10.1 ...
+[info] Resolving org.scalamacros#quasiquotes_2.10;2.0.1 ...
+[info] Resolving org.json4s#json4s-core_2.10;3.2.10 ...
+[info] Resolving org.json4s#json4s-ast_2.10;3.2.10 ...
+[info] Resolving com.thoughtworks.paranamer#paranamer;2.6 ...
+[info] Resolving org.spire-math#jawn-parser_2.10;0.6.0 ...
+[info] Resolving org.spire-math#json4s-support_2.10;0.6.0 ...
+[info] Resolving org.scala-sbt#run;0.13.17 ...
+[info] Resolving org.scala-sbt#task-system;0.13.17 ...
+[info] Resolving org.scala-sbt#tasks;0.13.17 ...
+[info] Resolving org.scala-sbt#tracking;0.13.17 ...
+[info] Resolving org.scala-sbt#cache;0.13.17 ...
+[info] Resolving org.scala-sbt#testing;0.13.17 ...
+[info] Resolving org.scala-sbt#test-agent;0.13.17 ...
+[info] Resolving org.scala-sbt#main-settings;0.13.17 ...
+[info] Resolving org.scala-sbt#apply-macro;0.13.17 ...
+[info] Resolving org.scala-sbt#command;0.13.17 ...
+[info] Resolving org.scala-sbt#template-resolver;0.1 ...
+[info] Resolving org.scala-sbt#logic;0.13.17 ...
+[info] Resolving org.scala-sbt#compiler-interface;0.13.17 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Resolving org.scala-sbt#scripted-sbt;0.13.17 ...
+[info] Resolving org.scala-sbt#scripted-framework;0.13.17 ...
+[info] Resolving org.scala-sbt#sbt-launch;0.13.17 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#sbt-scala-native;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:31:04 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/api...
+[info] Compiling 14 Scala sources to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/classes...
+model contains 47 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/jars/sbt-scala-native.jar
+[info] 	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/srcs/sbt-scala-native-sources.jar
+[info] 	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/docs/sbt-scala-native-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 10 s, completed Sep 29, 2018 1:31:07 PM
+[info] Packaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testInterfaceSbtDefs...
+[info] Wrote /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:31:07 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/api...
+[info] Compiling 11 Scala sources to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 22 documentable templates
+[warn] /home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/Runner.scala:17: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Returns an array of tasks that when executed will run tests and suites
+[warn]   ^
+[warn] /home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/OptionalThrowable.scala:25: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Returns the <code>Throwable</code> contained in this
+[warn]   ^
+[warn] /home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/Framework.scala:15: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Initiates a run.
+[warn]   ^
+[warn] three warnings found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testInterfaceSerialization...
+[info] Wrote /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:31:10 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/api...
+[info] Compiling 8 Scala sources to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 35 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/test-interface-serialization_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/test-interface-serialization_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testInterface...
+[info] Wrote /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 13:31:11 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-interface/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/test-interface/target/scala-2.11/api...
+[info] Compiling 6 Scala sources to /home/valdis/scala-native/test-interface/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 18 documentable templates
+[warn] /home/valdis/scala-native/test-interface/src/main/scala/scala/scalajs/reflect/annotation/EnableReflectiveInstantiation.scala:5: Could not find any member to link for "scala.scalajs.reflect.Reflect".
+[warn] /** Enables reflective instantiation for the annotated class, trait or object,
+[warn] ^
+[warn] one warning found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/test-interface_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/test-interface_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/test-interface_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/test-interface_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 5 s, completed Sep 29, 2018 1:31:12 PM
+[info] Updating {file:/home/valdis/scala-native/}sandbox...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] Compiling 1 Scala source to /home/valdis/scala-native/sandbox/target/scala-2.11/classes...
+[info] Linking (902 ms)
+[info] Discovered 551 classes and 3289 methods
+[info] Optimizing (debug mode) (263 ms)
+[info] Generating intermediate code (790 ms)
+[info] Produced 32 files
+[error] /home/valdis/scala-native/sandbox/target/scala-2.11/native/lib/gc/immix/Allocator.c:88:39: warning: format specifies type 'unsigned long long' but the argument has type 'uint64_t' (aka 'unsigned long') [-Wformat]
+[error]     printf("\n\nBlock count: %llu\n", allocator->blockCount);
+[error]                              ~~~~     ^~~~~~~~~~~~~~~~~~~~~
+[error]                              %lu
+[error] /home/valdis/scala-native/sandbox/target/scala-2.11/native/lib/gc/immix/Allocator.c:89:35: warning: format specifies type 'unsigned long long' but the argument has type 'uint64_t' (aka 'unsigned long') [-Wformat]
+[error]     printf("Unavailable: %llu\n", unavailableBlockCount);
+[error]                          ~~~~     ^~~~~~~~~~~~~~~~~~~~~
+[error]                          %lu
+[error] /home/valdis/scala-native/sandbox/target/scala-2.11/native/lib/gc/immix/Allocator.c:90:28: warning: format specifies type 'unsigned long long' but the argument has type 'uint64_t' (aka 'unsigned long') [-Wformat]
+[error]     printf("Free: %llu\n", allocator->freeBlockCount);
+[error]                   ~~~~     ^~~~~~~~~~~~~~~~~~~~~~~~~
+[error]                   %lu
+[error] /home/valdis/scala-native/sandbox/target/scala-2.11/native/lib/gc/immix/Allocator.c:91:32: warning: format specifies type 'unsigned long long' but the argument has type 'uint64_t' (aka 'unsigned long') [-Wformat]
+[error]     printf("Recycled: %llu\n", allocator->recycledBlockCount);
+[error]                       ~~~~     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[error]                       %lu
+[error] 4 warnings generated.
+[info] Compiling to native code (899 ms)
+[info] Linking native code (immix gc, none lto) (107 ms)
+[info] Total (3101 ms)
+0x7fcbff3a3000 FREE
+0x7fc428578000
+0x7fc428578010
+0x7fc428578020
+0x7fc428578038
+0x7fc428578048
+0x7fc428578058
+0x7fc428578070
+0x7fc428578080
+0x7fc428578090
+0x7fc4285780a0
+0x7fc4285780b0
+0x7fc4285780c8
+0x7fc4285780d8
+0x7fc4285780e8
+0x7fc428578128
+0x7fc428578140
+0x7fc428578958
+0x7fc428578970
+0x7fc428578988
+0x7fc4285789a0
+0x7fc4285789b8
+0x7fc4285789d0
+0x7fc4285789e8
+0x7fc428578a00
+0x7fc428578a18
+0x7fc428578a30
+0x7fc428578a48
+0x7fc428578a60
+0x7fc428578a78
+0x7fc428578a90
+0x7fc428578aa8
+0x7fc428578ac0
+0x7fc428578ad8
+0x7fc428578af0
+0x7fc428578b08
+0x7fc428578b20
+0x7fc428578b38
+0x7fc428578b50
+0x7fc428578b68
+0x7fc428578b80
+0x7fc428578b98
+0x7fc428578bb0
+0x7fc428578bc8
+0x7fc428578be0
+0x7fc428578bf8
+0x7fc428578c10
+0x7fc428578c20
+0x7fc428578c30
+0x7fc428578c40
+0x7fc428578c50
+0x7fc428578c60
+0x7fc428578c70
+0x7fc428578c80
+0x7fc428578c90
+0x7fc428578ca0
+0x7fc428578cb0
+0x7fc428578cc0
+0x7fc428578cd0
+0x7fc428578ce0
+0x7fc428578cf0
+0x7fc428578d00
+0x7fc428578d10
+0x7fc428578d20
+0x7fc428578d30
+0x7fc428578d40
+0x7fc428578d50
+0x7fc428578d60
+0x7fc428578d70
+0x7fc428578d80
+0x7fc428578d90
+0x7fc428578da0
+0x7fc428578db0
+0x7fc428578dc8
+0x7fc428578e08
+0x7fc428578e20
+0x7fc428578e38
+0x7fc428578e50
+0x7fc428578e90
+0x7fc428578eb0
+0x7fc428578ed8
+0x7fc428578ef0
+0x7fc428578f00
+0x7fc428578f18
+0x7fc428578f30
+0x7fc428578f40
+0x7fc428578f50
+0x7fc428578f90
+0x7fc428578fb0
+0x7fc428578fc0
+0x7fc428579000
+0x7fc428579020
+0x7fc428579040
+0x7fc428579050
+0x7fc428579080
+0x7fc428579090
+0x7fc4285790a0
+0x7fc4285790b0
+0x7fc4285790c0
+0x7fc4285790d0
+0x7fc4285790e0
+0x7fc4285790f0
+0x7fc428579100
+0x7fc428579110
+0x7fc428579120
+0x7fc428579130
+0x7fc428579140
+0x7fc4285791d8
+0x7fc4285791f0
+0x7fc428579208
+0x7fc428579220
+0x7fc428579238
+0x7fc428579248
+0x7fc428579260
+0x7fc428579278
+0x7fc428579288
+0x7fc4285792a0
+0x7fc4285792b8
+0x7fc4285792e0
+0x7fc4285792f0
+0x7fc428579308
+0x7fc428579320
+0x7fc428579330
+0x7fc428579340
+0x7fc428579358
+0x7fc428579370
+0x7fc428579388
+0x7fc4285793a0
+0x7fc4285793c8
+0x7fc4285793e0
+0x7fc4285793f8
+0x7fc428579408
+0x7fc428579420
+0x7fc428579438
+0x7fc428579450
+0x7fc428579468
+0x7fc428579490
+0x7fc4285794a8
+0x7fc4285794c0
+0x7fc4285794d0
+0x7fc4285794e8
+0x7fc428579500
+0x7fc428579518
+0x7fc428579530
+0x7fc428579558
+0x7fc428579570
+0x7fc428579588
+0x7fc428579598
+0x7fc4285795b0
+0x7fc4285795c8
+0x7fc4285795e0
+0x7fc4285795f8
+0x7fc428579620
+0x7fc428579638
+0x7fc428579650
+0x7fc428579660
+0x7fc428579678
+0x7fc428579690
+0x7fc4285796a8
+0x7fc4285796c0
+0x7fc4285796e8
+0x7fc428579700
+0x7fc428579718
+0x7fc428579728
+0x7fc428579740
+0x7fc428579758
+0x7fc428579770
+0x7fc428579788
+0x7fc4285797b0
+0x7fc4285797c8
+0x7fc4285797e0
+0x7fc4285797f0
+0x7fc428579808
+0x7fc428579820
+0x7fc428579838
+0x7fc428579850
+0x7fc428579878
+0x7fc428579890
+0x7fc4285798a8
+0x7fc4285798b8
+0x7fc4285798c8
+0x7fc4285798e0
+0x7fc4285798f8
+0x7fc428579910
+0x7fc428579928
+0x7fc428579950
+0x7fc428579968
+0x7fc428579980
+0x7fc428579990
+0x7fc4285799a8
+0x7fc4285799c0
+0x7fc4285799d8
+0x7fc4285799f0
+0x7fc428579a00
+0x7fc428579a10
+0x7fc428579a38
+0x7fc428579a50
+0x7fc428579a68
+0x7fc428579a78
+0x7fc428579a90
+0x7fc428579aa8
+0x7fc428579ac0
+0x7fc428579ad8
+0x7fc428579b00
+0x7fc428579b18
+0x7fc428579b30
+0x7fc428579b40
+0x7fc428579b50
+0x7fc428579b60
+0x7fc428579b80
+0x7fc428579b98
+0x7fc428579bb0
+0x7fc428579bc8
+0x7fc428579be0
+0x7fc428579bf0
+0x7fc428579c30
+0x7fc428579c88
+0x7fc428579ca0
+0x7fc428579d38
+0x7fc428579d50
+0x7fc428579de8
+0x7fc428579e00
+0x7fc428579e10
+0x7fc428579e20
+0x7fc428579e30
+0x7fc428579e40
+0x7fc428579e78
+0x7fc428579ea0
+0x7fc428579eb8
+0x7fc428579ed0
+0x7fc428579ee8
+0x7fc428579f00
+0x7fc428579f18
+0x7fc428579f30
+0x7fc428579f58
+0x7fc428579f68
+0x7fc428579f80
+0x7fc428579f90
+0x7fc428579fa8
+0x7fc428579fc0
+0x7fc42857a7d8
+0x7fc42857a7f0
+0x7fc42857a808
+0x7fc42857a818
+0x7fc42857a830
+0x7fc42857a848
+0x7fc42857a858
+0x7fc42857a870
+0x7fc42857a880
+0x7fc42857a898
+0x7fc42857a8a8
+0x7fc42857a8c0
+0x7fc42857a8d8
+0x7fc42857a8e8
+0x7fc42857a900
+0x7fc42857a918
+0x7fc42857a930
+0x7fc42857a948
+0x7fc42857a960
+0x7fc42857a970
+0x7fc42857a980
+0x7fc42857a998
+0x7fc42857a9b0
+0x7fc42857a9c8
+0x7fc42857a9e0
+0x7fc42857a9f8
+0x7fc42857aa10
+0x7fc42857aa28
+0x7fc42857aa40
+0x7fc42857aa58
+0x7fc42857aa70
+0x7fc42857aa80
+0x7fc42857aaa8
+0x7fc42857aac0
+0x7fc42857aad0
+0x7fc42857aae8
+0x7fc42857ab10
+0x7fc42857ab28
+0x7fc42857ab38
+0x7fc42857ab48
+0x7fc42857ab68
+0x7fc42857ab80
+0x7fc42857ab90
+0x7fc42857aba8
+0x7fc42857abc0
+0x7fc42857abd8
+0x7fc42857abe8
+0x7fc42857ac18
+0x7fc42857ac30
+0x7fc42857ac48
+0x7fc42857ac60
+0x7fc42857ac78
+0x7fc42857b490
+0x7fc42857b4a8
+0x7fc42857b4c0
+0x7fc42857b4d8
+0x7fc42857b4f0
+0x7fc42857b508
+0x7fc42857b520
+0x7fc42857b538
+0x7fc42857b550
+0x7fc42857b568
+0x7fc42857b580
+0x7fc42857b598
+0x7fc42857b5b0
+0x7fc42857b5c8
+0x7fc42857b5e0
+0x7fc42857b5f8
+0x7fc42857b610
+0x7fc42857b628
+0x7fc42857b640
+0x7fc42857b658
+0x7fc42857b670
+0x7fc42857b688
+0x7fc42857b6a0
+0x7fc42857b6b8
+0x7fc42857b6d0
+0x7fc42857b6e8
+0x7fc42857b700
+0x7fc42857b718
+0x7fc42857b730
+0x7fc42857b748
+0x7fc42857b760
+0x7fc42857b778
+0x7fc42857b790
+0x7fc42857b7a8
+0x7fc42857b7c0
+0x7fc42857b7d8
+0x7fc42857b7f0
+0x7fc42857b808
+0x7fc42857b820
+0x7fc42857b838
+0x7fc42857b850
+0x7fc42857b868
+0x7fc42857b880
+0x7fc42857b898
+0x7fc42857b8b0
+0x7fc42857b8c8
+0x7fc42857b8e0
+0x7fc42857b8f8
+0x7fc42857b910
+0x7fc42857b928
+0x7fc42857b940
+0x7fc42857b958
+0x7fc42857b970
+0x7fc42857b988
+0x7fc42857b9a0
+0x7fc42857b9b8
+0x7fc42857b9d0
+0x7fc42857b9e8
+0x7fc42857ba00
+0x7fc42857ba18
+0x7fc42857ba30
+0x7fc42857ba48
+0x7fc42857ba60
+0x7fc42857ba78
+0x7fc42857ba90
+0x7fc42857baa8
+0x7fc42857bac0
+0x7fc42857bad8
+0x7fc42857baf0
+0x7fc42857bb08
+0x7fc42857bb20
+0x7fc42857bb38
+0x7fc42857bb50
+0x7fc42857bb68
+0x7fc42857bb80
+0x7fc42857bb98
+0x7fc42857bbb0
+0x7fc42857bbc8
+0x7fc42857bbe0
+0x7fc42857bbf8
+0x7fc42857bc10
+0x7fc42857bc28
+0x7fc42857bc40
+0x7fc42857bc58
+0x7fc42857bc70
+0x7fc42857bc88
+0x7fc42857bca0
+0x7fc42857bcb8
+0x7fc42857bcd0
+0x7fc42857bce8
+0x7fc42857bd00
+0x7fc42857bd18
+0x7fc42857bd30
+0x7fc42857bd48
+0x7fc42857bd60
+0x7fc42857bd88
+0x7fc42857bda0
+0x7fc42857bdb8
+0x7fc42857bdd0
+0x7fc42857bde8
+0x7fc42857be00
+0x7fc42857be10
+0x7fc42857be20
+0x7fc42857be38
+0x7fc42857be48
+0x7fc42857be58
+0x7fc42857be70
+0x7fc42857bea8
+0x7fc42857bec0
+0x7fc42857bed0
+0x7fc42857bee8
+0x7fc42857bf28
+0x7fc42857bf50
+0x7fc42857bf68
+0x7fc42857bf80
+0x7fc42857bf98
+0x7fc42857bfb0
+0x7fc42857bfc0
+0x7fc42857c008
+0x7fc42857c020
+0x7fc42857c038
+0x7fc42857c048
+0x7fc42857c060
+0x7fc42857c070
+0x7fc42857c088
+0x7fc42857c0c0
+0x7fc42857c0d0
+0x7fc42857c0e8
+0x7fc42857c100
+0x7fc42857c118
+0x7fc42857c130
+0x7fc42857c548
+0x7fc42857c560
+0x7fc42857c578
+0x7fc42857c590
+0x7fc42857c5a8
+0x7fc42857c5c0
+0x7fc42857c5d8
+0x7fc42857c5f0
+0x7fc42857c608
+0x7fc42857c620
+0x7fc42857c638
+0x7fc42857c650
+0x7fc42857c668
+0x7fc42857c680
+0x7fc42857c698
+0x7fc42857c6b0
+0x7fc42857c6c8
+0x7fc42857c6e0
+0x7fc42857c6f8
+0x7fc42857c710
+0x7fc42857c728
+0x7fc42857c740
+0x7fc42857c758
+0x7fc42857c770
+0x7fc42857c788
+0x7fc42857c7a0
+0x7fc42857c7b8
+0x7fc42857c7d0
+0x7fc42857c7e8
+0x7fc42857c800
+0x7fc42857c818
+0x7fc42857c830
+0x7fc42857c848
+0x7fc42857c860
+0x7fc42857c878
+0x7fc42857c890
+0x7fc42857c8a8
+0x7fc42857c8c0
+0x7fc42857c8d8
+0x7fc42857c8f0
+0x7fc42857c908
+0x7fc42857c920
+0x7fc42857c938
+0x7fc42857c950
+0x7fc42857c968
+0x7fc42857c980
+0x7fc42857c998
+0x7fc42857c9b0
+0x7fc42857c9c8
+0x7fc42857c9e0
+0x7fc42857c9f8
+0x7fc42857ca10
+0x7fc42857ca28
+0x7fc42857ca40
+0x7fc42857ca58
+0x7fc42857ca70
+0x7fc42857ca88
+0x7fc42857caa0
+0x7fc42857cab8
+0x7fc42857cad0
+0x7fc42857cae8
+0x7fc42857cb00
+0x7fc42857cb18
+0x7fc42857cb30
+0x7fc42857cb48
+0x7fc42857cb60
+0x7fc42857cb78
+0x7fc42857cb90
+0x7fc42857cba8
+0x7fc42857cbc0
+0x7fc42857cbd8
+0x7fc42857cbf0
+0x7fc42857cc08
+0x7fc42857cc20
+0x7fc42857cc38
+0x7fc42857cc50
+0x7fc42857cc68
+0x7fc42857cc80
+0x7fc42857cc98
+0x7fc42857ccb0
+0x7fc42857ccc8
+0x7fc42857cce0
+0x7fc42857ccf8
+0x7fc42857cd10
+0x7fc42857cd28
+0x7fc42857cd40
+0x7fc42857cd58
+0x7fc42857cd70
+0x7fc42857cd88
+0x7fc42857cda0
+0x7fc42857cdb8
+0x7fc42857cdd0
+0x7fc42857cde8
+0x7fc42857ce00
+0x7fc42857ce18
+0x7fc42857ce30
+0x7fc42857ce48
+0x7fc42857ce60
+0x7fc42857ce78
+0x7fc42857ce90
+0x7fc42857cea8
+0x7fc42857cec0
+0x7fc42857ced8
+0x7fc42857cef0
+0x7fc42857cf08
+0x7fc42857cf20
+0x7fc42857cf38
+0x7fc42857cf50
+0x7fc42857cf68
+0x7fc42857cf80
+0x7fc42857cf98
+0x7fc42857cfb0
+0x7fc42857cfc8
+0x7fc42857d038
+0x7fc42857d050
+0x7fc42857d068
+0x7fc42857d080
+0x7fc42857d098
+0x7fc42857d0b0
+0x7fc42857d0c8
+0x7fc42857d0d8
+0x7fc42857d108
+0x7fc42857d1a0
+0x7fc42857d1b8
+0x7fc42857d1d0
+0x7fc42857d1e8
+0x7fc42857d200
+0x7fc42857d218
+0x7fc42857d230
+0x7fc42857d260
+0x7fc42857d2f8
+0x7fc42857d310
+0x7fc42857d328
+0x7fc42857d340
+0x7fc42857d350
+0x7fc42857d360
+0x7fc42857d370
+0x7fc42857d380
+0x7fc42857d398
+0x7fc42857d3b0
+0x7fc42857d3c8
+0x7fc42857d3e0
+0x7fc42857d3f8
+0x7fc42857d410
+0x7fc42857d428
+0x7fc42857d440
+0x7fc42857d458
+0x7fc42857d470
+0x7fc42857d488
+0x7fc42857d4a0
+0x7fc42857d4b8
+0x7fc42857d4d0
+0x7fc42857d4e8
+0x7fc42857d500
+0x7fc42857d518
+0x7fc42857d530
+0x7fc42857d548
+0x7fc42857d560
+0x7fc42857d578
+0x7fc42857d590
+0x7fc42857d5a8
+0x7fc42857d5c0
+0x7fc42857d5d8
+0x7fc42857d5f0
+0x7fc42857d608
+0x7fc42857d620
+0x7fc42857d638
+0x7fc42857d650
+0x7fc42857d668
+0x7fc42857d680
+0x7fc42857d698
+0x7fc42857d6b0
+0x7fc42857d6c8
+0x7fc42857d6e0
+0x7fc42857d6f8
+0x7fc42857d710
+0x7fc42857d728
+0x7fc42857d740
+0x7fc42857d758
+0x7fc42857d770
+0x7fc42857d788
+0x7fc42857d7a0
+0x7fc42857d7b8
+0x7fc42857d7d0
+0x7fc42857d7e8
+0x7fc42857d800
+0x7fc42857d818
+0x7fc42857d830
+0x7fc42857d848
+0x7fc42857d860
+0x7fc42857d878
+0x7fc42857d890
+0x7fc42857d8b8
+0x7fc42857d8d0
+0x7fc42857d8e8
+0x7fc42857d910
+0x7fc42857d928
+0x7fc42857d940
+0x7fc42857d958
+0x7fc42857d970
+0x7fc42857d988
+0x7fc42857d9a0
+0x7fc42857d9b8
+0x7fc42857d9d0
+0x7fc42857d9e8
+0x7fc42857da00
+0x7fc42857da18
+0x7fc42857da30
+0x7fc42857da48
+0x7fc42857da60
+0x7fc42857da78
+0x7fc42857da90
+0x7fc42857daa8
+0x7fc42857dac0
+0x7fc42857dad8
+0x7fc42857daf0
+0x7fc42857db08
+0x7fc42857db20
+0x7fc42857db38
+0x7fc42857db50
+0x7fc42857db68
+0x7fc42857db80
+0x7fc42857db98
+0x7fc42857dbb0
+0x7fc42857dbc8
+0x7fc42857dbe0
+0x7fc42857dbf8
+0x7fc42857dc10
+0x7fc42857dc28
+0x7fc42857dc40
+0x7fc42857dc58
+0x7fc42857dc70
+0x7fc42857dc88
+0x7fc42857dca0
+0x7fc42857dcb8
+0x7fc42857dcd0
+0x7fc42857dce8
+0x7fc42857dd00
+0x7fc42857dd10
+0x7fc42857e318
+0x7fc42857e330
+0x7fc42857e348
+0x7fc42857e360
+0x7fc42857e378
+0x7fc42857e390
+0x7fc42857e3a8
+0x7fc42857e3c0
+0x7fc42857e3d8
+0x7fc42857e3f0
+0x7fc42857e408
+0x7fc42857e420
+0x7fc42857e438
+0x7fc42857e450
+0x7fc42857e468
+0x7fc42857e480
+0x7fc42857e498
+0x7fc42857e4b0
+0x7fc42857e4c8
+0x7fc42857e4e0
+0x7fc42857e4f8
+0x7fc42857e510
+0x7fc42857e528
+0x7fc42857e540
+0x7fc42857e558
+0x7fc42857e570
+0x7fc42857e588
+0x7fc42857e5a0
+0x7fc42857e5b8
+0x7fc42857e5d0
+0x7fc42857e5e8
+0x7fc42857e600
+0x7fc42857e618
+0x7fc42857e630
+0x7fc42857e648
+0x7fc42857e660
+0x7fc42857e678
+0x7fc42857e690
+0x7fc42857e6a8
+0x7fc42857e6c0
+0x7fc42857e6d8
+0x7fc42857e6f0
+0x7fc42857e708
+0x7fc42857e720
+0x7fc42857e738
+0x7fc42857e750
+0x7fc42857e768
+0x7fc42857e780
+0x7fc42857e798
+0x7fc42857e7b0
+0x7fc42857e7c8
+0x7fc42857e7e0
+0x7fc42857e7f8
+0x7fc42857e810
+0x7fc42857e828
+0x7fc42857e840
+0x7fc42857e858
+0x7fc42857e870
+0x7fc42857e888
+0x7fc42857e8a0
+0x7fc42857e8b8
+0x7fc42857e8d0
+0x7fc42857e8e8
+0x7fc42857e900
+0x7fc42857e918
+0x7fc42857e930
+0x7fc42857e948
+0x7fc42857e960
+0x7fc42857e978
+0x7fc42857e990
+0x7fc42857e9a8
+0x7fc42857e9c0
+0x7fc42857e9d8
+0x7fc42857e9f0
+0x7fc42857ea08
+0x7fc42857ea20
+0x7fc42857ea38
+0x7fc42857ea50
+0x7fc42857ea68
+0x7fc42857ea80
+0x7fc42857ea98
+0x7fc42857eab0
+0x7fc42857eac8
+0x7fc42857eae0
+0x7fc42857eaf8
+0x7fc42857eb10
+0x7fc42857eb28
+0x7fc42857eb40
+0x7fc42857eb58
+0x7fc42857eb70
+0x7fc42857eb88
+0x7fc42857eba0
+0x7fc42857ebb8
+0x7fc42857ebd0
+0x7fc42857ebe8
+0x7fc42857ec00
+0x7fc42857ec18
+0x7fc42857ec30
+0x7fc42857ec48
+0x7fc42857ec60
+0x7fc42857ec78
+0x7fc42857ec90
+0x7fc42857eca8
+0x7fc42857ecc0
+0x7fc42857ecd8
+0x7fc42857ecf0
+0x7fc42857ed08
+0x7fc42857ed20
+0x7fc42857ed38
+0x7fc42857ed50
+0x7fc42857ed68
+0x7fc42857ed80
+0x7fc42857ed98
+0x7fc42857edb0
+0x7fc42857edc8
+0x7fc42857ede0
+0x7fc42857edf8
+0x7fc42857ee10
+0x7fc42857ee28
+0x7fc42857ee40
+0x7fc42857ee58
+0x7fc42857ee70
+0x7fc42857ee88
+0x7fc42857eea0
+0x7fc42857eeb8
+0x7fc42857eed0
+0x7fc42857eee8
+0x7fc42857ef00
+0x7fc42857ef18
+0x7fc42857ef30
+0x7fc42857ef48
+0x7fc42857ef60
+0x7fc42857ef78
+0x7fc42857ef90
+0x7fc42857efa8
+0x7fc42857efc0
+0x7fc42857efd8
+0x7fc42857eff0
+0x7fc42857f008
+0x7fc42857f020
+0x7fc42857f038
+0x7fc42857f050
+0x7fc42857f068
+0x7fc42857f080
+0x7fc42857f098
+0x7fc42857f0b0
+0x7fc42857f0c8
+0x7fc42857f0e0
+0x7fc42857f0f8
+0x7fc42857f110
+0x7fc42857f128
+0x7fc42857f140
+0x7fc42857f158
+0x7fc42857f170
+0x7fc42857f188
+0x7fc42857f1a0
+0x7fc42857f1b8
+0x7fc42857f1d0
+0x7fc42857f1e8
+0x7fc42857f200
+0x7fc42857f218
+0x7fc42857f230
+0x7fc42857f248
+0x7fc42857f260
+0x7fc42857f278
+0x7fc42857f290
+0x7fc42857f2a8
+0x7fc42857f2c0
+0x7fc42857f2d8
+0x7fc42857f2f0
+0x7fc42857f308
+0x7fc42857f320
+0x7fc42857f338
+0x7fc42857f350
+0x7fc42857f368
+0x7fc42857f380
+0x7fc42857f398
+0x7fc42857f3b0
+0x7fc42857f3c8
+0x7fc42857f3e0
+0x7fc42857f3f8
+0x7fc42857f410
+0x7fc42857f428
+0x7fc42857f440
+0x7fc42857f458
+0x7fc42857f470
+0x7fc42857f488
+0x7fc42857f4a0
+0x7fc42857f4b8
+0x7fc42857f4d0
+0x7fc42857f4e8
+0x7fc42857f500
+0x7fc42857f518
+0x7fc42857f530
+0x7fc42857f548
+0x7fc42857f560
+0x7fc42857f578
+0x7fc42857f590
+0x7fc42857f5a8
+0x7fc42857f5c0
+0x7fc42857f5d8
+0x7fc42857f5f0
+0x7fc42857f608
+0x7fc42857f620
+0x7fc42857f638
+0x7fc42857f650
+0x7fc42857f668
+0x7fc42857f680
+0x7fc42857f698
+0x7fc42857f6b0
+0x7fc42857f6c8
+0x7fc42857f6e0
+0x7fc42857f6f8
+0x7fc42857f710
+0x7fc42857f728
+0x7fc42857f740
+0x7fc42857f758
+0x7fc42857f770
+0x7fc42857f788
+0x7fc42857f7a0
+0x7fc42857f7b8
+0x7fc42857f7d0
+0x7fc42857f7e8
+0x7fc42857f800
+0x7fc42857f818
+0x7fc42857f830
+0x7fc42857f848
+0x7fc42857f860
+0x7fc42857f878
+0x7fc42857f890
+0x7fc42857f8a8
+0x7fc42857f8c0
+0x7fc42857f8d8
+0x7fc42857f8f0
+0x7fc42857f908
+0x7fc42857f920
+0x7fc42857f938
+0x7fc42857f950
+0x7fc42857f968
+0x7fc42857f980
+0x7fc42857f998
+0x7fc42857f9b0
+0x7fc42857f9c8
+0x7fc42857f9e0
+0x7fc42857f9f8
+0x7fc42857fa10
+0x7fc42857fa28
+0x7fc42857fa40
+0x7fc42857fa58
+0x7fc42857fa70
+0x7fc42857fa88
+0x7fc42857faa0
+0x7fc42857fab8
+0x7fc42857fad0
+0x7fc42857fae8
+0x7fc42857fb00
+0x7fc42857fb18
+0x7fc42857fb30
+0x7fc42857fb48
+0x7fc42857fb60
+0x7fc42857fb78
+0x7fc42857fb90
+0x7fc42857fba8
+0x7fc42857fbc0
+0x7fc42857fbd8
+0x7fc42857fbf0
+0x7fc42857fc08
+0x7fc42857fc20
+0x7fc42857fc38
+0x7fc42857fc50
+0x7fc42857fc68
+0x7fc42857fc80
+0x7fc42857fc98
+0x7fc42857fcb0
+0x7fc42857fcc8
+0x7fc42857fce0
+0x7fc42857fcf8
+0x7fc42857fd10
+0x7fc42857fd28
+0x7fc42857fd40
+0x7fc42857fd58
+0x7fc42857fd70
+0x7fc42857fd88
+0x7fc42857fda0
+0x7fc42857fdb8
+0x7fc42857fdd0
+0x7fc42857fde8
+0x7fc42857fe00
+0x7fc42857fe18
+0x7fc42857fe30
+0x7fc42857fe48
+0x7fc42857fe60
+0x7fc42857fe78
+0x7fc42857fe90
+0x7fc42857fea8
+0x7fc42857fec0
+0x7fc42857fed8
+0x7fc42857fef0
+0x7fc42857ff08
+0x7fc42857ff20
+0x7fc42857ff38
+0x7fc42857ff50
+0x7fc42857ff68
+0x7fc42857ff80
+0x7fc42857ff98
+0x7fc42857ffb0
+0x7fc42857ffc8
+0x7fc42857ffe0
+0x7fcbff3a3088 FREE
+0x7fc428578000
+0x7fc428578018
+0x7fc428578030
+0x7fc428578048
+0x7fc428578060
+0x7fc428578078
+0x7fc428578090
+0x7fc4285780a8
+0x7fc4285780c0
+0x7fc4285780d8
+0x7fc4285780f0
+0x7fc428578108
+0x7fc428578120
+0x7fc428578138
+0x7fc428578150
+0x7fc428578168
+0x7fc428578180
+0x7fc428578198
+0x7fc4285781b0
+0x7fc4285781c8
+0x7fc4285781e0
+0x7fc4285781f8
+0x7fc428578210
+0x7fc428578228
+0x7fc428578240
+0x7fc428578258
+0x7fc428578270
+0x7fc428578288
+0x7fc4285782a0
+0x7fc4285782b8
+0x7fc4285782d0
+0x7fc4285782e8
+0x7fc428578300
+0x7fc428578318
+0x7fc428578330
+0x7fc428578348
+0x7fc428578360
+0x7fc428578378
+0x7fc428578390
+0x7fc4285783a8
+0x7fc4285783c0
+0x7fc4285783d8
+0x7fc4285783f0
+0x7fc428578408
+0x7fc428578420
+0x7fc428578438
+0x7fc428578450
+0x7fc428578468
+0x7fc428578480
+0x7fc428578498
+0x7fc4285784b0
+0x7fc4285784c8
+0x7fc4285784e0
+0x7fc4285784f8
+0x7fc428578510
+0x7fc428578528
+0x7fc428578540
+0x7fc428578558
+0x7fc428578570
+0x7fc428578588
+0x7fc4285785a0
+0x7fc4285785b8
+0x7fc4285785d0
+0x7fc4285785e8
+0x7fc428578600
+0x7fc428578618
+0x7fc428578630
+0x7fc428578648
+0x7fc428578660
+0x7fc428578678
+0x7fc428578690
+0x7fc4285786a8
+0x7fc4285786c0
+0x7fc4285786d8
+0x7fc4285786f0
+0x7fc428578708
+0x7fc428578720
+0x7fc428578738
+0x7fc428578750
+0x7fc428578768
+0x7fc428578780
+0x7fc428578798
+0x7fc4285787b0
+0x7fc4285787c8
+0x7fc4285787e0
+0x7fc4285787f8
+0x7fc428578810
+0x7fc428578828
+0x7fc428578840
+0x7fc428578858
+0x7fc428578870
+0x7fc428578888
+0x7fc4285788a0
+0x7fc4285788b8
+0x7fc4285788d0
+0x7fc4285788e8
+0x7fc428578900
+0x7fc428578918
+0x7fc428578930
+0x7fc428578948
+0x7fc428578960
+0x7fc428578978
+0x7fc428578990
+0x7fc4285789a8
+0x7fc4285789c0
+0x7fc4285789d8
+0x7fc4285789f0
+0x7fc428578a08
+0x7fc428578a20
+0x7fc428578a38
+0x7fc428578a50
+0x7fc428578a68
+0x7fc428578a80
+0x7fc428578a98
+0x7fc428578ab0
+0x7fc428578ac8
+0x7fc428578ae0
+0x7fc428578af8
+0x7fc428578b10
+0x7fc428578b28
+0x7fc428578b40
+0x7fc428578b58
+0x7fc428578b70
+0x7fc428578b88
+0x7fc428578ba0
+0x7fc428578bb8
+0x7fc428578bd0
+0x7fc428578be8
+0x7fc428578c00
+0x7fc428578c18
+0x7fc428578c30
+0x7fc428578c48
+0x7fc428578c60
+0x7fc428578c78
+0x7fc428578c90
+0x7fc428578ca8
+0x7fc428578cc0
+0x7fc428578cd8
+0x7fc428578cf0
+0x7fc428578d08
+0x7fc428578d20
+0x7fc428578d38
+0x7fc428578d50
+0x7fc428578d68
+0x7fc428578d80
+0x7fc428578d98
+0x7fc428578db0
+0x7fc428578dc8
+0x7fc428578de0
+0x7fc428578df8
+0x7fc428578e10
+0x7fc428578e28
+0x7fc428578e40
+0x7fc428578e58
+0x7fc428578e70
+0x7fc428578e88
+0x7fc428578ea0
+0x7fc428578eb8
+0x7fc428578ed0
+0x7fc428578ee8
+0x7fc428578f00
+0x7fc428578f18
+0x7fc428578f30
+0x7fc428578f48
+0x7fc428578f60
+0x7fc428578f78
+0x7fc428578f90
+0x7fc428578fa8
+0x7fc428578fc0
+0x7fc428578fd8
+0x7fc428578ff0
+0x7fc428579008
+0x7fc428579020
+0x7fc428579038
+0x7fc428579050
+0x7fc428579068
+0x7fc428579080
+0x7fc428579098
+0x7fc4285790b0
+0x7fc4285790c8
+0x7fc4285790e0
+0x7fc4285790f8
+0x7fc428579110
+0x7fc428579128
+0x7fc428579140
+0x7fc428579158
+0x7fc428579170
+0x7fc428579188
+0x7fc4285791a0
+0x7fc4285791b8
+0x7fc4285791d0
+0x7fc4285791e8
+0x7fc428579200
+0x7fc428579218
+0x7fc428579230
+0x7fc428579248
+0x7fc428579260
+0x7fc428579278
+0x7fc428579290
+0x7fc4285792a8
+0x7fc4285792c0
+0x7fc4285792d8
+0x7fc4285792f0
+0x7fc428579308
+0x7fc428579320
+0x7fc428579338
+0x7fc428579350
+0x7fc428579368
+0x7fc428579380
+0x7fc428579398
+0x7fc4285793b0
+0x7fc4285793c8
+0x7fc4285793e0
+0x7fc4285793f8
+0x7fc428579410
+0x7fc428579428
+0x7fc428579440
+0x7fc428579458
+0x7fc428579470
+0x7fc428579488
+0x7fc4285794a0
+0x7fc4285794b8
+0x7fc4285794d0
+0x7fc4285794e8
+0x7fc428579500
+0x7fc428579518
+0x7fc428579530
+0x7fc428579548
+0x7fc428579560
+0x7fc428579578
+0x7fc428579590
+0x7fc4285795a8
+0x7fc4285795c0
+0x7fc4285795d8
+0x7fc4285795f0
+0x7fc428579608
+0x7fc428579620
+0x7fc428579638
+0x7fc428579650
+0x7fc428579668
+0x7fc428579680
+0x7fc428579698
+0x7fc4285796b0
+0x7fc4285796c8
+0x7fc4285796e0
+0x7fc4285796f8
+0x7fc428579710
+0x7fc428579728
+0x7fc428579740
+0x7fc428579758
+0x7fc428579770
+0x7fc428579788
+0x7fc4285797a0
+0x7fc4285797b8
+0x7fc4285797d0
+0x7fc4285797e8
+0x7fc428579800
+0x7fc428579818
+0x7fc428579830
+0x7fc428579848
+0x7fc428579860
+0x7fc428579878
+0x7fc428579890
+0x7fc4285798a8
+0x7fc4285798c0
+0x7fc4285798d8
+0x7fc4285798f0
+0x7fc428579908
+0x7fc428579920
+0x7fc428579938
+0x7fc428579950
+0x7fc428579968
+0x7fc428579980
+0x7fc428579998
+0x7fc4285799b0
+0x7fc4285799c8
+0x7fc4285799e0
+0x7fc4285799f8
+0x7fc428579a10
+0x7fc428579a28
+0x7fc428579a40
+0x7fc428579a58
+0x7fc428579a70
+0x7fc428579a88
+0x7fc428579aa0
+0x7fc428579ab8
+0x7fc428579ad0
+0x7fc428579ae8
+0x7fc428579b00
+0x7fc428579b18
+0x7fc428579b30
+0x7fc428579b48
+0x7fc428579b60
+0x7fc428579b78
+0x7fc428579b90
+0x7fc428579ba8
+0x7fc428579bc0
+0x7fc428579bd8
+0x7fc428579bf0
+0x7fc428579c08
+0x7fc428579c20
+0x7fc428579c38
+0x7fc428579c50
+0x7fc428579c68
+0x7fc428579c80
+0x7fc428579c98
+0x7fc428579cb0
+0x7fc428579cc8
+0x7fc428579ce0
+0x7fc428579cf8
+0x7fc428579d10
+0x7fc428579d28
+0x7fc428579d40
+0x7fc428579d58
+0x7fc428579d70
+0x7fc428579d88
+0x7fc428579da0
+0x7fc428579db8
+0x7fc428579dd0
+0x7fc428579de8
+0x7fc428579e00
+0x7fc428579e18
+0x7fc428579e30
+0x7fc428579e48
+0x7fc428579e60
+0x7fc428579e78
+0x7fc428579e90
+0x7fc428579ea8
+0x7fc428579ec0
+0x7fc428579ed8
+0x7fc428579ef0
+0x7fc428579f08
+0x7fc428579f20
+0x7fc428579f38
+0x7fc428579f50
+0x7fc428579f68
+0x7fc428579f80
+0x7fc428579f98
+0x7fc428579fb0
+0x7fc428579fc8
+0x7fc428579fe0
+0x7fc428579ff8
+0x7fc42857a010
+0x7fc42857a028
+0x7fc42857a040
+0x7fc42857a058
+0x7fc42857a070
+0x7fc42857a088
+0x7fc42857a0a0
+0x7fc42857a0b8
+0x7fc42857a0d0
+0x7fc42857a0e8
+0x7fc42857a100
+0x7fc42857a118
+0x7fc42857a130
+0x7fc42857a148
+0x7fc42857a160
+0x7fc42857a178
+0x7fc42857a190
+0x7fc42857a1a8
+0x7fc42857a1c0
+0x7fc42857a1d8
+0x7fc42857a1f0
+0x7fc42857a208
+0x7fc42857a220
+0x7fc42857a238
+0x7fc42857a250
+0x7fc42857a268
+0x7fc42857a280
+0x7fc42857a298
+0x7fc42857a2b0
+0x7fc42857a2c8
+0x7fc42857a2e0
+0x7fc42857a2f8
+0x7fc42857a310
+0x7fc42857a328
+0x7fc42857a340
+0x7fc42857a358
+0x7fc42857a370
+0x7fc42857a388
+0x7fc42857a3a0
+0x7fc42857a3b8
+0x7fc42857a3d0
+0x7fc42857a3e8
+0x7fc42857a400
+0x7fc42857a418
+0x7fc42857a430
+0x7fc42857a448
+0x7fc42857a460
+0x7fc42857a478
+0x7fc42857a490
+0x7fc42857a4a8
+0x7fc42857a4c0
+0x7fc42857a4d8
+0x7fc42857a4f0
+0x7fc42857a508
+0x7fc42857a520
+0x7fc42857a538
+0x7fc42857a550
+0x7fc42857a568
+0x7fc42857a580
+0x7fc42857a598
+0x7fc42857a5b0
+0x7fc42857a5c8
+0x7fc42857a5e0
+0x7fc42857a5f8
+0x7fc42857a610
+0x7fc42857a628
+0x7fc42857a640
+0x7fc42857a658
+0x7fc42857a670
+0x7fc42857a688
+0x7fc42857a6a0
+0x7fc42857a6b8
+0x7fc42857a6d0
+0x7fc42857a6e8
+0x7fc42857a700
+0x7fc42857a718
+0x7fc42857a730
+0x7fc42857a748
+0x7fc42857a760
+0x7fc42857a778
+0x7fc42857a790
+0x7fc42857a7a8
+0x7fc42857a7c0
+0x7fc42857a7d8
+0x7fc42857a7f0
+0x7fc42857a808
+0x7fc42857a820
+0x7fc42857a838
+0x7fc42857a850
+0x7fc42857a868
+0x7fc42857a880
+0x7fc42857a898
+0x7fc42857a8b0
+0x7fc42857a8c8
+0x7fc42857a8e0
+0x7fc42857a8f8
+0x7fc42857a910
+0x7fc42857a928
+0x7fc42857a940
+0x7fc42857a958
+0x7fc42857a970
+0x7fc42857a988
+0x7fc42857a9a0
+0x7fc42857a9b8
+0x7fc42857a9d0
+0x7fc42857a9e8
+0x7fc42857aa00
+0x7fc42857aa18
+0x7fc42857aa30
+0x7fc42857aa48
+0x7fc42857aa60
+0x7fc42857aa78
+0x7fc42857aa90
+0x7fc42857aaa8
+0x7fc42857aac0
+0x7fc42857aad8
+0x7fc42857aaf0
+0x7fc42857ab08
+0x7fc42857ab20
+0x7fc42857ab38
+0x7fc42857ab50
+0x7fc42857ab68
+0x7fc42857ab80
+0x7fc42857ab98
+0x7fc42857abb0
+0x7fc42857abc8
+0x7fc42857abe0
+0x7fc42857abf8
+0x7fc42857ac10
+0x7fc42857ac28
+0x7fc42857ac40
+0x7fc42857ac58
+java.lang.RuntimeException: Nonzero exit code: 139
+	at scala.sys.package$.error(package.scala:27)
+	at scala.scalanative.sbtplugin.ScalaNativePluginInternal$$anonfun$scalaNativeConfigSettings$6$$anonfun$apply$8$$anonfun$apply$9$$anonfun$apply$10.apply(ScalaNativePluginInternal.scala:158)
+	at scala.scalanative.sbtplugin.ScalaNativePluginInternal$$anonfun$scalaNativeConfigSettings$6$$anonfun$apply$8$$anonfun$apply$9$$anonfun$apply$10.apply(ScalaNativePluginInternal.scala:158)
+	at scala.Option.foreach(Option.scala:236)
+	at scala.scalanative.sbtplugin.ScalaNativePluginInternal$$anonfun$scalaNativeConfigSettings$6$$anonfun$apply$8$$anonfun$apply$9.apply(ScalaNativePluginInternal.scala:158)
+	at scala.scalanative.sbtplugin.ScalaNativePluginInternal$$anonfun$scalaNativeConfigSettings$6$$anonfun$apply$8$$anonfun$apply$9.apply(ScalaNativePluginInternal.scala:143)
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47)
+[trace] Stack trace suppressed: run 'last sandbox/compile:run' for the full output.
+[error] (sandbox/compile:run) Nonzero exit code: 139
+[error] Total time: 4 s, completed Sep 29, 2018 1:31:16 PM

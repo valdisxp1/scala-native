@@ -1,0 +1,124 @@
+[info] Loading project definition from /home/valdis/scala-native/project
+[info] Resolving key references (12160 settings) ...
+[info] Set current project to scala-native (in build file:/home/valdis/scala-native/)
+[info] Updating {file:/home/valdis/scala-native/}tests...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] Compiling 6 Scala sources to /home/valdis/scala-native/unit-tests/target/scala-2.11/classes...
+[info] Compiling 124 Scala sources to /home/valdis/scala-native/unit-tests/target/scala-2.11/test-classes...
+[warn] there were three deprecation warnings; re-run with -deprecation for details
+[warn] there were 53 feature warnings; re-run with -feature for details
+[warn] two warnings found
+[info] Compiling 1 Scala source to /home/valdis/scala-native/unit-tests/target/scala-2.11/test-classes...
+[info] Linking (1812 ms)
+[info] Discovered 4749 classes and 26730 methods
+[info] Optimizing (debug mode) (865 ms)
+[info] Generating intermediate code (4232 ms)
+[info] Produced 32 files
+[info] Compiling to native code (1518 ms)
+[info] Linking native code (immix gc, none lto) (334 ms)
+[info] Total (8893 ms)
+[info] Starting process '/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out' on port '35483'.
+[info] (lldb) target create "/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out"
+[info] Current executable set to '/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out' (x86_64).
+[info] (lldb) settings set -- target.run-args  "35483"
+[info] (lldb) r
+[info] Process 7174 stopped
+[info] * thread #1, name = 'tests-out', stop reason = signal SIGSEGV: invalid address (fault address: 0x8)
+[info]     frame #0: 0x0000000000aef2d4 tests-out`scala.scalanative.runtime.Array::length_i32 + 4
+[info] tests-out`scala.scalanative.runtime.Array::length_i32:
+[info] ->  0xaef2d4 <+4>:  movl   0x8(%rdi), %ecx
+[info]     0xaef2d7 <+7>:  movq   %rax, %rdi
+[info]     0xaef2da <+10>: movl   %ecx, %esi
+[info]     0xaef2dc <+12>: movl   %ecx, 0x14(%rsp)
+[info] 
+[info] Process 7174 launched: '/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out' (x86_64)
+[info] (lldb) bt
+[info] * thread #1, name = 'tests-out', stop reason = signal SIGSEGV: invalid address (fault address: 0x8)
+[info]   * frame #0: 0x0000000000aef2d4 tests-out`scala.scalanative.runtime.Array::length_i32 + 4
+[info]     frame #1: 0x000000000071fd10 tests-out`scala.scalanative.runtime.ObjectArray::at_i32_ptr + 32
+[info]     frame #2: 0x000000000099da66 tests-out`scala.scalanative.runtime.ObjectArray::apply_i32_java.lang.Object + 6
+[info]     frame #3: 0x00000000009497a1 tests-out`java.lang.Integer$::valueOf_i32_java.lang.Integer + 65
+[info]     frame #4: 0x0000000000a18f3e tests-out`scala.runtime.BoxesRunTime$::boxToInteger_i32_java.lang.Integer + 30
+[info]     frame #5: 0x00000000009721ee tests-out`scala.scalanative.runtime.Array$HeaderOps$::stride$underscore$=$extension_ptr_i64_unit + 30
+[info]     frame #6: 0x000000000076cd89 tests-out`scala.scalanative.runtime.ObjectArray$::alloc_i32_scala.scalanative.runtime.ObjectArray + 153
+[info]     frame #7: 0x000000000089cb18 tests-out`java.lang.IntegerCache$::init + 24
+[info]     frame #8: 0x00000000006f520d tests-out`java.lang.IntegerCache$::load + 93
+[info]     frame #9: 0x000000000094978d tests-out`java.lang.Integer$::valueOf_i32_java.lang.Integer + 45
+[info]     frame #10: 0x0000000000a18f3e tests-out`scala.runtime.BoxesRunTime$::boxToInteger_i32_java.lang.Integer + 30
+[info]     frame #11: 0x0000000000aef2ac tests-out`scala.scalanative.runtime.Array$HeaderOps$::length$underscore$=$extension_ptr_i32_unit + 28
+[info]     frame #12: 0x0000000000abc4ed tests-out`scala.scalanative.runtime.IntArray$::alloc_i32_scala.scalanative.runtime.IntArray + 109
+[info]     frame #13: 0x0000000000af6d30 tests-out`java.lang.Integer$::init + 48
+[info]     frame #14: 0x00000000009a119d tests-out`java.lang.Integer$::load + 93
+[info]     frame #15: 0x0000000000a18f32 tests-out`scala.runtime.BoxesRunTime$::boxToInteger_i32_java.lang.Integer + 18
+[info]     frame #16: 0x0000000000aef2ac tests-out`scala.scalanative.runtime.Array$HeaderOps$::length$underscore$=$extension_ptr_i32_unit + 28
+[info]     frame #17: 0x000000000076cd5d tests-out`scala.scalanative.runtime.ObjectArray$::alloc_i32_scala.scalanative.runtime.ObjectArray + 109
+[info]     frame #18: 0x00000000007c833f tests-out`scala.scalanative.runtime.package$::init_i32_ptr_scala.scalanative.runtime.ObjectArray + 47
+[info]     frame #19: 0x0000000000702cf5 tests-out`main + 69
+[info]     frame #20: 0x00007ffff65f2b97 libc.so.6`__libc_start_main(main=(tests-out`main), argc=2, argv=0x00007fffffffdb68, init=<unavailable>, fini=<unavailable>, rtld_fini=<unavailable>, stack_end=0x00007fffffffdb58) at libc-start.c:310
+[info]     frame #21: 0x00000000006f355a tests-out`_start + 42
+[info] (lldb) q
+scala.scalanative.build.BuildException: The test program never connected to the test runner.
+	at scala.scalanative.testinterface.ComRunner.liftedTree1$1(ComRunner.scala:49)
+	at scala.scalanative.testinterface.ComRunner.<init>(ComRunner.scala:40)
+	at scala.scalanative.testinterface.ScalaNativeRunner.createRemoteRunner(ScalaNativeRunner.scala:44)
+	at scala.scalanative.testinterface.ScalaNativeRunner.<init>(ScalaNativeRunner.scala:21)
+	at scala.scalanative.testinterface.ScalaNativeFramework.runner(ScalaNativeFramework.scala:33)
+	at sbt.Defaults$$anonfun$createTestRunners$1.apply(Defaults.scala:590)
+	at sbt.Defaults$$anonfun$createTestRunners$1.apply(Defaults.scala:584)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.Map$Map1.foreach(Map.scala:109)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at sbt.Defaults$.createTestRunners(Defaults.scala:584)
+	at sbt.Defaults$.allTestGroupsTask(Defaults.scala:604)
+	at sbt.Defaults$$anonfun$testTasks$7.apply(Defaults.scala:467)
+	at sbt.Defaults$$anonfun$testTasks$7.apply(Defaults.scala:467)
+	at scala.Function9$$anonfun$tupled$1.apply(Function9.scala:35)
+	at scala.Function9$$anonfun$tupled$1.apply(Function9.scala:34)
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47)
+	at sbt.$tilde$greater$$anonfun$$u2219$1.apply(TypeFunctions.scala:40)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+[error] (tests/nativetest:executeTests) scala.scalanative.build.BuildException: The test program never connected to the test runner.
+[error] Total time: 76 s, completed Oct 10, 2018 4:39:54 PM

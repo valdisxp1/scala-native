@@ -1,13 +1,15 @@
 package java.lang
 
 import java.io.File
+
 import scala.collection.JavaConverters._
 import scala.scalanative.annotation.stub
 import scala.scalanative.libc.stdlib
+import scala.scalanative.native.sysinfo
 
 class Runtime private () {
   import Runtime.ProcessBuilderOps
-  def availableProcessors(): Int = 1
+  def availableProcessors(): Int = sysinfo.get_nprocs
   def exit(status: Int): Unit    = stdlib.exit(status)
   def gc(): Unit                 = ()
 

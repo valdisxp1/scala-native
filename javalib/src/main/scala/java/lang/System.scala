@@ -119,6 +119,10 @@ object System {
   def setErr(err: PrintStream): Unit =
     this.err = err
 
+  def setIn(in: InputStream): Unit   = this.in = in
+  def setOut(out: PrintStream): Unit = this.out = out
+  def setErr(err: PrintStream): Unit = this.err = err
+
   def gc(): Unit = GC.collect()
 
   private lazy val envVars: Map[String, String] = {

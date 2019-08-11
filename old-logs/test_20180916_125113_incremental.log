@@ -1,0 +1,1882 @@
+[info] Loading project definition from /home/valdis/scala-native/project
+[info] Compiling 1 Scala source to /home/valdis/scala-native/project/target/scala-2.10/sbt-0.13/classes...
+[info] Resolving key references (10908 settings) ...
+[info] Set current project to scala-native (in build file:/home/valdis/scala-native/)
+[success] Total time: 4 s, completed Sep 16, 2018 12:51:28 PM
+[success] Total time: 0 s, completed Sep 16, 2018 12:51:28 PM
+[success] Total time: 0 s, completed Sep 16, 2018 12:51:28 PM
+[info] Fetching Scala source version 2.11.12 from /home/valdis/scala-2.11.11-only
+[info] Updating {file:/home/valdis/scala-native/}nscplugin...
+[info] Packaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:51:29 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/nscplugin/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 45 Scala sources to /home/valdis/scala-native/nscplugin/target/scala-2.11/classes...
+[info] Main Scala API documentation to /home/valdis/scala-native/nscplugin/target/scala-2.11/api...
+[info] Checking out Scala source version 2.11.12
+model contains 263 documentable templates
+[warn] /home/valdis/scala-native/nscplugin/src/main/scala/scala/scalanative/nscplugin/NirGenExpr.scala:1376: match may not be exhaustive.
+[warn] It would fail on the following inputs: (Ptr, Char), (Ptr, Function(_, _)), (Ptr, Int), (Ptr, None), (Ptr, Void)
+[warn]         val conv = (fromty, toty) match {
+[warn]                    ^
+[warn] /home/valdis/scala-native/nscplugin/src/main/scala/scala/scalanative/nscplugin/NirGenName.scala:100: match may not be exhaustive.
+[warn] It would fail on the following inputs: Byte, Int, Long, Short, UByte, UInt, ULong, UShort
+[warn]     def printType(ty: nir.Type): Unit = ty match {
+[warn]                                         ^
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[warn] there were two unchecked warnings; re-run with -unchecked for details
+[warn] three warnings found
+[info] Packaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/poms/nscplugin_2.11.12.pom
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/jars/nscplugin_2.11.12.jar
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/srcs/nscplugin_2.11.12-sources.jar
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/docs/nscplugin_2.11.12-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Updating {file:/home/valdis/scala-native/}nativelib...
+[info] Packaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Wrote /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Done packaging.
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:51:47 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/nativelib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 82 Scala sources to /home/valdis/scala-native/nativelib/target/scala-2.11/classes...
+[info] Main Scala API documentation to /home/valdis/scala-native/nativelib/target/scala-2.11/api...
+[warn] dropping dependency on node with no phase object: mixin
+[warn] there were 25 feature warnings; re-run with -feature for details
+model contains 267 documentable templates
+[warn] one warning found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[warn] there were 25 feature warnings; re-run with -feature for details
+[warn] one warning found
+[info] Because /home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/package.scala contains a macro definition, the following dependencies are invalidated unconditionally:
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/java/lang/Class.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/java/lang/Object.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/java/net/SocketHelpers.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/Ptr.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/Zone.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/complex.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/ctype.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/errno.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/float.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/math.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/signal.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/statvfs.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/stdio.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/stdlib.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/string.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/arpa/inet.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/cpio.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/dirent.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/errno.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/fcntl.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/grp.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/limits.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/netdb.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/netinet/in.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/netinet/tcp.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/pthread.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/pwd.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/regex.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sched.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/stdlib.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/ioctl.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/select.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/socket.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/stat.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/time.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/types.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/uio.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/sys/utsname.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/syslog.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/termios.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/time.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/unistd.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/posix/utime.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Arrays.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Boxes.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/DeleteOnExit.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/GC.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Intrinsics.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Platform.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Shutdown.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/package.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/time.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/unwind.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/zlib.scala
+[info] Packaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/nativelib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/nativelib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/nativelib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/nativelib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Updating {file:/home/valdis/scala-native/}javalib...
+[info] Wrote /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Packaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Done packaging.
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:51:56 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/javalib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Packaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Compiling 382 Scala sources to /home/valdis/scala-native/javalib/target/scala-2.11/classes...
+[info] Packaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/javalib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/javalib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/javalib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/javalib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}auxlib...
+[info] Wrote /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:52:15 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/auxlib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/auxlib/target/scala-2.11/api...
+[info] Compiling 5 Scala sources to /home/valdis/scala-native/auxlib/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 46 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Packaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Done packaging.
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/auxlib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/auxlib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/auxlib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/auxlib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Updating {file:/home/valdis/scala-native/}scalalib...
+[info] Wrote /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Packaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Done packaging.
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:52:16 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/scalalib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 582 Scala sources to /home/valdis/scala-native/scalalib/target/scala-2.11/classes...
+[info] Main Scala API documentation to /home/valdis/scala-native/scalalib/target/scala-2.11/api...
+[warn] dropping dependency on node with no phase object: mixin
+[warn] there were two deprecation warnings; re-run with -deprecation for details
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenIterableLike.scala:101: Could not find the type $Coll points to while expanding it for the usecase signature of method zipWithIndex in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def zipWithIndex: $Coll[(A, Int)]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenIterableLike.scala:73: Could not find the type $Coll points to while expanding it for the usecase signature of method zip in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def zip[B](that: GenIterable[B]): $Coll[(A, B)]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:364: Could not find the type $Coll points to while expanding it for the usecase signature of method padTo in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def padTo(len: Int, elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:332: Could not find the type $Coll points to while expanding it for the usecase signature of method :+ in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def :+(elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:296: Could not find the type $Coll points to while expanding it for the usecase signature of method +: in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def +:(elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:280: Could not find the type $Coll points to while expanding it for the usecase signature of method updated in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def updated(index: Int, elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:262: Could not find the type $Coll points to while expanding it for the usecase signature of method patch in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def patch(from: Int, that: GenSeq[A], replaced: Int): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala:467: Could not find the type $Coll points to while expanding it for the usecase signature of method intersect in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def intersect(that: Seq[A]): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala:436: Could not find the type $Coll points to while expanding it for the usecase signature of method diff in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def diff(that: Seq[A]): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala:412: Could not find the type $Coll points to while expanding it for the usecase signature of method union in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def union(that: Seq[A]): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:212: Could not find the type $Coll points to while expanding it for the usecase signature of method reverseMap in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def reverseMap[B](f: A => B): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenIterableLike.scala:128: Could not find the type $Coll points to while expanding it for the usecase signature of method zipAll in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def zipAll[B](that: Iterable[B], thisElem: A, thatElem: B): $Coll[(A, B)]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:190: Could not find the type $Coll points to while expanding it for the usecase signature of method collect in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def collect[B](pf: PartialFunction[A, B]): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:211: Could not find the type $Coll points to while expanding it for the usecase signature of method flatMap in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def flatMap[B](f: A => GenTraversableOnce[B]): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:172: Could not find the type $Coll points to while expanding it for the usecase signature of method map in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def map[B](f: A => B): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/TraversableLike.scala:165: Could not find the type $Coll points to while expanding it for the usecase signature of method ++: in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def ++:[B](that: TraversableOnce[B]): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:253: Could not find the type $Coll points to while expanding it for the usecase signature of method ++ in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def ++[B](that: GenTraversableOnce[B]): $Coll[B]
+[warn]                ^
+model contains 1293 documentable templates
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:88: Could not find any member to link for "`java.lang.ExceptionInInitializerError`".
+[warn]   /** Returns the `Class` object associated with the class or interface with the given string name using the current `ClassLoader`.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:81: Could not find any member to link for "`java.lang.NullPointerException`".
+[warn]   /** Assigns the value of 0 to each element in the array.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:54: Could not find any member to link for "`java.lang.NullPointerException`".
+[warn]   /** Creates a new array of the specified type and given length.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:30: Could not find any member to link for "java.lang.NullPointerException".
+[warn]   /** Copies `length` elements of array `src` starting at position `srcPos` to the
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:722: Variable month undefined in comment for object Groups in object Regex
+[warn]    *  val day = date replaceAllIn(text, _ match { case Groups(_, month, day) => s"$month/$day" })
+[warn]                                                                                    ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:722: Variable day undefined in comment for object Groups in object Regex
+[warn]    *  val day = date replaceAllIn(text, _ match { case Groups(_, month, day) => s"$month/$day" })
+[warn]                                                                                           ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:61: Variable year undefined in comment for class Regex in class Regex
+[warn]  *    case date(year, month, day) => s"$year was a good year for PLs."
+[warn]                                         ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:80: Variable year undefined in comment for class Regex in class Regex
+[warn]  *    case date(year, _*) => s"$year was a good year for PLs."
+[warn]                                 ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:120: Variable s undefined in comment for class Regex in class Regex
+[warn]  *  val oldies = mi filter (_ => (mi group 1).toInt < 1960) map (s => s"$s: An oldie but goodie.")
+[warn]                                                                          ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:135: Variable c undefined in comment for class Regex in class Regex
+[warn]  *  val months      = (0 to 11) map { i => val c = Calendar.getInstance; c.set(2014, i, 1); f"$c%tb" }
+[warn]                                                                                                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:136: Variable months(m.toInt - 1) undefined in comment for class Regex in class Regex
+[warn]  *  val reformatted = date replaceAllIn (dates, _ match { case date(y,m,d) => f"${months(m.toInt - 1)} $d, $y" })
+[warn]                                                                                  ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:136: Variable d undefined in comment for class Regex in class Regex
+[warn]  *  val reformatted = date replaceAllIn (dates, _ match { case date(y,m,d) => f"${months(m.toInt - 1)} $d, $y" })
+[warn]                                                                                                         ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:136: Variable y undefined in comment for class Regex in class Regex
+[warn]  *  val reformatted = date replaceAllIn (dates, _ match { case date(y,m,d) => f"${months(m.toInt - 1)} $d, $y" })
+[warn]                                                                                                             ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:546: Variable year undefined in comment for method unanchored in class Regex
+[warn]    *    case date(year, month, day) => s"Copyright $year"                  // OK
+[warn]                                                     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:462: Variable m group "month" undefined in comment for method replaceAllIn in class Regex
+[warn]    * val repl = datePattern replaceAllIn (text, m => s"${m group "month"}/${m group "day"}")
+[warn]                                                         ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:462: Variable m group "day" undefined in comment for method replaceAllIn in class Regex
+[warn]    * val repl = datePattern replaceAllIn (text, m => s"${m group "month"}/${m group "day"}")
+[warn]                                                                            ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:348: Variable x undefined in comment for method findAllIn in class Regex
+[warn]    *    case madhatter(x,y) => s"$x$y"
+[warn]                                   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:348: Variable y undefined in comment for method findAllIn in class Regex
+[warn]    *    case madhatter(x,y) => s"$x$y"
+[warn]                                     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Queue.scala:51: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the `n`-th element of this queue.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala:22: Variable 1 undefined in comment for trait ClassTag in trait ClassTag
+[warn]  *   mkArray: [T](elems: T*)(implicit evidence$1: scala.reflect.ClassTag[T])Array[T]
+[warn]                                                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Range.scala:409: Tag '@pre' is not recognised
+[warn]   /** Counts the number of range elements.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Queue.scala:121: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns a tuple with the first element in the queue,
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/PriorityQueue.scala:137: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the element with the highest priority in the queue,
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/Queue.scala:58: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the first element in the queue, and removes this element
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/concurrent/duration/Duration.scala:693: Could not find any member to link for "ArithmeticException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:144: Variable name undefined in comment for macro method f in class StringContext
+[warn]    *    println(f"$name%s is $height%2.2f meters tall")  // James is 1.90 meters tall
+[warn]                    ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:144: Variable height undefined in comment for macro method f in class StringContext
+[warn]    *    println(f"$name%s is $height%2.2f meters tall")  // James is 1.90 meters tall
+[warn]                               ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:304: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /** Uses the underlying string as a pattern (in a fashion similar to
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:321: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /** Like `format(args*)` but takes an initial `Locale` parameter
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Queue.scala:140: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the first element in the queue, or throws an error if there
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Option.scala:109: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the option's value.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/Either.scala:276: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]     /**
+[warn]     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/Either.scala:441: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]     /**
+[warn]     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/ListSet.scala:129: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stream.scala:218: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Gives constant time access to the first element of this `Stream`.  Using
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/annotation/implicitNotFound.scala:15: Variable Xi undefined in comment for class implicitNotFound in class implicitNotFound
+[warn]  * result of replacing all occurrences of ${Xi} in the string msg with the
+[warn]                                            ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/ListSet.scala:112: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Creates a new iterator over all elements contained in this set.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:20: Variable name undefined in comment for class StringContext in class StringContext
+[warn]  *   println(s"Hello, $name")  // Hello, James
+[warn]                        ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:26: Variable name undefined in comment for class StringContext in class StringContext
+[warn]  *   s"Hello, $name"
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:44: Variable a undefined in comment for class StringContext in class StringContext
+[warn]  *    val x: JSONObject = json"{ a: $a }"
+[warn]                                      ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stack.scala:110: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Removes the top element from the stack.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/Stack.scala:139: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Removes the top element from the stack.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Console.scala:150: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /** Prints its arguments as a formatted string to the default output,
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/Source.scala:181: Variable Positioner undefined in comment for class Source in class Source
+[warn]  *  [[scala.io.Source$Positioner the positioner]].
+[warn]                       ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:76: Variable name undefined in comment for method s in class StringContext
+[warn]    *    println(s"Hello, $name")  // Hello, James
+[warn]                           ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:78: Variable name undefined in comment for method s in class StringContext
+[warn]    *  In this example, the expression $name is replaced with the `toString` of the
+[warn]                                        ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:83: Variable 1 + 1 undefined in comment for method s in class StringContext
+[warn]    *    println(s"1 + 1 = ${1 + 1}")
+[warn]                            ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/TraversableLike.scala:414: Could not find any member to link for "`UnsupportedOperationException`".
+[warn]   /** Selects all elements except the first.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/ListSet.scala:134: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:258: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:262: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:282: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:278: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:270: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:274: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:266: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stack.scala:100: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the top element of the stack. An error is signaled if
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/Stack.scala:129: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the top element of the stack. This method will not remove
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/unchecked.scala:11: Could not find any member to link for "java.lang.ClassCastException".
+[warn] /** An annotation to designate that the annotated entity
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Predef.scala:20: Could not find any member to link for "scala.LowPriorityImplicits".
+[warn] /** The `Predef` object provides definitions that are accessible in all Scala
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:35: Could not find any member to link for "java.util.regex".
+[warn] /** A regular expression is used to determine whether a string matches a pattern
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:729: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** A class to step through a sequence of regex matches.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:321: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Return all non-overlapping matches of this `Regex` in the given character 
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:193: Could not find any member to link for "java.lang.CharSequence".
+[warn]   /** Tries to match a [[java.lang.CharSequence]].
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/StringBuilder.scala:56: Could not find any member to link for "NegativeArraySizeException".
+[warn]   /** Constructs a string builder with no characters in it and an
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:166: Could not find any member to link for "java.lang.String#replaceAll".
+[warn]   /** Replace all literal occurrences of `literal` with the string `replacement`.
+[warn]   ^
+[warn] there were 114 deprecation warnings; re-run with -deprecation for details
+[warn] one warning found
+[info] Because /home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/package.scala contains a macro definition, the following dependencies are invalidated unconditionally:
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/Array.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/Predef.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/beans/ScalaBeanInfo.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/concurrent/TrieMap.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/PagedSeq.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/RedBlackTree.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/TrieIterator.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/AVLTree.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/ArrayOps.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/ArrayStack.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/StringBuilder.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/WrappedArray.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/package.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/ParIterableLike.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/immutable/ParHashMap.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/immutable/ParHashSet.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParArray.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParHashMap.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParHashSet.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParHashTable.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/UnrolledParArrayCombiner.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/package.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassManifestDeprecatedApis.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/Manifest.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/runtime/ScalaRunTime.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/sys/process/Process.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/MurmurHash.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/Sorting.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/control/Exception.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala
+[info] Because /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala contains a macro definition, the following dependencies are invalidated unconditionally:
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/Enumeration.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/Iterator.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/ListBuffer.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/concurrent/duration/Duration.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/runtime/ScalaRunTime.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/Properties.scala
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stream.scala:19: Could not find any member to link for "collect".
+[warn] /** The class `Stream` implements lazy lists where elements
+[warn] ^
+[info] Packaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/concurrent/duration/Duration.scala:659: Could not find any member to link for "ArithmeticException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/Source.scala:172: Could not find any member to link for "scala.io.Source@iter".
+[warn] /** An iterable representation of source data.
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:158: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads in some structured input (from the default input), specified by
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:143: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a double value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:128: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a float value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:113: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads an long value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:98: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads an int value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:83: Could not find any member to link for "java.lang.StringIndexOutOfBoundsException".
+[warn]   /** Reads a char value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:68: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a short value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:53: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a byte value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:33: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a boolean value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala:7: Could not find any member to link for "scala.reflect.api.TypeTags#TypeTag".
+[warn] /**
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Float.scala:215: Could not find any member to link for "java.lang.Float.MIN_VALUE".
+[warn]   /** The negative number with the greatest (finite) absolute value which is representable
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Double.scala:215: Could not find any member to link for "java.lang.Double.MIN_VALUE".
+[warn]   /** The negative number with the greatest (finite) absolute value which is representable
+[warn]   ^
+[warn] 99 warnings found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/scalalib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/scalalib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/scalalib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/scalalib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 105 s, completed Sep 16, 2018 12:53:14 PM
+[info] Packaging /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testingCompilerInterface...
+[info] Updating {file:/home/valdis/scala-native/}util...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] Updating {file:/home/valdis/scala-native/}nir...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] Updating {file:/home/valdis/scala-native/}tools...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#nir_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#testing-compiler-interface;0.3.9-SNAPSHOT ...
+[info] Resolving org.scalacheck#scalacheck_2.10;1.13.4 ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scalatest#scalatest_2.10;3.0.0 ...
+[info] Resolving org.scalactic#scalactic_2.10;3.0.0 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] Wrote /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT.pom
+[info] Updating {file:/home/valdis/scala-native/}testRunner...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#tools_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nir_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-runner_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:53:14 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-runner/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 10 Scala sources to /home/valdis/scala-native/util/target/scala-2.10/classes...
+[info] Compiling 23 Scala sources to /home/valdis/scala-native/nir/target/scala-2.10/classes...
+[info] Compiling 51 Scala sources to /home/valdis/scala-native/tools/target/scala-2.10/classes...
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:114: match may not be exhaustive.
+[warn] It would fail on the following inputs: Class(_, _, _, _), Module(_, _, _, _), Trait(_, _, _)
+[warn]           env(n) match {
+[warn]              ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:139: match may not be exhaustive.
+[warn] It would fail on the following inputs: Class(_, _, _, _), Module(_, _, _, _), Struct(_, _, _), Trait(_, _, _)
+[warn]         env(n) match {
+[warn]            ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:260: match may not be exhaustive.
+[warn] It would fail on the following inputs: If(_, _, _), Jump(_), Let(_, _, _), None, Ret(_), Switch(_, _, _), Throw(_, _), Unreachable
+[warn]         insts.head match {
+[warn]               ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/GlobalValueNumbering.scala:102: Cannot check match for unreachability.
+[warn] (The analysis required more space than allowed. Please try with scalac -Dscalac.patmat.analysisBudget=512 or -Dscalac.patmat.analysisBudget=off.)
+[warn]     op match {
+[warn]     ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/PartialEvaluation.scala:276: match may not be exhaustive.
+[warn] It would fail on the following inputs: Array(_, _), Bool, Char, Class(_), Double, Float, Function(_, _), Module(_), None, Nothing, Ptr, Struct(_, _), Trait(_), UByte, UInt, ULong, UShort, Unit, Vararg, Void
+[warn]   private def minValue(ty: Type): Long = ty match {
+[warn]                                          ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/PartialEvaluation.scala:283: match may not be exhaustive.
+[warn] It would fail on the following inputs: Array(_, _), Bool, Char, Class(_), Double, Float, Function(_, _), Module(_), None, Nothing, Ptr, Struct(_, _), Trait(_), UByte, UInt, ULong, UShort, Unit, Vararg, Void
+[warn]   private def maxValue(ty: Type): Long = ty match {
+[warn]                                          ^
+[warn] 6 warnings found
+[info] Main Scala API documentation to /home/valdis/scala-native/test-runner/target/scala-2.10/api...
+[info] Compiling 12 Scala sources to /home/valdis/scala-native/test-runner/target/scala-2.10/classes...
+model contains 40 documentable templates
+[info] Packaging /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/poms/test-runner_2.10.pom
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/jars/test-runner_2.10.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/srcs/test-runner_2.10-sources.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/docs/test-runner_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 24 s, completed Sep 16, 2018 12:53:38 PM
+[info] Packaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT.pom
+[info] :: delivering :: org.scala-native#util_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:53:38 CEST 2018
+[info] Main Scala API documentation to /home/valdis/scala-native/util/target/scala-2.10/api...
+[info] 	delivering ivy file to /home/valdis/scala-native/util/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Packaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Wrote /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT.pom
+[info] Done packaging.
+[info] :: delivering :: org.scala-native#test-runner_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:53:38 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-runner/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/poms/test-runner_2.10.pom
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/jars/test-runner_2.10.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/srcs/test-runner_2.10-sources.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/docs/test-runner_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+model contains 18 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/poms/util_2.10.pom
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/jars/util_2.10.jar
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/srcs/util_2.10-sources.jar
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/docs/util_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] :: delivering :: org.scala-native#nir_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:53:39 CEST 2018
+[info] Packaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] 	delivering ivy file to /home/valdis/scala-native/nir/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/nir/target/scala-2.10/api...
+[info] Packaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT.pom
+[info] Done packaging.
+model contains 211 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/poms/nir_2.10.pom
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/jars/nir_2.10.jar
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/srcs/nir_2.10-sources.jar
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/docs/nir_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] :: delivering :: org.scala-native#tools_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:53:42 CEST 2018
+[info] Packaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] 	delivering ivy file to /home/valdis/scala-native/tools/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/tools/target/scala-2.10/api...
+[info] Wrote /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT.pom
+[info] Packaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Done packaging.
+model contains 120 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/poms/tools_2.10.pom
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/jars/tools_2.10.jar
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/srcs/tools_2.10-sources.jar
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/docs/tools_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}sbtScalaNative...
+[info] Resolving org.scala-native#tools_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#nir_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-runner_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.portable-scala#sbt-platform-deps;1.0.0-M2 ...
+[info] Resolving org.scala-sbt#sbt;0.13.17 ...
+[info] Resolving org.scala-sbt#main;0.13.17 ...
+[info] Resolving org.scala-sbt#actions;0.13.17 ...
+[info] Resolving org.scala-sbt#classpath;0.13.17 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-sbt#interface;0.13.17 ...
+[info] Resolving org.scala-sbt#io;0.13.17 ...
+[info] Resolving org.scala-sbt#control;0.13.17 ...
+[info] Resolving org.scala-sbt#launcher-interface;1.0.1 ...
+[info] Resolving org.scala-sbt#completion;0.13.17 ...
+[info] Resolving org.scala-sbt#collections;0.13.17 ...
+[info] Resolving jline#jline;2.14.5 ...
+[info] Resolving org.scala-sbt#api;0.13.17 ...
+[info] Resolving org.scala-sbt#classfile;0.13.17 ...
+[info] Resolving org.scala-sbt#logging;0.13.17 ...
+[info] Resolving org.scala-sbt#process;0.13.17 ...
+[info] Resolving org.scala-sbt#compiler-integration;0.13.17 ...
+[info] Resolving org.scala-sbt#incremental-compiler;0.13.17 ...
+[info] Resolving org.scala-sbt#relation;0.13.17 ...
+[info] Resolving org.scala-sbt#compile;0.13.17 ...
+[info] Resolving org.scala-sbt#persist;0.13.17 ...
+[info] Resolving org.scala-tools.sbinary#sbinary_2.10;0.4.2 ...
+[info] Resolving org.scala-sbt#compiler-ivy-integration;0.13.17 ...
+[info] Resolving org.scala-sbt#ivy;0.13.17 ...
+[info] Resolving org.scala-sbt#cross;0.13.17 ...
+[info] Resolving org.scala-sbt.ivy#ivy;2.3.0-sbt-b18f59ea3bc914a297bb6f1a4f7fb0ace399e310 ...
+[info] Resolving com.jcraft#jsch;0.1.50 ...
+[info] Resolving org.scala-sbt#serialization_2.10;0.1.2 ...
+[info] Resolving org.scala-lang.modules#scala-pickling_2.10;0.10.1 ...
+[info] Resolving org.scalamacros#quasiquotes_2.10;2.0.1 ...
+[info] Resolving org.json4s#json4s-core_2.10;3.2.10 ...
+[info] Resolving org.json4s#json4s-ast_2.10;3.2.10 ...
+[info] Resolving com.thoughtworks.paranamer#paranamer;2.6 ...
+[info] Resolving org.spire-math#jawn-parser_2.10;0.6.0 ...
+[info] Resolving org.spire-math#json4s-support_2.10;0.6.0 ...
+[info] Resolving org.scala-sbt#run;0.13.17 ...
+[info] Resolving org.scala-sbt#task-system;0.13.17 ...
+[info] Resolving org.scala-sbt#tasks;0.13.17 ...
+[info] Resolving org.scala-sbt#tracking;0.13.17 ...
+[info] Resolving org.scala-sbt#cache;0.13.17 ...
+[info] Resolving org.scala-sbt#testing;0.13.17 ...
+[info] Resolving org.scala-sbt#test-agent;0.13.17 ...
+[info] Resolving org.scala-sbt#main-settings;0.13.17 ...
+[info] Resolving org.scala-sbt#apply-macro;0.13.17 ...
+[info] Resolving org.scala-sbt#command;0.13.17 ...
+[info] Resolving org.scala-sbt#template-resolver;0.1 ...
+[info] Resolving org.scala-sbt#logic;0.13.17 ...
+[info] Resolving org.scala-sbt#compiler-interface;0.13.17 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Resolving org.scala-sbt#scripted-sbt;0.13.17 ...
+[info] Resolving org.scala-sbt#scripted-framework;0.13.17 ...
+[info] Resolving org.scala-sbt#sbt-launch;0.13.17 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#sbt-scala-native;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:53:45 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/api...
+[info] Compiling 14 Scala sources to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/classes...
+model contains 47 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/jars/sbt-scala-native.jar
+[info] 	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/srcs/sbt-scala-native-sources.jar
+[info] 	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/docs/sbt-scala-native-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 9 s, completed Sep 16, 2018 12:53:47 PM
+[info] Packaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testInterfaceSbtDefs...
+[info] Wrote /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:53:47 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/api...
+[info] Compiling 11 Scala sources to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 22 documentable templates
+[warn] /home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/Runner.scala:17: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Returns an array of tasks that when executed will run tests and suites
+[warn]   ^
+[warn] /home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/OptionalThrowable.scala:25: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Returns the <code>Throwable</code> contained in this
+[warn]   ^
+[warn] /home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/Framework.scala:15: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Initiates a run.
+[warn]   ^
+[warn] three warnings found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testInterfaceSerialization...
+[info] Wrote /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:53:48 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/api...
+[info] Compiling 8 Scala sources to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 35 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/test-interface-serialization_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/test-interface-serialization_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testInterface...
+[info] Wrote /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sun Sep 16 12:53:49 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-interface/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/test-interface/target/scala-2.11/api...
+[info] Compiling 6 Scala sources to /home/valdis/scala-native/test-interface/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 18 documentable templates
+[warn] /home/valdis/scala-native/test-interface/src/main/scala/scala/scalajs/reflect/annotation/EnableReflectiveInstantiation.scala:5: Could not find any member to link for "scala.scalajs.reflect.Reflect".
+[warn] /** Enables reflective instantiation for the annotated class, trait or object,
+[warn] ^
+[warn] one warning found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/test-interface_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/test-interface_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/test-interface_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/test-interface_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 4 s, completed Sep 16, 2018 12:53:50 PM
+[info] Updating {file:/home/valdis/scala-native/}sandbox...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] Compiling 1 Scala source to /home/valdis/scala-native/sandbox/target/scala-2.11/classes...
+[info] Linking (952 ms)
+[info] Discovered 813 classes and 4748 methods
+[info] Optimizing (debug mode) (401 ms)
+[info] Generating intermediate code (852 ms)
+[info] Produced 32 files
+[error] /home/valdis/scala-native/sandbox/target/scala-2.11/native/lib/gc/immix/Heap.c:195:17: warning: indirection of non-volatile null pointer will be deleted, not trap [-Wnull-dereference]
+[error]         int i = *(int*)0;
+[error]                 ^~~~~~~~
+[error] /home/valdis/scala-native/sandbox/target/scala-2.11/native/lib/gc/immix/Heap.c:195:17: note: consider using __builtin_trap() or qualifying pointer with 'volatile'
+[error] 1 warning generated.
+[info] Compiling to native code (975 ms)
+[info] Linking native code (immix gc, none lto) (121 ms)
+NextFreeBlock
+0x7efdb13a8000 (0)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb13b8000 (2)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb13c0000 (3)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb13c8000 (4)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb13d0000 (5)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb13d8000 (6)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb13e0000 (7)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb13e8000 (8)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb13f0000 (9)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb13f8000 (10)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1400000 (11)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1408000 (12)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1410000 (13)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1418000 (14)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1420000 (15)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1428000 (16)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1430000 (17)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1438000 (18)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1440000 (19)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1448000 (20)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1450000 (21)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1458000 (22)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1460000 (23)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1468000 (24)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1470000 (25)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1478000 (26)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1480000 (27)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1488000 (28)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1490000 (29)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+NextFreeBlock
+0x7efdb1498000 (30)FREE
+mark: 0, flags: 0, first: 0, nextBlock: 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+Hello, World!
+[success] Total time: 4 s, completed Sep 16, 2018 12:53:54 PM
+[info] Updating {file:/home/valdis/scala-native/}tests...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] Compiling 6 Scala sources to /home/valdis/scala-native/unit-tests/target/scala-2.11/classes...
+[info] Compiling 125 Scala sources to /home/valdis/scala-native/unit-tests/target/scala-2.11/test-classes...
+[warn] there were 5 deprecation warnings; re-run with -deprecation for details
+[warn] there were 53 feature warnings; re-run with -feature for details
+[warn] two warnings found
+[info] Compiling 1 Scala source to /home/valdis/scala-native/unit-tests/target/scala-2.11/test-classes...
+[info] Linking (1369 ms)
+[info] Discovered 5171 classes and 29166 methods
+[info] Optimizing (debug mode) (753 ms)
+[info] Generating intermediate code (2894 ms)
+[info] Produced 32 files
+[error] /home/valdis/scala-native/unit-tests/target/scala-2.11/native/lib/gc/immix/Heap.c:195:17: warning: indirection of non-volatile null pointer will be deleted, not trap [-Wnull-dereference]
+[error]         int i = *(int*)0;
+[error]                 ^~~~~~~~
+[error] /home/valdis/scala-native/unit-tests/target/scala-2.11/native/lib/gc/immix/Heap.c:195:17: note: consider using __builtin_trap() or qualifying pointer with 'volatile'
+[error] 1 warning generated.
+[info] Compiling to native code (1810 ms)
+[info] Linking native code (immix gc, none lto) (367 ms)
+[info] Starting process '/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out' on port '41195'.
+[info] (lldb) target create "/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out"
+[info] Current executable set to '/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out' (x86_64).
+[info] (lldb) settings set -- target.run-args  "41195"
+[info] (lldb) r
+[info] NextFreeBlock
+[info] 0x7ff81f7a0000 (0)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f7b0000 (2)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f7b8000 (3)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f7c0000 (4)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f7c8000 (5)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f7d0000 (6)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f7d8000 (7)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f7e0000 (8)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f7e8000 (9)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f7f0000 (10)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f7f8000 (11)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f800000 (12)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f808000 (13)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f810000 (14)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f818000 (15)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f820000 (16)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f828000 (17)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f830000 (18)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f838000 (19)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f840000 (20)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f848000 (21)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f850000 (22)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f858000 (23)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f860000 (24)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f868000 (25)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f870000 (26)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f878000 (27)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f880000 (28)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f888000 (29)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f890000 (30)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f898000 (31)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f8a0000 (32)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f8a8000 (33)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f8b0000 (34)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f8b8000 (35)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f8c0000 (36)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f8c8000 (37)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f8d0000 (38)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f8d8000 (39)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f8e0000 (40)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f8e8000 (41)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f8f0000 (42)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f8f8000 (43)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f900000 (44)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f908000 (45)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f910000 (46)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f918000 (47)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f920000 (48)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f928000 (49)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f930000 (50)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f938000 (51)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f940000 (52)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f948000 (53)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f950000 (54)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f958000 (55)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f960000 (56)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f968000 (57)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f970000 (58)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f978000 (59)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f980000 (60)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f988000 (61)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f990000 (62)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f998000 (63)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f9a0000 (64)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f9a8000 (65)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f9b0000 (66)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f9b8000 (67)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f9c0000 (68)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f9c8000 (69)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f9d0000 (70)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f9d8000 (71)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f9e0000 (72)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f9e8000 (73)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f9f0000 (74)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81f9f8000 (75)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa00000 (76)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa08000 (77)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa10000 (78)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa18000 (79)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa20000 (80)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa28000 (81)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa30000 (82)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa38000 (83)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa40000 (84)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa48000 (85)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa50000 (86)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa58000 (87)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa60000 (88)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa68000 (89)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa70000 (90)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa78000 (91)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa80000 (92)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa88000 (93)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa90000 (94)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fa98000 (95)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81faa0000 (96)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81faa8000 (97)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fab0000 (98)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fab8000 (99)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fac0000 (100)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fac8000 (101)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fad0000 (102)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fad8000 (103)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fae0000 (104)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fae8000 (105)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81faf0000 (106)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81faf8000 (107)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb00000 (108)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb08000 (109)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb10000 (110)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb18000 (111)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb20000 (112)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb28000 (113)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb30000 (114)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb38000 (115)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb40000 (116)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb48000 (117)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb50000 (118)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb58000 (119)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb60000 (120)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb68000 (121)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb70000 (122)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb78000 (123)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb80000 (124)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb88000 (125)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb90000 (126)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: 0 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] NextFreeBlock
+[info] 0x7ff81fb98000 (127)FREE
+[info] mark: 0, flags: 0, first: 0, nextBlock: -1 
+[info] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[info] 
+[info] Collect
+[info] inner pointer: 0x7ff81fb9fff8 object: 0x7ff81fb9ffe8
+[info] ignoring 0x7ff81fb9ffd0
+[info] Not found: 0x7ff81fb9ffd0
+[info] ignoring 0x7ff81f7a02c0
+[info] Not found: 0x7ff81f7a02c0
+[info] ignoring 0x7ff81f7a02c0
+[info] Not found: 0x7ff81f7a02c0
+[info] ignoring 0x7ff81f7a02c0
+[info] Not found: 0x7ff81f7a02c0
+[info] ignoring 0x7ff81f7a0d48
+[info] Not found: 0x7ff81f7a0d48
+[info] ignoring 0x7ff81f7a0170
+[info] Not found: 0x7ff81f7a0170
+[info] ignoring 0x7ff81f7a02c0
+[info] Not found: 0x7ff81f7a02c0
+[info] ignoring 0x7ff81f7a02c0
+[info] Not found: 0x7ff81f7a02c0
+[info] ignoring 0x7ff81f7a0d48
+[info] Not found: 0x7ff81f7a0d48
+[info] ignoring 0x7ff81f7a0d48
+[info] Not found: 0x7ff81f7a0d48
+[info] ignoring 0x7ff81f7a0d48
+[info] Not found: 0x7ff81f7a0d48
+[info] ignoring 0x7ff81f7a0170
+[info] Not found: 0x7ff81f7a0170
+[info] ignoring 0x7ff81fb9ffb0
+[info] Not found: 0x7ff81fb9ffb0
+[info] ignoring 0x7ff81fb9ffb0
+[info] Not found: 0x7ff81fb9ffb0
+[info] ignoring 0x7ff81fb9ffb0
+[info] Not found: 0x7ff81fb9ffb0
+[info] ignoring 0x7ff81fb9ffb0
+[info] Not found: 0x7ff81fb9ffb0
+[info] ignoring 0x7ff81fb9ffb0
+[info] Not found: 0x7ff81fb9ffb0
+[info] ignoring 0x7ff81fb9ffb0
+[info] Not found: 0x7ff81fb9ffb0
+[info] ignoring 0x7ff81f7a0170
+[info] Not found: 0x7ff81f7a0170
+[info] large inner pointer: 0x7ff048970000, object: 0x7ff048970000
+[info] ignoring 0x7ff81fb78840
+[info] Not found: 0x7ff81fb78840
+[info] ignoring 0x7ff81fb78840
+[info] Not found: 0x7ff81fb78840
+[info] ignoring 0x7ff81fb78860
+[info] Not found: 0x7ff81fb78860
+[info] large inner pointer: 0x7ff048970000, object: 0x7ff048970000
+[info] ignoring 0x7ff81fb78840
+[info] Not found: 0x7ff81fb78840
+[info] ignoring 0x7ff81f7a20f8
+[info] Not found: 0x7ff81f7a20f8
+[info] ignoring 0x7ff81f89c7c0
+[info] Not found: 0x7ff81f89c7c0
+[info] ignoring 0x7ff81f7a10b0
+[info] Not found: 0x7ff81f7a10b0
+[info] ignoring 0x7ff81f7a0150
+[info] Not found: 0x7ff81f7a0150
+[info] ignoring 0x7ff81f7a0150
+[info] Not found: 0x7ff81f7a0150
+[info] ignoring 0x7ff81fb61b50
+[info] Not found: 0x7ff81fb61b50
+[info] ignoring 0x7ff81f7a0120
+[info] Not found: 0x7ff81f7a0120
+[info] ignoring 0x7ff81fb61b50
+[info] Not found: 0x7ff81fb61b50
+[info] ignoring 0x7ff81fb61b50
+[info] Not found: 0x7ff81fb61b50
+[info] ignoring 0x7ff81fb61b50
+[info] Not found: 0x7ff81fb61b50
+[info] ignoring 0x7ff81fb61b50
+[info] Not found: 0x7ff81fb61b50
+[info] ignoring 0x7ff81fb61b50
+[info] Not found: 0x7ff81fb61b50
+[info] ignoring 0x7ff81fb61b50
+[info] Not found: 0x7ff81fb61b50
+[info] ignoring 0x7ff81fb61b50
+[info] Not found: 0x7ff81fb61b50
+[info] ignoring 0x7ff81fb61b50
+[info] Not found: 0x7ff81fb61b50
+[info] ignoring 0x7ff81fb61a60
+[info] Not found: 0x7ff81fb61a60
+[info] ignoring 0x7ff81fb61a60
+[info] Not found: 0x7ff81fb61a60
+[info] ignoring 0x7ff81fb61a60
+[info] Not found: 0x7ff81fb61a60
+[info] ignoring 0x7ff81fb61a60
+[info] Not found: 0x7ff81fb61a60
+[info] ignoring 0x7ff81fb61a60
+[info] Not found: 0x7ff81fb61a60
+[info] ignoring 0x7ff81fb61b50
+[info] Not found: 0x7ff81fb61b50
+[info] ignoring 0x7ff81f7a2c60
+[info] Not found: 0x7ff81f7a2c60
+[info] ignoring 0x7ff81fb594a0
+[info] Not found: 0x7ff81fb594a0
+[info] ignoring 0x7ff81fb78840
+[info] Not found: 0x7ff81fb78840
+[info] ignoring 0x7ff81fb61b50
+[info] Not found: 0x7ff81fb61b50
+[info] ignoring 0x7ff81fb59458
+[info] Not found: 0x7ff81fb59458
+[info] ignoring 0x7ff81f89c670
+[info] Not found: 0x7ff81f89c670
+[info] ignoring 0x7ff81fb59458
+[info] Not found: 0x7ff81fb59458
+[info] ignoring 0x7ff81fb63688
+[info] Not found: 0x7ff81fb63688
+[info] ignoring 0x7ff81f89c670
+[info] Not found: 0x7ff81f89c670
+[info] ignoring 0x7ff81fb61b50
+[info] Not found: 0x7ff81fb61b50
+[info] ignoring 0x7ff81f7a20f8
+[info] Not found: 0x7ff81f7a20f8
+[info] ignoring 0x7ff81fb59458
+[info] Not found: 0x7ff81fb59458
+[info] ignoring 0x7ff81f89c670
+[info] Not found: 0x7ff81f89c670
+[info] ignoring 0x7ff81f89c670
+[info] Not found: 0x7ff81f89c670
+[info] ignoring 0x7ff81f89c670
+[info] Not found: 0x7ff81f89c670
+[info] ignoring 0x7ff81f7a0130
+[info] Not found: 0x7ff81f7a0130
+[info] inner pointer: 0x7ff81fb07fb8 object: 0x7ff81fb07fb0
+[info] inner pointer: 0x7ff81fb07fb8 object: 0x7ff81fb07fb0
+[info] inner pointer: 0x7ff81fb08240 object: 0x7ff81fb08238
+[info] inner pointer: 0x7ff81fb08240 object: 0x7ff81fb08238
+[info] inner pointer: 0x7ff81fb08228 object: 0x7ff81fb08220
+[info] inner pointer: 0x7ff81fb08228 object: 0x7ff81fb08220
+[info] ignoring 0x7ff81fb08240
+[info] BAD POINTER
+[info] From 0x7ff81fb07fb0 (relative:446454), block:
+[info] 0x7ff81fb00000 (108)FREE
+[info] mark: 1, flags: 0, first: 0, nextBlock: 0 
+[info] 2 18 186 10 10 10 10 10 10 10 10 10 11 18 34 0 18 18 18 18 18 18 18 18 18 19 2 10 2 122 18 18 18 18 18 18 18 18 19 35 2 18 234 2 2 2 2 2 2 2 2 2 3 18 2 18 90 10 10 10 10 10 10 10 10 11 2 18 10 202 26 26 26 26 26 26 26 26 26 35 10 18 10 58 10 10 10 10 10 10 10 10 11 2 10 2 170 18 18 18 18 18 18 18 18 18 3 18 10 226 11 2 10 2 99 2 2 18 3 18 2 18 42 2 10 18 3 
+[info] To 0x7ff81fb08240 (relative:446536), block:
+[info] 0x7ff81fb08000 (109)FREE
+[info] mark: 1, flags: 0, first: 0, nextBlock: 0 
+[info] 2 11 2 98 2 3 10 2 194 10 18 2 11 2 10 2 122 11 2 10 2 98 3 18 2 18 114 10 2 10 18 2 10 18 2 10 18 2 10 10 27 19 2 18 186 2 10 18 2 10 10 11 10 2 242 10 18 2 2 10 2 10 18 18 10 18 2 2 10 2 10 18 18 10 2 194 10 18 2 2 10 2 10 18 18 10 18 2 2 10 2 11 2 10 2 170 11 26 10 2 146 10 18 2 2 18 2 10 18 2 11 2 10 2 98 19 2 18 210 26 10 18 2 10 18 2 2 
+[info] ignoring 0x7ff81fb08240
+[info] tests-out: /home/valdis/scala-native/unit-tests/target/scala-2.11/native/lib/gc/immix/Marker.c:111: void Marker_Mark(Heap *, Stack *): Assertion `!Heap_IsWordInSmallHeap(heap, field) || Object_GetObject(field) != NULL' failed.
+[info] Process 61944 stopped
+[info] * thread #1, name = 'tests-out', stop reason = signal SIGABRT
+[info]     frame #0: 0x00007ffff660fe97 libc.so.6`__GI_raise(sig=2) at raise.c:51
+[info] 
+[info] Process 61944 launched: '/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out' (x86_64)
+[info] (lldb) bt
+[info] * thread #1, name = 'tests-out', stop reason = signal SIGABRT
+[info]   * frame #0: 0x00007ffff660fe97 libc.so.6`__GI_raise(sig=2) at raise.c:51
+[info]     frame #1: 0x00007ffff6611801 libc.so.6`__GI_abort at abort.c:79
+[info]     frame #2: 0x00007ffff660139a libc.so.6`__assert_fail_base(fmt="%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", assertion="!Heap_IsWordInSmallHeap(heap, field) || Object_GetObject(field) != NULL", file="/home/valdis/scala-native/unit-tests/target/scala-2.11/native/lib/gc/immix/Marker.c", line=111, function=<unavailable>) at assert.c:92
+[info]     frame #3: 0x00007ffff6601412 libc.so.6`__GI___assert_fail(assertion=<unavailable>, file=<unavailable>, line=<unavailable>, function=<unavailable>) at assert.c:101
+[info]     frame #4: 0x0000000000bc36f8 tests-out`Marker_Mark + 680
+[info]     frame #5: 0x0000000000bc4a83 tests-out`Heap_Collect + 195
+[info]     frame #6: 0x0000000000bc4be0 tests-out`Heap_allocSmallSlow + 32
+[info]     frame #7: 0x0000000000bc4f62 tests-out`Heap_AllocSmall + 162
+[info]     frame #8: 0x0000000000bc6184 tests-out`scalanative_alloc_small + 20
+[info]     frame #9: 0x00000000008f843e tests-out`java.lang.Integer$::valueOf_i32_java.lang.Integer + 222
+[info]     frame #10: 0x00000000008f528e tests-out`scala.runtime.BoxesRunTime$::boxToInteger_i32_java.lang.Integer + 30
+[info]     frame #11: 0x0000000000b08385 tests-out`scala.scalanative.runtime.Array::length_i32 + 21
+[info]     frame #12: 0x0000000000744db0 tests-out`scala.scalanative.runtime.ObjectArray::at_i32_ptr + 32
+[info]     frame #13: 0x00000000007f0c86 tests-out`scala.scalanative.runtime.ObjectArray::apply_i32_java.lang.Object + 6
+[info]     frame #14: 0x00000000008f83a1 tests-out`java.lang.Integer$::valueOf_i32_java.lang.Integer + 65
+[info]     frame #15: 0x00000000008f528e tests-out`scala.runtime.BoxesRunTime$::boxToInteger_i32_java.lang.Integer + 30
+[info]     frame #16: 0x0000000000b08385 tests-out`scala.scalanative.runtime.Array::length_i32 + 21
+[info]     frame #17: 0x00000000007d3be0 tests-out`scala.scalanative.runtime.ByteArray::at_i32_ptr + 32
+[info]     frame #18: 0x000000000086c299 tests-out`scala.scalanative.runtime.ByteArray::apply_i32_i8 + 9
+[info]     frame #19: 0x0000000000986388 tests-out`java.net.SocketInputStream::read_i32 + 120
+[info]     frame #20: 0x0000000000a0799a tests-out`java.io.FilterInputStream::read_i32 + 26
+[info]     frame #21: 0x000000000072d85a tests-out`java.io.DataInputStream::readByte_i8 + 10
+[info]     frame #22: 0x0000000000a9e0c3 tests-out`java.io.DataInputStream::readFully_scala.scalanative.runtime.ByteArray_i32_i32_unit + 163
+[info]     frame #23: 0x0000000000a74829 tests-out`java.io.DataInputStream::readFully_scala.scalanative.runtime.ByteArray_unit + 41
+[info]     frame #24: 0x00000000009c2ac0 tests-out`scala.scalanative.testinterface.TestMainBase::receive_java.io.DataInputStream_scala.scalanative.testinterface.serialization.Message + 192
+[info]     frame #25: 0x000000000086c4f1 tests-out`scala.scalanative.testinterface.TestMainBase::testRunner_scala.scalanative.runtime.ObjectArray_sbt.testing.Runner_java.net.Socket_unit + 193
+[info]     frame #26: 0x00000000007d4059 tests-out`scala.scalanative.testinterface.TestMainBase::testMain_scala.scalanative.runtime.ObjectArray_unit + 329
+[info]     frame #27: 0x00000000009e5646 tests-out`scala.scalanative.testinterface.TestMain$::main_scala.scalanative.runtime.ObjectArray_unit + 6
+[info]     frame #28: 0x000000000086479d tests-out`main + 109
+[info]     frame #29: 0x00007ffff65f2b97 libc.so.6`__libc_start_main(main=(tests-out`main), argc=2, argv=0x00007fffffffdb68, init=<unavailable>, fini=<unavailable>, rtld_fini=<unavailable>, stack_end=0x00007fffffffdb58) at libc-start.c:310
+[info]     frame #30: 0x000000000072c91a tests-out`_start + 42
+[info] (lldb) q
+java.net.SocketException: Socket is closed
+	at java.net.Socket.setSoTimeout(Socket.java:1137)
+	at scala.scalanative.testinterface.ComRunner.receive(ComRunner.scala:107)
+	at scala.scalanative.testinterface.ScalaNativeRunner.receive(ScalaNativeRunner.scala:36)
+	at scala.scalanative.testinterface.ScalaNativeRunner.tasks(ScalaNativeRunner.scala:28)
+	at sbt.TestRunner.tasks(TestFramework.scala:61)
+	at sbt.TestFramework$$anonfun$6$$anonfun$7.apply(TestFramework.scala:171)
+	at sbt.TestFramework$$anonfun$6$$anonfun$7.apply(TestFramework.scala:171)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anonfun$6.apply(TestFramework.scala:171)
+	at sbt.TestFramework$$anonfun$6.apply(TestFramework.scala:168)
+	at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:251)
+	at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:251)
+	at scala.collection.MapLike$MappedValues$$anonfun$foreach$3.apply(MapLike.scala:245)
+	at scala.collection.MapLike$MappedValues$$anonfun$foreach$3.apply(MapLike.scala:245)
+	at scala.collection.TraversableLike$WithFilter$$anonfun$foreach$1.apply(TraversableLike.scala:772)
+	at scala.collection.immutable.Map$Map1.foreach(Map.scala:109)
+	at scala.collection.TraversableLike$WithFilter.foreach(TraversableLike.scala:771)
+	at scala.collection.MapLike$MappedValues.foreach(MapLike.scala:245)
+	at scala.collection.TraversableLike$class.flatMap(TraversableLike.scala:251)
+	at scala.collection.AbstractTraversable.flatMap(Traversable.scala:105)
+	at sbt.TestFramework$.createTestTasks(TestFramework.scala:168)
+	at sbt.TestFramework$.testTasks(TestFramework.scala:138)
+	at sbt.Tests$.testTask(Tests.scala:177)
+	at sbt.Tests$.apply(Tests.scala:166)
+	at sbt.Defaults$$anonfun$15.apply(Defaults.scala:617)
+	at sbt.Defaults$$anonfun$15.apply(Defaults.scala:605)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at sbt.Defaults$.allTestGroupsTask(Defaults.scala:605)
+	at sbt.Defaults$$anonfun$testTasks$7.apply(Defaults.scala:467)
+	at sbt.Defaults$$anonfun$testTasks$7.apply(Defaults.scala:467)
+	at scala.Function9$$anonfun$tupled$1.apply(Function9.scala:35)
+	at scala.Function9$$anonfun$tupled$1.apply(Function9.scala:34)
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47)
+	at sbt.$tilde$greater$$anonfun$$u2219$1.apply(TypeFunctions.scala:40)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+[error] (tests/nativetest:executeTests) java.net.SocketException: Socket is closed
+[error] Total time: 26 s, completed Sep 16, 2018 12:54:21 PM

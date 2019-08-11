@@ -11,7 +11,7 @@ final case class TestResult(status: Boolean, thrown: Option[Throwable])
 
 final case class Test(name: String, run: () => TestResult)
 
-abstract class Suite {
+trait Suite {
   private val tests = new mutable.UnrolledBuffer[Test]
 
   def assert(cond: Boolean): Unit =

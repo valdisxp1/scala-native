@@ -24,4 +24,7 @@ object RuntimeSuite extends tests.Suite {
     assert(proc.waitFor(5, TimeUnit.SECONDS))
     assert(out.split("\n").toSet == Set("echo.sh", "err.sh", "hello.sh", "ls"))
   }
+  test("availableProcessors") {
+    assert(Runtime.getRuntime.availableProcessors() > 0)
+  }
 }

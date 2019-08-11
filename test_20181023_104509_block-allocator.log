@@ -1,0 +1,2399 @@
+[info] Loading project definition from /home/valdis/scala-native/project
+[info] Resolving key references (12161 settings) ...
+[info] Set current project to scala-native (in build file:/home/valdis/scala-native/)
+[success] Total time: 4 s, completed Oct 23, 2018 10:45:18 AM
+[success] Total time: 0 s, completed Oct 23, 2018 10:45:18 AM
+[success] Total time: 0 s, completed Oct 23, 2018 10:45:18 AM
+[info] Fetching Scala source version 2.11.12 from /home/valdis/scala-2.11.11-only
+[info] Updating {file:/home/valdis/scala-native/}nscplugin...
+[info] Packaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:45:19 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/nscplugin/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/nscplugin/target/scala-2.11/api...
+[info] Compiling 45 Scala sources to /home/valdis/scala-native/nscplugin/target/scala-2.11/classes...
+[info] Checking out Scala source version 2.11.12
+model contains 266 documentable templates
+[warn] /home/valdis/scala-native/nir/src/main/scala/scala/scalanative/nir/Types.scala:24: match may not be exhaustive.
+[warn] It would fail on the following inputs: Byte, Int, Long, Short, UByte, UInt, ULong, UShort
+[warn]     def printType(ty: nir.Type): Unit = ty match {
+[warn]                                         ^
+[warn] /home/valdis/scala-native/nscplugin/src/main/scala/scala/scalanative/nscplugin/NirGenExpr.scala:1354: match may not be exhaustive.
+[warn] It would fail on the following input: (Trait(_), UShort)
+[warn]         val conv = (fromty, toty) match {
+[warn]                    ^
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[warn] there were two unchecked warnings; re-run with -unchecked for details
+[warn] three warnings found
+[info] Packaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/poms/nscplugin_2.11.12.pom
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/jars/nscplugin_2.11.12.jar
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/srcs/nscplugin_2.11.12-sources.jar
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/docs/nscplugin_2.11.12-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Updating {file:/home/valdis/scala-native/}nativelib...
+[info] Wrote /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Done packaging.
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:45:35 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/nativelib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 42 Scala sources to /home/valdis/scala-native/nativelib/target/scala-2.11/classes...
+[info] Main Scala API documentation to /home/valdis/scala-native/nativelib/target/scala-2.11/api...
+[warn] dropping dependency on node with no phase object: mixin
+[warn] there were 25 feature warnings; re-run with -feature for details
+model contains 200 documentable templates
+[warn] one warning found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[warn] there were 25 feature warnings; re-run with -feature for details
+[warn] one warning found
+[info] Because /home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/package.scala contains a macro definition, the following dependencies are invalidated unconditionally:
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/java/lang/Class.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/java/lang/Object.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/Ptr.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/Zone.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Arrays.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Boxes.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/DeleteOnExit.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/GC.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Intrinsics.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Platform.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Shutdown.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/libc.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/package.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/time.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/unwind.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/zlib.scala
+[info] Packaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/nativelib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/nativelib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/nativelib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/nativelib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/clib/target/scala-2.11/clib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Updating {file:/home/valdis/scala-native/}clib...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/clib/target/scala-2.11/clib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:45:41 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/clib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/clib/target/scala-2.11/api...
+[info] Compiling 9 Scala sources to /home/valdis/scala-native/clib/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 16 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/clib/target/scala-2.11/clib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/clib/target/scala-2.11/clib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published clib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/clib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published clib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/clib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published clib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/clib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published clib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/clib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/posixlib/target/scala-2.11/posixlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Updating {file:/home/valdis/scala-native/}posixlib...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/posixlib/target/scala-2.11/posixlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:45:42 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/posixlib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 32 Scala sources to /home/valdis/scala-native/posixlib/target/scala-2.11/classes...
+[info] Main Scala API documentation to /home/valdis/scala-native/posixlib/target/scala-2.11/api...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 63 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/posixlib/target/scala-2.11/posixlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/posixlib/target/scala-2.11/posixlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published posixlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/posixlib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published posixlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/posixlib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published posixlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/posixlib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published posixlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/posixlib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Updating {file:/home/valdis/scala-native/}javalib...
+[info] Wrote /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Packaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Done packaging.
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:45:45 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/javalib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Packaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Compiling 382 Scala sources to /home/valdis/scala-native/javalib/target/scala-2.11/classes...
+[info] Packaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/javalib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/javalib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/javalib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/javalib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}auxlib...
+[info] Wrote /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:46:02 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/auxlib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/auxlib/target/scala-2.11/api...
+[info] Compiling 5 Scala sources to /home/valdis/scala-native/auxlib/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 46 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Packaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Done packaging.
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/auxlib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/auxlib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/auxlib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/auxlib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Updating {file:/home/valdis/scala-native/}scalalib...
+[info] Wrote /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Packaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Done packaging.
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:46:03 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/scalalib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 582 Scala sources to /home/valdis/scala-native/scalalib/target/scala-2.11/classes...
+[info] Main Scala API documentation to /home/valdis/scala-native/scalalib/target/scala-2.11/api...
+[warn] dropping dependency on node with no phase object: mixin
+[warn] there were two deprecation warnings; re-run with -deprecation for details
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenIterableLike.scala:101: Could not find the type $Coll points to while expanding it for the usecase signature of method zipWithIndex in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def zipWithIndex: $Coll[(A, Int)]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenIterableLike.scala:73: Could not find the type $Coll points to while expanding it for the usecase signature of method zip in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def zip[B](that: GenIterable[B]): $Coll[(A, B)]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:364: Could not find the type $Coll points to while expanding it for the usecase signature of method padTo in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def padTo(len: Int, elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:332: Could not find the type $Coll points to while expanding it for the usecase signature of method :+ in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def :+(elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:296: Could not find the type $Coll points to while expanding it for the usecase signature of method +: in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def +:(elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:280: Could not find the type $Coll points to while expanding it for the usecase signature of method updated in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def updated(index: Int, elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:262: Could not find the type $Coll points to while expanding it for the usecase signature of method patch in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def patch(from: Int, that: GenSeq[A], replaced: Int): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala:467: Could not find the type $Coll points to while expanding it for the usecase signature of method intersect in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def intersect(that: Seq[A]): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala:436: Could not find the type $Coll points to while expanding it for the usecase signature of method diff in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def diff(that: Seq[A]): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala:412: Could not find the type $Coll points to while expanding it for the usecase signature of method union in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def union(that: Seq[A]): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:212: Could not find the type $Coll points to while expanding it for the usecase signature of method reverseMap in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def reverseMap[B](f: A => B): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenIterableLike.scala:128: Could not find the type $Coll points to while expanding it for the usecase signature of method zipAll in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def zipAll[B](that: Iterable[B], thisElem: A, thatElem: B): $Coll[(A, B)]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:190: Could not find the type $Coll points to while expanding it for the usecase signature of method collect in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def collect[B](pf: PartialFunction[A, B]): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:211: Could not find the type $Coll points to while expanding it for the usecase signature of method flatMap in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def flatMap[B](f: A => GenTraversableOnce[B]): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:172: Could not find the type $Coll points to while expanding it for the usecase signature of method map in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def map[B](f: A => B): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/TraversableLike.scala:165: Could not find the type $Coll points to while expanding it for the usecase signature of method ++: in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def ++:[B](that: TraversableOnce[B]): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:253: Could not find the type $Coll points to while expanding it for the usecase signature of method ++ in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def ++[B](that: GenTraversableOnce[B]): $Coll[B]
+[warn]                ^
+model contains 1293 documentable templates
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:88: Could not find any member to link for "`java.lang.ExceptionInInitializerError`".
+[warn]   /** Returns the `Class` object associated with the class or interface with the given string name using the current `ClassLoader`.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:81: Could not find any member to link for "`java.lang.NullPointerException`".
+[warn]   /** Assigns the value of 0 to each element in the array.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:54: Could not find any member to link for "`java.lang.NullPointerException`".
+[warn]   /** Creates a new array of the specified type and given length.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:30: Could not find any member to link for "java.lang.NullPointerException".
+[warn]   /** Copies `length` elements of array `src` starting at position `srcPos` to the
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:722: Variable month undefined in comment for object Groups in object Regex
+[warn]    *  val day = date replaceAllIn(text, _ match { case Groups(_, month, day) => s"$month/$day" })
+[warn]                                                                                    ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:722: Variable day undefined in comment for object Groups in object Regex
+[warn]    *  val day = date replaceAllIn(text, _ match { case Groups(_, month, day) => s"$month/$day" })
+[warn]                                                                                           ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:61: Variable year undefined in comment for class Regex in class Regex
+[warn]  *    case date(year, month, day) => s"$year was a good year for PLs."
+[warn]                                         ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:80: Variable year undefined in comment for class Regex in class Regex
+[warn]  *    case date(year, _*) => s"$year was a good year for PLs."
+[warn]                                 ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:120: Variable s undefined in comment for class Regex in class Regex
+[warn]  *  val oldies = mi filter (_ => (mi group 1).toInt < 1960) map (s => s"$s: An oldie but goodie.")
+[warn]                                                                          ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:135: Variable c undefined in comment for class Regex in class Regex
+[warn]  *  val months      = (0 to 11) map { i => val c = Calendar.getInstance; c.set(2014, i, 1); f"$c%tb" }
+[warn]                                                                                                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:136: Variable months(m.toInt - 1) undefined in comment for class Regex in class Regex
+[warn]  *  val reformatted = date replaceAllIn (dates, _ match { case date(y,m,d) => f"${months(m.toInt - 1)} $d, $y" })
+[warn]                                                                                  ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:136: Variable d undefined in comment for class Regex in class Regex
+[warn]  *  val reformatted = date replaceAllIn (dates, _ match { case date(y,m,d) => f"${months(m.toInt - 1)} $d, $y" })
+[warn]                                                                                                         ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:136: Variable y undefined in comment for class Regex in class Regex
+[warn]  *  val reformatted = date replaceAllIn (dates, _ match { case date(y,m,d) => f"${months(m.toInt - 1)} $d, $y" })
+[warn]                                                                                                             ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:546: Variable year undefined in comment for method unanchored in class Regex
+[warn]    *    case date(year, month, day) => s"Copyright $year"                  // OK
+[warn]                                                     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:462: Variable m group "month" undefined in comment for method replaceAllIn in class Regex
+[warn]    * val repl = datePattern replaceAllIn (text, m => s"${m group "month"}/${m group "day"}")
+[warn]                                                         ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:462: Variable m group "day" undefined in comment for method replaceAllIn in class Regex
+[warn]    * val repl = datePattern replaceAllIn (text, m => s"${m group "month"}/${m group "day"}")
+[warn]                                                                            ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:348: Variable x undefined in comment for method findAllIn in class Regex
+[warn]    *    case madhatter(x,y) => s"$x$y"
+[warn]                                   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:348: Variable y undefined in comment for method findAllIn in class Regex
+[warn]    *    case madhatter(x,y) => s"$x$y"
+[warn]                                     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Queue.scala:51: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the `n`-th element of this queue.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala:22: Variable 1 undefined in comment for trait ClassTag in trait ClassTag
+[warn]  *   mkArray: [T](elems: T*)(implicit evidence$1: scala.reflect.ClassTag[T])Array[T]
+[warn]                                                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Range.scala:409: Tag '@pre' is not recognised
+[warn]   /** Counts the number of range elements.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Queue.scala:121: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns a tuple with the first element in the queue,
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/PriorityQueue.scala:137: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the element with the highest priority in the queue,
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/Queue.scala:58: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the first element in the queue, and removes this element
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/concurrent/duration/Duration.scala:693: Could not find any member to link for "ArithmeticException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:144: Variable name undefined in comment for macro method f in class StringContext
+[warn]    *    println(f"$name%s is $height%2.2f meters tall")  // James is 1.90 meters tall
+[warn]                    ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:144: Variable height undefined in comment for macro method f in class StringContext
+[warn]    *    println(f"$name%s is $height%2.2f meters tall")  // James is 1.90 meters tall
+[warn]                               ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:304: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /** Uses the underlying string as a pattern (in a fashion similar to
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:321: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /** Like `format(args*)` but takes an initial `Locale` parameter
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Queue.scala:140: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the first element in the queue, or throws an error if there
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Option.scala:109: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the option's value.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/Either.scala:276: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]     /**
+[warn]     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/Either.scala:441: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]     /**
+[warn]     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/ListSet.scala:129: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stream.scala:218: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Gives constant time access to the first element of this `Stream`.  Using
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/annotation/implicitNotFound.scala:15: Variable Xi undefined in comment for class implicitNotFound in class implicitNotFound
+[warn]  * result of replacing all occurrences of ${Xi} in the string msg with the
+[warn]                                            ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/ListSet.scala:112: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Creates a new iterator over all elements contained in this set.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:20: Variable name undefined in comment for class StringContext in class StringContext
+[warn]  *   println(s"Hello, $name")  // Hello, James
+[warn]                        ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:26: Variable name undefined in comment for class StringContext in class StringContext
+[warn]  *   s"Hello, $name"
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:44: Variable a undefined in comment for class StringContext in class StringContext
+[warn]  *    val x: JSONObject = json"{ a: $a }"
+[warn]                                      ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stack.scala:110: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Removes the top element from the stack.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/Stack.scala:139: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Removes the top element from the stack.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Console.scala:150: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /** Prints its arguments as a formatted string to the default output,
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/Source.scala:181: Variable Positioner undefined in comment for class Source in class Source
+[warn]  *  [[scala.io.Source$Positioner the positioner]].
+[warn]                       ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:76: Variable name undefined in comment for method s in class StringContext
+[warn]    *    println(s"Hello, $name")  // Hello, James
+[warn]                           ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:78: Variable name undefined in comment for method s in class StringContext
+[warn]    *  In this example, the expression $name is replaced with the `toString` of the
+[warn]                                        ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:83: Variable 1 + 1 undefined in comment for method s in class StringContext
+[warn]    *    println(s"1 + 1 = ${1 + 1}")
+[warn]                            ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/TraversableLike.scala:414: Could not find any member to link for "`UnsupportedOperationException`".
+[warn]   /** Selects all elements except the first.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/ListSet.scala:134: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:258: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:262: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:282: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:278: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:270: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:274: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:266: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stack.scala:100: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the top element of the stack. An error is signaled if
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/Stack.scala:129: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the top element of the stack. This method will not remove
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/unchecked.scala:11: Could not find any member to link for "java.lang.ClassCastException".
+[warn] /** An annotation to designate that the annotated entity
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Predef.scala:20: Could not find any member to link for "scala.LowPriorityImplicits".
+[warn] /** The `Predef` object provides definitions that are accessible in all Scala
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:35: Could not find any member to link for "java.util.regex".
+[warn] /** A regular expression is used to determine whether a string matches a pattern
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:729: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** A class to step through a sequence of regex matches.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:321: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Return all non-overlapping matches of this `Regex` in the given character 
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:193: Could not find any member to link for "java.lang.CharSequence".
+[warn]   /** Tries to match a [[java.lang.CharSequence]].
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/StringBuilder.scala:56: Could not find any member to link for "NegativeArraySizeException".
+[warn]   /** Constructs a string builder with no characters in it and an
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:166: Could not find any member to link for "java.lang.String#replaceAll".
+[warn]   /** Replace all literal occurrences of `literal` with the string `replacement`.
+[warn]   ^
+[warn] there were 114 deprecation warnings; re-run with -deprecation for details
+[warn] one warning found
+[info] Because /home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/package.scala contains a macro definition, the following dependencies are invalidated unconditionally:
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/Array.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/Predef.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/beans/ScalaBeanInfo.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/concurrent/TrieMap.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/PagedSeq.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/RedBlackTree.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/TrieIterator.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/AVLTree.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/ArrayOps.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/ArrayStack.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/StringBuilder.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/WrappedArray.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/package.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/ParIterableLike.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/immutable/ParHashMap.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/immutable/ParHashSet.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParArray.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParHashMap.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParHashSet.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParHashTable.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/UnrolledParArrayCombiner.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/package.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassManifestDeprecatedApis.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/Manifest.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/runtime/ScalaRunTime.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/sys/process/Process.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/MurmurHash.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/Sorting.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/control/Exception.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala
+[info] Because /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala contains a macro definition, the following dependencies are invalidated unconditionally:
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/Enumeration.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/Iterator.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/ListBuffer.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/concurrent/duration/Duration.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/runtime/ScalaRunTime.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/Properties.scala
+[info] Packaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stream.scala:19: Could not find any member to link for "collect".
+[warn] /** The class `Stream` implements lazy lists where elements
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/concurrent/duration/Duration.scala:659: Could not find any member to link for "ArithmeticException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/Source.scala:172: Could not find any member to link for "scala.io.Source@iter".
+[warn] /** An iterable representation of source data.
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:158: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads in some structured input (from the default input), specified by
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:143: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a double value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:128: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a float value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:113: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads an long value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:98: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads an int value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:83: Could not find any member to link for "java.lang.StringIndexOutOfBoundsException".
+[warn]   /** Reads a char value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:68: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a short value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:53: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a byte value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:33: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a boolean value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala:7: Could not find any member to link for "scala.reflect.api.TypeTags#TypeTag".
+[warn] /**
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Float.scala:215: Could not find any member to link for "java.lang.Float.MIN_VALUE".
+[warn]   /** The negative number with the greatest (finite) absolute value which is representable
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Double.scala:215: Could not find any member to link for "java.lang.Double.MIN_VALUE".
+[warn]   /** The negative number with the greatest (finite) absolute value which is representable
+[warn]   ^
+[warn] 99 warnings found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/scalalib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/scalalib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/scalalib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/scalalib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 99 s, completed Oct 23, 2018 10:46:58 AM
+[info] Packaging /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] Updating {file:/home/valdis/scala-native/}testingCompilerInterface...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}util...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] Updating {file:/home/valdis/scala-native/}nir...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] Updating {file:/home/valdis/scala-native/}tools...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#nir_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#testing-compiler-interface;0.3.9-SNAPSHOT ...
+[info] Resolving org.scalacheck#scalacheck_2.10;1.13.4 ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scalatest#scalatest_2.10;3.0.0 ...
+[info] Resolving org.scalactic#scalactic_2.10;3.0.0 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] Updating {file:/home/valdis/scala-native/}testRunner...
+[info] Wrote /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#tools_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nir_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-runner_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:46:58 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-runner/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 10 Scala sources to /home/valdis/scala-native/util/target/scala-2.10/classes...
+[info] Compiling 23 Scala sources to /home/valdis/scala-native/nir/target/scala-2.10/classes...
+[warn] /home/valdis/scala-native/nir/src/main/scala/scala/scalanative/nir/Types.scala:24: match may not be exhaustive.
+[warn] It would fail on the following inputs: Byte, Int, Long, Short, UByte, UInt, ULong, UShort
+[warn]     def printType(ty: nir.Type): Unit = ty match {
+[warn]                                         ^
+[warn] one warning found
+[info] Compiling 51 Scala sources to /home/valdis/scala-native/tools/target/scala-2.10/classes...
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:114: match may not be exhaustive.
+[warn] It would fail on the following inputs: Class(_, _, _, _), Module(_, _, _, _), Trait(_, _, _)
+[warn]           env(n) match {
+[warn]              ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:139: match may not be exhaustive.
+[warn] It would fail on the following inputs: Class(_, _, _, _), Module(_, _, _, _), Struct(_, _, _), Trait(_, _, _)
+[warn]         env(n) match {
+[warn]            ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:256: match may not be exhaustive.
+[warn] It would fail on the following inputs: If(_, _, _), Jump(_), Let(_, _, _), None, Ret(_), Switch(_, _, _), Throw(_, _), Unreachable
+[warn]         insts.head match {
+[warn]               ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/GlobalValueNumbering.scala:102: Cannot check match for unreachability.
+[warn] (The analysis required more space than allowed. Please try with scalac -Dscalac.patmat.analysisBudget=512 or -Dscalac.patmat.analysisBudget=off.)
+[warn]     op match {
+[warn]     ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/PartialEvaluation.scala:276: match may not be exhaustive.
+[warn] It would fail on the following inputs: Array(_), ArrayValue(_, _), Bool, Char, Class(_), Double, Float, Function(_, _), Module(_), None, Nothing, Ptr, StructValue(_, _), Trait(_), UByte, UInt, ULong, UShort, Unit, Var(_), Vararg, Void
+[warn]   private def minValue(ty: Type): Long = ty match {
+[warn]                                          ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/PartialEvaluation.scala:283: match may not be exhaustive.
+[warn] It would fail on the following inputs: Array(_), ArrayValue(_, _), Bool, Char, Class(_), Double, Float, Function(_, _), Module(_), None, Nothing, Ptr, StructValue(_, _), Trait(_), UByte, UInt, ULong, UShort, Unit, Var(_), Vararg, Void
+[warn]   private def maxValue(ty: Type): Long = ty match {
+[warn]                                          ^
+[warn] 6 warnings found
+[info] Main Scala API documentation to /home/valdis/scala-native/test-runner/target/scala-2.10/api...
+[info] Compiling 12 Scala sources to /home/valdis/scala-native/test-runner/target/scala-2.10/classes...
+model contains 40 documentable templates
+[info] Packaging /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/poms/test-runner_2.10.pom
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/jars/test-runner_2.10.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/srcs/test-runner_2.10-sources.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/docs/test-runner_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 33 s, completed Oct 23, 2018 10:47:30 AM
+[info] Packaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT.pom
+[info] :: delivering :: org.scala-native#util_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:47:30 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/util/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/util/target/scala-2.10/api...
+[info] Packaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT.pom
+[info] :: delivering :: org.scala-native#test-runner_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:47:31 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-runner/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/poms/test-runner_2.10.pom
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/jars/test-runner_2.10.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/srcs/test-runner_2.10-sources.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/docs/test-runner_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+model contains 18 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/poms/util_2.10.pom
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/jars/util_2.10.jar
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/srcs/util_2.10-sources.jar
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/docs/util_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Wrote /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT.pom
+[info] Packaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] :: delivering :: org.scala-native#nir_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:47:31 CEST 2018
+[info] Packaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT.jar ...
+[info] 	delivering ivy file to /home/valdis/scala-native/nir/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/nir/target/scala-2.10/api...
+[info] Done packaging.
+[info] Done packaging.
+model contains 214 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/poms/nir_2.10.pom
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/jars/nir_2.10.jar
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/srcs/nir_2.10-sources.jar
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/docs/nir_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] Wrote /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT.pom
+[info] :: delivering :: org.scala-native#tools_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:47:34 CEST 2018
+[info] Main Scala API documentation to /home/valdis/scala-native/tools/target/scala-2.10/api...
+[info] 	delivering ivy file to /home/valdis/scala-native/tools/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Packaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Done packaging.
+model contains 123 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/poms/tools_2.10.pom
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/jars/tools_2.10.jar
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/srcs/tools_2.10-sources.jar
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/docs/tools_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}sbtScalaNative...
+[info] Resolving org.scala-native#tools_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#nir_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-runner_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.portable-scala#sbt-platform-deps;1.0.0-M2 ...
+[info] Resolving org.scala-sbt#sbt;0.13.17 ...
+[info] Resolving org.scala-sbt#main;0.13.17 ...
+[info] Resolving org.scala-sbt#actions;0.13.17 ...
+[info] Resolving org.scala-sbt#classpath;0.13.17 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-sbt#interface;0.13.17 ...
+[info] Resolving org.scala-sbt#io;0.13.17 ...
+[info] Resolving org.scala-sbt#control;0.13.17 ...
+[info] Resolving org.scala-sbt#launcher-interface;1.0.1 ...
+[info] Resolving org.scala-sbt#completion;0.13.17 ...
+[info] Resolving org.scala-sbt#collections;0.13.17 ...
+[info] Resolving jline#jline;2.14.5 ...
+[info] Resolving org.scala-sbt#api;0.13.17 ...
+[info] Resolving org.scala-sbt#classfile;0.13.17 ...
+[info] Resolving org.scala-sbt#logging;0.13.17 ...
+[info] Resolving org.scala-sbt#process;0.13.17 ...
+[info] Resolving org.scala-sbt#compiler-integration;0.13.17 ...
+[info] Resolving org.scala-sbt#incremental-compiler;0.13.17 ...
+[info] Resolving org.scala-sbt#relation;0.13.17 ...
+[info] Resolving org.scala-sbt#compile;0.13.17 ...
+[info] Resolving org.scala-sbt#persist;0.13.17 ...
+[info] Resolving org.scala-tools.sbinary#sbinary_2.10;0.4.2 ...
+[info] Resolving org.scala-sbt#compiler-ivy-integration;0.13.17 ...
+[info] Resolving org.scala-sbt#ivy;0.13.17 ...
+[info] Resolving org.scala-sbt#cross;0.13.17 ...
+[info] Resolving org.scala-sbt.ivy#ivy;2.3.0-sbt-b18f59ea3bc914a297bb6f1a4f7fb0ace399e310 ...
+[info] Resolving com.jcraft#jsch;0.1.50 ...
+[info] Resolving org.scala-sbt#serialization_2.10;0.1.2 ...
+[info] Resolving org.scala-lang.modules#scala-pickling_2.10;0.10.1 ...
+[info] Resolving org.scalamacros#quasiquotes_2.10;2.0.1 ...
+[info] Resolving org.json4s#json4s-core_2.10;3.2.10 ...
+[info] Resolving org.json4s#json4s-ast_2.10;3.2.10 ...
+[info] Resolving com.thoughtworks.paranamer#paranamer;2.6 ...
+[info] Resolving org.spire-math#jawn-parser_2.10;0.6.0 ...
+[info] Resolving org.spire-math#json4s-support_2.10;0.6.0 ...
+[info] Resolving org.scala-sbt#run;0.13.17 ...
+[info] Resolving org.scala-sbt#task-system;0.13.17 ...
+[info] Resolving org.scala-sbt#tasks;0.13.17 ...
+[info] Resolving org.scala-sbt#tracking;0.13.17 ...
+[info] Resolving org.scala-sbt#cache;0.13.17 ...
+[info] Resolving org.scala-sbt#testing;0.13.17 ...
+[info] Resolving org.scala-sbt#test-agent;0.13.17 ...
+[info] Resolving org.scala-sbt#main-settings;0.13.17 ...
+[info] Resolving org.scala-sbt#apply-macro;0.13.17 ...
+[info] Resolving org.scala-sbt#command;0.13.17 ...
+[info] Resolving org.scala-sbt#template-resolver;0.1 ...
+[info] Resolving org.scala-sbt#logic;0.13.17 ...
+[info] Resolving org.scala-sbt#compiler-interface;0.13.17 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Resolving org.scala-sbt#scripted-sbt;0.13.17 ...
+[info] Resolving org.scala-sbt#scripted-framework;0.13.17 ...
+[info] Resolving org.scala-sbt#sbt-launch;0.13.17 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#sbt-scala-native;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:47:38 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/api...
+[info] Compiling 14 Scala sources to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/classes...
+model contains 47 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/jars/sbt-scala-native.jar
+[info] 	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/srcs/sbt-scala-native-sources.jar
+[info] 	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/docs/sbt-scala-native-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 9 s, completed Oct 23, 2018 10:47:40 AM
+[info] Packaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testInterfaceSbtDefs...
+[info] Wrote /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:47:40 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/api...
+[info] Compiling 11 Scala sources to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 22 documentable templates
+[warn] /home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/Runner.scala:17: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Returns an array of tasks that when executed will run tests and suites
+[warn]   ^
+[warn] /home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/OptionalThrowable.scala:25: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Returns the <code>Throwable</code> contained in this
+[warn]   ^
+[warn] /home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/Framework.scala:15: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Initiates a run.
+[warn]   ^
+[warn] three warnings found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testInterfaceSerialization...
+[info] Wrote /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:47:41 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/api...
+[info] Compiling 8 Scala sources to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 35 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/test-interface-serialization_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/test-interface-serialization_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testInterface...
+[info] Wrote /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Tue Oct 23 10:47:43 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-interface/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/test-interface/target/scala-2.11/api...
+[info] Compiling 6 Scala sources to /home/valdis/scala-native/test-interface/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 18 documentable templates
+[warn] /home/valdis/scala-native/test-interface/src/main/scala/scala/scalajs/reflect/annotation/EnableReflectiveInstantiation.scala:5: Could not find any member to link for "scala.scalajs.reflect.Reflect".
+[warn] /** Enables reflective instantiation for the annotated class, trait or object,
+[warn] ^
+[warn] one warning found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/test-interface_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/test-interface_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/test-interface_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/test-interface_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 4 s, completed Oct 23, 2018 10:47:44 AM
+[info] Updating {file:/home/valdis/scala-native/}sandbox...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] Compiling 1 Scala source to /home/valdis/scala-native/sandbox/target/scala-2.11/classes...
+[info] Linking (860 ms)
+[info] Discovered 551 classes and 3288 methods
+[info] Optimizing (debug mode) (323 ms)
+[info] Generating intermediate code (803 ms)
+[info] Produced 32 files
+[info] Compiling to native code (958 ms)
+[info] Linking native code (immix gc, none lto) (113 ms)
+[info] Total (3185 ms)
+ADD chunk (0x7f0906418000 0x7f0906420000)
+ADD chunk (0x7f090641c000 0x7f0906420000)
+Hello, World!
+[success] Total time: 4 s, completed Oct 23, 2018 10:47:48 AM
+[info] Updating {file:/home/valdis/scala-native/}tests...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] Compiling 6 Scala sources to /home/valdis/scala-native/unit-tests/target/scala-2.11/classes...
+[info] Compiling 124 Scala sources to /home/valdis/scala-native/unit-tests/target/scala-2.11/test-classes...
+[warn] there were three deprecation warnings; re-run with -deprecation for details
+[warn] there were 53 feature warnings; re-run with -feature for details
+[warn] two warnings found
+[info] Compiling 1 Scala source to /home/valdis/scala-native/unit-tests/target/scala-2.11/test-classes...
+[info] Linking (1579 ms)
+[info] Discovered 4757 classes and 26762 methods
+[info] Optimizing (debug mode) (588 ms)
+[info] Generating intermediate code (3268 ms)
+[info] Produced 32 files
+[info] Compiling to native code (1394 ms)
+[info] Linking native code (immix gc, none lto) (324 ms)
+[info] Total (7224 ms)
+[info] Starting process '/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out' on port '37411'.
+[info] (lldb) target create "/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out"
+[info] Current executable set to '/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out' (x86_64).
+[info] (lldb) settings set -- target.run-args  "37411"
+[info] (lldb) r
+[info] ADD chunk (0x7ff816f68000 0x7ff816f70000)
+[info] ADD chunk (0x7ff816f6c000 0x7ff816f70000)
+[info] block (0x7ff816f68000 0x7ff816f70000)
+[info] object 0x7ff79979e018=2
+[info] ADD chunk (0x7ff816f68000 0x7ff816f6c000)
+[info] object 0x7ff79979e418=4
+[info] ADD chunk (0x7ff816f70000 0x7ff816f78000)
+[info] ADD chunk (0x7ff816f76000 0x7ff816f78000)
+[info] block (0x7ff816f68000 0x7ff816f70000)
+[info] object 0x7ff79979e018=1
+[info] object 0x7ff79979e818=4 NEXT
+[info] SUPERBLOCK (0x7ff816f68000, 0x7ff816f70000)
+[info] block (0x7ff816f70000 0x7ff816f78000)
+[info] object 0x7ff79979e818=4
+[info] object 0x7ff79979ee18=1
+[info] ADD chunk (0x7ff816f76000 0x7ff816f78000)
+[info] ADD chunk (0x7ff816f78000 0x7ff816f88000)
+[info] ADD chunk (0x7ff816f82000 0x7ff816f88000)
+[info] block (0x7ff816f70000 0x7ff816f78000)
+[info] object 0x7ff79979e818=2
+[info] object 0x7ff79979f018=4 NEXT
+[info] SUPERBLOCK (0x7ff816f70000, 0x7ff816f78000)
+[info] block (0x7ff816f78000 0x7ff816f88000)
+[info] object 0x7ff79979f018=4
+[info] object 0x7ff79979fa18=1
+[info] object 0x7ff7997a0018=0 NEXT
+[info] ADD chunk (0x7ff816f82000 0x7ff816f88000)
+[info] ADD chunk (0x7ff816f68000 0x7ff816f70000)
+[info] ADD chunk (0x7ff816f6e000 0x7ff816f70000)
+[info] block (0x7ff816f68000 0x7ff816f70000)
+[info] object 0x7ff79979e018=4
+[info] object 0x7ff79979e618=1
+[info] ADD chunk (0x7ff816f6e000 0x7ff816f70000)
+[info] block (0x7ff816f78000 0x7ff816f88000)
+[info] object 0x7ff79979f018=4
+[info] object 0x7ff79979fa18=1
+[info] object 0x7ff7997a0018=0 NEXT
+[info] ADD chunk (0x7ff816f82000 0x7ff816f88000)
+[info] ADD chunk (0x7ff816f70000 0x7ff816f78000)
+[info] ADD chunk (0x7ff816f76000 0x7ff816f78000)
+[info] block (0x7ff816f68000 0x7ff816f70000)
+[info] object 0x7ff79979e018=4
+[info] object 0x7ff79979e618=1
+[info] ADD chunk (0x7ff816f6e000 0x7ff816f70000)
+[info] block (0x7ff816f70000 0x7ff816f78000)
+[info] object 0x7ff79979e818=4
+[info] object 0x7ff79979ee18=1
+[info] ADD chunk (0x7ff816f76000 0x7ff816f78000)
+[info] block (0x7ff816f78000 0x7ff816f88000)
+[info] object 0x7ff79979f018=4
+[info] object 0x7ff79979fa18=1
+[info] object 0x7ff7997a0018=0 NEXT
+[info] ADD chunk (0x7ff816f82000 0x7ff816f88000)
+[info] ADD chunk (0x7ff816f88000 0x7ff816f90000)
+[info] ADD chunk (0x7ff816f8e000 0x7ff816f90000)
+[info] * java.util.ArraysSuite$
+[info]   [ok] asList
+[info] * java.util.zip.CheckedOutputStreamSuite$
+[info]   [ok] Constructor()
+[info]   [ok] getChecksum()
+[info]   [ok] write(Int)
+[info]   [ok] write(Array[Byte], Int, Int)
+[info] * scala.FloatComparisonSuite$
+[info]   [ok] fcmp
+[info] * java.net.Inet6AddressSuite$
+[info]   [ok] isMulticastAddress
+[info]   [ok] isAnyLocalAddress
+[info]   [ok] isLoopbackAddress
+[info]   [ok] isLinkLocalAddress
+[info]   [ok] isSiteLocalAddress
+[info]   [ok] isIPv4CompatibleAddress
+[info]   [ok] getByAddress
+[info] * java.util.LinkedHashMapInsertionOrderLimitedSuite$
+[info]   [ok] should store strings
+[info]   [ok] should store integers
+[info]   [ok] should store doubles also in corner cases
+[info]   [ok] should store custom objects
+[info]   [ok] should remove stored elements
+[info]   [ok] should remove stored elements on double corner cases
+[info]   [ok] should put or fail on null keys
+[info]   [ok] should put or fail on null values
+[info]   [ok] should be cleared with one operation
+[info]   [ok] should check contained key presence
+[info]   [ok] should check contained value presence
+[info]   [ok] should give proper Collection over values
+[info]   [ok] should give proper EntrySet over key value pairs
+[info]   [ok] should give proper KeySet over keys
+[info]   [ok] should put a whole map into
+[info]   [ok] values should mirror the related map size
+[info]   [ok] values should check single and multiple objects presence
+[info]   [ok] values should side effect clear remove retain on the related map
+[info]   [ok] keySet should mirror the related map size
+[info]   [ok] keySet should check single and multiple objects presence
+[info]   [ok] keySet should side effect clear remove retain on the related map
+[info]   [ok] should iterate in insertion order after building
+[info]   [ok] should iterate in the same order after removal of elements
+[info]   [ok] should iterate in order after adding elements
+[info]   [ok] should iterate in after accessing elements
+[info] * java.util.LinkedHashMapAccessOrderSuite$
+[info]   [ok] should store strings
+[info]   [ok] should store integers
+[info]   [ok] should store doubles also in corner cases
+[info]   [ok] should store custom objects
+[info]   [ok] should remove stored elements
+[info]   [ok] should remove stored elements on double corner cases
+[info]   [ok] should put or fail on null keys
+[info]   [ok] should put or fail on null values
+[info]   [ok] should be cleared with one operation
+[info]   [ok] should check contained key presence
+[info]   [ok] should check contained value presence
+[info]   [ok] should give proper Collection over values
+[info]   [ok] should give proper EntrySet over key value pairs
+[info]   [ok] should give proper KeySet over keys
+[info]   [ok] should put a whole map into
+[info]   [ok] values should mirror the related map size
+[info]   [ok] values should check single and multiple objects presence
+[info]   [ok] values should side effect clear remove retain on the related map
+[info]   [ok] keySet should mirror the related map size
+[info]   [ok] keySet should check single and multiple objects presence
+[info]   [ok] keySet should side effect clear remove retain on the related map
+[info]   [ok] should iterate in insertion order after building
+[info]   [ok] should iterate in the same order after removal of elements
+[info]   [ok] should iterate in order after adding elements
+[info]   [ok] should iterate in after accessing elements
+[info] * java.util.LinkedHashMapAccessOrderLimitedSuite$
+[info]   [ok] should store strings
+[info]   [ok] should store integers
+[info]   [ok] should store doubles also in corner cases
+[info]   [ok] should store custom objects
+[info]   [ok] should remove stored elements
+[info]   [ok] should remove stored elements on double corner cases
+[info]   [ok] should put or fail on null keys
+[info]   [ok] should put or fail on null values
+[info]   [ok] should be cleared with one operation
+[info]   [ok] should check contained key presence
+[info]   [ok] should check contained value presence
+[info]   [ok] should give proper Collection over values
+[info]   [ok] should give proper EntrySet over key value pairs
+[info]   [ok] should give proper KeySet over keys
+[info]   [ok] should put a whole map into
+[info]   [ok] values should mirror the related map size
+[info]   [ok] values should check single and multiple objects presence
+[info]   [ok] values should side effect clear remove retain on the related map
+[info]   [ok] keySet should mirror the related map size
+[info]   [ok] keySet should check single and multiple objects presence
+[info]   [ok] keySet should side effect clear remove retain on the related map
+[info]   [ok] should iterate in insertion order after building
+[info]   [ok] should iterate in the same order after removal of elements
+[info]   [ok] should iterate in order after adding elements
+[info]   [ok] should iterate in after accessing elements
+[info] * java.lang.ExceptionSuite$
+[info]   [ok] printStackTrace
+[info]   [ok] printStackTrace <no stack trace available>
+[info] * java.util.zip.DeflaterSuite$
+[info]   [ok] Deflater.setInput doesn't throw an exception
+[info]   [ok] Deflater needs input right after being created
+[info]   [ok] Deflater doesn't need input after input has been set
+[info]   [ok] Deflater can deflate byte arrays with default compression level
+[info]   [ok] Deflater can deflate with best compression level
+[info]   [ok] Deflater can deflate given a buffer smaller than total amount of data
+[info] * scala.scalanative.native.SizeofSuite$
+[info]   [ok] Byte
+[info]   [ok] UByte
+[info]   [ok] Short
+[info]   [ok] UShort
+[info]   [ok] Int
+[info]   [ok] UInt
+[info]   [ok] Long
+[info]   [ok] ULong
+[info]   [ok] Ptr
+[info]   [ok] CStruct1[Byte]
+[info]   [ok] CStruct2[Byte, Byte]
+[info]   [ok] CStruct2[Byte, Int]
+[info]   [ok] CStruct3[Byte, Short, Byte]
+[info]   [ok] CStruct4[Byte, Short, Byte, Int]
+[info]   [ok] inner struct CStruct2[Byte, CStruct2[Long, Byte]]
+[info]   [ok] inner struct CStruct3[Byte, Long, CStruct3[Int, Int, Byte]]
+[info]   [ok] inner struct CStruct3[Byte, Long, CStruct3[Int, Int, CStruct4[Byte, Int, Short, Byte]]
+[info]   [ok] CArray[Byte, _32]
+[info]   [ok] CArray[Byte, _128]
+[info]   [ok] CArray[Byte, _1024]
+[info]   [ok] CArray[CStruct3[Byte, Int, Byte], _32]
+[info] * java.lang.CharacterSuite$
+[info]   [ok] toLowerCase
+[info]   [ok] toUpperCase
+[info] * scala.EqualitySuite$
+[info]   [ok] case class equality
+[info]   [ok] null equals null
+[info]   [ok] null does not equal object
+[info]   [ok] object does not equal null
+[info]   [ok] == null doesn't call equals
+[info] * java.security.CertificateSuite$
+[info]   [ok] getType
+[info]   [ok] equals
+[info] * java.util.FormatterSuite$
+[info] block (0x7ff816f68000 0x7ff816f70000)
+[info] object 0x7ff79979e018=2
+[info] object 0x7ff79979e818=2 NEXT
+[info] SUPERBLOCK (0x7ff816f68000, 0x7ff816f70000)
+[info] block (0x7ff816f70000 0x7ff816f78000)
+[info] object 0x7ff79979e818=2
+[info] object 0x7ff79979f018=2 NEXT
+[info] SUPERBLOCK (0x7ff816f70000, 0x7ff816f78000)
+[info] block (0x7ff816f78000 0x7ff816f88000)
+[info] object 0x7ff79979f018=2
+[info] object 0x7ff79979fe18=1 NEXT
+[info] object 0x7ff7997a0018=2 NEXT
+[info] SUPERBLOCK (0x7ff816f78000, 0x7ff816f88000)
+[info] block (0x7ff816f88000 0x7ff816f90000)
+[info] object 0x7ff7997a0018=2
+[info] object 0x7ff7997a0818=2 NEXT
+[info] SUPERBLOCK (0x7ff816f88000, 0x7ff816f90000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=0 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=0 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=0 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=0 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] ADD chunk (0x7ff817048000 0x7ff81704c000)
+[info] object 0x7ff7997ac418=4
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=0 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] ADD chunk (0x7ff817048000 0x7ff81704c000)
+[info] object 0x7ff7997ac418=4
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=0 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] ADD chunk (0x7ff817048000 0x7ff81704c000)
+[info] object 0x7ff7997ac418=4
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=0 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] ADD chunk (0x7ff817048000 0x7ff81704c000)
+[info] object 0x7ff7997ac418=4
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=2 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=0 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=0 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=0 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817050000 0x7ff817058000)
+[info] ADD chunk (0x7ff817054000 0x7ff817058000)
+[info] block (0x7ff817050000 0x7ff817058000)
+[info] object 0x7ff7997ac818=2
+[info]   [ok] Constructor()
+[info] object 0x7ff7997ad018=0 NEXT
+[info] SUPERBLOCK (0x7ff817050000, 0x7ff817058000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info]   [ok] Constructor(Appendable)
+[info]   [ok] Constructor(Locale)
+[info]   [ok] Constructor(Appendable, Locale)
+[info]   [ok] Constructor(String)
+[info]   [ok] Constructor(String, String)
+[info]   [ok] Constructor(String, String, Locale)
+[info]   [ok] Constructor(File)
+[info]   [ok] Constructor(File, String)
+[info]   [ok] Constructor(File, String, Locale)
+[info]   [ok] Constructor(PrintStream)
+[info]   [ok] Constructor(OutputStream)
+[info]   [ok] Constructor(OutputStream, String)
+[info]   [ok] Constructor(OutputStream, String, Locale)
+[info]   [ok] locale()
+[info]   [ok] out()
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=2 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817050000 0x7ff817058000)
+[info] ADD chunk (0x7ff817054000 0x7ff817058000)
+[info]   [ok] flush()
+[info] block (0x7ff817050000 0x7ff817058000)
+[info] object 0x7ff7997ac818=2
+[info]   [ok] close()
+[info] object 0x7ff7997ad018=0 NEXT
+[info] SUPERBLOCK (0x7ff817050000, 0x7ff817058000)
+[info] ADD chunk (0x7ff817050000 0x7ff817058000)
+[info] ADD chunk (0x7ff817054000 0x7ff817058000)
+[info]   [ok] toString()
+[info] block (0x7ff817050000 0x7ff817058000)
+[info] object 0x7ff7997ac818=2
+[info] object 0x7ff7997ad018=0 NEXT
+[info] SUPERBLOCK (0x7ff817050000, 0x7ff817058000)
+[info] ADD chunk (0x7ff817048000 0x7ff817050000)
+[info] ADD chunk (0x7ff81704c000 0x7ff817050000)
+[info]   [ok] ioException()
+[info]   [ok] format(String, Array[Object]) for null parameter
+[info] block (0x7ff817048000 0x7ff817050000)
+[info] object 0x7ff7997ac018=2
+[info] object 0x7ff7997ac818=2 NEXT
+[info] SUPERBLOCK (0x7ff817048000, 0x7ff817050000)
+[info] ADD chunk (0x7ff817050000 0x7ff817058000)
+[info] ADD chunk (0x7ff817054000 0x7ff817058000)
+[info]   [ok] format(String, Array[Object]) for argument index
+[info]   [ok] format(String, Array[Object]) for width
+[info] block (0x7ff817050000 0x7ff817058000)
+[info] object 0x7ff7997ac818=2
+[info] object 0x7ff7997ad018=0 NEXT
+[info] SUPERBLOCK (0x7ff817050000, 0x7ff817058000)
+[info] ADD chunk (0x7ff817058000 0x7ff817060000)
+[info] ADD chunk (0x7ff81705c000 0x7ff817060000)
+[info]   [ok] format(String, Array[Object]) for precision
+[info]   [ok] format(String, Array[Object]) for line separator
+[info] block (0x7ff817058000 0x7ff817060000)
+[info] object 0x7ff7997ad018=2
+[info] object 0x7ff7997ad818=0 NEXT
+[info] SUPERBLOCK (0x7ff817058000, 0x7ff817060000)
+[info] ADD chunk (0x7ff817300000 0x7ff817308000)
+[info] ADD chunk (0x7ff817304000 0x7ff817308000)
+[info]   [ok] format(String, Array[Object]) for percent
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] object 0x7ff7997d8018=2 NEXT
+[info]   [ok] format(String, Array[Object]) for flag
+[info] SUPERBLOCK (0x7ff817300000, 0x7ff817308000)
+[info] ADD chunk (0x7ff817300000 0x7ff817308000)
+[info] ADD chunk (0x7ff817304000 0x7ff817308000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for general conversion b/B
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for general conversion type 's' and 'S'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for general conversion type 'h' and 'H'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for general conversion other cases
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for general conversion exception
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for Character conversion
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for legal Byte/Short/Integer/Long conversion type 'd'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for legal Byte/Short/Integer/Long conversion type 'o'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for legal Byte/Short/Integer/Long conversion type 'x' and 'X'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for Date/Time conversion
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for null argument for Byte/Short/Integer/Long/BigInteger conversion
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for legal BigInteger conversion type 'd'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for padding of BigInteger conversion
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for BigInteger conversion exception
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for BigInteger exception throwing order
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for Float/Double conversion type 'e' and 'E'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for Float/Double conversion type 'g' and 'G'
+[info]   [ok] format(String, Array[Object]) for Float/Double conversion type 'g' and 'G' overflow
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for Float/Double conversion type 'f'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for Float/Double conversion type 'a' and 'A'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for BigDecimal conversion type 'e' and 'E'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=1
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for BigDecimal conversion type 'g' and 'G'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for BigDecimal conversion type 'f'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] format(String, Array[Object]) for exceptions in Float/Double/BigDecimal conversion type 'e', 'E', 'g', 'G', 'f', 'a', 'A'
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=4
+[info] object 0x7ff7997d7c18=4
+[info] ADD chunk (0x7ff817090000 0x7ff817098000)
+[info] ADD chunk (0x7ff817094000 0x7ff817098000)
+[info]   [ok] format(String, Array[Object]) for Float/Double/BigDecimal exception throwing order
+[info]   [ok] format(String, Array[Object]) for BigDecimal exception throwing order
+[info] block (0x7ff817090000 0x7ff817098000)
+[info] object 0x7ff7997b0818=2
+[info] object 0x7ff7997b1018=0 NEXT
+[info] SUPERBLOCK (0x7ff817090000, 0x7ff817098000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=4
+[info] object 0x7ff7997d7c18=4
+[info] ADD chunk (0x7ff817090000 0x7ff817098000)
+[info] ADD chunk (0x7ff817094000 0x7ff817098000)
+[info]   [ok] format(String, Array[Object]) for null argument for Float/Double/BigDecimal conversion
+[info]   [ok] Formatter.BigDecimalLayoutForm.values()
+[info] block (0x7ff817090000 0x7ff817098000)
+[info] object 0x7ff7997b0818=2
+[info] object 0x7ff7997b1018=0 NEXT
+[info] SUPERBLOCK (0x7ff817090000, 0x7ff817098000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=4
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] Formatter.BigDecimalLayoutForm.valueOf(String)
+[info] ADD chunk (0x7ff817090000 0x7ff817098000)
+[info] ADD chunk (0x7ff817094000 0x7ff817098000)
+[info]   [ok] DaylightTime
+[info] block (0x7ff817090000 0x7ff817098000)
+[info] object 0x7ff7997b0818=2
+[info] object 0x7ff7997b1018=0 NEXT
+[info] SUPERBLOCK (0x7ff817090000, 0x7ff817098000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=4
+[info] object 0x7ff7997d7c18=4
+[info] ADD chunk (0x7ff817090000 0x7ff817098000)
+[info] ADD chunk (0x7ff817094000 0x7ff817098000)
+[info]   [ok] ScientificNotation
+[info] * scala.scalanative.native.InstanceOfSuite$
+[info]   [ok] expects casts to Nothing and Null should succeed
+[info]   [ok] expects "".asInstanceOf[String] succeed
+[info]   [ok] expects null.asInstanceOf[String] should succeed
+[info]   [ok] expects a.asInstanceOf[String], where a = null should succeed
+[info]   [ok] expects (new AnyRef).asInstanceOf[AnyRef] should succeeds
+[info]   [ok] expects anyRef.isInstanceOf[String] == false
+[info]   [ok] expects literal null.isInstanceOf[String] == false
+[info]   [ok] expects "".isInstanceOf[String] == true
+[info]   [ok] expects a.isInstanceOf[String] == true, where a = ""
+[info]   [ok] expects a.isInstanceOf[String] == false, where a = null
+[info] * java.nio.AllocByteBufferTest$
+[info]   [ok] allocate
+[info]   [ok] is read only
+[info]   [ok] position
+[info]   [ok] limit
+[info]   [ok] mark and reset
+[info]   [ok] clear
+[info]   [ok] flip
+[info]   [ok] rewind
+[info]   [ok] remaining and has remaining
+[info]   [ok] absolute get
+[info]   [ok] absolute put
+[info]   [ok] relative get
+[info]   [ok] relative put
+[info]   [ok] relative bulk get
+[info]   [ok] relative bulk put
+[info]   [ok] compact
+[info]   [ok] slice
+[info]   [ok] duplicate
+[info]   [ok] order
+[info]   [ok] relative getChar
+[info]   [ok] relative putChar
+[info]   [ok] absolute getChar
+[info]   [ok] absolute putChar
+[info]   [ok] asCharBuffer - Bytes to Chars
+[info]   [ok] asCharBuffer - Chars to Bytes
+[info]   [ok] relative getShort
+[info]   [ok] relative putShort
+[info]   [ok] absolute getShort
+[info]   [ok] absolute putShort
+[info]   [ok] asShortBuffer - Bytes to Shorts
+[info]   [ok] asShortBuffer - Shorts to Bytes
+[info]   [ok] relative getInt
+[info]   [ok] relative putInt
+[info]   [ok] absolute getInt
+[info]   [ok] absolute putInt
+[info]   [ok] asIntBuffer - Bytes to Ints
+[info]   [ok] asIntBuffer - Ints to Bytes
+[info]   [ok] relative getLong
+[info]   [ok] relative putLong
+[info]   [ok] absolute getLong
+[info]   [ok] absolute putLong
+[info]   [ok] asLongBuffer - Bytes to Longs
+[info]   [ok] asLongBuffer - Longs to Bytes
+[info]   [ok] relative getFloat
+[info]   [ok] relative putFloat
+[info]   [ok] absolute getFloat
+[info]   [ok] absolute putFloat
+[info]   [ok] asFloatBuffer - Bytes to Floats
+[info]   [ok] asFloatBuffer - Floats to Bytes
+[info]   [ok] relative getDouble
+[info]   [ok] relative putDouble
+[info]   [ok] absolute getDouble
+[info]   [ok] absolute_putDouble
+[info]   [ok] asDoubleBuffer - Bytes to Doubles
+[info]   [ok] asDoubleBuffer - Doubles to Bytes
+[info] * java.nio.WrappedByteBufferTest$
+[info]   [ok] allocate
+[info]   [ok] is read only
+[info]   [ok] position
+[info]   [ok] limit
+[info]   [ok] mark and reset
+[info]   [ok] clear
+[info]   [ok] flip
+[info]   [ok] rewind
+[info]   [ok] remaining and has remaining
+[info]   [ok] absolute get
+[info]   [ok] absolute put
+[info]   [ok] relative get
+[info]   [ok] relative put
+[info]   [ok] relative bulk get
+[info]   [ok] relative bulk put
+[info]   [ok] compact
+[info]   [ok] slice
+[info]   [ok] duplicate
+[info]   [ok] order
+[info]   [ok] relative getChar
+[info]   [ok] relative putChar
+[info]   [ok] absolute getChar
+[info]   [ok] absolute putChar
+[info]   [ok] asCharBuffer - Bytes to Chars
+[info]   [ok] asCharBuffer - Chars to Bytes
+[info]   [ok] relative getShort
+[info]   [ok] relative putShort
+[info]   [ok] absolute getShort
+[info]   [ok] absolute putShort
+[info]   [ok] asShortBuffer - Bytes to Shorts
+[info]   [ok] asShortBuffer - Shorts to Bytes
+[info]   [ok] relative getInt
+[info]   [ok] relative putInt
+[info]   [ok] absolute getInt
+[info]   [ok] absolute putInt
+[info]   [ok] asIntBuffer - Bytes to Ints
+[info]   [ok] asIntBuffer - Ints to Bytes
+[info]   [ok] relative getLong
+[info]   [ok] relative putLong
+[info]   [ok] absolute getLong
+[info]   [ok] absolute putLong
+[info]   [ok] asLongBuffer - Bytes to Longs
+[info]   [ok] asLongBuffer - Longs to Bytes
+[info]   [ok] relative getFloat
+[info]   [ok] relative putFloat
+[info]   [ok] absolute getFloat
+[info]   [ok] absolute putFloat
+[info]   [ok] asFloatBuffer - Bytes to Floats
+[info]   [ok] asFloatBuffer - Floats to Bytes
+[info]   [ok] relative getDouble
+[info]   [ok] relative putDouble
+[info]   [ok] absolute getDouble
+[info]   [ok] absolute_putDouble
+[info]   [ok] asDoubleBuffer - Bytes to Doubles
+[info]   [ok] asDoubleBuffer - Doubles to Bytes
+[info] * java.nio.ReadOnlyWrappedByteBufferTest$
+[info]   [ok] allocate
+[info]   [ok] is read only
+[info]   [ok] position
+[info]   [ok] limit
+[info]   [ok] mark and reset
+[info]   [ok] clear
+[info]   [ok] flip
+[info]   [ok] rewind
+[info]   [ok] remaining and has remaining
+[info]   [ok] absolute get
+[info]   [ok] absolute put
+[info]   [ok] relative get
+[info]   [ok] relative put
+[info]   [ok] relative bulk get
+[info]   [ok] relative bulk put
+[info]   [ok] compact
+[info]   [ok] slice
+[info]   [ok] duplicate
+[info]   [ok] order
+[info]   [ok] relative getChar
+[info]   [ok] relative putChar
+[info]   [ok] absolute getChar
+[info]   [ok] absolute putChar
+[info]   [ok] asCharBuffer - Bytes to Chars
+[info]   [ok] asCharBuffer - Chars to Bytes
+[info]   [ok] relative getShort
+[info]   [ok] relative putShort
+[info]   [ok] absolute getShort
+[info]   [ok] absolute putShort
+[info]   [ok] asShortBuffer - Bytes to Shorts
+[info]   [ok] asShortBuffer - Shorts to Bytes
+[info]   [ok] relative getInt
+[info]   [ok] relative putInt
+[info]   [ok] absolute getInt
+[info]   [ok] absolute putInt
+[info]   [ok] asIntBuffer - Bytes to Ints
+[info]   [ok] asIntBuffer - Ints to Bytes
+[info]   [ok] relative getLong
+[info]   [ok] relative putLong
+[info]   [ok] absolute getLong
+[info]   [ok] absolute putLong
+[info]   [ok] asLongBuffer - Bytes to Longs
+[info]   [ok] asLongBuffer - Longs to Bytes
+[info]   [ok] relative getFloat
+[info]   [ok] relative putFloat
+[info]   [ok] absolute getFloat
+[info]   [ok] absolute putFloat
+[info]   [ok] asFloatBuffer - Bytes to Floats
+[info]   [ok] asFloatBuffer - Floats to Bytes
+[info]   [ok] relative getDouble
+[info]   [ok] relative putDouble
+[info]   [ok] absolute getDouble
+[info]   [ok] absolute_putDouble
+[info]   [ok] asDoubleBuffer - Bytes to Doubles
+[info]   [ok] asDoubleBuffer - Doubles to Bytes
+[info] * java.nio.SlicedAllocByteBufferTest$
+[info]   [ok] allocate
+[info]   [ok] is read only
+[info]   [ok] position
+[info]   [ok] limit
+[info]   [ok] mark and reset
+[info]   [ok] clear
+[info]   [ok] flip
+[info]   [ok] rewind
+[info]   [ok] remaining and has remaining
+[info]   [ok] absolute get
+[info]   [ok] absolute put
+[info]   [ok] relative get
+[info]   [ok] relative put
+[info]   [ok] relative bulk get
+[info]   [ok] relative bulk put
+[info]   [ok] compact
+[info]   [ok] slice
+[info]   [ok] duplicate
+[info]   [ok] order
+[info]   [ok] relative getChar
+[info]   [ok] relative putChar
+[info]   [ok] absolute getChar
+[info]   [ok] absolute putChar
+[info]   [ok] asCharBuffer - Bytes to Chars
+[info]   [ok] asCharBuffer - Chars to Bytes
+[info]   [ok] relative getShort
+[info]   [ok] relative putShort
+[info]   [ok] absolute getShort
+[info]   [ok] absolute putShort
+[info]   [ok] asShortBuffer - Bytes to Shorts
+[info]   [ok] asShortBuffer - Shorts to Bytes
+[info]   [ok] relative getInt
+[info]   [ok] relative putInt
+[info]   [ok] absolute getInt
+[info]   [ok] absolute putInt
+[info]   [ok] asIntBuffer - Bytes to Ints
+[info]   [ok] asIntBuffer - Ints to Bytes
+[info]   [ok] relative getLong
+[info]   [ok] relative putLong
+[info]   [ok] absolute getLong
+[info]   [ok] absolute putLong
+[info]   [ok] asLongBuffer - Bytes to Longs
+[info]   [ok] asLongBuffer - Longs to Bytes
+[info]   [ok] relative getFloat
+[info]   [ok] relative putFloat
+[info]   [ok] absolute getFloat
+[info]   [ok] absolute putFloat
+[info]   [ok] asFloatBuffer - Bytes to Floats
+[info]   [ok] asFloatBuffer - Floats to Bytes
+[info]   [ok] relative getDouble
+[info]   [ok] relative putDouble
+[info]   [ok] absolute getDouble
+[info]   [ok] absolute_putDouble
+[info]   [ok] asDoubleBuffer - Bytes to Doubles
+[info]   [ok] asDoubleBuffer - Doubles to Bytes
+[info] * scala.scalanative.native.CStringSuite$
+[info]   [ok] fromCString
+[info]   [ok] toCString
+[info] * java.io.FileOutputStreamSuite$
+[info]   [ok] write null
+[info]   [ok] write out of bounds negative count
+[info]   [ok] write out of bounds negative offset
+[info]   [ok] write out of bounds array too small
+[info]   [ok] attempt to open a readonly regular file
+[info]   [ok] attempt to open a directory
+[info]   [ok] attempt to create a file in a readonly directory
+[info]   [ok] truncate a file on initialization if append=false
+[info]   [ok] do not truncate a file on initialization if append=true
+[info] * java.io.BufferedWriterSuite$
+[info] block (0x7ff817090000 0x7ff817098000)
+[info] object 0x7ff7997b0818=2
+[info] object 0x7ff7997b1018=2 NEXT
+[info] SUPERBLOCK (0x7ff817090000, 0x7ff817098000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=4
+[info] object 0x7ff7997d7c18=4
+[info] ADD chunk (0x7ff817090000 0x7ff817098000)
+[info] ADD chunk (0x7ff817094000 0x7ff817098000)
+[info]   [ok] Creating a `BufferedWriter` with a buffer of size 0 throws an exception
+[info]   [ok] Can write small chunks to a `BufferedWriter`
+[info]   [ok] Can write a chunk larger than buffer size to a `BufferedWriter`
+[info]   [ok] Closing twice is harmless
+[info] * java.lang.MathSuite$
+[info]   [ok] max
+[info]   [ok] min
+[info] * java.util.zip.CRC32Suite$
+[info] block (0x7ff817090000 0x7ff817098000)
+[info] object 0x7ff7997b0818=2
+[info] object 0x7ff7997b1018=0 NEXT
+[info] SUPERBLOCK (0x7ff817090000, 0x7ff817098000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=4
+[info] object 0x7ff7997d7c18=4
+[info] ADD chunk (0x7ff8170e0000 0x7ff8170e8000)
+[info] ADD chunk (0x7ff8170e4000 0x7ff8170e8000)
+[info]   [ok] Constructor()
+[info]   [ok] getValue()
+[info]   [ok] update(Array[Byte])
+[info]   [ok] update(Array[Byte], Int, Int)
+[info] * java.io.FileWriterSuite$
+[info]   [ok] write to new file
+[info] * scala.ArrayDoubleCopySuite$
+[info]   [ok] array[Double]: init
+[info]   [ok] array[Double]: copy to another array
+[info]   [ok] array[Double]: copy zero elements from empty array
+[info]   [ok] array[Double]: copy to self without overlap (1/2)
+[info]   [ok] array[Double]: copy to self without overlap (2/2)
+[info]   [ok] array[Double]: copy to self with overlap and backward copy
+[info]   [ok] array[Double]: copy to self with overlap and forward copy
+[info]   [ok] array[Double]: throws NullPointerException if from is null
+[info]   [ok] array[Double]: throws NullPointerException if to is null
+[info]   [ok] array[Double]: throws IndexOutOfBoundsException if length is negative
+[info]   [ok] array[Double]: throws IndexOutOfBoundsException if toPos + len > to.length
+[info]   [ok] array[Double]: throws IndexOutOfBoundsException if fromPos + len > from.length
+[info]   [ok] array[Double]: throws IndexOutOfBoundsException if toPos is negative
+[info]   [ok] array[Double]: throws IndexOutOfBoundsException if fromPos is negative
+[info]   [ok] array[Double]: throws ArrayStoreException if copy to a different type of array
+[info] * java.io.BufferedOutputStreamSuite$
+[info] block (0x7ff8170e0000 0x7ff8170e8000)
+[info] object 0x7ff7997b5818=2
+[info] object 0x7ff7997b6018=0 NEXT
+[info] SUPERBLOCK (0x7ff8170e0000, 0x7ff8170e8000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=4
+[info] object 0x7ff7997d7c18=4
+[info] ADD chunk (0x7ff817138000 0x7ff817140000)
+[info] ADD chunk (0x7ff81713c000 0x7ff817140000)
+[info] block (0x7ff817138000 0x7ff817140000)
+[info] object 0x7ff7997bb018=4
+[info] object 0x7ff7997bb418=1
+[info] ADD chunk (0x7ff81713c000 0x7ff817140000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=4
+[info] object 0x7ff7997d7c18=4
+[info] ADD chunk (0x7ff8170f0000 0x7ff8170f8000)
+[info] ADD chunk (0x7ff8170f6000 0x7ff8170f8000)
+[info] block (0x7ff8170f0000 0x7ff8170f8000)
+[info] object 0x7ff7997b6818=4
+[info] object 0x7ff7997b6e18=1
+[info] ADD chunk (0x7ff8170f6000 0x7ff8170f8000)
+[info] block (0x7ff817138000 0x7ff817140000)
+[info] object 0x7ff7997bb018=2
+[info] object 0x7ff7997bb818=0 NEXT
+[info] SUPERBLOCK (0x7ff817138000, 0x7ff817140000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff8170f0000 0x7ff8170f8000)
+[info] object 0x7ff7997b6818=4
+[info] object 0x7ff7997b6e18=1
+[info] ADD chunk (0x7ff8170f6000 0x7ff8170f8000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff8170f0000 0x7ff8170f8000)
+[info] object 0x7ff7997b6818=4
+[info] object 0x7ff7997b6e18=1
+[info] ADD chunk (0x7ff8170f6000 0x7ff8170f8000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff8170f0000 0x7ff8170f8000)
+[info] object 0x7ff7997b6818=4
+[info] object 0x7ff7997b6e18=1
+[info] ADD chunk (0x7ff8170f6000 0x7ff8170f8000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff8170f0000 0x7ff8170f8000)
+[info] object 0x7ff7997b6818=4
+[info] object 0x7ff7997b6e18=1
+[info] ADD chunk (0x7ff8170f6000 0x7ff8170f8000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff8170f0000 0x7ff8170f8000)
+[info] object 0x7ff7997b6818=4
+[info] object 0x7ff7997b6e18=1
+[info] ADD chunk (0x7ff8170f6000 0x7ff8170f8000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] block (0x7ff8170f0000 0x7ff8170f8000)
+[info] object 0x7ff7997b6818=4
+[info] object 0x7ff7997b6e18=1
+[info] ADD chunk (0x7ff8170f6000 0x7ff8170f8000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info]   [ok] Constructor(OutputStream)
+[info]   [ok] Constructor(OutputStream, Int)
+[info]   [ok] Size must be > 0
+[info]   [ok] flush()
+[info]   [ok] write(Array[Byte], Int, Int)
+[info]   [ok] write(Array[Byte], Int, Int)
+[info]   [ok] write(Int)
+[info]   [ok] close()
+[info]   [ok] Write scenario 1
+[info]   [ok] Write scenario 2
+[info]   [ok] Write scenario 3
+[info]   [ok] flush on closed stream
+[info]   [ok] creating a buffer of negative size throws IllegalArgumentException
+[info]   [ok] write to closed Buffer throws IOException
+[info]   [ok] simple write
+[info]   [ok] write without flush does nothing
+[info]   [ok] simple write Array
+[info]   [ok] write array with bad index or length throw exceptions
+[info] * java.nio.file.PathsSuite$
+[info]   [ok] Paths.get(relative path) returns a path relative to cwd
+[info]   [ok] Paths.get(absolute path) returns an absolute path
+[info]   [ok] Paths.get(URI) throws an exception when the scheme is missing
+[info]   [ok] Paths.get(URI) throws an exception when the scheme is different from `file`
+[info]   [ok] Paths.get(URI) returns a path if the scheme is `file`
+[info] * java.io.PushbackInputStreamSuite$
+[info] block (0x7ff8170f0000 0x7ff8170f8000)
+[info] object 0x7ff7997b6818=4
+[info] object 0x7ff7997b6e18=1
+[info] ADD chunk (0x7ff8170f6000 0x7ff8170f8000)
+[info] block (0x7ff817300000 0x7ff817308000)
+[info] object 0x7ff7997d7818=2
+[info] ADD chunk (0x7ff817300000 0x7ff817304000)
+[info] object 0x7ff7997d7c18=4
+[info] ADD chunk (0x7ff817068000 0x7ff817080000)
+[info] tests-out: /home/valdis/scala-native/unit-tests/target/scala-2.11/native/lib/gc/immix/Heap.c:124: word_t *Heap_AllocLarge(Heap *, uint32_t): Assertion `Heap_IsWordInHeap(heap, (word_t *)object)' failed.
+[info]   [ok] reset()
+[info]   [ok] mark()
+[info]   [ok] Constructor(InputStream)
+[info]   [ok] Constructor(InputStream, Int)
+[info] Process 8836 stopped
+[info] * thread #1, name = 'tests-out', stop reason = signal SIGABRT
+[info]     frame #0: 0x00007ffff6614e97 libc.so.6`__GI_raise(sig=2) at raise.c:51
+[info] 
+[info] Process 8836 launched: '/home/valdis/scala-native/unit-tests/target/scala-2.11/tests-out' (x86_64)
+[info] (lldb) bt
+[info] * thread #1, name = 'tests-out', stop reason = signal SIGABRT
+[info]   * frame #0: 0x00007ffff6614e97 libc.so.6`__GI_raise(sig=2) at raise.c:51
+[info]     frame #1: 0x00007ffff6616801 libc.so.6`__GI_abort at abort.c:79
+[info]     frame #2: 0x00007ffff660639a libc.so.6`__assert_fail_base(fmt="%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", assertion="Heap_IsWordInHeap(heap, (word_t *)object)", file="/home/valdis/scala-native/unit-tests/target/scala-2.11/native/lib/gc/immix/Heap.c", line=124, function=<unavailable>) at assert.c:92
+[info]     frame #3: 0x00007ffff6606412 libc.so.6`__GI___assert_fail(assertion=<unavailable>, file=<unavailable>, line=<unavailable>, function=<unavailable>) at assert.c:101
+[info]     frame #4: 0x0000000000b599bc tests-out`Heap_AllocLarge + 252
+[info]     frame #5: 0x0000000000b58d74 tests-out`scalanative_alloc_atomic + 20
+[info]     frame #6: 0x00000000009f95db tests-out`scala.scalanative.runtime.ByteArray$::alloc_i32_scala.scalanative.runtime.ByteArray + 59
+[info]     frame #7: 0x0000000000725155 tests-out`java.io.PushbackInputStream::init_java.io.InputStream_i32 + 69
+[info]     frame #8: 0x000000000072526c tests-out`java.io.PushbackInputStreamSuite$::java$io$PushbackInputStreamSuite$$getPIS_java.io.PushbackInputStream + 140
+[info]     frame #9: 0x000000000085ad76 tests-out`java.io.PushbackInputStreamSuite$$anonfun$5::apply$mcV$sp_unit + 22
+[info]     frame #10: 0x00000000009d2c3b tests-out`tests.Suite$$anonfun$test$1::apply$mcZ$sp_bool + 43
+[info]     frame #11: 0x000000000095ac52 tests-out`tests.Suite$$anonfun$run$2::apply_tests.Test_unit + 50
+[info]     frame #12: 0x000000000081f896 tests-out`tests.Suite$$anonfun$run$2::apply_java.lang.Object_java.lang.Object + 6
+[info]     frame #13: 0x000000000070c6f5 tests-out`scala.collection.mutable.UnrolledBuffer$Unrolled::foreach_scala.Function1_unit + 213
+[info]     frame #14: 0x00000000009f7a66 tests-out`scala.collection.mutable.UnrolledBuffer::foreach_scala.Function1_unit + 22
+[info]     frame #15: 0x0000000000b32260 tests-out`tests.Suite::run_sbt.testing.EventHandler_arr.sbt.testing.Logger_bool + 240
+[info]     frame #16: 0x00000000008d9143 tests-out`tests.NativeTask::execute_sbt.testing.EventHandler_arr.sbt.testing.Logger_arr.sbt.testing.Task + 67
+[info]     frame #17: 0x0000000000b31f44 tests-out`scala.scalanative.testinterface.TestMainBase$$anonfun$3::apply_sbt.testing.Task_arr.sbt.testing.Task + 20
+[info]     frame #18: 0x000000000073fe16 tests-out`scala.scalanative.testinterface.TestMainBase$$anonfun$3::apply_java.lang.Object_java.lang.Object + 6
+[info]     frame #19: 0x00000000007c1a10 tests-out`scala.Option::map_scala.Function1_scala.Option + 112
+[info]     frame #20: 0x0000000000a81cb5 tests-out`scala.scalanative.testinterface.TestMainBase::testRunner_arr.sbt.testing.Task_sbt.testing.Runner_java.net.Socket_unit + 1461
+[info]     frame #21: 0x000000000073ff5d tests-out`scala.scalanative.testinterface.TestMainBase::testMain_arr.java.lang.String_unit + 317
+[info]     frame #22: 0x0000000000b31f26 tests-out`scala.scalanative.testinterface.TestMain$::main_arr.java.lang.String_unit + 6
+[info]     frame #23: 0x000000000090765d tests-out`main + 109
+[info]     frame #24: 0x00007ffff65f7b97 libc.so.6`__libc_start_main(main=(tests-out`main), argc=2, argv=0x00007fffffffdb68, init=<unavailable>, fini=<unavailable>, rtld_fini=<unavailable>, stack_end=0x00007fffffffdb58) at libc-start.c:310
+[info]     frame #25: 0x00000000006f430a tests-out`_start + 42
+[info] (lldb) q
+java.net.SocketException: Socket is closed
+	at java.net.Socket.setSoTimeout(Socket.java:1137)
+	at scala.scalanative.testinterface.ComRunner.receive(ComRunner.scala:107)
+	at scala.scalanative.testinterface.ScalaNativeRunner.receive(ScalaNativeRunner.scala:36)
+	at scala.scalanative.testinterface.ScalaNativeTask.receive$1(ScalaNativeTask.scala:31)
+	at scala.scalanative.testinterface.ScalaNativeTask.execute(ScalaNativeTask.scala:42)
+	at sbt.TestRunner.runTest$1(TestFramework.scala:76)
+	at sbt.TestRunner.run(TestFramework.scala:85)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+[error] Could not run test java.io.PushbackInputStreamSuite: java.net.SocketException: Socket is closed
+java.lang.NullPointerException
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:78)
+	at sbt.JUnitXmlTestsListener$TestSuite$$anonfun$2.apply(JUnitXmlTestsListener.scala:71)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.generic.TraversableForwarder$class.foreach(TraversableForwarder.scala:32)
+	at scala.collection.mutable.ListBuffer.foreach(ListBuffer.scala:45)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at sbt.JUnitXmlTestsListener$TestSuite.stop(JUnitXmlTestsListener.scala:71)
+	at sbt.JUnitXmlTestsListener.writeSuite(JUnitXmlTestsListener.scala:180)
+	at sbt.JUnitXmlTestsListener.endGroup(JUnitXmlTestsListener.scala:161)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestRunner$$anonfun$run$4.apply(TestFramework.scala:90)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at sbt.TestFramework$$anonfun$safeForeach$1.apply(TestFramework.scala:107)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at sbt.TestFramework$.safeForeach(TestFramework.scala:107)
+	at sbt.TestRunner.safeListenersCall(TestFramework.scala:96)
+	at sbt.TestRunner.run(TestFramework.scala:90)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+[error] java.lang.NullPointerException
+scala.scalanative.build.BuildException: Test runner not running.
+	at scala.scalanative.testinterface.ComRunner.send(ComRunner.scala:69)
+	at scala.scalanative.testinterface.ScalaNativeRunner.send(ScalaNativeRunner.scala:33)
+	at scala.scalanative.testinterface.ScalaNativeTask.execute(ScalaNativeTask.scala:27)
+	at sbt.TestRunner.runTest$1(TestFramework.scala:76)
+	at sbt.TestRunner.run(TestFramework.scala:85)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1$$anonfun$apply$8.apply(TestFramework.scala:202)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:185)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFramework$$anon$2$$anonfun$$init$$1.apply(TestFramework.scala:202)
+	at sbt.TestFunction.apply(TestFramework.scala:207)
+	at sbt.Tests$.sbt$Tests$$processRunnable$1(Tests.scala:239)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.Tests$$anonfun$makeSerial$1.apply(Tests.scala:245)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$3$$anonfun$apply$2.apply(System.scala:44)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)

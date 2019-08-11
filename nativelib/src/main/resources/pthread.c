@@ -65,14 +65,10 @@ int scalanative_pthread_scope_process() { return PTHREAD_SCOPE_PROCESS; }
 
 int scalanative_pthread_scope_system() { return PTHREAD_SCOPE_SYSTEM; }
 
-pthread_cond_t scalanative_pthread_cond_initializer() {
-    return (pthread_cond_t)PTHREAD_COND_INITIALIZER;
-}
+int scalanative_pthread_process_private() { return PTHREAD_PROCESS_PRIVATE; }
 
-pthread_mutex_t scalanative_pthread_mutex_initializer() {
-    return (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
-}
+int scalanative_pthread_scope_process() { return PTHREAD_SCOPE_PROCESS; }
 
-pthread_rwlock_t scalanative_pthread_rwlock_initializer() {
-    return (pthread_rwlock_t)PTHREAD_RWLOCK_INITIALIZER;
-}
+int scalanative_pthread_scope_system() { return PTHREAD_SCOPE_SYSTEM; }
+
+pthread_rwlock_t scalanative_pthread_rwlock_initializer() { return PTHREAD_RWLOCK_INITIALIZER; }

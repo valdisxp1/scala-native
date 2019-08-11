@@ -66,6 +66,10 @@ int scalanative_libc_sigterm() { return SIGTERM; }
 
 int scalanative_libc_sigusr1() { return SIGUSR1; }
 
+int scalanative_libc_sigrtmin() { return SIGRTMIN; }
+
+int scalanative_libc_sigrtmax() { return SIGRTMAX; }
+
 int scalanative_libc_rand_max() { return RAND_MAX; }
 
 float scalanative_libc_huge_valf() { return HUGE_VALF; }

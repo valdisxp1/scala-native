@@ -1,0 +1,1997 @@
+[info] Loading project definition from /home/valdis/scala-native/project
+[info] Resolving key references (12156 settings) ...
+[info] Set current project to scala-native (in build file:/home/valdis/scala-native/)
+[success] Total time: 4 s, completed Sep 29, 2018 3:50:43 PM
+[success] Total time: 0 s, completed Sep 29, 2018 3:50:43 PM
+[success] Total time: 0 s, completed Sep 29, 2018 3:50:43 PM
+[info] Fetching Scala source version 2.11.12 from /home/valdis/scala-2.11.11-only
+[info] Updating {file:/home/valdis/scala-native/}nscplugin...
+[info] Packaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:50:43 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/nscplugin/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/nscplugin/target/scala-2.11/api...
+[info] Compiling 45 Scala sources to /home/valdis/scala-native/nscplugin/target/scala-2.11/classes...
+[info] Checking out Scala source version 2.11.12
+model contains 266 documentable templates
+[warn] /home/valdis/scala-native/nir/src/main/scala/scala/scalanative/nir/Types.scala:24: match may not be exhaustive.
+[warn] It would fail on the following inputs: Byte, Int, Long, Short, UByte, UInt, ULong, UShort
+[warn]     def printType(ty: nir.Type): Unit = ty match {
+[warn]                                         ^
+[warn] /home/valdis/scala-native/nscplugin/src/main/scala/scala/scalanative/nscplugin/NirGenExpr.scala:1354: match may not be exhaustive.
+[warn] It would fail on the following inputs: (ArrayValue(_, _), ArrayValue(_, _)), (Function(_, _), ArrayValue(_, _)), (None, ArrayValue(_, _)), (Ptr, ArrayValue(_, _)), (StructValue(_, _), ArrayValue(_, _)), (Vararg, ArrayValue(_, _))
+[warn]         val conv = (fromty, toty) match {
+[warn]                    ^
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[warn] there were two unchecked warnings; re-run with -unchecked for details
+[warn] three warnings found
+[info] Packaging /home/valdis/scala-native/nscplugin/target/scala-2.11/nscplugin_2.11.12-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/poms/nscplugin_2.11.12.pom
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/jars/nscplugin_2.11.12.jar
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/srcs/nscplugin_2.11.12-sources.jar
+[info] 	published nscplugin_2.11.12 to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/docs/nscplugin_2.11.12-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/nscplugin_2.11.12/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Updating {file:/home/valdis/scala-native/}nativelib...
+[info] Wrote /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Done packaging.
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:51:00 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/nativelib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 42 Scala sources to /home/valdis/scala-native/nativelib/target/scala-2.11/classes...
+[info] Main Scala API documentation to /home/valdis/scala-native/nativelib/target/scala-2.11/api...
+[warn] dropping dependency on node with no phase object: mixin
+[warn] there were 25 feature warnings; re-run with -feature for details
+model contains 200 documentable templates
+[warn] one warning found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[warn] there were 25 feature warnings; re-run with -feature for details
+[warn] one warning found
+[info] Because /home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/package.scala contains a macro definition, the following dependencies are invalidated unconditionally:
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/java/lang/Class.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/java/lang/Object.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/Ptr.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/native/Zone.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Arrays.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Boxes.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/DeleteOnExit.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/GC.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Intrinsics.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Platform.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/Shutdown.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/libc.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/package.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/time.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/unwind.scala
+[info] 	/home/valdis/scala-native/nativelib/src/main/scala/scala/scalanative/runtime/zlib.scala
+[info] Packaging /home/valdis/scala-native/nativelib/target/scala-2.11/nativelib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/nativelib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/nativelib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/nativelib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published nativelib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/nativelib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/nativelib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/clib/target/scala-2.11/clib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}clib...
+[info] Wrote /home/valdis/scala-native/clib/target/scala-2.11/clib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:51:06 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/clib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/clib/target/scala-2.11/api...
+[info] Compiling 9 Scala sources to /home/valdis/scala-native/clib/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 16 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/clib/target/scala-2.11/clib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/clib/target/scala-2.11/clib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published clib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/clib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published clib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/clib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published clib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/clib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published clib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/clib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/clib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Updating {file:/home/valdis/scala-native/}posixlib...
+[info] Packaging /home/valdis/scala-native/posixlib/target/scala-2.11/posixlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Wrote /home/valdis/scala-native/posixlib/target/scala-2.11/posixlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Done packaging.
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:51:07 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/posixlib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/posixlib/target/scala-2.11/api...
+[info] Compiling 31 Scala sources to /home/valdis/scala-native/posixlib/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 62 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/posixlib/target/scala-2.11/posixlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/posixlib/target/scala-2.11/posixlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published posixlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/posixlib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published posixlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/posixlib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published posixlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/posixlib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published posixlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/posixlib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/posixlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Updating {file:/home/valdis/scala-native/}javalib...
+[info] Wrote /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Packaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Done packaging.
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:51:10 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/javalib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Packaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Compiling 382 Scala sources to /home/valdis/scala-native/javalib/target/scala-2.11/classes...
+[info] Packaging /home/valdis/scala-native/javalib/target/scala-2.11/javalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/javalib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/javalib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/javalib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published javalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/javalib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/javalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Updating {file:/home/valdis/scala-native/}auxlib...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:51:27 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/auxlib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/auxlib/target/scala-2.11/api...
+[info] Compiling 5 Scala sources to /home/valdis/scala-native/auxlib/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 46 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/auxlib/target/scala-2.11/auxlib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/auxlib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/auxlib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/auxlib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published auxlib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/auxlib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/auxlib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Updating {file:/home/valdis/scala-native/}scalalib...
+[info] Wrote /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Packaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Done packaging.
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:51:28 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/scalalib/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 582 Scala sources to /home/valdis/scala-native/scalalib/target/scala-2.11/classes...
+[info] Main Scala API documentation to /home/valdis/scala-native/scalalib/target/scala-2.11/api...
+[warn] dropping dependency on node with no phase object: mixin
+[warn] there were two deprecation warnings; re-run with -deprecation for details
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenIterableLike.scala:101: Could not find the type $Coll points to while expanding it for the usecase signature of method zipWithIndex in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def zipWithIndex: $Coll[(A, Int)]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenIterableLike.scala:73: Could not find the type $Coll points to while expanding it for the usecase signature of method zip in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def zip[B](that: GenIterable[B]): $Coll[(A, B)]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:364: Could not find the type $Coll points to while expanding it for the usecase signature of method padTo in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def padTo(len: Int, elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:332: Could not find the type $Coll points to while expanding it for the usecase signature of method :+ in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def :+(elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:296: Could not find the type $Coll points to while expanding it for the usecase signature of method +: in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def +:(elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:280: Could not find the type $Coll points to while expanding it for the usecase signature of method updated in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def updated(index: Int, elem: A): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:262: Could not find the type $Coll points to while expanding it for the usecase signature of method patch in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def patch(from: Int, that: GenSeq[A], replaced: Int): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala:467: Could not find the type $Coll points to while expanding it for the usecase signature of method intersect in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def intersect(that: Seq[A]): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala:436: Could not find the type $Coll points to while expanding it for the usecase signature of method diff in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def diff(that: Seq[A]): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala:412: Could not find the type $Coll points to while expanding it for the usecase signature of method union in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def union(that: Seq[A]): $Coll[A]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenSeqLike.scala:212: Could not find the type $Coll points to while expanding it for the usecase signature of method reverseMap in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def reverseMap[B](f: A => B): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenIterableLike.scala:128: Could not find the type $Coll points to while expanding it for the usecase signature of method zipAll in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def zipAll[B](that: Iterable[B], thisElem: A, thatElem: B): $Coll[(A, B)]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:190: Could not find the type $Coll points to while expanding it for the usecase signature of method collect in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def collect[B](pf: PartialFunction[A, B]): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:211: Could not find the type $Coll points to while expanding it for the usecase signature of method flatMap in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def flatMap[B](f: A => GenTraversableOnce[B]): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:172: Could not find the type $Coll points to while expanding it for the usecase signature of method map in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def map[B](f: A => B): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/TraversableLike.scala:165: Could not find the type $Coll points to while expanding it for the usecase signature of method ++: in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def ++:[B](that: TraversableOnce[B]): $Coll[B]
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/GenTraversableLike.scala:253: Could not find the type $Coll points to while expanding it for the usecase signature of method ++ in class StringOps.In this context, $Coll = "String".
+[warn]    *  @usecase def ++[B](that: GenTraversableOnce[B]): $Coll[B]
+[warn]                ^
+model contains 1293 documentable templates
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:88: Could not find any member to link for "`java.lang.ExceptionInInitializerError`".
+[warn]   /** Returns the `Class` object associated with the class or interface with the given string name using the current `ClassLoader`.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:81: Could not find any member to link for "`java.lang.NullPointerException`".
+[warn]   /** Assigns the value of 0 to each element in the array.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:54: Could not find any member to link for "`java.lang.NullPointerException`".
+[warn]   /** Creates a new array of the specified type and given length.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/compat/Platform.scala:30: Could not find any member to link for "java.lang.NullPointerException".
+[warn]   /** Copies `length` elements of array `src` starting at position `srcPos` to the
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:722: Variable month undefined in comment for object Groups in object Regex
+[warn]    *  val day = date replaceAllIn(text, _ match { case Groups(_, month, day) => s"$month/$day" })
+[warn]                                                                                    ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:722: Variable day undefined in comment for object Groups in object Regex
+[warn]    *  val day = date replaceAllIn(text, _ match { case Groups(_, month, day) => s"$month/$day" })
+[warn]                                                                                           ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:61: Variable year undefined in comment for class Regex in class Regex
+[warn]  *    case date(year, month, day) => s"$year was a good year for PLs."
+[warn]                                         ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:80: Variable year undefined in comment for class Regex in class Regex
+[warn]  *    case date(year, _*) => s"$year was a good year for PLs."
+[warn]                                 ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:120: Variable s undefined in comment for class Regex in class Regex
+[warn]  *  val oldies = mi filter (_ => (mi group 1).toInt < 1960) map (s => s"$s: An oldie but goodie.")
+[warn]                                                                          ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:135: Variable c undefined in comment for class Regex in class Regex
+[warn]  *  val months      = (0 to 11) map { i => val c = Calendar.getInstance; c.set(2014, i, 1); f"$c%tb" }
+[warn]                                                                                                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:136: Variable months(m.toInt - 1) undefined in comment for class Regex in class Regex
+[warn]  *  val reformatted = date replaceAllIn (dates, _ match { case date(y,m,d) => f"${months(m.toInt - 1)} $d, $y" })
+[warn]                                                                                  ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:136: Variable d undefined in comment for class Regex in class Regex
+[warn]  *  val reformatted = date replaceAllIn (dates, _ match { case date(y,m,d) => f"${months(m.toInt - 1)} $d, $y" })
+[warn]                                                                                                         ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:136: Variable y undefined in comment for class Regex in class Regex
+[warn]  *  val reformatted = date replaceAllIn (dates, _ match { case date(y,m,d) => f"${months(m.toInt - 1)} $d, $y" })
+[warn]                                                                                                             ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:546: Variable year undefined in comment for method unanchored in class Regex
+[warn]    *    case date(year, month, day) => s"Copyright $year"                  // OK
+[warn]                                                     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:462: Variable m group "month" undefined in comment for method replaceAllIn in class Regex
+[warn]    * val repl = datePattern replaceAllIn (text, m => s"${m group "month"}/${m group "day"}")
+[warn]                                                         ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:462: Variable m group "day" undefined in comment for method replaceAllIn in class Regex
+[warn]    * val repl = datePattern replaceAllIn (text, m => s"${m group "month"}/${m group "day"}")
+[warn]                                                                            ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:348: Variable x undefined in comment for method findAllIn in class Regex
+[warn]    *    case madhatter(x,y) => s"$x$y"
+[warn]                                   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:348: Variable y undefined in comment for method findAllIn in class Regex
+[warn]    *    case madhatter(x,y) => s"$x$y"
+[warn]                                     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Queue.scala:51: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the `n`-th element of this queue.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala:22: Variable 1 undefined in comment for trait ClassTag in trait ClassTag
+[warn]  *   mkArray: [T](elems: T*)(implicit evidence$1: scala.reflect.ClassTag[T])Array[T]
+[warn]                                                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Range.scala:409: Tag '@pre' is not recognised
+[warn]   /** Counts the number of range elements.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Queue.scala:121: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns a tuple with the first element in the queue,
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/PriorityQueue.scala:137: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the element with the highest priority in the queue,
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/Queue.scala:58: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the first element in the queue, and removes this element
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/concurrent/duration/Duration.scala:693: Could not find any member to link for "ArithmeticException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:144: Variable name undefined in comment for macro method f in class StringContext
+[warn]    *    println(f"$name%s is $height%2.2f meters tall")  // James is 1.90 meters tall
+[warn]                    ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:144: Variable height undefined in comment for macro method f in class StringContext
+[warn]    *    println(f"$name%s is $height%2.2f meters tall")  // James is 1.90 meters tall
+[warn]                               ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:304: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /** Uses the underlying string as a pattern (in a fashion similar to
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:321: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /** Like `format(args*)` but takes an initial `Locale` parameter
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Queue.scala:140: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the first element in the queue, or throws an error if there
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Option.scala:109: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the option's value.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/Either.scala:276: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]     /**
+[warn]     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/Either.scala:441: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]     /**
+[warn]     ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/ListSet.scala:129: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stream.scala:218: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Gives constant time access to the first element of this `Stream`.  Using
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/annotation/implicitNotFound.scala:15: Variable Xi undefined in comment for class implicitNotFound in class implicitNotFound
+[warn]  * result of replacing all occurrences of ${Xi} in the string msg with the
+[warn]                                            ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/ListSet.scala:112: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Creates a new iterator over all elements contained in this set.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:20: Variable name undefined in comment for class StringContext in class StringContext
+[warn]  *   println(s"Hello, $name")  // Hello, James
+[warn]                        ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:26: Variable name undefined in comment for class StringContext in class StringContext
+[warn]  *   s"Hello, $name"
+[warn]                ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:44: Variable a undefined in comment for class StringContext in class StringContext
+[warn]  *    val x: JSONObject = json"{ a: $a }"
+[warn]                                      ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stack.scala:110: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Removes the top element from the stack.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/Stack.scala:139: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Removes the top element from the stack.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Console.scala:150: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /** Prints its arguments as a formatted string to the default output,
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/Source.scala:181: Variable Positioner undefined in comment for class Source in class Source
+[warn]  *  [[scala.io.Source$Positioner the positioner]].
+[warn]                       ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:76: Variable name undefined in comment for method s in class StringContext
+[warn]    *    println(s"Hello, $name")  // Hello, James
+[warn]                           ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:78: Variable name undefined in comment for method s in class StringContext
+[warn]    *  In this example, the expression $name is replaced with the `toString` of the
+[warn]                                        ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala:83: Variable 1 + 1 undefined in comment for method s in class StringContext
+[warn]    *    println(s"1 + 1 = ${1 + 1}")
+[warn]                            ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/TraversableLike.scala:414: Could not find any member to link for "`UnsupportedOperationException`".
+[warn]   /** Selects all elements except the first.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/ListSet.scala:134: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:258: Could not find any member to link for "java.lang.IllegalArgumentException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:262: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:282: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:278: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:270: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:274: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:266: Could not find any member to link for "java.lang.NumberFormatException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stack.scala:100: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the top element of the stack. An error is signaled if
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/Stack.scala:129: Could not find any member to link for "java.util.NoSuchElementException".
+[warn]   /** Returns the top element of the stack. This method will not remove
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/unchecked.scala:11: Could not find any member to link for "java.lang.ClassCastException".
+[warn] /** An annotation to designate that the annotated entity
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Predef.scala:20: Could not find any member to link for "scala.LowPriorityImplicits".
+[warn] /** The `Predef` object provides definitions that are accessible in all Scala
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:35: Could not find any member to link for "java.util.regex".
+[warn] /** A regular expression is used to determine whether a string matches a pattern
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:729: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** A class to step through a sequence of regex matches.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:321: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Return all non-overlapping matches of this `Regex` in the given character 
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala:193: Could not find any member to link for "java.lang.CharSequence".
+[warn]   /** Tries to match a [[java.lang.CharSequence]].
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/StringBuilder.scala:56: Could not find any member to link for "NegativeArraySizeException".
+[warn]   /** Constructs a string builder with no characters in it and an
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala:166: Could not find any member to link for "java.lang.String#replaceAll".
+[warn]   /** Replace all literal occurrences of `literal` with the string `replacement`.
+[warn]   ^
+[warn] there were 114 deprecation warnings; re-run with -deprecation for details
+[warn] one warning found
+[info] Because /home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/package.scala contains a macro definition, the following dependencies are invalidated unconditionally:
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/Array.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/Predef.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/beans/ScalaBeanInfo.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/SeqLike.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/concurrent/TrieMap.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/PagedSeq.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/RedBlackTree.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/StringLike.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/TrieIterator.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/AVLTree.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/ArrayOps.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/ArrayStack.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/StringBuilder.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/WrappedArray.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/package.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/ParIterableLike.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/immutable/ParHashMap.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/immutable/ParHashSet.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParArray.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParHashMap.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParHashSet.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/ParHashTable.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/mutable/UnrolledParArrayCombiner.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/parallel/package.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassManifestDeprecatedApis.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/Manifest.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/runtime/ScalaRunTime.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/sys/process/Process.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/MurmurHash.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/Sorting.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/control/Exception.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/matching/Regex.scala
+[info] Because /home/valdis/scala-native/scalalib/src/main/scala/scala/StringContext.scala contains a macro definition, the following dependencies are invalidated unconditionally:
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/Enumeration.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/Iterator.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/collection/mutable/ListBuffer.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/concurrent/duration/Duration.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/runtime/ScalaRunTime.scala
+[info] 	/home/valdis/scala-native/scalalib/src/main/scala/scala/util/Properties.scala
+[info] Packaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/collection/immutable/Stream.scala:19: Could not find any member to link for "collect".
+[warn] /** The class `Stream` implements lazy lists where elements
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/concurrent/duration/Duration.scala:659: Could not find any member to link for "ArithmeticException".
+[warn]   /**
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/Source.scala:172: Could not find any member to link for "scala.io.Source@iter".
+[warn] /** An iterable representation of source data.
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:158: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads in some structured input (from the default input), specified by
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:143: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a double value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:128: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a float value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:113: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads an long value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:98: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads an int value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:83: Could not find any member to link for "java.lang.StringIndexOutOfBoundsException".
+[warn]   /** Reads a char value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:68: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a short value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:53: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a byte value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/io/StdIn.scala:33: Could not find any member to link for "java.io.EOFException".
+[warn]   /** Reads a boolean value from an entire line of the default input.
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/reflect/ClassTag.scala:7: Could not find any member to link for "scala.reflect.api.TypeTags#TypeTag".
+[warn] /**
+[warn] ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Float.scala:215: Could not find any member to link for "java.lang.Float.MIN_VALUE".
+[warn]   /** The negative number with the greatest (finite) absolute value which is representable
+[warn]   ^
+[warn] /home/valdis/scala-native/scalalib/src/main/scala/scala/Double.scala:215: Could not find any member to link for "java.lang.Double.MIN_VALUE".
+[warn]   /** The negative number with the greatest (finite) absolute value which is representable
+[warn]   ^
+[warn] 99 warnings found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/scalalib/target/scala-2.11/scalalib_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/scalalib_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/scalalib_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/scalalib_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published scalalib_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/scalalib_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/scalalib_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 99 s, completed Sep 29, 2018 3:52:22 PM
+[info] Packaging /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] Updating {file:/home/valdis/scala-native/}util...
+[info] Updating {file:/home/valdis/scala-native/}testingCompilerInterface...
+[info] Done packaging.
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] Updating {file:/home/valdis/scala-native/}nir...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] Updating {file:/home/valdis/scala-native/}tools...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#nir_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#testing-compiler-interface;0.3.9-SNAPSHOT ...
+[info] Resolving org.scalacheck#scalacheck_2.10;1.13.4 ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scalatest#scalatest_2.10;3.0.0 ...
+[info] Resolving org.scalactic#scalactic_2.10;3.0.0 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] Updating {file:/home/valdis/scala-native/}testRunner...
+[info] Wrote /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#tools_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nir_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-runner_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:52:23 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-runner/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Compiling 10 Scala sources to /home/valdis/scala-native/util/target/scala-2.10/classes...
+[info] Compiling 23 Scala sources to /home/valdis/scala-native/nir/target/scala-2.10/classes...
+[warn] /home/valdis/scala-native/nir/src/main/scala/scala/scalanative/nir/Types.scala:24: match may not be exhaustive.
+[warn] It would fail on the following inputs: Byte, Int, Long, Short, UByte, UInt, ULong, UShort
+[warn]     def printType(ty: nir.Type): Unit = ty match {
+[warn]                                         ^
+[warn] one warning found
+[info] Compiling 51 Scala sources to /home/valdis/scala-native/tools/target/scala-2.10/classes...
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:114: match may not be exhaustive.
+[warn] It would fail on the following inputs: Class(_, _, _, _), Module(_, _, _, _), Trait(_, _, _)
+[warn]           env(n) match {
+[warn]              ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:139: match may not be exhaustive.
+[warn] It would fail on the following inputs: Class(_, _, _, _), Module(_, _, _, _), Struct(_, _, _), Trait(_, _, _)
+[warn]         env(n) match {
+[warn]            ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/codegen/CodeGen.scala:256: match may not be exhaustive.
+[warn] It would fail on the following inputs: If(_, _, _), Jump(_), Let(_, _, _), None, Ret(_), Switch(_, _, _), Throw(_, _), Unreachable
+[warn]         insts.head match {
+[warn]               ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/GlobalValueNumbering.scala:102: Cannot check match for unreachability.
+[warn] (The analysis required more space than allowed. Please try with scalac -Dscalac.patmat.analysisBudget=512 or -Dscalac.patmat.analysisBudget=off.)
+[warn]     op match {
+[warn]     ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/PartialEvaluation.scala:276: match may not be exhaustive.
+[warn] It would fail on the following inputs: Array(_), ArrayValue(_, _), Bool, Char, Class(_), Double, Float, Function(_, _), Module(_), None, Nothing, Ptr, StructValue(_, _), Trait(_), UByte, UInt, ULong, UShort, Unit, Var(_), Vararg, Void
+[warn]   private def minValue(ty: Type): Long = ty match {
+[warn]                                          ^
+[warn] /home/valdis/scala-native/tools/src/main/scala/scala/scalanative/optimizer/pass/PartialEvaluation.scala:283: match may not be exhaustive.
+[warn] It would fail on the following inputs: Array(_), ArrayValue(_, _), Bool, Char, Class(_), Double, Float, Function(_, _), Module(_), None, Nothing, Ptr, StructValue(_, _), Trait(_), UByte, UInt, ULong, UShort, Unit, Var(_), Vararg, Void
+[warn]   private def maxValue(ty: Type): Long = ty match {
+[warn]                                          ^
+[warn] 6 warnings found
+[info] Main Scala API documentation to /home/valdis/scala-native/test-runner/target/scala-2.10/api...
+[info] Compiling 12 Scala sources to /home/valdis/scala-native/test-runner/target/scala-2.10/classes...
+model contains 40 documentable templates
+[info] Packaging /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/poms/test-runner_2.10.pom
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/jars/test-runner_2.10.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/srcs/test-runner_2.10-sources.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/docs/test-runner_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 31 s, completed Sep 29, 2018 3:52:53 PM
+[info] Packaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT.pom
+[info] :: delivering :: org.scala-native#util_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:52:53 CEST 2018
+[info] Main Scala API documentation to /home/valdis/scala-native/util/target/scala-2.10/api...
+[info] 	delivering ivy file to /home/valdis/scala-native/util/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Packaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Wrote /home/valdis/scala-native/test-runner/target/scala-2.10/test-runner_2.10-0.3.9-SNAPSHOT.pom
+[info] :: delivering :: org.scala-native#test-runner_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:52:53 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-runner/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/poms/test-runner_2.10.pom
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/jars/test-runner_2.10.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/srcs/test-runner_2.10-sources.jar
+[info] 	published test-runner_2.10 to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/docs/test-runner_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-runner_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+model contains 18 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/util/target/scala-2.10/util_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/poms/util_2.10.pom
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/jars/util_2.10.jar
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/srcs/util_2.10-sources.jar
+[info] 	published util_2.10 to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/docs/util_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/util_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] :: delivering :: org.scala-native#nir_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:52:54 CEST 2018
+[info] Packaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] 	delivering ivy file to /home/valdis/scala-native/nir/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/nir/target/scala-2.10/api...
+[info] Wrote /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT.pom
+[info] Packaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Done packaging.
+model contains 214 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/nir/target/scala-2.10/nir_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/poms/nir_2.10.pom
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/jars/nir_2.10.jar
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/srcs/nir_2.10-sources.jar
+[info] 	published nir_2.10 to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/docs/nir_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/nir_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT-sources.jar ...
+[info] Wrote /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT.pom
+[info] :: delivering :: org.scala-native#tools_2.10;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:52:57 CEST 2018
+[info] Main Scala API documentation to /home/valdis/scala-native/tools/target/scala-2.10/api...
+[info] 	delivering ivy file to /home/valdis/scala-native/tools/target/scala-2.10/ivy-0.3.9-SNAPSHOT.xml
+[info] Packaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] Done packaging.
+model contains 123 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/tools/target/scala-2.10/tools_2.10-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/poms/tools_2.10.pom
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/jars/tools_2.10.jar
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/srcs/tools_2.10-sources.jar
+[info] 	published tools_2.10 to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/docs/tools_2.10-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/tools_2.10/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}sbtScalaNative...
+[info] Resolving org.scala-native#tools_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-library;2.10.7 ...
+[info] Resolving org.scala-native#nir_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#util_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-runner_2.10;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.portable-scala#sbt-platform-deps;1.0.0-M2 ...
+[info] Resolving org.scala-sbt#sbt;0.13.17 ...
+[info] Resolving org.scala-sbt#main;0.13.17 ...
+[info] Resolving org.scala-sbt#actions;0.13.17 ...
+[info] Resolving org.scala-sbt#classpath;0.13.17 ...
+[info] Resolving org.scala-lang#scala-compiler;2.10.7 ...
+[info] Resolving org.scala-lang#scala-reflect;2.10.7 ...
+[info] Resolving org.scala-sbt#interface;0.13.17 ...
+[info] Resolving org.scala-sbt#io;0.13.17 ...
+[info] Resolving org.scala-sbt#control;0.13.17 ...
+[info] Resolving org.scala-sbt#launcher-interface;1.0.1 ...
+[info] Resolving org.scala-sbt#completion;0.13.17 ...
+[info] Resolving org.scala-sbt#collections;0.13.17 ...
+[info] Resolving jline#jline;2.14.5 ...
+[info] Resolving org.scala-sbt#api;0.13.17 ...
+[info] Resolving org.scala-sbt#classfile;0.13.17 ...
+[info] Resolving org.scala-sbt#logging;0.13.17 ...
+[info] Resolving org.scala-sbt#process;0.13.17 ...
+[info] Resolving org.scala-sbt#compiler-integration;0.13.17 ...
+[info] Resolving org.scala-sbt#incremental-compiler;0.13.17 ...
+[info] Resolving org.scala-sbt#relation;0.13.17 ...
+[info] Resolving org.scala-sbt#compile;0.13.17 ...
+[info] Resolving org.scala-sbt#persist;0.13.17 ...
+[info] Resolving org.scala-tools.sbinary#sbinary_2.10;0.4.2 ...
+[info] Resolving org.scala-sbt#compiler-ivy-integration;0.13.17 ...
+[info] Resolving org.scala-sbt#ivy;0.13.17 ...
+[info] Resolving org.scala-sbt#cross;0.13.17 ...
+[info] Resolving org.scala-sbt.ivy#ivy;2.3.0-sbt-b18f59ea3bc914a297bb6f1a4f7fb0ace399e310 ...
+[info] Resolving com.jcraft#jsch;0.1.50 ...
+[info] Resolving org.scala-sbt#serialization_2.10;0.1.2 ...
+[info] Resolving org.scala-lang.modules#scala-pickling_2.10;0.10.1 ...
+[info] Resolving org.scalamacros#quasiquotes_2.10;2.0.1 ...
+[info] Resolving org.json4s#json4s-core_2.10;3.2.10 ...
+[info] Resolving org.json4s#json4s-ast_2.10;3.2.10 ...
+[info] Resolving com.thoughtworks.paranamer#paranamer;2.6 ...
+[info] Resolving org.spire-math#jawn-parser_2.10;0.6.0 ...
+[info] Resolving org.spire-math#json4s-support_2.10;0.6.0 ...
+[info] Resolving org.scala-sbt#run;0.13.17 ...
+[info] Resolving org.scala-sbt#task-system;0.13.17 ...
+[info] Resolving org.scala-sbt#tasks;0.13.17 ...
+[info] Resolving org.scala-sbt#tracking;0.13.17 ...
+[info] Resolving org.scala-sbt#cache;0.13.17 ...
+[info] Resolving org.scala-sbt#testing;0.13.17 ...
+[info] Resolving org.scala-sbt#test-agent;0.13.17 ...
+[info] Resolving org.scala-sbt#main-settings;0.13.17 ...
+[info] Resolving org.scala-sbt#apply-macro;0.13.17 ...
+[info] Resolving org.scala-sbt#command;0.13.17 ...
+[info] Resolving org.scala-sbt#template-resolver;0.1 ...
+[info] Resolving org.scala-sbt#logic;0.13.17 ...
+[info] Resolving org.scala-sbt#compiler-interface;0.13.17 ...
+[info] Resolving org.scala-lang#jline;2.10.7 ...
+[info] Resolving org.fusesource.jansi#jansi;1.4 ...
+[info] Resolving org.scala-sbt#scripted-sbt;0.13.17 ...
+[info] Resolving org.scala-sbt#scripted-framework;0.13.17 ...
+[info] Resolving org.scala-sbt#sbt-launch;0.13.17 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#sbt-scala-native;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:53:00 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/api...
+[info] Compiling 14 Scala sources to /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/classes...
+model contains 47 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/sbt-scala-native/target/scala-2.10/sbt-0.13/sbt-scala-native-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/jars/sbt-scala-native.jar
+[info] 	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/srcs/sbt-scala-native-sources.jar
+[info] 	published sbt-scala-native to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/docs/sbt-scala-native-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/sbt-scala-native/scala_2.10/sbt_0.13/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 10 s, completed Sep 29, 2018 3:53:03 PM
+[info] Packaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testInterfaceSbtDefs...
+[info] Wrote /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:53:03 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/api...
+[info] Compiling 11 Scala sources to /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 22 documentable templates
+[warn] /home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/Runner.scala:17: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Returns an array of tasks that when executed will run tests and suites
+[warn]   ^
+[warn] /home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/OptionalThrowable.scala:25: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Returns the <code>Throwable</code> contained in this
+[warn]   ^
+[warn] /home/valdis/scala-native/test-interface-sbt-defs/src/main/scala/sbt/testing/Framework.scala:15: Could not find any member to link for "java.lang.IllegalStateException".
+[warn]   /** Initiates a run.
+[warn]   ^
+[warn] three warnings found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/test-interface-sbt-defs/target/scala-2.11/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testInterfaceSerialization...
+[info] Wrote /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:53:04 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/api...
+[info] Compiling 8 Scala sources to /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 35 documentable templates
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/test-interface-serialization/target/scala-2.11/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/test-interface-serialization_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/test-interface-serialization_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published test-interface-serialization_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/test-interface-serialization_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface-serialization_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[info] Packaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-sources.jar ...
+[info] Done packaging.
+[info] Updating {file:/home/valdis/scala-native/}testInterface...
+[info] Wrote /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.pom
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] :: delivering :: org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT :: 0.3.9-SNAPSHOT :: integration :: Sat Sep 29 15:53:06 CEST 2018
+[info] 	delivering ivy file to /home/valdis/scala-native/test-interface/target/scala-2.11/ivy-0.3.9-SNAPSHOT.xml
+[info] Main Scala API documentation to /home/valdis/scala-native/test-interface/target/scala-2.11/api...
+[info] Compiling 6 Scala sources to /home/valdis/scala-native/test-interface/target/scala-2.11/classes...
+[warn] dropping dependency on node with no phase object: mixin
+model contains 18 documentable templates
+[warn] /home/valdis/scala-native/test-interface/src/main/scala/scala/scalajs/reflect/annotation/EnableReflectiveInstantiation.scala:5: Could not find any member to link for "scala.scalajs.reflect.Reflect".
+[warn] /** Enables reflective instantiation for the annotated class, trait or object,
+[warn] ^
+[warn] one warning found
+[info] Main Scala API documentation successful.
+[info] Packaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT-javadoc.jar ...
+[info] Done packaging.
+[info] Packaging /home/valdis/scala-native/test-interface/target/scala-2.11/test-interface_native0.3.9-SNAPSHOT_2.11-0.3.9-SNAPSHOT.jar ...
+[info] Done packaging.
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/poms/test-interface_native0.3.9-SNAPSHOT_2.11.pom
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/jars/test-interface_native0.3.9-SNAPSHOT_2.11.jar
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/srcs/test-interface_native0.3.9-SNAPSHOT_2.11-sources.jar
+[info] 	published test-interface_native0.3.9-SNAPSHOT_2.11 to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/docs/test-interface_native0.3.9-SNAPSHOT_2.11-javadoc.jar
+[info] 	published ivy to /home/valdis/.ivy2/local/org.scala-native/test-interface_native0.3.9-SNAPSHOT_2.11/0.3.9-SNAPSHOT/ivys/ivy.xml
+[success] Total time: 4 s, completed Sep 29, 2018 3:53:07 PM
+[info] Updating {file:/home/valdis/scala-native/}sandbox...
+[info] Resolving org.scala-lang#scala-library;2.11.12 ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nativelib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-reflect;2.11.12 ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#javalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#posixlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#clib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#auxlib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#scalalib_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-serialization_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#test-interface-sbt-defs_native0.3.9-SNAPSHOT_2.11;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-sbt#test-interface;1.0 ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-native#nscplugin_2.11.12;0.3.9-SNAPSHOT ...
+[info] Resolving org.scala-lang#scala-compiler;2.11.12 ...
+[info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.5 ...
+[info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...
+[info] Resolving jline#jline;2.14.3 ...
+[info] Done updating.
+[info] Compiling 1 Scala source to /home/valdis/scala-native/sandbox/target/scala-2.11/classes...
+[info] Linking (888 ms)
+[info] Discovered 551 classes and 3289 methods
+[info] Optimizing (debug mode) (314 ms)
+[info] Generating intermediate code (734 ms)
+[info] Produced 32 files
+[error] /home/valdis/scala-native/sandbox/target/scala-2.11/native/lib/gc/immix/Allocator.c:88:39: warning: format specifies type 'unsigned long long' but the argument has type 'uint64_t' (aka 'unsigned long') [-Wformat]
+[error]     printf("\n\nBlock count: %llu\n", allocator->blockCount);
+[error]                              ~~~~     ^~~~~~~~~~~~~~~~~~~~~
+[error]                              %lu
+[error] /home/valdis/scala-native/sandbox/target/scala-2.11/native/lib/gc/immix/Allocator.c:89:35: warning: format specifies type 'unsigned long long' but the argument has type 'uint64_t' (aka 'unsigned long') [-Wformat]
+[error]     printf("Unavailable: %llu\n", unavailableBlockCount);
+[error]                          ~~~~     ^~~~~~~~~~~~~~~~~~~~~
+[error]                          %lu
+[error] /home/valdis/scala-native/sandbox/target/scala-2.11/native/lib/gc/immix/Allocator.c:90:28: warning: format specifies type 'unsigned long long' but the argument has type 'uint64_t' (aka 'unsigned long') [-Wformat]
+[error]     printf("Free: %llu\n", allocator->freeBlockCount);
+[error]                   ~~~~     ^~~~~~~~~~~~~~~~~~~~~~~~~
+[error]                   %lu
+[error] /home/valdis/scala-native/sandbox/target/scala-2.11/native/lib/gc/immix/Allocator.c:91:32: warning: format specifies type 'unsigned long long' but the argument has type 'uint64_t' (aka 'unsigned long') [-Wformat]
+[error]     printf("Recycled: %llu\n", allocator->recycledBlockCount);
+[error]                       ~~~~     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[error]                       %lu
+[error] 4 warnings generated.
+[info] Compiling to native code (934 ms)
+[info] Linking native code (immix gc, none lto) (105 ms)
+[info] Total (3127 ms)
+0x7faf0c37f000 FREE
+Heap_AllocSmall 0x7fa735550000 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550010 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550020 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550038 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550048 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550058 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550070 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550080 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550090 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355500a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355500b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355500c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355500d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355500e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550128 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550140 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550958 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550970 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550988 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355509a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355509b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355509d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355509e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550a00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550a18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550a30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550a48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550a60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550a78 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550a90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550aa8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550ac0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550ad8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550af0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550b08 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550b20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550b38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550b50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550b68 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550b80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550b98 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550bb0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550bc8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550be0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550bf8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550c10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550c20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550c30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550c40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550c50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550c60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550c70 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550c80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550c90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550ca0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550cb0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550cc0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550cd0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550ce0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550cf0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550d00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550d10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550d20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550d30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550d40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550d50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550d60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550d70 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550d80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550d90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550da0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550db0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550dc8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550e08 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550e20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550e38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550e50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550e90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550eb0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550ed8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550ef0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550f00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550f18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550f30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550f40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550f50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550f90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550fb0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735550fc0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551000 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551020 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551040 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551050 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551080 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551090 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355510a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355510b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355510c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355510d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355510e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355510f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551100 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551110 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551120 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551130 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551140 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355511d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355511f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551208 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551220 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551238 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551248 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551260 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551278 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551288 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355512a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355512b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355512e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355512f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551308 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551320 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551330 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551340 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551358 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551370 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551388 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355513a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355513c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355513e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355513f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551408 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551420 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551438 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551450 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551468 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551490 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355514a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355514c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355514d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355514e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551500 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551518 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551530 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551558 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551570 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551588 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551598 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355515b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355515c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355515e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355515f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551620 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551638 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551650 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551660 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551678 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551690 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355516a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355516c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355516e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551700 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551718 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551728 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551740 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551758 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551770 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551788 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355517b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355517c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355517e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355517f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551808 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551820 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551838 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551850 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551878 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551890 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355518a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355518b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355518c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355518e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355518f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551910 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551928 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551950 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551968 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551980 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551990 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355519a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355519c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355519d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355519f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551a00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551a10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551a38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551a50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551a68 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551a78 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551a90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551aa8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551ac0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551ad8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551b00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551b18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551b30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551b40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551b50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551b60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551b80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551b98 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551bb0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551bc8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551be0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551bf0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551c30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551c88 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551ca0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551d38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551d50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551de8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551e00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551e10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551e20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551e30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551e40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551e78 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551ea0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551eb8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551ed0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551ee8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551f00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551f18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551f30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551f58 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551f68 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551f80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551f90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551fa8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735551fc0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355527d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355527f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552808 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552818 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552830 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552848 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552858 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552870 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552880 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552898 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355528a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355528c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355528d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355528e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552900 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552918 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552930 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552948 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552960 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552970 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552980 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552998 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355529b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355529c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355529e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355529f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552a10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552a28 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552a40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552a58 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552a70 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552a80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552aa8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552ac0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552ad0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552ae8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552b10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552b28 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552b38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552b48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552b68 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552b80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552b90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552ba8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552bc0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552bd8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552be8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552c18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552c30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552c48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552c60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735552c78 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553490 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355534a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355534c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355534d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355534f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553508 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553520 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553538 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553550 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553568 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553580 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553598 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355535b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355535c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355535e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355535f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553610 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553628 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553640 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553658 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553670 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553688 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355536a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355536b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355536d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355536e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553700 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553718 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553730 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553748 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553760 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553778 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553790 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355537a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355537c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355537d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355537f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553808 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553820 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553838 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553850 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553868 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553880 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553898 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355538b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355538c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355538e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355538f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553910 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553928 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553940 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553958 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553970 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553988 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355539a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355539b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355539d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355539e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553a00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553a18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553a30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553a48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553a60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553a78 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553a90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553aa8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553ac0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553ad8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553af0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553b08 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553b20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553b38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553b50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553b68 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553b80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553b98 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553bb0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553bc8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553be0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553bf8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553c10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553c28 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553c40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553c58 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553c70 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553c88 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553ca0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553cb8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553cd0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553ce8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553d00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553d18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553d30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553d48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553d60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553d88 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553da0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553db8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553dd0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553de8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553e00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553e10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553e20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553e38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553e48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553e58 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553e70 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553ea8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553ec0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553ed0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553ee8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553f28 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553f50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553f68 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553f80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553f98 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553fb0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735553fc0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554008 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554020 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554038 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554048 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554060 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554070 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554088 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355540c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355540d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355540e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554100 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554118 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554130 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554548 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554560 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554578 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554590 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355545a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355545c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355545d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355545f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554608 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554620 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554638 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554650 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554668 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554680 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554698 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355546b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355546c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355546e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355546f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554710 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554728 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554740 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554758 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554770 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554788 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355547a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355547b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355547d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355547e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554800 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554818 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554830 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554848 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554860 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554878 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554890 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355548a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355548c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355548d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355548f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554908 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554920 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554938 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554950 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554968 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554980 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554998 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355549b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355549c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355549e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355549f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554a10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554a28 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554a40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554a58 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554a70 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554a88 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554aa0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554ab8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554ad0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554ae8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554b00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554b18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554b30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554b48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554b60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554b78 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554b90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554ba8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554bc0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554bd8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554bf0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554c08 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554c20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554c38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554c50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554c68 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554c80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554c98 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554cb0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554cc8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554ce0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554cf8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554d10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554d28 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554d40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554d58 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554d70 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554d88 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554da0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554db8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554dd0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554de8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554e00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554e18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554e30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554e48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554e60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554e78 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554e90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554ea8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554ec0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554ed8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554ef0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554f08 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554f20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554f38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554f50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554f68 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554f80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554f98 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554fb0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735554fc8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555038 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555050 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555068 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555080 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555098 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355550b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355550c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355550d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555108 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355551a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355551b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355551d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355551e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555200 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555218 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555230 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555260 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355552f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555310 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555328 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555340 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555350 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555360 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555370 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555380 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555398 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355553b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355553c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355553e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355553f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555410 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555428 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555440 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555458 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555470 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555488 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355554a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355554b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355554d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355554e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555500 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555518 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555530 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555548 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555560 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555578 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555590 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355555a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355555c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355555d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355555f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555608 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555620 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555638 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555650 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555668 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555680 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555698 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355556b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355556c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355556e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355556f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555710 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555728 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555740 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555758 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555770 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555788 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355557a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355557b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355557d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355557e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555800 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555818 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555830 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555848 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555860 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555878 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555890 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355558b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355558d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355558e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555910 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555928 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555940 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555958 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555970 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555988 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355559a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355559b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355559d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355559e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555a00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555a18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555a30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555a48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555a60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555a78 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555a90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555aa8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555ac0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555ad8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555af0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555b08 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555b20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555b38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555b50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555b68 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555b80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555b98 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555bb0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555bc8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555be0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555bf8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555c10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555c28 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555c40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555c58 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555c70 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555c88 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555ca0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555cb8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555cd0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555ce8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555d00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735555d10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556318 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556330 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556348 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556360 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556378 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556390 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355563a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355563c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355563d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355563f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556408 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556420 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556438 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556450 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556468 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556480 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556498 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355564b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355564c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355564e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355564f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556510 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556528 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556540 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556558 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556570 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556588 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355565a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355565b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355565d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355565e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556600 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556618 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556630 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556648 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556660 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556678 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556690 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355566a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355566c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355566d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355566f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556708 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556720 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556738 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556750 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556768 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556780 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556798 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355567b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355567c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355567e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355567f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556810 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556828 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556840 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556858 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556870 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556888 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355568a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355568b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355568d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355568e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556900 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556918 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556930 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556948 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556960 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556978 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556990 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355569a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355569c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355569d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355569f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556a08 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556a20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556a38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556a50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556a68 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556a80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556a98 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556ab0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556ac8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556ae0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556af8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556b10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556b28 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556b40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556b58 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556b70 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556b88 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556ba0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556bb8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556bd0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556be8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556c00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556c18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556c30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556c48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556c60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556c78 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556c90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556ca8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556cc0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556cd8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556cf0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556d08 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556d20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556d38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556d50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556d68 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556d80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556d98 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556db0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556dc8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556de0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556df8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556e10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556e28 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556e40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556e58 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556e70 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556e88 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556ea0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556eb8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556ed0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556ee8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556f00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556f18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556f30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556f48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556f60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556f78 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556f90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556fa8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556fc0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556fd8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735556ff0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557008 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557020 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557038 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557050 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557068 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557080 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557098 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355570b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355570c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355570e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355570f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557110 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557128 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557140 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557158 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557170 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557188 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355571a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355571b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355571d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355571e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557200 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557218 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557230 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557248 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557260 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557278 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557290 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355572a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355572c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355572d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355572f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557308 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557320 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557338 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557350 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557368 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557380 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557398 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355573b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355573c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355573e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355573f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557410 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557428 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557440 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557458 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557470 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557488 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355574a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355574b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355574d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355574e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557500 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557518 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557530 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557548 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557560 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557578 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557590 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355575a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355575c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355575d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355575f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557608 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557620 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557638 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557650 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557668 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557680 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557698 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355576b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355576c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355576e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355576f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557710 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557728 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557740 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557758 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557770 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557788 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355577a0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355577b8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355577d0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355577e8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557800 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557818 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557830 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557848 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557860 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557878 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557890 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355578a8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355578c0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355578d8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355578f0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557908 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557920 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557938 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557950 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557968 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557980 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557998 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355579b0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355579c8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355579e0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa7355579f8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557a10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557a28 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557a40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557a58 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557a70 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557a88 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557aa0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557ab8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557ad0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557ae8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557b00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557b18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557b30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557b48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557b60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557b78 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557b90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557ba8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557bc0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557bd8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557bf0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557c08 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557c20 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557c38 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557c50 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557c68 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557c80 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557c98 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557cb0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557cc8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557ce0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557cf8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557d10 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557d28 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557d40 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557d58 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557d70 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557d88 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557da0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557db8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557dd0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557de8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557e00 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557e18 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557e30 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557e48 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557e60 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557e78 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557e90 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557ea8 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557ec0 limit:0x7fa735557f00
+Heap_AllocSmall 0x7fa735557ed8 limit:0x7fa735557f00
+sandbox-out: /home/valdis/scala-native/sandbox/target/scala-2.11/native/lib/gc/immix/Block.h:25: word_t *Block_GetLineAddress(BlockHeader *, int): Assertion `lineIndex < LINE_COUNT' failed.
+java.lang.RuntimeException: Nonzero exit code: 134
+	at scala.sys.package$.error(package.scala:27)
+	at scala.scalanative.sbtplugin.ScalaNativePluginInternal$$anonfun$scalaNativeConfigSettings$6$$anonfun$apply$8$$anonfun$apply$9$$anonfun$apply$10.apply(ScalaNativePluginInternal.scala:158)
+	at scala.scalanative.sbtplugin.ScalaNativePluginInternal$$anonfun$scalaNativeConfigSettings$6$$anonfun$apply$8$$anonfun$apply$9$$anonfun$apply$10.apply(ScalaNativePluginInternal.scala:158)
+	at scala.Option.foreach(Option.scala:236)
+	at scala.scalanative.sbtplugin.ScalaNativePluginInternal$$anonfun$scalaNativeConfigSettings$6$$anonfun$apply$8$$anonfun$apply$9.apply(ScalaNativePluginInternal.scala:158)
+	at scala.scalanative.sbtplugin.ScalaNativePluginInternal$$anonfun$scalaNativeConfigSettings$6$$anonfun$apply$8$$anonfun$apply$9.apply(ScalaNativePluginInternal.scala:143)
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47)
+[trace] Stack trace suppressed: run 'last sandbox/compile:run' for the full output.
+[error] (sandbox/compile:run) Nonzero exit code: 134
+[error] Total time: 4 s, completed Sep 29, 2018 3:53:11 PM
