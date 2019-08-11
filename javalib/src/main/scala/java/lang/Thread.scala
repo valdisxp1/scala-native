@@ -2,14 +2,14 @@ package java.lang
 
 import java.util
 
-import scala.scalanative.unsafe.{CCast, CFuncPtr, CFuncPtr1, CInt, Ptr, sizeof, stackalloc}
+import scala.scalanative.unsafe.{CFuncPtr1, CInt, Ptr, stackalloc}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
 import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_key_t, pthread_t}
-import scala.scalanative.runtime.{CAtomicInt, CAtomicLong, NativeThread, ShadowLock, ThreadBase}
+import scala.scalanative.runtime.{CAtomicInt, CAtomicLong, NativeThread, ShadowLock, ThreadBase, fromRawPtr, toRawPtr}
 import scalanative.unsigned._
-import scalanative.annotation.stub
-import scalanative.libc.errno
+import scalanative.libc.signal
+import scalanative.runtime.Intrinsics._
 
 // Ported from Harmony
 
@@ -48,7 +48,7 @@ class Thread private (
     group.add(this)
     livenessState.store(internalStarted)
     underlying = pthread_self()
-    pthread_setspecific(myThreadKey, this.cast[Ptr[scala.Byte]])
+    pthread_setspecific(myThreadKey, fromRawPtr[scala.Byte](castObjectToRawPtr(this)))
   }
 
   // Indicates if the thread was already started
@@ -289,7 +289,7 @@ class Thread private (
     }
 
     val status =
-      pthread_create(id, attrs, callRunRoutine, this.cast[Ptr[scala.Byte]])
+      pthread_create(id, attrs, callRunRoutine, fromRawPtr[scala.Byte](castObjectToRawPtr(this)))
     if (status != 0)
       throw new Exception(
         "Failed to create new thread, pthread error " + status)
@@ -418,30 +418,6 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     !ptr
   }
 
-  // defined as Ptr[Void] => Ptr[Void]
-  // called as Ptr[Thread] => Ptr[Void]
-  private def callRun(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
-    val thread = p.cast[Thread]
-    pthread_setspecific(myThreadKey, p)
-    if (thread.underlying == 0L.asInstanceOf[ULong]) {
-      // the parent hasn't set the underlying thread id yet
-      // make sure it is initialized
-      thread.underlying = pthread_self()
-    }
-    thread.livenessState
-      .compareAndSwapStrong(internalStarting, internalStarted)
-    try {
-      thread.run()
-    } catch {
-      case e: Throwable =>
-        thread.getUncaughtExceptionHandler.uncaughtException(thread, e)
-    } finally {
-      post(thread)
-    }
-
-    null.asInstanceOf[Ptr[scala.Byte]]
-  }
-
   private def post(thread: Thread) = {
     shutdownMutex.safeSynchronized {
       thread.group.remove(thread)
@@ -460,7 +436,31 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     pthread_setspecific(myThreadKey, null.asInstanceOf[Ptr[scala.Byte]])
   }
 
-  private val callRunRoutine = CFuncPtr.fromFunction1(callRun)
+  // defined as Ptr[Void] => Ptr[Void]
+  // called as Ptr[Thread] => Ptr[Void]
+  private val callRunRoutine = new CFuncPtr1[Ptr[scala.Byte],Ptr[scala.Byte]]{
+    def apply(p: Ptr[scala.Byte]): Ptr[scala.Byte] = {
+      val thread = castRawPtrToObject(toRawPtr(p)).asIntanceOf[Thread]
+      pthread_setspecific(myThreadKey, p)
+      if (thread.underlying == 0L.asInstanceOf[ULong]) {
+        // the parent hasn't set the underlying thread id yet
+        // make sure it is initialized
+        thread.underlying = pthread_self()
+      }
+      thread.livenessState
+        .compareAndSwapStrong(internalStarting, internalStarted)
+      try {
+        thread.run()
+      } catch {
+        case e: Throwable =>
+          thread.getUncaughtExceptionHandler.uncaughtException(thread, e)
+      } finally {
+        post(thread)
+      }
+
+      null.asInstanceOf[Ptr[scala.Byte]]
+    }
+  }
 
   // internal liveness state values
   // waiting and blocked handled separately
@@ -515,8 +515,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
   def activeCount: Int = currentThread().group.activeCount()
 
   def currentThreadInternal(): Thread with ThreadBase =
-    pthread_getspecific(myThreadKey)
-      .cast[Thread]
+    castRawPtrToObject(toRawPtr(pthread_getspecific(myThreadKey)))
       .asInstanceOf[Thread with ThreadBase]
 
   def currentThread(): Thread = {
@@ -637,27 +636,24 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
                                       0,
                                       mainThread = true)
 
-  private def currentThreadStackTrace(signal: CInt): Unit =
-    try {
+  private val currentThreadStackTracePtr = new CFuncPtr1[CInt, Unit] {
+    def apply(signal: CInt): Unit = try {
       currentThread().getStackTrace
     } catch {
       case t: Throwable => t.printStackTrace()
     }
-
-  private val currentThreadStackTracePtr =
-    CFunctionPtr.fromFunction1(currentThreadStackTrace _)
+  }
   private val currentThreadStackTraceSignal = signal.SIGRTMIN + 7
   signal.signal(currentThreadStackTraceSignal, currentThreadStackTracePtr)
 
-  private def currentThreadSuspend(signal: CInt): Unit =
-    try {
-      currentThread().suspend()
-    } catch {
-      case t: Throwable => t.printStackTrace()
-    }
-
-  private val currentThreadSuspendPtr =
-    CFunctionPtr.fromFunction1(currentThreadSuspend _)
+  private val currentThreadSuspendPtr = new CFuncPtr1[CInt, Unit] {
+    def apply(signal: CInt): Unit =
+      try {
+        currentThread().suspend()
+      } catch {
+        case t: Throwable => t.printStackTrace()
+      }
+  }
   private val suspendSignal = signal.SIGRTMIN + 8
   signal.signal(suspendSignal, currentThreadSuspendPtr)
 

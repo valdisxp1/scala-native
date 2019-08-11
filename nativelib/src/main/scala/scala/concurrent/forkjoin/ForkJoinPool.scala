@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit
 
 import scalanative.runtime.{CAtomicInt, CAtomicLong, CAtomicRef}
 import scalanative.runtime.CAtomicsImplicits._
-import scalanative.native.CLong
 
 abstract class CountedCompleter[T] protected extends ForkJoinTask[T] {
 

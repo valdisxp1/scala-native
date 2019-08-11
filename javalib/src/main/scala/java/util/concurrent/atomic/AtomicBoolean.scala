@@ -1,6 +1,5 @@
 package java.util.concurrent.atomic
 
-import scala.scalanative.native.CInt
 import scala.scalanative.runtime.CAtomicInt
 
 class AtomicBoolean(private[this] var value: Boolean) extends Serializable {

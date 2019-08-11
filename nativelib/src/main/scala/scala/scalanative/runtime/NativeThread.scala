@@ -1,8 +1,9 @@
 package scala.scalanative
 package runtime
 
-import native.{CInt, CSize, Ptr, extern, name}
 import posix.sys.types.{pthread_attr_t, pthread_t}
+
+import scala.scalanative.unsafe.{CInt, CSize, Ptr, extern, name}
 
 @extern
 object NativeThread {

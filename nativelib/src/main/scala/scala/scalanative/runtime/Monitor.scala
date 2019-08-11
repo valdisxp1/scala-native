@@ -1,21 +1,10 @@
 package scala.scalanative.runtime
 
-import scala.scalanative.native._
-import scala.scalanative.unsafe.Ptr
-import scala.scalanative.native.stdlib.malloc
+import scala.scalanative.unsafe.{Ptr, stackalloc}
+import scala.scalanative.runtime.libc.malloc
 import scala.scalanative.posix.errno.{EBUSY, EPERM}
-import scala.scalanative.posix.pthread._
-import scala.scalanative.posix.sys.time.{
-  CLOCK_REALTIME,
-  clock_gettime,
-  timespec
-}
-import scala.scalanative.posix.sys.types.{
-  pthread_cond_t,
-  pthread_condattr_t,
-  pthread_mutex_t,
-  pthread_mutexattr_t
-}
+import scala.scalanative.posix.sys.time.{clock_gettime, gettimeofday, timespec, timeval}
+import scala.scalanative.posix.sys.types.{pthread_cond_t, pthread_condattr_t, pthread_mutex_t, pthread_mutexattr_t}
 import scala.scalanative.runtime.ThreadBase._
 
 final class Monitor private[runtime] (shadow: Boolean) {
@@ -51,17 +40,18 @@ final class Monitor private[runtime] (shadow: Boolean) {
     if (thread != null) {
       thread.setLockState(TimedWaiting)
     }
-    val tsPtr = stackalloc[timespec]
-    clock_gettime(CLOCK_REALTIME, tsPtr)
-    val curSeconds     = !tsPtr._1
-    val curNanos       = !tsPtr._2
+    val ts = stackalloc[timespec]
+    val tv = stackalloc[timeval]
+    gettimeofday(tv, null)
+    val curSeconds     = tv._1
+    val curNanos       = tv._2
     val overflownNanos = curNanos + nanos + (millis % 1000) * 1000000
 
     val deadlineNanos   = overflownNanos % 1000000000
     val deadLineSeconds = curSeconds + millis / 1000 + overflownNanos / 1000000000
 
-    !tsPtr._1 = deadLineSeconds
-    !tsPtr._2 = deadlineNanos
+    tsPtr._1 = deadLineSeconds
+    tsPtr._2 = deadlineNanos
 
     val returnVal = pthread_cond_timedwait(condPtr, mutexPtr, tsPtr)
     if (thread != null) {

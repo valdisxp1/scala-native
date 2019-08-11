@@ -2,7 +2,7 @@
 package scala.scalanative
 package runtime
 
-import scala.scalanative.native.{
+import scala.scalanative.unsafe.{
   CBool,
   CChar,
   CInt,

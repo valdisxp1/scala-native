@@ -1,7 +1,7 @@
 package scala.scalanative
 package runtime
 
-import scala.scalanative.native._
+import scala.scalanative.unsafe._
 import scala.scalanative.runtime.Atomic._
 
 abstract class CAtomic {
@@ -28,20 +28,18 @@ abstract class CAtomic {
 
 %{
    default = '0' if N in ['int'] else ('\'a\'.asInstanceOf['+T+']' if N in ['char', 'uchar'] else '0.asInstanceOf['+T+']')
-   cast = '' if N in ['byte', 'ubyte'] else '.cast[Ptr['+T+']]'
-   castB = '' if N in ['byte', 'ubyte'] else '.cast[Ptr[Byte]]'
 }%
 
 class CAtomic${C}(default: ${T} = ${default}) extends CAtomic {
 
-  private[this] val atm = stdlib.malloc(sizeof[${T}])${cast}
+  private[this] val atm = fromRawPtr[${T}](libc.malloc(sizeof[${T}]))
   init_${N}(atm, default)
 
   def load(): ${T} = load_${N}(atm)
 
   def store(value: ${T}): Unit = store_${N}(atm, value)
 
-  def free(): Unit = stdlib.free(atm${castB})
+  def free(): Unit = libc.free(toRawPtr(atm))
 
   def compareAndSwapStrong(expected: ${T}, desired: ${T}): (Boolean, ${T}) = {
     val expectedPtr = stackalloc[${T}]
