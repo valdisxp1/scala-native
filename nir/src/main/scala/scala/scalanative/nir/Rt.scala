@@ -40,6 +40,9 @@ object Rt {
   val GetRawTypeName = Global.Member(Runtime.name, GetRawTypeSig)
   val GetRawType     = Val.Global(GetRawTypeName, Ptr)
 
+  val ObjectName = Object.name
+  val ObjectMonitorField = ObjectName member Sig.Field("__monitor")
+
   val StringName               = String.name
   val StringValueName          = StringName member Sig.Field("value")
   val StringOffsetName         = StringName member Sig.Field("offset")

@@ -34,7 +34,7 @@ final class State(block: Local) {
   def allocBox(boxname: Global, value: Val)(
       implicit linked: linker.Result): Addr = {
     val boxcls = linked.infos(boxname).asInstanceOf[Class]
-    alloc(BoxKind, boxcls, Array(value))
+    alloc(BoxKind, boxcls, Array(Val.Null, value))
   }
   def allocString(value: String)(implicit linked: linker.Result): Addr = {
     val charsArray = value.toArray
@@ -44,7 +44,8 @@ final class State(block: Local) {
       case (value, idx) =>
         chars.values(idx) = Val.Char(value)
     }
-    val values = new Array[Val](4)
+    val values = new Array[Val](5)
+    values(linked.ObjectMonitorField.index) = Val.Null
     values(linked.StringValueField.index) = Val.Virtual(charsAddr)
     values(linked.StringOffsetField.index) = Val.Int(0)
     values(linked.StringCountField.index) = Val.Int(charsArray.length)

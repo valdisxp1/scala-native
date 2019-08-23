@@ -65,10 +65,6 @@ int scalanative_pthread_scope_process() { return PTHREAD_SCOPE_PROCESS; }
 
 int scalanative_pthread_scope_system() { return PTHREAD_SCOPE_SYSTEM; }
 
-int scalanative_pthread_process_private() { return PTHREAD_PROCESS_PRIVATE; }
-
-int scalanative_pthread_scope_process() { return PTHREAD_SCOPE_PROCESS; }
-
-int scalanative_pthread_scope_system() { return PTHREAD_SCOPE_SYSTEM; }
-
-pthread_rwlock_t scalanative_pthread_rwlock_initializer() { return PTHREAD_RWLOCK_INITIALIZER; }
+pthread_rwlock_t scalanative_pthread_rwlock_initializer() {
+    return (pthread_rwlock_t) PTHREAD_RWLOCK_INITIALIZER;
+}

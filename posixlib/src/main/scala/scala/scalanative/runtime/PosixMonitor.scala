@@ -19,9 +19,9 @@ final class PosixMonitor private[runtime] (shadow: Boolean) extends Monitor {
   private val condPtr = fromRawPtr[pthread_cond_t](malloc(pthread_cond_t_size))
   pthread_cond_init(condPtr, PosixMonitor.condAttrPtr)
 
-  def _notify(): Unit    = pthread_cond_signal(condPtr)
-  def _notifyAll(): Unit = pthread_cond_broadcast(condPtr)
-  def _wait(): Unit = {
+  override def _notify(): Unit    = pthread_cond_signal(condPtr)
+  override def _notifyAll(): Unit = pthread_cond_broadcast(condPtr)
+  override def _wait(): Unit = {
     val thread = ThreadBase.currentThreadInternal()
     if (thread != null) {
       thread.setLockState(Waiting)
@@ -34,7 +34,7 @@ final class PosixMonitor private[runtime] (shadow: Boolean) extends Monitor {
       throw new IllegalMonitorStateException()
     }
   }
-  def _wait(millis: scala.Long, nanos: Int): Unit = {
+  override def _wait(millis: scala.Long, nanos: Int): Unit = {
     val thread = ThreadBase.currentThreadInternal()
     if (thread != null) {
       thread.setLockState(TimedWaiting)
@@ -60,7 +60,7 @@ final class PosixMonitor private[runtime] (shadow: Boolean) extends Monitor {
       throw new IllegalMonitorStateException()
     }
   }
-  def enter(): Unit = {
+  override def enter(): Unit = {
     if (pthread_mutex_trylock(mutexPtr) == EBUSY) {
       val thread = ThreadBase.currentThreadInternal()
       if (thread != null) {
@@ -79,7 +79,7 @@ final class PosixMonitor private[runtime] (shadow: Boolean) extends Monitor {
     }
   }
 
-  def exit(): Unit = {
+  override def exit(): Unit = {
     if (!shadow) {
       popLock()
     }
