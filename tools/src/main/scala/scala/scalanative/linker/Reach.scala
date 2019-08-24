@@ -659,6 +659,9 @@ class Reach(config: build.Config, entries: Seq[Global], loader: ClassLoader) {
         } else {
           Some(scalaImpl)
         }
+      // inject the Monitor implementation into the Monitor
+      case Rt.MonitorUnsafeCreateSig if cls.name == Rt.MonitorName =>
+        Some(Rt.PosixMonitorUnsafeCreate)
       case _ =>
         lookupSig(cls, sig)
     }

@@ -9,6 +9,8 @@ object Rt {
   val String  = Ref(Global.Top("java.lang.String"))
   val Type    = StructValue(Seq(Int, Int, Ptr))
   val Runtime = Ref(Global.Top("scala.scalanative.runtime.package$"))
+  val Monitor = Ref(Global.Top("scala.scalanative.runtime.Monitor"))
+  val PosixMonitor = Ref(Global.Top("scala.scalanative.runtime.PosixMonitor"))
 
   val BoxedPtr        = Ref(Global.Top("scala.scalanative.unsafe.Ptr"))
   val BoxedNull       = Ref(Global.Top("scala.runtime.Null$"))
@@ -42,6 +44,12 @@ object Rt {
 
   val ObjectName = Object.name
   val ObjectMonitorField = ObjectName member Sig.Field("__monitor")
+
+  val MonitorName = Monitor.name
+  val PosixMonitorName = PosixMonitor.name
+  val MonitorUnsafeCreateSig =
+    Sig.Method("unsafeCreate", Seq(Object, Monitor)).mangled
+  val PosixMonitorUnsafeCreate = PosixMonitorName member MonitorUnsafeCreateSig
 
   val StringName               = String.name
   val StringValueName          = StringName member Sig.Field("value")

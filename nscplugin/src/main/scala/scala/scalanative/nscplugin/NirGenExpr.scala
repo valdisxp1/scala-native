@@ -1316,12 +1316,13 @@ trait NirGenExpr { self: NirGenPhase =>
 
       val monitor =
         genApplyModuleMethod(RuntimeModule, GetMonitorMethod, Seq(receiverp))
-      val enter = genApplyMethod(RuntimeMonitorEnterMethod,
+      RuntimeMonitorEnterMethod
+      val enter = genApplyMethod(PosixMonitorEnterMethod,
                                 statically = true,
                                 monitor,
                                 Seq())
       val arg = genExpr(argp)
-      val exit = genApplyMethod(RuntimeMonitorExitMethod,
+      val exit = genApplyMethod(PosixMonitorExitMethod,
                                statically = true,
                                monitor,
                                Seq())
