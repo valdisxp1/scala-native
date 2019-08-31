@@ -128,5 +128,24 @@ object PosixMonitor {
     .asInstanceOf[Ptr[pthread_mutex_t]]
   pthread_mutex_init(monitorCreationMutexPtr, PosixMonitor.mutexAttrPtr)
 
+  private val globalMonitor: Monitor = unsafeCreate(new ShadowLock())
+
+  def apply(x: java.lang.Object): Monitor = {
+    val o = x.asInstanceOf[_Object]
+    if (o.__monitor != null) {
+      o.__monitor
+    } else {
+      try {
+        globalMonitor.enter()
+        if (o.__monitor == null) {
+          o.__monitor = unsafeCreate(x)
+        }
+        o.__monitor
+      } finally {
+        globalMonitor.exit()
+      }
+    }
+  }
+
   private def unsafeCreate(x: Object): Monitor = new PosixMonitor(x.isInstanceOf[ShadowLock])
 }
