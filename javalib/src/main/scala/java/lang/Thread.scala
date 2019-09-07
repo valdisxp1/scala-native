@@ -6,7 +6,7 @@ import scala.scalanative.unsafe.{CFuncPtr1, CInt, Ptr, stackalloc}
 import scala.scalanative.posix.pthread._
 import scala.scalanative.posix.sched._
 import scala.scalanative.posix.sys.types.{pthread_attr_t, pthread_key_t, pthread_t}
-import scala.scalanative.runtime.{CAtomicInt, CAtomicLong, NativeThread, ShadowLock, ThreadBase, fromRawPtr, toRawPtr}
+import scala.scalanative.runtime.{Boxes, CAtomicInt, CAtomicLong, NativeThread, ShadowLock, ThreadBase, fromRawPtr, toRawPtr}
 import scalanative.unsigned._
 import scalanative.libc.signal
 import scalanative.runtime.Intrinsics._
@@ -27,7 +27,7 @@ class Thread private (
 
   import java.lang.Thread._
 
-  private var livenessState = CAtomicInt(internalNew)
+  private val livenessState = CAtomicInt(internalNew)
 
   private val threadId: scala.Long = getNextThreadId
 
@@ -59,7 +59,7 @@ class Thread private (
 
   private var exceptionHandler: Thread.UncaughtExceptionHandler = _
 
-  private var underlying: pthread_t = 0.asInstanceOf[ULong]
+  private var underlying: pthread_t = Boxes.boxToULong(0L)
 
   private val sleepMutex   = new Object
   private val joinMutex    = new Object
@@ -280,8 +280,7 @@ class Thread private (
 
     val id = stackalloc[pthread_t]
     // pthread_attr_t is a struct, not a ULong
-    val attrs = stackalloc[scala.Byte](pthread_attr_t_size)
-      .asInstanceOf[Ptr[pthread_attr_t]]
+    val attrs = stackalloc[pthread_attr_t](pthread_attr_t_size)
     pthread_attr_init(attrs)
     NativeThread.attrSetPriority(attrs, Thread.toNativePriority(priority))
     if (stackSize > 0) {
@@ -523,7 +522,7 @@ object Thread extends scala.scalanative.runtime.ThreadModuleBase {
     if (value != null) {
       value
     } else {
-      if (mainThread.underlying == 0L.asInstanceOf[ULong]) {
+      if (mainThread.underlying == Boxes.boxToULong(0L)) {
         // main thread uninitialized, so it must be the only thread
         mainThread
       } else {
