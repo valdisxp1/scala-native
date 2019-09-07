@@ -15,7 +15,7 @@ abstract class ThreadBase {
     if (size == 0) {
       false
     } else {
-      val target = Monitor(obj)
+      val target = PosixMonitor(obj)
       var i: Int = 0
       while (i < size && locks(i) != target) {
         i += 1

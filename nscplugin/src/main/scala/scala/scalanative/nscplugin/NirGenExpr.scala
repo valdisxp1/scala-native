@@ -1311,17 +1311,20 @@ trait NirGenExpr { self: NirGenPhase =>
         buf.bin(bin, ty, left, right, unwind)
     }
 
+    def genGetMonitor(objectRef: Tree): Val = {
+      genApplyModuleMethod(PosixMonitorModule, GetMonitorMethod, Seq(objectRef))
+    }
+
     def genSynchronized(app: Apply): Val = {
       val Apply(Select(receiverp, _), List(argp)) = app
 
-      val monitor =
-        genApplyModuleMethod(RuntimeModule, GetMonitorMethod, Seq(receiverp))
-      val enter = genApplyMethod(RuntimeMonitorEnterMethod,
+      val monitor = genGetMonitor(receiverp)
+      val enter = genApplyMethod(PosixMonitorEnterMethod,
                                 statically = true,
                                 monitor,
                                 Seq())
       val arg = genExpr(argp)
-      val exit = genApplyMethod(RuntimeMonitorExitMethod,
+      val exit = genApplyMethod(PosixMonitorExitMethod,
                                statically = true,
                                monitor,
                                Seq())

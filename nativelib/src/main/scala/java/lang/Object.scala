@@ -21,21 +21,6 @@ class _Object {
   @inline def __getClass(): _Class[_] =
     new _Class(runtime.getRawType(this))
 
-  @inline def __notify(): Unit =
-    runtime.getMonitor(this)._notify
-
-  @inline def __notifyAll(): Unit =
-    runtime.getMonitor(this)._notifyAll
-
-  @inline def __wait(): Unit =
-    runtime.getMonitor(this)._wait
-
-  @inline def __wait(timeout: scala.Long): Unit =
-    runtime.getMonitor(this)._wait(timeout)
-
-  @inline def __wait(timeout: scala.Long, nanos: Int): Unit =
-    runtime.getMonitor(this)._wait(timeout, nanos)
-
   @inline def __scala_==(that: _Object): scala.Boolean = {
     // This implementation is only called for classes that don't override
     // equals. Otherwise, whenever equals is overriden, we also update the
