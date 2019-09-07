@@ -6,7 +6,7 @@ import scala.scalanative.runtime.libc
 import scala.scalanative.runtime.Intrinsics._
 
 class _Object {
-  var __monitor: scala.scalanative.runtime.Monitor = _
+  var __monitor: AnyRef = _
   @inline def __equals(that: _Object): scala.Boolean =
     this eq that
 
@@ -20,6 +20,21 @@ class _Object {
 
   @inline def __getClass(): _Class[_] =
     new _Class(runtime.getRawType(this))
+
+  @inline def __notify(): Unit =
+    ()
+
+  @inline def __notifyAll(): Unit =
+    ()
+
+  @inline def __wait(): Unit =
+    ()
+
+  @inline def __wait(timeout: scala.Long): Unit =
+    ()
+
+  @inline def __wait(timeout: scala.Long, nanos: Int): Unit =
+    ()
 
   @inline def __scala_==(that: _Object): scala.Boolean = {
     // This implementation is only called for classes that don't override

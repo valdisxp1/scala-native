@@ -7,7 +7,7 @@ import scalanative.unsafe._
 
 object RuntimeEnviromenment {
   /** Get monitor for given object. */
-  @alwaysinline def getMonitor(obj: Object): Monitor = PosixMonitor(obj)
+  @alwaysinline def getMonitor(obj: Object): PosixMonitor = PosixMonitor(obj)
 
   /** Initialize runtime with given arguments and return the
    *  rest as Java-style array.

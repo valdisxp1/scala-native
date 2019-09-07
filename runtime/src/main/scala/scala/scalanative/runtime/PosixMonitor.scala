@@ -9,7 +9,7 @@ import scala.scalanative.runtime.ThreadBase._
 import scala.scalanative.runtime.libc.malloc
 import scala.scalanative.unsafe.{Ptr, stackalloc}
 
-final class PosixMonitor private[runtime] (shadow: Boolean) extends Monitor {
+final class PosixMonitor private[runtime] (shadow: Boolean) {
   // memory leak
   // TODO destroy the mutex and release the memory
   private val mutexPtr = fromRawPtr[pthread_mutex_t](malloc(pthread_mutex_t_size))
@@ -19,9 +19,9 @@ final class PosixMonitor private[runtime] (shadow: Boolean) extends Monitor {
   private val condPtr = fromRawPtr[pthread_cond_t](malloc(pthread_cond_t_size))
   pthread_cond_init(condPtr, PosixMonitor.condAttrPtr)
 
-  override def _notify(): Unit    = pthread_cond_signal(condPtr)
-  override def _notifyAll(): Unit = pthread_cond_broadcast(condPtr)
-  override def _wait(): Unit = {
+  def _notify(): Unit    = pthread_cond_signal(condPtr)
+  def _notifyAll(): Unit = pthread_cond_broadcast(condPtr)
+  def _wait(): Unit = {
     val thread = ThreadBase.currentThreadInternal()
     if (thread != null) {
       thread.setLockState(Waiting)
@@ -34,7 +34,7 @@ final class PosixMonitor private[runtime] (shadow: Boolean) extends Monitor {
       throw new IllegalMonitorStateException()
     }
   }
-  override def _wait(millis: scala.Long, nanos: Int): Unit = {
+  def _wait(millis: scala.Long, nanos: Int): Unit = {
     val thread = ThreadBase.currentThreadInternal()
     if (thread != null) {
       thread.setLockState(TimedWaiting)
@@ -60,7 +60,7 @@ final class PosixMonitor private[runtime] (shadow: Boolean) extends Monitor {
       throw new IllegalMonitorStateException()
     }
   }
-  override def enter(): Unit = {
+  def enter(): Unit = {
     if (pthread_mutex_trylock(mutexPtr) == EBUSY) {
       val thread = ThreadBase.currentThreadInternal()
       if (thread != null) {
@@ -79,7 +79,7 @@ final class PosixMonitor private[runtime] (shadow: Boolean) extends Monitor {
     }
   }
 
-  override def exit(): Unit = {
+  def exit(): Unit = {
     if (!shadow) {
       popLock()
     }
@@ -94,7 +94,7 @@ final class PosixMonitor private[runtime] (shadow: Boolean) extends Monitor {
       thread.size += 1
       if (thread.size >= thread.locks.length) {
         val oldArray = thread.locks
-        val newArray = new scala.Array[Monitor](oldArray.length * 2)
+        val newArray = new scala.Array[PosixMonitor](oldArray.length * 2)
         System.arraycopy(oldArray, 0, newArray, 0, oldArray.length)
         thread.locks = newArray
       }
@@ -113,39 +113,38 @@ final class PosixMonitor private[runtime] (shadow: Boolean) extends Monitor {
 }
 
 object PosixMonitor {
-  private val mutexAttrPtr: Ptr[pthread_mutexattr_t] = malloc(
-    pthread_mutexattr_t_size).asInstanceOf[Ptr[pthread_mutexattr_t]]
+  private val mutexAttrPtr: Ptr[pthread_mutexattr_t] = Boxes.boxToPtr(malloc(
+    pthread_mutexattr_t_size))
   pthread_mutexattr_init(mutexAttrPtr)
   pthread_mutexattr_settype(mutexAttrPtr, PTHREAD_MUTEX_RECURSIVE)
 
-  private val condAttrPtr: Ptr[pthread_condattr_t] = malloc(
-    pthread_condattr_t_size).asInstanceOf[Ptr[pthread_cond_t]]
+  private val condAttrPtr: Ptr[pthread_condattr_t] = Boxes.boxToPtr(malloc(
+    pthread_condattr_t_size))
   pthread_condattr_init(condAttrPtr)
   pthread_condattr_setpshared(condAttrPtr, PTHREAD_PROCESS_SHARED)
 
-  private[runtime] val monitorCreationMutexPtr: Ptr[pthread_mutex_t] = malloc(
-    pthread_mutex_t_size)
-    .asInstanceOf[Ptr[pthread_mutex_t]]
+  private[runtime] val monitorCreationMutexPtr: Ptr[pthread_mutex_t] = Boxes.boxToPtr(malloc(
+    pthread_mutex_t_size))
   pthread_mutex_init(monitorCreationMutexPtr, PosixMonitor.mutexAttrPtr)
 
-  private val globalMonitor: Monitor = unsafeCreate(new ShadowLock())
+  private val globalMonitor: PosixMonitor = unsafeCreate(new ShadowLock())
 
   def apply(x: java.lang.Object): PosixMonitor = {
     val o = x.asInstanceOf[_Object]
     if (o.__monitor != null) {
-      o.__monitor.asInstanceOf
+      o.__monitor.asInstanceOf[PosixMonitor]
     } else {
       try {
         globalMonitor.enter()
         if (o.__monitor == null) {
           o.__monitor = unsafeCreate(x)
         }
-        o.__monitor.asInstanceOf
+        o.__monitor.asInstanceOf[PosixMonitor]
       } finally {
         globalMonitor.exit()
       }
     }
   }
 
-  private def unsafeCreate(x: Object): Monitor = new PosixMonitor(x.isInstanceOf[ShadowLock])
+  private def unsafeCreate(x: Object) = new PosixMonitor(x.isInstanceOf[ShadowLock])
 }
