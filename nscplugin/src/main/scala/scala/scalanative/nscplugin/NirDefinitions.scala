@@ -103,6 +103,8 @@ trait NirDefinitions { self: NirGlobalAddons =>
     lazy val PosixMonitorExitMethod =
       getDecl(PosixMonitorClass, TermName("exit"))
 
+    lazy val PosixMonitorForwards: Seq[global.TermName] = Seq(nme.wait_, nme.notify_, nme.notifyAll_)
+
     lazy val RuntimeTypeClass = getRequiredClass(
       "scala.scalanative.runtime.Type")
 

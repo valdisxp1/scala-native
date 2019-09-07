@@ -688,6 +688,8 @@ trait NirGenExpr { self: NirGenPhase =>
             genApplyBox(arg.tpe, arg)
           } else if (currentRun.runDefinitions.isUnbox(sym)) {
             genApplyUnbox(app.tpe, args.head)
+          } else if (PosixMonitorForwards contains sym.name) {
+            genApplyMonitor(app)
           } else {
             val Select(receiverp, _) = fun
             genApplyMethod(fun.symbol, statically = false, receiverp, args)
@@ -1330,6 +1332,17 @@ trait NirGenExpr { self: NirGenPhase =>
                                Seq())
 
       arg
+    }
+
+    def genApplyMonitor(app: Apply): Val = {
+      val Apply(oldFun@Select(receiverp, funName), args) = app
+      val monitor = genGetMonitor(receiverp)
+      val newFun = PosixMonitorClass.info.member(funName.mapName("_" + _))
+      val filtered = newFun.filter(_.tpe.params.size == oldFun.tpe.params.size)
+      genApplyMethod(filtered,
+        statically = false,
+        monitor,
+        args)
     }
 
     def genCoercion(app: Apply, receiver: Tree, code: Int): Val = {

@@ -34,6 +34,7 @@ final class PosixMonitor private[runtime] (shadow: Boolean) {
       throw new IllegalMonitorStateException()
     }
   }
+  def _wait(millis: scala.Long): Unit = _wait(millis, 0)
   def _wait(millis: scala.Long, nanos: Int): Unit = {
     val thread = ThreadBase.currentThreadInternal()
     if (thread != null) {
