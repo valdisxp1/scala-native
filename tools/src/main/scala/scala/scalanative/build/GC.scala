@@ -37,7 +37,7 @@ object GC {
   def commix: GC = Immix
 
   /** The default garbage collector. */
-  def default: GC = Immix
+  def default: GC = Boehm
 
   /** Get a garbage collector with given name. */
   def apply(gc: String) = gc match {
