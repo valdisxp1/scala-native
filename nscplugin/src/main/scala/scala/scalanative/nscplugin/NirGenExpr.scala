@@ -1338,11 +1338,23 @@ trait NirGenExpr { self: NirGenPhase =>
       val Apply(oldFun@Select(receiverp, funName), args) = app
       val monitor = genGetMonitor(receiverp)
       val newFun = PosixMonitorClass.info.member(funName.mapName("_" + _))
-      val filtered = newFun.filter(_.tpe.params.size == oldFun.tpe.params.size)
-      genApplyMethod(filtered,
-        statically = false,
-        monitor,
-        args)
+
+      val oldSignature = oldFun.tpe.params.map(_.tpe.sym.name)
+      val filtered = newFun.filter {
+        alternative =>
+          val newSignature = alternative.tpe.params.map(_.tpe.sym.name)
+          newSignature == oldSignature
+      }
+
+      if (filtered.exists) {
+        genApplyMethod(filtered,
+          statically = false,
+          monitor,
+          args)
+      } else {
+        val Select(receiverp, _) = oldFun
+        genApplyMethod(oldFun.symbol, statically = false, receiverp, args)
+      }
     }
 
     def genCoercion(app: Apply, receiver: Tree, code: Int): Val = {
