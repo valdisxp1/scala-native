@@ -33,7 +33,7 @@ class AtomicReference[T <: AnyRef](private[this] var value: T)
     String.valueOf(value)
 
   private implicit def toLong(e: T): Long = castRawPtrToLong(castObjectToRawPtr(e))
-  private implicit def toRef(l: Long): T  = castRawPtrToObject(castLongToRawPtr(l)).asInstanceOf
+  private implicit def toRef(l: Long): T  = castRawPtrToObject(castLongToRawPtr(l)).asInstanceOf[T]
 }
 
 object AtomicReference {

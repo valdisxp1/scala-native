@@ -12,7 +12,7 @@ package scala.scalanative.build
  *
  *  Additional GCs might be added to the list in the future.
  *
- *  @param dir name of the gc
+ *  @param name name of the gc
  *  @param links linking dependencies of the gc
  */
 sealed abstract class GC private (val name: String, val links: Seq[String]) {
@@ -34,10 +34,10 @@ object GC {
   def immix: GC = Immix
 
   /** Mostly-precise mark-region garbage collector running concurrently. */
-  def commix: GC = Immix
+  def commix: GC = Commix
 
   /** The default garbage collector. */
-  def default: GC = Immix
+  def default: GC = Boehm
 
   /** Get a garbage collector with given name. */
   def apply(gc: String) = gc match {

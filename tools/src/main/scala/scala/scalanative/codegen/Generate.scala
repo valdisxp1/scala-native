@@ -4,6 +4,7 @@ package codegen
 import scala.collection.mutable
 import scala.scalanative.nir._
 import scala.scalanative.linker.Class
+import scala.scalanative.nir.Type.Ref
 
 object Generate {
   import Impl._
@@ -322,7 +323,7 @@ object Generate {
       Type.Ref(Global.Top("scala.scalanative.runtime.ObjectArray"))
 
     val Runtime =
-      Rt.Runtime
+      Ref(Global.Top("scala.scalanative.runtime.RuntimeEnviromenment$"))
     val RuntimeInitSig =
       Type.Function(Seq(Runtime, Type.Int, Type.Ptr), ObjectArray)
     val RuntimeInitName =

@@ -688,6 +688,8 @@ trait NirGenExpr { self: NirGenPhase =>
             genApplyBox(arg.tpe, arg)
           } else if (currentRun.runDefinitions.isUnbox(sym)) {
             genApplyUnbox(app.tpe, args.head)
+          } else if (PosixMonitorForwards contains sym.name) {
+            genApplyMonitor(app)
           } else {
             val Select(receiverp, _) = fun
             genApplyMethod(fun.symbol, statically = false, receiverp, args)
@@ -1311,22 +1313,48 @@ trait NirGenExpr { self: NirGenPhase =>
         buf.bin(bin, ty, left, right, unwind)
     }
 
+    def genGetMonitor(objectRef: Tree): Val = {
+      genApplyModuleMethod(PosixMonitorModule, GetMonitorMethod, Seq(objectRef))
+    }
+
     def genSynchronized(app: Apply): Val = {
       val Apply(Select(receiverp, _), List(argp)) = app
 
-      val monitor =
-        genApplyModuleMethod(RuntimeModule, GetMonitorMethod, Seq(receiverp))
-      val enter = genApplyMethod(RuntimeMonitorEnterMethod,
+      val monitor = genGetMonitor(receiverp)
+      val enter = genApplyMethod(PosixMonitorEnterMethod,
                                 statically = true,
                                 monitor,
                                 Seq())
       val arg = genExpr(argp)
-      val exit = genApplyMethod(RuntimeMonitorExitMethod,
+      val exit = genApplyMethod(PosixMonitorExitMethod,
                                statically = true,
                                monitor,
                                Seq())
 
       arg
+    }
+
+    def genApplyMonitor(app: Apply): Val = {
+      val Apply(oldFun@Select(receiverp, funName), args) = app
+      val monitor = genGetMonitor(receiverp)
+      val newFun = PosixMonitorClass.info.member(funName.mapName("_" + _))
+
+      val oldSignature = oldFun.tpe.params.map(_.tpe.sym.name)
+      val filtered = newFun.filter {
+        alternative =>
+          val newSignature = alternative.tpe.params.map(_.tpe.sym.name)
+          newSignature == oldSignature
+      }
+
+      if (filtered.exists) {
+        genApplyMethod(filtered,
+          statically = false,
+          monitor,
+          args)
+      } else {
+        val Select(receiverp, _) = oldFun
+        genApplyMethod(oldFun.symbol, statically = false, receiverp, args)
+      }
     }
 
     def genCoercion(app: Apply, receiver: Tree, code: Int): Val = {
