@@ -42,7 +42,7 @@ class AtomicReferenceArray[E <: AnyRef](length: Int) extends Serializable {
     inner.mkString("[", ", ", "]")
 
   private implicit def toLong(e: E): Long = castRawPtrToLong(castObjectToRawPtr(e))
-  private implicit def toRef(l: Long): E  = castRawPtrToObject(castLongToRawPtr(l)).asInstanceOf
+  private implicit def toRef(l: Long): E  = castRawPtrToObject(castLongToRawPtr(l)).asInstanceOf[E]
 }
 
 object AtomicReferenceArray {

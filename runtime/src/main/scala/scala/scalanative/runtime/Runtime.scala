@@ -38,7 +38,7 @@ object RuntimeEnviromenment {
    */
   def loop(): Unit = {
     new Thread("EventLoop") {
-      override def run() =
+      override def run(): Unit =
         ExecutionContext.global
           .asInstanceOf[QueueExecutionContext]
           .waitUntilDone()
