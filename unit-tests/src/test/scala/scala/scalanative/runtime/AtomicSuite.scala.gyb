@@ -3,7 +3,8 @@ package runtime
 
 import runtime._
 import native._
-import stdlib._
+import scala.scalanative.unsafe._
+import scala.scalanative.unsigned._
 
 object AtomicSuite extends tests.MultiThreadSuite {
 

@@ -4,47 +4,42 @@ package runtime
 
 import runtime._
 import native._
-import stdlib._
+import scala.scalanative.unsafe._
+import scala.scalanative.unsigned._
 
 object AtomicSuite extends tests.MultiThreadSuite {
 
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 26)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 27)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Strong byte") {
     val a = CAtomicByte()
 
     val b = 3.asInstanceOf[Byte]
 
-    assertNot(
-      a.compareAndSwapStrong(1.asInstanceOf[Byte], 3.asInstanceOf[Byte])._1)
+    assertNot(a.compareAndSwapStrong(1.asInstanceOf[Byte], 3.asInstanceOf[Byte])._1)
 
-    assert(
-      a.compareAndSwapStrong(0.asInstanceOf[Byte], 3.asInstanceOf[Byte])._2 == 3
-        .asInstanceOf[Byte])
+    assert(a.compareAndSwapStrong(0.asInstanceOf[Byte], 3.asInstanceOf[Byte])._2 == 3.asInstanceOf[Byte])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Weak byte") {
     val a = CAtomicByte()
 
     val b = 3.asInstanceOf[Byte]
 
-    assertNot(
-      a.compareAndSwapWeak(1.asInstanceOf[Byte], 3.asInstanceOf[Byte])._1)
+    assertNot(a.compareAndSwapWeak(1.asInstanceOf[Byte], 3.asInstanceOf[Byte])._1)
 
-    assert(
-      a.compareAndSwapWeak(0.asInstanceOf[Byte], 3.asInstanceOf[Byte])._2 == 3
-        .asInstanceOf[Byte])
+    assert(a.compareAndSwapWeak(0.asInstanceOf[Byte], 3.asInstanceOf[Byte])._2 == 3.asInstanceOf[Byte])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 56)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 57)
 
-  test("compare_and_swap (weak and strong) is atomic for byte") {
+test("compare_and_swap (weak and strong) is atomic for byte") {
 
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
@@ -72,8 +67,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
         }
       }
       number != (n * numThreads).asInstanceOf[Byte]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+    } { n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicByte()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -84,9 +80,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[Byte]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[Byte]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapStrong(expected, newValue)._1)
           i -= 1
         }
@@ -96,9 +92,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[Byte]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicByte()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -109,9 +105,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[Byte]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[Byte]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapWeak(expected, newValue)._1)
           i -= 1
         }
@@ -121,9 +117,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[Byte]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 114)
-    true
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 115)
+      true
     }
   }
 
@@ -165,96 +161,99 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
-  test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for byte") {
-    val numThreads = 2
-    testWithMinRepetitions() { n: Int =>
-      var number = 0
-      withThreads(numThreads, label = "CounterExample") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[Byte]
-        // making this as fast as possible
-        while (i > 0) {
-          number = number + b
-          i -= 1
-        }
-      }
-      number != (n * numThreads).asInstanceOf[Byte]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicByte()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[Byte]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchAdd(b)
-          i -= 1
-        }
-      }
+    test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for byte") {
+        val numThreads = 2
+        testWithMinRepetitions() {
+          n: Int =>
+            var number = 0
+            withThreads(numThreads, label = "CounterExample") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[Byte]
+              // making this as fast as possible
+              while (i > 0) {
+                number  = number + b
+                i -= 1
+              }
+            }
+            number != (n * numThreads).asInstanceOf[Byte]
+        } {
+          n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicByte()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[Byte]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchAdd(b)
+                i -= 1
+              }
+            }
 
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[Byte]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicByte()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[Byte]
-        // making this as fast as possible
-        while (i > 0) {
-          number.addFetch(b)
-          i -= 1
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[Byte]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicByte()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[Byte]
+              // making this as fast as possible
+              while (i > 0) {
+                number.addFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[Byte]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicByte()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = -1.asInstanceOf[Byte]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchSub(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[Byte]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicByte()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = -1.asInstanceOf[Byte]
+              // making this as fast as possible
+              while (i > 0) {
+                number.subFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[Byte]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 213)
+            true
         }
       }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[Byte]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicByte()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = -1.asInstanceOf[Byte]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchSub(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[Byte]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicByte()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = -1.asInstanceOf[Byte]
-        // making this as fast as possible
-        while (i > 0) {
-          number.subFetch(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[Byte]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 212)
-    true
-    }
-  }
 
   test("fetch_sub byte") {
     val a = CAtomicByte(1.asInstanceOf[Byte])
@@ -351,41 +350,35 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Strong short") {
     val a = CAtomicShort()
 
     val b = 3.asInstanceOf[CShort]
 
-    assertNot(
-      a.compareAndSwapStrong(1.asInstanceOf[CShort], 3.asInstanceOf[CShort])._1)
+    assertNot(a.compareAndSwapStrong(1.asInstanceOf[CShort], 3.asInstanceOf[CShort])._1)
 
-    assert(
-      a.compareAndSwapStrong(0.asInstanceOf[CShort], 3.asInstanceOf[CShort])
-        ._2 == 3.asInstanceOf[CShort])
+    assert(a.compareAndSwapStrong(0.asInstanceOf[CShort], 3.asInstanceOf[CShort])._2 == 3.asInstanceOf[CShort])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Weak short") {
     val a = CAtomicShort()
 
     val b = 3.asInstanceOf[CShort]
 
-    assertNot(
-      a.compareAndSwapWeak(1.asInstanceOf[CShort], 3.asInstanceOf[CShort])._1)
+    assertNot(a.compareAndSwapWeak(1.asInstanceOf[CShort], 3.asInstanceOf[CShort])._1)
 
-    assert(
-      a.compareAndSwapWeak(0.asInstanceOf[CShort], 3.asInstanceOf[CShort])
-        ._2 == 3.asInstanceOf[CShort])
+    assert(a.compareAndSwapWeak(0.asInstanceOf[CShort], 3.asInstanceOf[CShort])._2 == 3.asInstanceOf[CShort])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 56)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 57)
 
-  test("compare_and_swap (weak and strong) is atomic for short") {
+test("compare_and_swap (weak and strong) is atomic for short") {
 
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
@@ -413,8 +406,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
         }
       }
       number != (n * numThreads).asInstanceOf[CShort]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+    } { n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicShort()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -425,9 +419,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[CShort]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[CShort]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapStrong(expected, newValue)._1)
           i -= 1
         }
@@ -437,9 +431,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[CShort]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicShort()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -450,9 +444,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[CShort]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[CShort]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapWeak(expected, newValue)._1)
           i -= 1
         }
@@ -462,9 +456,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[CShort]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 114)
-    true
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 115)
+      true
     }
   }
 
@@ -506,96 +500,99 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
-  test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for short") {
-    val numThreads = 2
-    testWithMinRepetitions() { n: Int =>
-      var number = 0
-      withThreads(numThreads, label = "CounterExample") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CShort]
-        // making this as fast as possible
-        while (i > 0) {
-          number = number + b
-          i -= 1
-        }
-      }
-      number != (n * numThreads).asInstanceOf[CShort]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicShort()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CShort]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchAdd(b)
-          i -= 1
-        }
-      }
+    test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for short") {
+        val numThreads = 2
+        testWithMinRepetitions() {
+          n: Int =>
+            var number = 0
+            withThreads(numThreads, label = "CounterExample") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CShort]
+              // making this as fast as possible
+              while (i > 0) {
+                number  = number + b
+                i -= 1
+              }
+            }
+            number != (n * numThreads).asInstanceOf[CShort]
+        } {
+          n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicShort()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CShort]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchAdd(b)
+                i -= 1
+              }
+            }
 
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CShort]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicShort()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CShort]
-        // making this as fast as possible
-        while (i > 0) {
-          number.addFetch(b)
-          i -= 1
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CShort]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicShort()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CShort]
+              // making this as fast as possible
+              while (i > 0) {
+                number.addFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CShort]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicShort()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = -1.asInstanceOf[CShort]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchSub(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CShort]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicShort()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = -1.asInstanceOf[CShort]
+              // making this as fast as possible
+              while (i > 0) {
+                number.subFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CShort]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 213)
+            true
         }
       }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CShort]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicShort()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = -1.asInstanceOf[CShort]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchSub(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CShort]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicShort()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = -1.asInstanceOf[CShort]
-        // making this as fast as possible
-        while (i > 0) {
-          number.subFetch(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CShort]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 212)
-    true
-    }
-  }
 
   test("fetch_sub short") {
     val a = CAtomicShort(1.asInstanceOf[CShort])
@@ -692,7 +689,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Strong int") {
     val a = CAtomicInt()
@@ -705,7 +702,7 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Weak int") {
     val a = CAtomicInt()
@@ -718,9 +715,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 56)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 57)
 
-  test("compare_and_swap (weak and strong) is atomic for int") {
+test("compare_and_swap (weak and strong) is atomic for int") {
 
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
@@ -748,8 +745,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
         }
       }
       number != (n * numThreads)
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+    } { n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicInt()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -760,9 +758,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b)
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapStrong(expected, newValue)._1)
           i -= 1
         }
@@ -772,9 +770,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads)
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicInt()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -785,9 +783,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b)
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapWeak(expected, newValue)._1)
           i -= 1
         }
@@ -797,9 +795,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads)
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 114)
-    true
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 115)
+      true
     }
   }
 
@@ -841,96 +839,99 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
-  test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for int") {
-    val numThreads = 2
-    testWithMinRepetitions() { n: Int =>
-      var number = 0
-      withThreads(numThreads, label = "CounterExample") { _: Int =>
-        var i = n
-        val b = 1
-        // making this as fast as possible
-        while (i > 0) {
-          number = number + b
-          i -= 1
-        }
-      }
-      number != (n * numThreads)
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicInt()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchAdd(b)
-          i -= 1
-        }
-      }
+    test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for int") {
+        val numThreads = 2
+        testWithMinRepetitions() {
+          n: Int =>
+            var number = 0
+            withThreads(numThreads, label = "CounterExample") {_: Int =>
+              var i = n
+              val b = 1
+              // making this as fast as possible
+              while (i > 0) {
+                number  = number + b
+                i -= 1
+              }
+            }
+            number != (n * numThreads)
+        } {
+          n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicInt()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchAdd(b)
+                i -= 1
+              }
+            }
 
-      val value    = number.load()
-      val expected = (n * numThreads)
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicInt()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1
-        // making this as fast as possible
-        while (i > 0) {
-          number.addFetch(b)
-          i -= 1
+            val value = number.load()
+            val expected = (n * numThreads)
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicInt()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1
+              // making this as fast as possible
+              while (i > 0) {
+                number.addFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads)
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicInt()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = -1
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchSub(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads)
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicInt()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = -1
+              // making this as fast as possible
+              while (i > 0) {
+                number.subFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads)
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 213)
+            true
         }
       }
-
-      val value    = number.load()
-      val expected = (n * numThreads)
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicInt()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = -1
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchSub(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads)
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicInt()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = -1
-        // making this as fast as possible
-        while (i > 0) {
-          number.subFetch(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads)
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 212)
-    true
-    }
-  }
 
   test("fetch_sub int") {
     val a = CAtomicInt(1)
@@ -1027,41 +1028,35 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Strong long") {
     val a = CAtomicLong()
 
     val b = 3.asInstanceOf[CLong]
 
-    assertNot(
-      a.compareAndSwapStrong(1.asInstanceOf[CLong], 3.asInstanceOf[CLong])._1)
+    assertNot(a.compareAndSwapStrong(1.asInstanceOf[CLong], 3.asInstanceOf[CLong])._1)
 
-    assert(
-      a.compareAndSwapStrong(0.asInstanceOf[CLong], 3.asInstanceOf[CLong])
-        ._2 == 3.asInstanceOf[CLong])
+    assert(a.compareAndSwapStrong(0.asInstanceOf[CLong], 3.asInstanceOf[CLong])._2 == 3.asInstanceOf[CLong])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Weak long") {
     val a = CAtomicLong()
 
     val b = 3.asInstanceOf[CLong]
 
-    assertNot(
-      a.compareAndSwapWeak(1.asInstanceOf[CLong], 3.asInstanceOf[CLong])._1)
+    assertNot(a.compareAndSwapWeak(1.asInstanceOf[CLong], 3.asInstanceOf[CLong])._1)
 
-    assert(
-      a.compareAndSwapWeak(0.asInstanceOf[CLong], 3.asInstanceOf[CLong])._2 == 3
-        .asInstanceOf[CLong])
+    assert(a.compareAndSwapWeak(0.asInstanceOf[CLong], 3.asInstanceOf[CLong])._2 == 3.asInstanceOf[CLong])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 56)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 57)
 
-  test("compare_and_swap (weak and strong) is atomic for long") {
+test("compare_and_swap (weak and strong) is atomic for long") {
 
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
@@ -1089,8 +1084,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
         }
       }
       number != (n * numThreads).asInstanceOf[CLong]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+    } { n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicLong()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -1101,9 +1097,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[CLong]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[CLong]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapStrong(expected, newValue)._1)
           i -= 1
         }
@@ -1113,9 +1109,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[CLong]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicLong()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -1126,9 +1122,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[CLong]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[CLong]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapWeak(expected, newValue)._1)
           i -= 1
         }
@@ -1138,9 +1134,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[CLong]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 114)
-    true
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 115)
+      true
     }
   }
 
@@ -1182,96 +1178,99 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
-  test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for long") {
-    val numThreads = 2
-    testWithMinRepetitions() { n: Int =>
-      var number = 0.asInstanceOf[CLong]
-      withThreads(numThreads, label = "CounterExample") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CLong]
-        // making this as fast as possible
-        while (i > 0) {
-          number = number + b
-          i -= 1
-        }
-      }
-      number != (n * numThreads).asInstanceOf[CLong]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicLong()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CLong]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchAdd(b)
-          i -= 1
-        }
-      }
+    test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for long") {
+        val numThreads = 2
+        testWithMinRepetitions() {
+          n: Int =>
+            var number = 0.asInstanceOf[CLong]
+            withThreads(numThreads, label = "CounterExample") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CLong]
+              // making this as fast as possible
+              while (i > 0) {
+                number  = number + b
+                i -= 1
+              }
+            }
+            number != (n * numThreads).asInstanceOf[CLong]
+        } {
+          n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicLong()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CLong]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchAdd(b)
+                i -= 1
+              }
+            }
 
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CLong]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicLong()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CLong]
-        // making this as fast as possible
-        while (i > 0) {
-          number.addFetch(b)
-          i -= 1
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CLong]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicLong()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CLong]
+              // making this as fast as possible
+              while (i > 0) {
+                number.addFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CLong]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicLong()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = -1.asInstanceOf[CLong]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchSub(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CLong]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicLong()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = -1.asInstanceOf[CLong]
+              // making this as fast as possible
+              while (i > 0) {
+                number.subFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CLong]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 213)
+            true
         }
       }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CLong]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicLong()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = -1.asInstanceOf[CLong]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchSub(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CLong]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicLong()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = -1.asInstanceOf[CLong]
-        // making this as fast as possible
-        while (i > 0) {
-          number.subFetch(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CLong]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 212)
-    true
-    }
-  }
 
   test("fetch_sub long") {
     val a = CAtomicLong(1.asInstanceOf[CLong])
@@ -1368,41 +1367,35 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Strong ubyte") {
     val a = CAtomicUnsignedByte()
 
     val b = 3.asInstanceOf[Byte]
 
-    assertNot(
-      a.compareAndSwapStrong(1.asInstanceOf[Byte], 3.asInstanceOf[Byte])._1)
+    assertNot(a.compareAndSwapStrong(1.asInstanceOf[Byte], 3.asInstanceOf[Byte])._1)
 
-    assert(
-      a.compareAndSwapStrong(0.asInstanceOf[Byte], 3.asInstanceOf[Byte])._2 == 3
-        .asInstanceOf[Byte])
+    assert(a.compareAndSwapStrong(0.asInstanceOf[Byte], 3.asInstanceOf[Byte])._2 == 3.asInstanceOf[Byte])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Weak ubyte") {
     val a = CAtomicUnsignedByte()
 
     val b = 3.asInstanceOf[Byte]
 
-    assertNot(
-      a.compareAndSwapWeak(1.asInstanceOf[Byte], 3.asInstanceOf[Byte])._1)
+    assertNot(a.compareAndSwapWeak(1.asInstanceOf[Byte], 3.asInstanceOf[Byte])._1)
 
-    assert(
-      a.compareAndSwapWeak(0.asInstanceOf[Byte], 3.asInstanceOf[Byte])._2 == 3
-        .asInstanceOf[Byte])
+    assert(a.compareAndSwapWeak(0.asInstanceOf[Byte], 3.asInstanceOf[Byte])._2 == 3.asInstanceOf[Byte])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 56)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 57)
 
-  test("compare_and_swap (weak and strong) is atomic for ubyte") {
+test("compare_and_swap (weak and strong) is atomic for ubyte") {
 
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
@@ -1430,8 +1423,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
         }
       }
       number != (n * numThreads).asInstanceOf[Byte]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+    } { n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicUnsignedByte()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -1442,9 +1436,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[Byte]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[Byte]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapStrong(expected, newValue)._1)
           i -= 1
         }
@@ -1454,9 +1448,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[Byte]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicUnsignedByte()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -1467,9 +1461,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[Byte]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[Byte]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapWeak(expected, newValue)._1)
           i -= 1
         }
@@ -1479,9 +1473,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[Byte]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 114)
-    true
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 115)
+      true
     }
   }
 
@@ -1523,96 +1517,99 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
-  test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for ubyte") {
-    val numThreads = 2
-    testWithMinRepetitions() { n: Int =>
-      var number = 0
-      withThreads(numThreads, label = "CounterExample") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[Byte]
-        // making this as fast as possible
-        while (i > 0) {
-          number = number + b
-          i -= 1
-        }
-      }
-      number != (n * numThreads).asInstanceOf[Byte]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicUnsignedByte()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[Byte]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchAdd(b)
-          i -= 1
-        }
-      }
+    test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for ubyte") {
+        val numThreads = 2
+        testWithMinRepetitions() {
+          n: Int =>
+            var number = 0
+            withThreads(numThreads, label = "CounterExample") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[Byte]
+              // making this as fast as possible
+              while (i > 0) {
+                number  = number + b
+                i -= 1
+              }
+            }
+            number != (n * numThreads).asInstanceOf[Byte]
+        } {
+          n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicUnsignedByte()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[Byte]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchAdd(b)
+                i -= 1
+              }
+            }
 
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[Byte]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicUnsignedByte()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[Byte]
-        // making this as fast as possible
-        while (i > 0) {
-          number.addFetch(b)
-          i -= 1
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[Byte]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicUnsignedByte()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[Byte]
+              // making this as fast as possible
+              while (i > 0) {
+                number.addFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[Byte]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicUnsignedByte()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = -1.asInstanceOf[Byte]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchSub(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[Byte]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicUnsignedByte()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = -1.asInstanceOf[Byte]
+              // making this as fast as possible
+              while (i > 0) {
+                number.subFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[Byte]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 213)
+            true
         }
       }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[Byte]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicUnsignedByte()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = -1.asInstanceOf[Byte]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchSub(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[Byte]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicUnsignedByte()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = -1.asInstanceOf[Byte]
-        // making this as fast as possible
-        while (i > 0) {
-          number.subFetch(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[Byte]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 212)
-    true
-    }
-  }
 
   test("fetch_sub ubyte") {
     val a = CAtomicUnsignedByte(1.asInstanceOf[Byte])
@@ -1709,47 +1706,35 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Strong ushort") {
     val a = CAtomicUnsignedShort()
 
     val b = 3.asInstanceOf[CUnsignedShort]
 
-    assertNot(
-      a.compareAndSwapStrong(1.asInstanceOf[CUnsignedShort],
-                              3.asInstanceOf[CUnsignedShort])
-        ._1)
+    assertNot(a.compareAndSwapStrong(1.asInstanceOf[CUnsignedShort], 3.asInstanceOf[CUnsignedShort])._1)
 
-    assert(
-      a.compareAndSwapStrong(0.asInstanceOf[CUnsignedShort],
-                              3.asInstanceOf[CUnsignedShort])
-        ._2 == 3.asInstanceOf[CUnsignedShort])
+    assert(a.compareAndSwapStrong(0.asInstanceOf[CUnsignedShort], 3.asInstanceOf[CUnsignedShort])._2 == 3.asInstanceOf[CUnsignedShort])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Weak ushort") {
     val a = CAtomicUnsignedShort()
 
     val b = 3.asInstanceOf[CUnsignedShort]
 
-    assertNot(
-      a.compareAndSwapWeak(1.asInstanceOf[CUnsignedShort],
-                            3.asInstanceOf[CUnsignedShort])
-        ._1)
+    assertNot(a.compareAndSwapWeak(1.asInstanceOf[CUnsignedShort], 3.asInstanceOf[CUnsignedShort])._1)
 
-    assert(
-      a.compareAndSwapWeak(0.asInstanceOf[CUnsignedShort],
-                            3.asInstanceOf[CUnsignedShort])
-        ._2 == 3.asInstanceOf[CUnsignedShort])
+    assert(a.compareAndSwapWeak(0.asInstanceOf[CUnsignedShort], 3.asInstanceOf[CUnsignedShort])._2 == 3.asInstanceOf[CUnsignedShort])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 56)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 57)
 
-  test("compare_and_swap (weak and strong) is atomic for ushort") {
+test("compare_and_swap (weak and strong) is atomic for ushort") {
 
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
@@ -1777,8 +1762,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
         }
       }
       number != (n * numThreads).asInstanceOf[CUnsignedShort]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+    } { n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicUnsignedShort()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -1789,9 +1775,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[CUnsignedShort]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 99)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 100)
             newValue = (expected + b).toUShort
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapStrong(expected, newValue)._1)
           i -= 1
         }
@@ -1801,9 +1787,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[CUnsignedShort]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicUnsignedShort()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -1814,9 +1800,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[CUnsignedShort]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 99)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 100)
             newValue = (expected + b).toUShort
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapWeak(expected, newValue)._1)
           i -= 1
         }
@@ -1826,9 +1812,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[CUnsignedShort]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 114)
-    true
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 115)
+      true
     }
   }
 
@@ -1870,96 +1856,99 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
-  test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for ushort") {
-    val numThreads = 2
-    testWithMinRepetitions() { n: Int =>
-      var number = 0.asInstanceOf[CUnsignedInt]
-      withThreads(numThreads, label = "CounterExample") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CUnsignedShort]
-        // making this as fast as possible
-        while (i > 0) {
-          number = number + b
-          i -= 1
-        }
-      }
-      number != (n * numThreads).asInstanceOf[CUnsignedShort]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicUnsignedShort()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CUnsignedShort]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchAdd(b)
-          i -= 1
-        }
-      }
+    test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for ushort") {
+        val numThreads = 2
+        testWithMinRepetitions() {
+          n: Int =>
+            var number = 0.asInstanceOf[CUnsignedInt]
+            withThreads(numThreads, label = "CounterExample") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CUnsignedShort]
+              // making this as fast as possible
+              while (i > 0) {
+                number  = number + b
+                i -= 1
+              }
+            }
+            number != (n * numThreads).asInstanceOf[CUnsignedShort]
+        } {
+          n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicUnsignedShort()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CUnsignedShort]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchAdd(b)
+                i -= 1
+              }
+            }
 
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CUnsignedShort]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicUnsignedShort()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CUnsignedShort]
-        // making this as fast as possible
-        while (i > 0) {
-          number.addFetch(b)
-          i -= 1
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CUnsignedShort]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicUnsignedShort()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CUnsignedShort]
+              // making this as fast as possible
+              while (i > 0) {
+                number.addFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CUnsignedShort]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicUnsignedShort()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = UShort.MaxValue
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchSub(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CUnsignedShort]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicUnsignedShort()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = UShort.MaxValue
+              // making this as fast as possible
+              while (i > 0) {
+                number.subFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CUnsignedShort]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 213)
+            true
         }
       }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CUnsignedShort]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicUnsignedShort()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = UShort.MaxValue
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchSub(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CUnsignedShort]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicUnsignedShort()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = UShort.MaxValue
-        // making this as fast as possible
-        while (i > 0) {
-          number.subFetch(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CUnsignedShort]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 212)
-    true
-    }
-  }
 
   test("fetch_sub ushort") {
     val a = CAtomicUnsignedShort(1.asInstanceOf[CUnsignedShort])
@@ -2056,54 +2045,41 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Strong uint") {
     val a = CAtomicUnsignedInt()
 
     val b = 3.asInstanceOf[CUnsignedInt]
 
-    assertNot(
-      a.compareAndSwapStrong(1.asInstanceOf[CUnsignedInt],
-                              3.asInstanceOf[CUnsignedInt])
-        ._1)
+    assertNot(a.compareAndSwapStrong(1.asInstanceOf[CUnsignedInt], 3.asInstanceOf[CUnsignedInt])._1)
 
-    assert(
-      a.compareAndSwapStrong(0.asInstanceOf[CUnsignedInt],
-                              3.asInstanceOf[CUnsignedInt])
-        ._2 == 3.asInstanceOf[CUnsignedInt])
+    assert(a.compareAndSwapStrong(0.asInstanceOf[CUnsignedInt], 3.asInstanceOf[CUnsignedInt])._2 == 3.asInstanceOf[CUnsignedInt])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Weak uint") {
     val a = CAtomicUnsignedInt()
 
     val b = 3.asInstanceOf[CUnsignedInt]
 
-    assertNot(
-      a.compareAndSwapWeak(1.asInstanceOf[CUnsignedInt],
-                            3.asInstanceOf[CUnsignedInt])
-        ._1)
+    assertNot(a.compareAndSwapWeak(1.asInstanceOf[CUnsignedInt], 3.asInstanceOf[CUnsignedInt])._1)
 
-    assert(
-      a.compareAndSwapWeak(0.asInstanceOf[CUnsignedInt],
-                            3.asInstanceOf[CUnsignedInt])
-        ._2 == 3.asInstanceOf[CUnsignedInt])
+    assert(a.compareAndSwapWeak(0.asInstanceOf[CUnsignedInt], 3.asInstanceOf[CUnsignedInt])._2 == 3.asInstanceOf[CUnsignedInt])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 56)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 57)
 
-  test("compare_and_swap (weak and strong) is atomic for uint") {
+test("compare_and_swap (weak and strong) is atomic for uint") {
 
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0.asInstanceOf[CUnsignedInt]
       withThreads(numThreads, label = "CounterExample") { _: Int =>
-        @inline def badCaS(expectedValue: CUnsignedInt,
-                           newValue: CUnsignedInt): CUnsignedInt = {
+        @inline def badCaS(expectedValue: CUnsignedInt, newValue: CUnsignedInt): CUnsignedInt = {
           val oldValue = number
           if (number == expectedValue) {
             number = newValue
@@ -2125,8 +2101,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
         }
       }
       number != (n * numThreads).asInstanceOf[CUnsignedInt]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+    } { n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicUnsignedInt()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -2137,9 +2114,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[CUnsignedInt]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[CUnsignedInt]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapStrong(expected, newValue)._1)
           i -= 1
         }
@@ -2149,9 +2126,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[CUnsignedInt]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicUnsignedInt()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -2162,9 +2139,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[CUnsignedInt]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[CUnsignedInt]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapWeak(expected, newValue)._1)
           i -= 1
         }
@@ -2174,9 +2151,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[CUnsignedInt]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 114)
-    true
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 115)
+      true
     }
   }
 
@@ -2218,96 +2195,99 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
-  test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for uint") {
-    val numThreads = 2
-    testWithMinRepetitions() { n: Int =>
-      var number = 0.asInstanceOf[CUnsignedInt]
-      withThreads(numThreads, label = "CounterExample") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CUnsignedInt]
-        // making this as fast as possible
-        while (i > 0) {
-          number = number + b
-          i -= 1
-        }
-      }
-      number != (n * numThreads).asInstanceOf[CUnsignedInt]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicUnsignedInt()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CUnsignedInt]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchAdd(b)
-          i -= 1
-        }
-      }
+    test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for uint") {
+        val numThreads = 2
+        testWithMinRepetitions() {
+          n: Int =>
+            var number = 0.asInstanceOf[CUnsignedInt]
+            withThreads(numThreads, label = "CounterExample") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CUnsignedInt]
+              // making this as fast as possible
+              while (i > 0) {
+                number  = number + b
+                i -= 1
+              }
+            }
+            number != (n * numThreads).asInstanceOf[CUnsignedInt]
+        } {
+          n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicUnsignedInt()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CUnsignedInt]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchAdd(b)
+                i -= 1
+              }
+            }
 
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CUnsignedInt]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicUnsignedInt()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CUnsignedInt]
-        // making this as fast as possible
-        while (i > 0) {
-          number.addFetch(b)
-          i -= 1
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CUnsignedInt]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicUnsignedInt()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CUnsignedInt]
+              // making this as fast as possible
+              while (i > 0) {
+                number.addFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CUnsignedInt]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicUnsignedInt()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = UInt.MaxValue
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchSub(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CUnsignedInt]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicUnsignedInt()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = UInt.MaxValue
+              // making this as fast as possible
+              while (i > 0) {
+                number.subFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CUnsignedInt]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 213)
+            true
         }
       }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CUnsignedInt]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicUnsignedInt()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = UInt.MaxValue
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchSub(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CUnsignedInt]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicUnsignedInt()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = UInt.MaxValue
-        // making this as fast as possible
-        while (i > 0) {
-          number.subFetch(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CUnsignedInt]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 212)
-    true
-    }
-  }
 
   test("fetch_sub uint") {
     val a = CAtomicUnsignedInt(1.asInstanceOf[CUnsignedInt])
@@ -2404,54 +2384,41 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Strong ulong") {
     val a = CAtomicUnsignedLong()
 
     val b = 3.asInstanceOf[CUnsignedLong]
 
-    assertNot(
-      a.compareAndSwapStrong(1.asInstanceOf[CUnsignedLong],
-                              3.asInstanceOf[CUnsignedLong])
-        ._1)
+    assertNot(a.compareAndSwapStrong(1.asInstanceOf[CUnsignedLong], 3.asInstanceOf[CUnsignedLong])._1)
 
-    assert(
-      a.compareAndSwapStrong(0.asInstanceOf[CUnsignedLong],
-                              3.asInstanceOf[CUnsignedLong])
-        ._2 == 3.asInstanceOf[CUnsignedLong])
+    assert(a.compareAndSwapStrong(0.asInstanceOf[CUnsignedLong], 3.asInstanceOf[CUnsignedLong])._2 == 3.asInstanceOf[CUnsignedLong])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Weak ulong") {
     val a = CAtomicUnsignedLong()
 
     val b = 3.asInstanceOf[CUnsignedLong]
 
-    assertNot(
-      a.compareAndSwapWeak(1.asInstanceOf[CUnsignedLong],
-                            3.asInstanceOf[CUnsignedLong])
-        ._1)
+    assertNot(a.compareAndSwapWeak(1.asInstanceOf[CUnsignedLong], 3.asInstanceOf[CUnsignedLong])._1)
 
-    assert(
-      a.compareAndSwapWeak(0.asInstanceOf[CUnsignedLong],
-                            3.asInstanceOf[CUnsignedLong])
-        ._2 == 3.asInstanceOf[CUnsignedLong])
+    assert(a.compareAndSwapWeak(0.asInstanceOf[CUnsignedLong], 3.asInstanceOf[CUnsignedLong])._2 == 3.asInstanceOf[CUnsignedLong])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 56)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 57)
 
-  test("compare_and_swap (weak and strong) is atomic for ulong") {
+test("compare_and_swap (weak and strong) is atomic for ulong") {
 
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
       var number = 0.asInstanceOf[CUnsignedLong]
       withThreads(numThreads, label = "CounterExample") { _: Int =>
-        @inline def badCaS(expectedValue: CUnsignedLong,
-                           newValue: CUnsignedLong): CUnsignedLong = {
+        @inline def badCaS(expectedValue: CUnsignedLong, newValue: CUnsignedLong): CUnsignedLong = {
           val oldValue = number
           if (number == expectedValue) {
             number = newValue
@@ -2473,8 +2440,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
         }
       }
       number != (n * numThreads).asInstanceOf[CUnsignedLong]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+    } { n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicUnsignedLong()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -2485,9 +2453,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[CUnsignedLong]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[CUnsignedLong]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapStrong(expected, newValue)._1)
           i -= 1
         }
@@ -2497,9 +2465,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[CUnsignedLong]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicUnsignedLong()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -2510,9 +2478,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[CUnsignedLong]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[CUnsignedLong]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapWeak(expected, newValue)._1)
           i -= 1
         }
@@ -2522,9 +2490,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[CUnsignedLong]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 114)
-    true
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 115)
+      true
     }
   }
 
@@ -2566,96 +2534,99 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
-  test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for ulong") {
-    val numThreads = 2
-    testWithMinRepetitions() { n: Int =>
-      var number = 0.asInstanceOf[CUnsignedLong]
-      withThreads(numThreads, label = "CounterExample") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CUnsignedLong]
-        // making this as fast as possible
-        while (i > 0) {
-          number = number + b
-          i -= 1
-        }
-      }
-      number != (n * numThreads).asInstanceOf[CUnsignedLong]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicUnsignedLong()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CUnsignedLong]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchAdd(b)
-          i -= 1
-        }
-      }
+    test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for ulong") {
+        val numThreads = 2
+        testWithMinRepetitions() {
+          n: Int =>
+            var number = 0.asInstanceOf[CUnsignedLong]
+            withThreads(numThreads, label = "CounterExample") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CUnsignedLong]
+              // making this as fast as possible
+              while (i > 0) {
+                number  = number + b
+                i -= 1
+              }
+            }
+            number != (n * numThreads).asInstanceOf[CUnsignedLong]
+        } {
+          n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicUnsignedLong()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CUnsignedLong]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchAdd(b)
+                i -= 1
+              }
+            }
 
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CUnsignedLong]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicUnsignedLong()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CUnsignedLong]
-        // making this as fast as possible
-        while (i > 0) {
-          number.addFetch(b)
-          i -= 1
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CUnsignedLong]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicUnsignedLong()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CUnsignedLong]
+              // making this as fast as possible
+              while (i > 0) {
+                number.addFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CUnsignedLong]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicUnsignedLong()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = ULong.MaxValue
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchSub(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CUnsignedLong]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicUnsignedLong()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = ULong.MaxValue
+              // making this as fast as possible
+              while (i > 0) {
+                number.subFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CUnsignedLong]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 213)
+            true
         }
       }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CUnsignedLong]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicUnsignedLong()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = ULong.MaxValue
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchSub(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CUnsignedLong]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicUnsignedLong()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = ULong.MaxValue
-        // making this as fast as possible
-        while (i > 0) {
-          number.subFetch(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CUnsignedLong]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 212)
-    true
-    }
-  }
 
   test("fetch_sub ulong") {
     val a = CAtomicUnsignedLong(1.asInstanceOf[CUnsignedLong])
@@ -2752,41 +2723,35 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Strong csize") {
     val a = CAtomicCSize()
 
     val b = 3.asInstanceOf[CSize]
 
-    assertNot(
-      a.compareAndSwapStrong(1.asInstanceOf[CSize], 3.asInstanceOf[CSize])._1)
+    assertNot(a.compareAndSwapStrong(1.asInstanceOf[CSize], 3.asInstanceOf[CSize])._1)
 
-    assert(
-      a.compareAndSwapStrong(0.asInstanceOf[CSize], 3.asInstanceOf[CSize])
-        ._2 == 3.asInstanceOf[CSize])
+    assert(a.compareAndSwapStrong(0.asInstanceOf[CSize], 3.asInstanceOf[CSize])._2 == 3.asInstanceOf[CSize])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 43)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 44)
 
   test("compare and swap Weak csize") {
     val a = CAtomicCSize()
 
     val b = 3.asInstanceOf[CSize]
 
-    assertNot(
-      a.compareAndSwapWeak(1.asInstanceOf[CSize], 3.asInstanceOf[CSize])._1)
+    assertNot(a.compareAndSwapWeak(1.asInstanceOf[CSize], 3.asInstanceOf[CSize])._1)
 
-    assert(
-      a.compareAndSwapWeak(0.asInstanceOf[CSize], 3.asInstanceOf[CSize])._2 == 3
-        .asInstanceOf[CSize])
+    assert(a.compareAndSwapWeak(0.asInstanceOf[CSize], 3.asInstanceOf[CSize])._2 == 3.asInstanceOf[CSize])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 56)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 57)
 
-  test("compare_and_swap (weak and strong) is atomic for csize") {
+test("compare_and_swap (weak and strong) is atomic for csize") {
 
     val numThreads = 2
     testWithMinRepetitions() { n: Int =>
@@ -2814,8 +2779,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
         }
       }
       number != (n * numThreads).asInstanceOf[CSize]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+    } { n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicCSize()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -2826,9 +2792,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[CSize]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[CSize]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapStrong(expected, newValue)._1)
           i -= 1
         }
@@ -2838,9 +2804,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[CSize]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 87)
-    {
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 88)
+      {
       val number = CAtomicCSize()
       withThreads(numThreads, label = "Test") { _: Int =>
         var i = n
@@ -2851,9 +2817,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
           var expected = 0.asInstanceOf[CSize]
           do {
             expected = number.load()
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 101)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 102)
             newValue = (expected + b).asInstanceOf[CSize]
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 103)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 104)
           } while (!number.compareAndSwapWeak(expected, newValue)._1)
           i -= 1
         }
@@ -2863,9 +2829,9 @@ object AtomicSuite extends tests.MultiThreadSuite {
       val expected = (n * numThreads).asInstanceOf[CSize]
       number.free()
       assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 114)
-    true
+      }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 115)
+      true
     }
   }
 
@@ -2907,96 +2873,99 @@ object AtomicSuite extends tests.MultiThreadSuite {
     a.free()
   }
 
-  test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for csize") {
-    val numThreads = 2
-    testWithMinRepetitions() { n: Int =>
-      var number = 0.asInstanceOf[CSize]
-      withThreads(numThreads, label = "CounterExample") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CSize]
-        // making this as fast as possible
-        while (i > 0) {
-          number = number + b
-          i -= 1
-        }
-      }
-      number != (n * numThreads).asInstanceOf[CSize]
-    } { n: Int => // ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicCSize()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CSize]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchAdd(b)
-          i -= 1
-        }
-      }
+    test("fetch_add, add_fetch, fetch_sub, sub_fetch are atomic for csize") {
+        val numThreads = 2
+        testWithMinRepetitions() {
+          n: Int =>
+            var number = 0.asInstanceOf[CSize]
+            withThreads(numThreads, label = "CounterExample") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CSize]
+              // making this as fast as possible
+              while (i > 0) {
+                number  = number + b
+                i -= 1
+              }
+            }
+            number != (n * numThreads).asInstanceOf[CSize]
+        } {
+          n: Int =>
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicCSize()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CSize]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchAdd(b)
+                i -= 1
+              }
+            }
 
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CSize]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 174)
-    {
-      val number = CAtomicCSize()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = 1.asInstanceOf[CSize]
-        // making this as fast as possible
-        while (i > 0) {
-          number.addFetch(b)
-          i -= 1
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CSize]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 175)
+            {
+            val number = CAtomicCSize()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = 1.asInstanceOf[CSize]
+              // making this as fast as possible
+              while (i > 0) {
+                number.addFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CSize]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicCSize()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = -1.asInstanceOf[CSize]
+              // making this as fast as possible
+              while (i > 0) {
+                number.fetchSub(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CSize]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 195)
+            {
+            val number = CAtomicCSize()
+            withThreads(numThreads, label = "Test") {_: Int =>
+              var i = n
+              val b = -1.asInstanceOf[CSize]
+              // making this as fast as possible
+              while (i > 0) {
+                number.subFetch(b)
+                i -= 1
+              }
+            }
+
+            val value = number.load()
+            val expected = (n * numThreads).asInstanceOf[CSize]
+            number.free()
+            assertEquals(value, expected)
+            }
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 213)
+            true
         }
       }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CSize]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicCSize()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = -1.asInstanceOf[CSize]
-        // making this as fast as possible
-        while (i > 0) {
-          number.fetchSub(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CSize]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 194)
-    {
-      val number = CAtomicCSize()
-      withThreads(numThreads, label = "Test") { _: Int =>
-        var i = n
-        val b = -1.asInstanceOf[CSize]
-        // making this as fast as possible
-        while (i > 0) {
-          number.subFetch(b)
-          i -= 1
-        }
-      }
-
-      val value    = number.load()
-      val expected = (n * numThreads).asInstanceOf[CSize]
-      number.free()
-      assertEquals(value, expected)
-    }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 212)
-    true
-    }
-  }
 
   test("fetch_sub csize") {
     val a = CAtomicCSize(1.asInstanceOf[CSize])
@@ -3093,89 +3062,70 @@ object AtomicSuite extends tests.MultiThreadSuite {
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 312)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 313)
 
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 316)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 317)
 
   test("compare and swap Strong Char") {
     val a = CAtomicChar()
 
     val b = 'b'.asInstanceOf[CChar]
 
-    assertNot(
-      a.compareAndSwapStrong('b'.asInstanceOf[CChar], 'b'.asInstanceOf[CChar])
-        ._1)
+    assertNot(a.compareAndSwapStrong('b'.asInstanceOf[CChar], 'b'.asInstanceOf[CChar])._1)
 
-    assert(
-      a.compareAndSwapStrong('a'.asInstanceOf[CChar], 'b'.asInstanceOf[CChar])
-        ._2 == 'b'.asInstanceOf[CChar])
+    assert(a.compareAndSwapStrong('a'.asInstanceOf[CChar], 'b'.asInstanceOf[CChar])._2 == 'b'.asInstanceOf[CChar])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 316)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 317)
 
   test("compare and swap Weak Char") {
     val a = CAtomicChar()
 
     val b = 'b'.asInstanceOf[CChar]
 
-    assertNot(
-      a.compareAndSwapWeak('b'.asInstanceOf[CChar], 'b'.asInstanceOf[CChar])._1)
+    assertNot(a.compareAndSwapWeak('b'.asInstanceOf[CChar], 'b'.asInstanceOf[CChar])._1)
 
-    assert(
-      a.compareAndSwapWeak('a'.asInstanceOf[CChar], 'b'.asInstanceOf[CChar])
-        ._2 == 'b'.asInstanceOf[CChar])
+    assert(a.compareAndSwapWeak('a'.asInstanceOf[CChar], 'b'.asInstanceOf[CChar])._2 == 'b'.asInstanceOf[CChar])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 316)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 317)
 
   test("compare and swap Strong UnsignedChar") {
     val a = CAtomicUnsignedChar()
 
     val b = 'b'.asInstanceOf[CUnsignedChar]
 
-    assertNot(
-      a.compareAndSwapStrong('b'.asInstanceOf[CUnsignedChar],
-                              'b'.asInstanceOf[CUnsignedChar])
-        ._1)
+    assertNot(a.compareAndSwapStrong('b'.asInstanceOf[CUnsignedChar], 'b'.asInstanceOf[CUnsignedChar])._1)
 
-    assert(
-      a.compareAndSwapStrong('a'.asInstanceOf[CUnsignedChar],
-                              'b'.asInstanceOf[CUnsignedChar])
-        ._2 == 'b'.asInstanceOf[CUnsignedChar])
+    assert(a.compareAndSwapStrong('a'.asInstanceOf[CUnsignedChar], 'b'.asInstanceOf[CUnsignedChar])._2 == 'b'.asInstanceOf[CUnsignedChar])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 316)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 317)
 
   test("compare and swap Weak UnsignedChar") {
     val a = CAtomicUnsignedChar()
 
     val b = 'b'.asInstanceOf[CUnsignedChar]
 
-    assertNot(
-      a.compareAndSwapWeak('b'.asInstanceOf[CUnsignedChar],
-                            'b'.asInstanceOf[CUnsignedChar])
-        ._1)
+    assertNot(a.compareAndSwapWeak('b'.asInstanceOf[CUnsignedChar], 'b'.asInstanceOf[CUnsignedChar])._1)
 
-    assert(
-      a.compareAndSwapWeak('a'.asInstanceOf[CUnsignedChar],
-                            'b'.asInstanceOf[CUnsignedChar])
-        ._2 == 'b'.asInstanceOf[CUnsignedChar])
+    assert(a.compareAndSwapWeak('a'.asInstanceOf[CUnsignedChar], 'b'.asInstanceOf[CUnsignedChar])._2 == 'b'.asInstanceOf[CUnsignedChar])
 
     a.free()
   }
-// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 330)
+// ###sourceLocation(file: "/home/valdis/scala-native/unit-tests/src/test/scala/scala/scalanative/runtime/AtomicSuite.scala.gyb", line: 331)
 
   test("multiple compare and swap should yield correct results") {
     val a = CAtomicInt()
 
     var i = 0
 
-    while (i < 10) {
-      assert(a.compareAndSwapStrong(i, i + 1)._2 == i + 1)
-      i += 1
+    while(i < 10) {
+        assert(a.compareAndSwapStrong(i, i + 1)._2 == i + 1)
+        i += 1
     }
 
     assert(a.load() == 10)
